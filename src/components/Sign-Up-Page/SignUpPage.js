@@ -1,5 +1,7 @@
 import "./SignUpPage.css"; 
 
+/*Coded by: Taylor Oxelgren */
+
 export default function SignUpPage() {
     return(
         <>
