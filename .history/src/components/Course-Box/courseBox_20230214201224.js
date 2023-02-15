@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import "./CourseBox.css";
 
 const CourseBox = () => {
-    
   let subject = "art";
 
   return (

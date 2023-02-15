@@ -1,12 +1,10 @@
 import "./App.css";
-import CourseBox from "./components/Course-Box/CourseBox";
 import Header from "./components/Header-Components/Logged-Out/Header";
 
 function App() {
   return (
     <>
       <Header />
-      <CourseBox />
     </>
   );
 }
