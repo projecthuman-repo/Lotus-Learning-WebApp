@@ -1,5 +1,5 @@
 .logOuted-Header {
-    height: 80px;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     padding: 20px;
@@ -32,6 +32,13 @@
 .Links > * {
     padding: 0 60px;
 }
+
+/* Every a tag inside Link's */
+.Links > div > a {
+    text-decoration: none;
+    color: black;
+}
+
 /* Every Element inside Logo-Title Div */
 .Logo-Title > * {
     padding: 0 10px;

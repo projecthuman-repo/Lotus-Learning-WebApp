@@ -1,5 +1,5 @@
 import Container from "react-bootstrap/Container";
-import "./Header.css";
+import "./Header-Logged-Out.css";
 import Logo from "../../../Images/BLN_Logo.png";
 export default function Header() {
   return (
@@ -12,11 +12,11 @@ export default function Header() {
           <div className="Title">Black Lily Nursery</div>
         </div>
         <div className="Links">
-          <div>COURSES</div>
-          <div>GAMES</div>
-          <div>CONTACT</div>
-          <div>LOG IN</div>
-          <div><b>SIGN UP</b></div>
+          <div><a href="/">COURSES</a></div>
+          <div><a href="/">GAMES</a></div>
+          <div><a href="/">CONTACT</a></div>
+          <div><a href="/">LOG IN</a></div>
+          <div><a href="/"><b>SIGN UP</b></a></div>
         </div>
       </Container>
     </>
