@@ -4,7 +4,7 @@ export default function SignUpPage() {
     return(
         <>
             <Container className="" fluid>
-                    {/* hello */}
+                    {/* Humza aamir */}
             </Container>
         </>
     );
