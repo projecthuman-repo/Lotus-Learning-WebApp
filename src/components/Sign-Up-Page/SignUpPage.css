@@ -1,0 +1,181 @@
+/* Part of the way through I switched to using view width to scale everything
+    I will need to convert the spacing on the elements to use view width instead of view height */
+
+/* Still need to add icon for logo, exit button and the facebook and google logos */
+
+/* Could probably refactor styling to reduce total amount of lines */
+
+/*Coded by: Taylor Oxelgren */
+
+.contentBox{
+    height:42.4vw;
+    width:34vw;
+    margin-top: 3.21vw;
+    margin-bottom: 3.21vw;
+    margin-left: auto;
+    margin-right: auto;
+
+    box-sizing: border-box;
+
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 22px;
+}
+
+
+.exitIcon{
+    display: inline-block;
+    position: relative;
+    left:32vw;
+    top: 2.57vh;
+    height: 1.1vw;
+    width: 1.1vw;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.logo{
+    width: 3.2vw;
+    height: 3.2vw;
+    background-color: black;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    margin-top:3.14vw;
+    margin-bottom: 4.1vh;
+}
+
+.log-sign-selector{
+    /* display: inline-block; */
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+
+    text-align: center;
+    line-height: 1.9vw;
+}
+
+
+.loginSelector, .signUpSelector{
+    display: inline-block;
+    padding-right: 1vw;
+    padding-left: 1vw;
+    border-bottom: 1px solid #B8B6B6;
+    width: 8.5vw;
+    
+    font-weight: 500;
+    font-size: 1.33vw;
+    line-height: 2.5vw;
+
+    color: #292929;
+}
+
+.signUpSelector{
+    border-left: 1px solid #B8B6B6;
+}
+
+.signUp{
+    margin-top: 8.2vh;
+    width:19vw;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.signUpBox{
+    width:19vw;
+    border: 0px;
+    border-bottom: 1px solid #B8B6B6;
+
+    /* background-color:red; */
+    height: 3vh;
+}
+
+::placeholder{
+    color:#D9D9D9;
+}
+
+ #password{
+    margin-top: 2vh;
+}
+
+
+.signUpButton{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    width:19vw;
+    height: 5vh;
+    margin-top: 4.1vh;
+    margin-bottom: 1.5vh;
+
+    background: #E6E6E6;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 0;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+
+.or{
+    text-align: center;
+    font-family: "Montserrat",sans-serif !important;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.1vw;
+    
+    margin-bottom: 4vh;
+    margin-top: 4vh;
+
+    color: #757575;
+}
+
+.lines{
+    display: inline-block;
+    width:6vw;
+
+    position: relative;
+    top: .5vh;
+    margin-left: 2.33vw;
+    margin-right: 2.33vw;
+    background-color: #C4C4C4;
+    border: 0;
+    height: 1px;
+
+}
+
+.su-With{
+    text-align: center;
+    line-height: 4vh;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-size: .9vw;
+
+    border: 1px solid #B8B6B6;
+    margin-top: 2vh;
+    margin-left: auto;
+    margin-right: auto;
+    width:14vw;
+    height:4vh;
+
+    color: #757575;
+    
+}
+
+.signUpFooter{
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 15px;
+    /* identical to box height */
+    margin-top: 2vh;
+
+    color: #757575;
+}
