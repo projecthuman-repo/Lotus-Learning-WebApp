@@ -1,7 +1,11 @@
+import { Container } from "react-bootstrap";
+
 export default function SignUpPage() {
     return(
         <>
-            <h1>sign up Page</h1>
+            <Container className="" fluid>
+                    {/* Humza aamir */}
+            </Container>
         </>
     );
 
