@@ -12,7 +12,7 @@ export default function Header() {
           <div className="Title">Black Lily Nursery</div>
         </div>
         <div className="Links">
-          <div><a href="/">COURSES</a></div>
+          <div><a href="/coursecatalogue">COURSES</a></div>
           <div><a href="/">GAMES</a></div>
           <div><a href="/">CONTACT</a></div>
           <div><a href="/">LOG IN</a></div>

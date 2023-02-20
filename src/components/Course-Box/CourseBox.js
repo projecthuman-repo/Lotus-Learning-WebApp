@@ -1,4 +1,3 @@
-import Container from "react-bootstrap/Container";
 import { Button } from "@mui/material";
 import "./CourseBox.css";
 
