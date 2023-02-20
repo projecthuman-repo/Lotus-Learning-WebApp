@@ -1,0 +1,8 @@
+.SideNav {
+    height: 100%;
+}
+
+.SideNavLinks {
+    display: flex;
+    flex-direction: column;
+}

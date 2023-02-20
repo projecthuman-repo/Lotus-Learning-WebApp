@@ -1,4 +1,4 @@
-body {
+body, #root {
   margin: 0;
   font-family: Poppins;
   -webkit-font-smoothing: antialiased;
