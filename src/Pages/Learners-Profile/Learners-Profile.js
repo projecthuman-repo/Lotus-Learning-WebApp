@@ -4,7 +4,7 @@ import Header from "../../components/Header-Components/Logged-In/Header-Logged-I
 import SearchBar from "../../components/SearchBar-Components/SearchBar"
 import "./Learners-Profile.css"
 export default function LearnersProfile() {
-    const courses = ['Art', 'Languages', 'Math', 'Science'];
+    // const courses = ['Art', 'Languages', 'Math', 'Science'];
     return(
         <>
             <Container className="LearnersPro-Header" fluid>
