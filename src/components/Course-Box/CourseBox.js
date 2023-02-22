@@ -78,164 +78,164 @@ const CourseBox = () => {
 
 export default CourseBox;
 
-//Styling
-{
-  /* <Container className="box">
-<Row>
-  <Col>
-    <Button
-      component="span"
-      sx={{
-        position: "absolute",
-        width: 217,
-        height: 208,
-        left: 188,
-        top: 656,
-        p: 6,
-        border: "2px solid #757575",
-        borderRadius: 5,
-      }}
-    >
-      {subject}
-    </Button>
-  </Col>
-  <Col>
-    <Button
-      component="span"
-      sx={{
-        position: "absolute",
-        width: 217,
-        height: 208,
-        left: 188,
-        top: 656,
-        p: 6,
-        border: "2px solid #757575",
-        borderRadius: 5,
-      }}
-    >
-      {subject}
-    </Button>
-  </Col>
-</Row>
-<Row>
-  <Col>
-    <Button
-      component="span"
-      sx={{
-        position: "absolute",
-        width: 217,
-        height: 208,
-        left: 188,
-        top: 656,
-        p: 6,
-        border: "2px solid #757575",
-        borderRadius: 5,
-      }}
-    >
-      {subject}
-    </Button>
-  </Col>
-</Row>
-</Container> */
-}
+// //Styling
+// {
+//   /* <Container className="box">
+// <Row>
+//   <Col>
+//     <Button
+//       component="span"
+//       sx={{
+//         position: "absolute",
+//         width: 217,
+//         height: 208,
+//         left: 188,
+//         top: 656,
+//         p: 6,
+//         border: "2px solid #757575",
+//         borderRadius: 5,
+//       }}
+//     >
+//       {subject}
+//     </Button>
+//   </Col>
+//   <Col>
+//     <Button
+//       component="span"
+//       sx={{
+//         position: "absolute",
+//         width: 217,
+//         height: 208,
+//         left: 188,
+//         top: 656,
+//         p: 6,
+//         border: "2px solid #757575",
+//         borderRadius: 5,
+//       }}
+//     >
+//       {subject}
+//     </Button>
+//   </Col>
+// </Row>
+// <Row>
+//   <Col>
+//     <Button
+//       component="span"
+//       sx={{
+//         position: "absolute",
+//         width: 217,
+//         height: 208,
+//         left: 188,
+//         top: 656,
+//         p: 6,
+//         border: "2px solid #757575",
+//         borderRadius: 5,
+//       }}
+//     >
+//       {subject}
+//     </Button>
+//   </Col>
+// </Row>
+// </Container> */
+// }
 
-//Grid
-{
-  /* <Row>
-<Col>
-  <Button
-    component="span"
-    sx={{
-      position: "absolute",
-      width: 217,
-      height: 208,
-      p: 6,
-      border: "2px solid #757575",
-      borderRadius: 5,
-    }}
-  >
-    {subject}
-  </Button>
-</Col>
-<Col>
-  <Button
-    component="span"
-    sx={{
-      position: "absolute",
-      width: 217,
-      height: 208,
-      p: 6,
-      border: "2px solid #757575",
-      borderRadius: 5,
-    }}
-  >
-    {subject}
-  </Button>
-</Col>
-<Col>
-  <Button
-    component="span"
-    sx={{
-      position: "absolute",
-      width: 217,
-      height: 208,
-      p: 6,
-      border: "2px solid #757575",
-      borderRadius: 5,
-    }}
-  >
-    {subject}
-  </Button>
-</Col>
-<Col>
-  <Button
-    component="span"
-    sx={{
-      position: "absolute",
-      width: 217,
-      height: 208,
-      p: 6,
-      border: "2px solid #757575",
-      borderRadius: 5,
-    }}
-  >
-    {subject}
-  </Button>
-</Col>
-</Row> */
-}
+// //Grid
+// {
+//   /* <Row>
+// <Col>
+//   <Button
+//     component="span"
+//     sx={{
+//       position: "absolute",
+//       width: 217,
+//       height: 208,
+//       p: 6,
+//       border: "2px solid #757575",
+//       borderRadius: 5,
+//     }}
+//   >
+//     {subject}
+//   </Button>
+// </Col>
+// <Col>
+//   <Button
+//     component="span"
+//     sx={{
+//       position: "absolute",
+//       width: 217,
+//       height: 208,
+//       p: 6,
+//       border: "2px solid #757575",
+//       borderRadius: 5,
+//     }}
+//   >
+//     {subject}
+//   </Button>
+// </Col>
+// <Col>
+//   <Button
+//     component="span"
+//     sx={{
+//       position: "absolute",
+//       width: 217,
+//       height: 208,
+//       p: 6,
+//       border: "2px solid #757575",
+//       borderRadius: 5,
+//     }}
+//   >
+//     {subject}
+//   </Button>
+// </Col>
+// <Col>
+//   <Button
+//     component="span"
+//     sx={{
+//       position: "absolute",
+//       width: 217,
+//       height: 208,
+//       p: 6,
+//       border: "2px solid #757575",
+//       borderRadius: 5,
+//     }}
+//   >
+//     {subject}
+//   </Button>
+// </Col>
+// </Row> */
+// }
 
-// JavaScript
-{
-  /* <h1>Course Catalogue</h1>
-{subjects.map((subject, key) => {
-  return (
-    <Row>
-      <Col key={key}>
-        <Subject name={subject} />
-      </Col>
-    </Row>
-  );
-})} */
-}
-
-//function for array iteration
-// const Subject = ({ name }) => {
+// // JavaScript
+// {
+//   /* <h1>Course Catalogue</h1>
+// {subjects.map((subject, key) => {
 //   return (
-//     <Col>
-//       <Button
-//         component="span"
-//         sx={{
-//           position: "absolute",
-//           width: 217,
-//           height: 208,
-//           p: 6,
-//           border: "2px solid #757575",
-//           borderRadius: 5,
-//         }}
-//       >
-//         {name}
-//       </Button>
-//     </Col>
+//     <Row>
+//       <Col key={key}>
+//         <Subject name={subject} />
+//       </Col>
+//     </Row>
 //   );
-// };
+// })} */
+// }
+
+// //function for array iteration
+// // const Subject = ({ name }) => {
+// //   return (
+// //     <Col>
+// //       <Button
+// //         component="span"
+// //         sx={{
+// //           position: "absolute",
+// //           width: 217,
+// //           height: 208,
+// //           p: 6,
+// //           border: "2px solid #757575",
+// //           borderRadius: 5,
+// //         }}
+// //       >
+// //         {name}
+// //       </Button>
+// //     </Col>
+// //   );
+// // };
