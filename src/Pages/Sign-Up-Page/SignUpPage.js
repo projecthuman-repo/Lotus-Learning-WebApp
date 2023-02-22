@@ -1,6 +1,9 @@
 import "./SignUpPage.css"; 
 
 /*Coded by: Taylor Oxelgren */
+import Logo from "../../Images/BLN_Logo.png";
+import fbIcon from "../../Images/fb_icon.svg";
+import googleIcon from "../../Images/Googleicon.svg";
 
 export default function SignUpPage() {
     return(
@@ -9,7 +12,10 @@ export default function SignUpPage() {
                 {/* The exit icon */}
                 <div className="exitIcon"></div> 
                 {/* Logo */}
-                <div className="logo"></div>
+                <div className="logo">
+                    <img className="logo-img" src={Logo} alt="Logo"></img>
+                </div>
+                {/* <img className="Logo" src={Logo} alt="Logo" /> */}
                 {/* Select login or sign up */}
                 <div className="log-sign-selector">
                     <div className="loginSelector">Login</div>
@@ -28,8 +34,13 @@ export default function SignUpPage() {
                     <hr className="lines"></hr>
                 </div>
                 {/* sign up with buttons */}
-                <div className="su-With">Sign up with Google</div>
-                <div className="su-With">Sign up with Facebook</div>
+                <div className="su-With">
+                    <img src={googleIcon} className="icons" alt="Googleicon"></img>
+                    Sign up with Google
+                </div>
+                <div className="su-With">
+                    <img src={fbIcon} id="fbIcon" className="icons" alt="fb_icon"></img>
+                    Sign up with Facebook</div>
                 <footer className="signUpFooter">Need an account? <b>Create your account</b></footer>
             </div>
         </>
