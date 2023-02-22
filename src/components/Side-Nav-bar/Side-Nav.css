@@ -41,3 +41,8 @@ span {
 #SignOut {
   padding-top: 100px;
 }
+
+.SideNavLinks {
+    display: flex;
+    flex-direction: column;
+}
