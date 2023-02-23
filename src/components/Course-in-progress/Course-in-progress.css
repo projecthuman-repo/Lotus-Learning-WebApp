@@ -1,0 +1,88 @@
+/* Sizing is still inconsitent, will require modification to use,
+ but should be functional with size tuning */
+
+
+*{
+    margin:0;
+}
+
+.coureprogress-container{
+    display:block;
+    background-color: #FFFFFF;
+    width:100%;
+    left:500px;
+    height:100%;
+    padding:0;
+    padding-left: 0px;
+    margin:0 ;
+}
+
+.lines{
+    display:block;
+    /* background-color: #C4C4C4; */
+    /* Setting color to black for now to improve visibility */
+    background-color:rgb(100,100,100);
+    /* background-color:black; */
+    width:100%;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-left: 1.25%;
+    padding:0;
+    height:3px;
+}
+
+.sectionTitle{
+    margin-left: 1.25%;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+}
+
+
+.courseBoxes{
+    width:100%;
+    margin-bottom: 190px;
+}
+
+.loadPrompt{
+    display: flex;
+    float:right;
+    padding:0;
+    /* margin-right: 1.2vw; */
+
+    cursor:pointer;
+}
+
+
+.badges{
+    display:inline-block;
+    width:8%;
+
+    margin-top: 1vh;
+    margin-right: 1vw;
+    /* margin-left: 2vw; */
+    margin-bottom:0;
+
+    border:0;
+
+}
+
+.badges img{
+    height:10%;
+    width:100%;
+}
+
+.badges p1{
+    display:block;
+    text-align: center;
+    padding-top: 0;
+
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 750;
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 0;
+}
