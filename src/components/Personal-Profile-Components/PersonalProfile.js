@@ -12,8 +12,6 @@ function PersonalProfile() {
         
        
         <div className="Personal-Profile-container">
-        {/* Added Header to Reference */}
-        <Header />
         
             {/* Container for Profile Picture */}
             <div className="profile-picture-container">
