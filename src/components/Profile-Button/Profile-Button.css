@@ -1,0 +1,15 @@
+.profile-button {
+    position: absolute;
+    margin: 115px 87px 460px 702px;
+    display: block;
+}
+
+.upload {
+    position: absolute;
+    margin: 413px 140px 419px 740px;
+    white-space: nowrap;
+}
+
+.upload-space {
+    margin: auto 5px;
+}

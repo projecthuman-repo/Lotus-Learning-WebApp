@@ -1,78 +1,115 @@
-h1 {
-  font-family: 'Poppins', sans-serif;
-}
-
-p {
-  font-family: 'Poppins', sans-serif;
-}
+/* Global Styling */
 
 .center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+  position: relative;
+width: 1440px;
+height: 2085px;
+
+background: #FFFFFF;
 }
 
+/* Title 'Course Catalogue' */
 .title {
-  text-align: center;
-  padding-top: 55px;
-  padding-bottom: 35px;
-  font-size: 50px;
+  position: absolute;
+width: 468px;
+height: 72px;
+left: 486px;
+top: 217px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 48px;
+line-height: 72px;
+
+color: #000000;
+
 }
 
-
+/* Search Bar */
 .SearchInput {
-  width: 846px !important;
-  height: 61px*.69;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 15px;
+
   box-sizing: border-box;
-  border: 0px solid gray;
-  outline: none;
-  margin-left: 25px;
+
+  position: absolute;
+  width: 846px;
+  height: 61px;
+  left: 297px;
+  top: 342px;
   
+  border: 3px solid #B3B3B3;
+  border-radius: 50px;
+
+  padding-left: 70px;
+   
 }
 
+.SearchInput::placeholder {
+  
 
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+line-height: 36px;
+
+color: #D9D9D9;
+}
+
+/* Search Bar Button -> Can use for different Pages 
 .button {
-  border-radius: 0px 13px 13px 0px;
-  border: 0px;
-  height: 43px;
-  width: 142px;
-  color:#B3B3B3;
+position: absolute;
+width: 85px;
+height: 36px;
+left: 367px;
+top: 355px;
 
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+line-height: 36px;
 
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 1000;
-  font-size: 20px;
-  line-height: 36px;
+color: #D9D9D9;
 
-}
+} 
+
 
 .button:hover {
   background-color: gray;
 }
 
-.text {
-  text-align: left;
-  padding: 0px 350px 0px 350px;
-}
+*/
 
 
-.tBox{
-  box-sizing: border-box;
-  border: 3px solid #B3B3B3;
-  border-radius: 15px;
-
-
-}
+/* Magnifying Glass */
 
 .search-icon {
-  color: black;
-  margin: 0px;
-  justify-content: center;
-  margin: 10px 0px 0px 5px;
   position: absolute;
+  font-size: 26px;
+  left: 322px;
+  top: 357px;
+  z-index: 1;
+  color: #757575;
+}
+
+/* Text/Paragraph */
+.text {
+  position: absolute;
+width: 840px;
+height: 103px;
+left: 304px;
+top: 450px;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 27px;
+display: flex;
+align-items: center;
+
+color: #757575;
+
+
 }
