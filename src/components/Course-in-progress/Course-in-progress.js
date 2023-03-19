@@ -37,5 +37,5 @@ export default function CourseInProgress(){
                     })}
                 </div>
             </div>
-    )
+    );
 }
