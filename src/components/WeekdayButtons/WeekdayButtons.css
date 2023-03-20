@@ -2,17 +2,20 @@
 
 /* Basic styling for the buttons */
 .weekdayButtons{
-    display:inline-block;
+    display:flexbox;
     height:50px;
+    height:100%;
     width:calc(60%/7);
-    text-align: center;
-    font-size: large;
+    font-size: 1.25vw;
+    margin-top: .5%;
+    margin-bottom: .5%;
     margin-right: 4%;
     margin-left:1%;
     border:0;
     border-radius: 5px;
     background-color: #FFFFFF;
 }
+
 
 .weekdayButtons:hover{
     background-color: #F3F3F3;
@@ -21,4 +24,5 @@
 .buttonFrame{
     display:block;
     width: 100%;
+    height: 100%;
 }

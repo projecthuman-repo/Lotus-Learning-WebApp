@@ -1,0 +1,28 @@
+.myContainer{
+    overflow: scroll;
+    scrollbar-width: 0;
+    position: relative;
+    width: 100%;
+
+    /* Removes scrollbar internet explorer and firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+}
+
+/* Removes scroll bar for safari and chrome */
+.myContainer::-webkit-scrollbar { 
+    display: none;
+}
+
+.notifcationDates{
+    text-align: left;
+    font-size: 2em;
+    margin-top: 10%;
+    margin-left: 20%;
+}
+
+.noti{
+    margin-bottom: 2.5%;
+    margin-left: 20%;
+}

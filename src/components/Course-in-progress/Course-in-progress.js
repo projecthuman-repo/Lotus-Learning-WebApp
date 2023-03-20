@@ -16,7 +16,7 @@ export default function CourseInProgress(){
             <div className="coureprogress-container">
                 <hr className="lines"></hr>
                 {/* Generates Weekday buttons */}
-                <WeekdayButtons className={"weekdayButtons"}/>
+                <div className="weekdayButtonsContainer"><WeekdayButtons /></div>
                 <hr className="lines"></hr>
                 <h1 className="sectionTitle">In Progress</h1>
                 <hr className="lines"></hr>
@@ -27,7 +27,7 @@ export default function CourseInProgress(){
                 <div className="loadPrompt">Load more...</div>
                 <hr className="lines"></hr>
                 <h1 className="sectionTitle">ACCOMPLISHMENTS</h1>
-                <div className="badgeContainer">
+                <div className="badgesContainer">
                     {/* Placing badges */}
                     {badges.map(function(badge) {
                         return (<div className="badges" >
