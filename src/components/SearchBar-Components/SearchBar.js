@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./SearchBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import Header from "../../components/Header-Components/Logged-In/Header-Logged-In";
 
 
 // Defining a functional component -> SearchBar
@@ -19,6 +20,7 @@ function SearchBar() {
   //Return 
     return (
       <div className="center">
+        <Header />
         <h1 className="title">Course Catalogue</h1>
         {/* added a div to put the button and form in, using that to set the border and etc*/}
         <div className="tBox">
@@ -33,10 +35,11 @@ function SearchBar() {
             value={searchTerm}
             onChange={handleChange}
           ></input>
-          <button type="submit" className="button">Search</button>
+        {/* Button Element can be added depending if the page requires it */}
+        {/* <button type="submit" className="button">Search</button> */}
         </form>
         </div>
-        <p className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lacus massa, hendrerit nec ex nec, commodo consectetur risus. Maecenas tempus urna sit amet scelerisque pharetra. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus non egestas ligula. Proin interdum iaculis justo et efficitur.</p>
       </div>
     );
   };
