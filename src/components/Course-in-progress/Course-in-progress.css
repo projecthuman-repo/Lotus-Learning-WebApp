@@ -1,0 +1,85 @@
+/* Coded by Taylor Oxelgren */
+
+.coureprogress-container{
+    display:block;
+    background-color: #FFFFFF;
+    width:100%;
+    height:100%;
+    padding:0;
+    padding-left: 0px;
+    margin:0 ;
+}
+
+.lines{
+    display:block;
+    /* background-color: #C4C4C4; */
+    /* Setting color to black for now to improve visibility */
+    background-color:rgb(100,100,100);
+    /* background-color:black; */
+    width:100%;
+    margin-top: 0px;
+    margin-bottom: 1%;
+    margin-left: 1.25%;
+    padding:0;
+    height:.5%;
+}
+
+.sectionTitle{
+    margin-left: 2%;
+    text-align: left;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.5vw;
+    line-height: 2vw;
+}
+
+
+.courseBoxes{
+    width:100%;
+    margin-bottom: 16%;
+}
+
+.loadPrompt{
+    text-align: right;
+    margin-right: .5%;
+
+    cursor:pointer;
+}
+
+
+.badgesContainer{
+    display: flex;
+    align-items: left;
+    margin: 0;
+}
+
+.badges{
+    vertical-align: auto;
+    width: 8%;
+    height: 8%;
+    margin-left: 2%;
+
+}
+
+.badges img{
+    width: 100%;
+}
+
+.badges p1{
+    display:block;
+    text-align: center;
+    padding-top: 0;
+
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 750;
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 0;
+}
+
+
+.courseBoxes{
+    background-color: blue;
+}

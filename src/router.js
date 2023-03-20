@@ -4,6 +4,10 @@ import LearnersProfile from "./Pages/Learners-Profile/Learners-Profile";
 import SignUpPage from "./Pages/Sign-Up-Page/SignUpPage";
 import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
 import SearchBar from "./components/SearchBar-Components/SearchBar";
+import CourseProgessPage from "./Pages/Learners-CourseProgress/CourseProgressPage.js";
+
+
+import LearnersProfileNotifications from "./Pages/Learners-Profile-Notifications/LearnersProfileNotifications";
 
 export default function Router() {
   return (
@@ -14,6 +18,8 @@ export default function Router() {
         <Route path="/coursecatalogue" element={<LearnersProfile />} />
         <Route path="/personalprofile" element={<PersonalProfile />} />
         <Route path="/searchbar" element={<SearchBar />} />
+        <Route path="/LearnersNotifications" element={<LearnersProfileNotifications />}/>
+        <Route path="/CourseProgress" element={<CourseProgessPage />}/>
       </Routes>
     </BrowserRouter>
   );

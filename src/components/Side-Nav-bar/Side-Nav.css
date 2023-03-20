@@ -1,9 +1,10 @@
 #SideNav {
   height: 100%;
-  width: 15%;
+  width: 100%;
   padding: 5% 15px;
   margin: 0;
   border-right: 1px solid #ececec;
+  position: relative;
 }
 
 h4 {
