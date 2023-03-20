@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import GameBox from '../../components/Game-Box/GameBox'
 import NotificationInfo from '../../components/Notification-Info/NotificationInfo'
 import PasswordInfo from '../../components/Password-Info/PasswordInfo'
 import PersonalInfo from '../../components/Personal-Information/PersonalInfo'

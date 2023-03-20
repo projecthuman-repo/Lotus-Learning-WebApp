@@ -1,17 +1,19 @@
 import React from 'react'
 import styled from 'styled-components';
 
+import tempImage from './Temp-Image.jpg'
+
 const GameBox = () => {
 
   const title = 'Title of Game'
 
   return (
     <GameCard>
-      <GameContent>
-        <img className='game-image' src='Temp-Image.jpg' alt={title} />
+      <div className='table-border'>
+        <img className='game-image' src={tempImage} alt={title} />
         <TitleHeader>
-          <h4>Title of Game</h4>
-          <p><u>Name of Creator</u></p>
+          <h5>Title of Game</h5>
+          <p className='creator-name'><u>Name of Creator</u></p>
           <p>Completed: Jan 00, 20XX</p>
         </TitleHeader>
         <GameDescription>
@@ -22,7 +24,7 @@ const GameBox = () => {
           <TagIcons>Strategy</TagIcons>
           <TagIcons>Puzzle</TagIcons>
         </GameTagIcons>
-      </GameContent>
+      </div>
     </GameCard>
   )
 }
@@ -34,29 +36,36 @@ const GameCard = styled.div`
 
   border: 1px solid #000000;
   border-radius: 10px;
+  
+  font-size: 14px;
 
-  width: 75rem;
-`;
+  .table-border {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 
-const GameContent = styled.div`
-  padding: 0.5rem;
+  .game-image {
+    margin-right: 1rem;
+    border-radius: 10px;
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
+    max-width: 7rem;
+    max-height: 7rem;
+  }
+`
+
 
 const TitleHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  border: 1px solid black;
+  margin: 0 1rem;
 `;
 
 
 const GameDescription = styled.div`
-  border: 1px solid black;
 
   max-width: 400px;
   overflow-wrap: break-word;
@@ -66,21 +75,24 @@ const GameDescription = styled.div`
 
   display: flex;
   flex-wrap: wrap;
+
+  margin: 0 0.5rem;
 `
 
 const GameTagIcons = styled.div`
-  border: 1px solid black;
 
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 
+
 `;
 
 const TagIcons = styled.button`
+  font-size: 10px;
 
   height: 2rem;
   border-radius: 21px;
-  padding: 0 1.5rem;
-  margin: 0.1rem 0.25rem;
+  padding: 0 0.2rem;
+  margin: 0.1rem 0.1rem;
 `

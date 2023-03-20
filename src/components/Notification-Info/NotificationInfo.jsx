@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import styled from 'styled-components'
+import GameBox from '../Game-Box/GameBox'
 
 const NotificationInfo = () => {
 
@@ -47,7 +48,7 @@ const NotificationInfo = () => {
                     </InputRow>
                 </div>
             </InfoTable>
-
+            <GameBox></GameBox>
         </>
     )
 }
