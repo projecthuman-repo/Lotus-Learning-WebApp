@@ -6,13 +6,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //import LearnersSignUp from "./Pages/Learners-Sign-Up/Learners-Sign-Up.js"
 import GameBox from "./components/Game-Box/GameBox";
 import LearnersInfo from "./components/Profile-Learners-Info/LearnersInfo";
+import LearnersAccount from "./Pages/Learners-Account/LearnersAccount";
 // import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
 
 
 function App() {
   return (
     <>
-      <LearnersInfo />
+      <LearnersAccount></LearnersAccount>
     </>
   );
 }
