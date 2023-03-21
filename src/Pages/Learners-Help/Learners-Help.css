@@ -1,0 +1,13 @@
+.alternate-search-row{
+    display: block;
+    width: 30%;  
+}
+
+.alternate-search-row p{
+    margin-left: 20%;
+}
+
+.question-list{
+    width: 70%;
+}
+

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Button, Dropdown } from 'react-bootstrap';
 import InfoTable from '../../components/Info-Table/InfoTable';
-
+import "./Learners-Help.css"
 const LearnersHelp = () => {
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -41,7 +41,15 @@ const LearnersHelp = () => {
                                 <InfoTable></InfoTable>
                             </SplitCol>
                             <div className="alternate-search-row">
-                                <SplitCol className='alternate-search-col'>Can't Find An Answer?</SplitCol>
+                                {/* <SplitCol className='alternate-search-col'>Can't Find An Answer?</SplitCol> */}
+                                    <p>Can't Find An Answer?</p>
+                                    <p>Contact Us</p>
+                                    <p>email@projecthumancity.com</p>
+
+                                    <p>Operations</p>
+                                    <p>email@projecthumancity.com</p>
+                                    <p>###-###-####</p>
+
                             </div>
                         </SplitRow>
                     </SplitCol>
