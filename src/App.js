@@ -7,13 +7,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import GameBox from "./components/Game-Box/GameBox";
 import LearnersInfo from "./components/Profile-Learners-Info/LearnersInfo";
 import LearnersAccount from "./Pages/Learners-Account/LearnersAccount";
+import LearnersHelp from "./Pages/Learners-Help/LearnersHelp";
 // import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
 
 
 function App() {
   return (
     <>
-      <LearnersAccount></LearnersAccount>
+      <LearnersHelp></LearnersHelp>
     </>
   );
 }
