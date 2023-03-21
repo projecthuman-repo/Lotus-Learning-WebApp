@@ -22,6 +22,7 @@ export default PasswordInfo;
 
 const HeadingTitle = styled.h2`
     font-weight: 700;
+    text-align:left;
 
 
 `
