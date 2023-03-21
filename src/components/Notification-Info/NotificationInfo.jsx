@@ -58,6 +58,7 @@ export default NotificationInfo
 
 const HeadingTitle = styled.h2`
     font-weight: 700;
+    text-align:left;
 
 
 `

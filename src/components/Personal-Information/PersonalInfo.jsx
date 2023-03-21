@@ -42,6 +42,7 @@ export default PersonalInfo
 
 const HeadingTitle = styled.h2`
     font-weight: 700;
+    text-align:left;
 
 
 `
@@ -53,6 +54,7 @@ const InfoTable = styled.div`
     margin: 2rem 0;
 
     width: 100%;
+    height:100%;
 
     display: flex;
     flex-direction: column;

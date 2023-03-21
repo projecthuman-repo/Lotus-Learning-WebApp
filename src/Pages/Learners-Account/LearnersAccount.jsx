@@ -9,12 +9,15 @@ import LearnersInfo from '../../components/Profile-Learners-Info/LearnersInfo'
 import SideNav from '../../components/Side-Nav-bar/Side-Nav'
 import LearnersProfile from '../Learners-Profile/Learners-Profile'
 
-const LearnersAccount = () => {
-    return (
-        <SplitRow>
-            <SideNav></SideNav>
-            <SplitCol>
-                <LearnersInfo></LearnersInfo>
+import LearnersProfileTemplate from "../Learners-Profile-Template/Learners-Profile-Template.js"
+import './LearnersAccount.css'
+
+function LearnersAccount(){
+        return(
+            <div className='profileInfo'>
+                <div className="LearnerInfoContainer">
+                    <LearnersInfo></LearnersInfo>
+                </div>
                 <hr />
                 <div className="personal-content">
                     <PersonalInfo></PersonalInfo>
@@ -25,13 +28,19 @@ const LearnersAccount = () => {
                     <hr />
                     <NotificationInfo></NotificationInfo>
                 </div>
-            </SplitCol>
-        </SplitRow>
+            </div>
+        );
+}
+
+
+function LearnersAccountPage() {
+    return (
+        <LearnersProfileTemplate childComponent={LearnersAccount}/>
 
     )
 }
 
-export default LearnersAccount
+export default LearnersAccountPage
 
 
 const SplitRow = styled.div`
