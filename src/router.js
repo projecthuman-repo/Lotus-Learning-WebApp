@@ -13,6 +13,7 @@ import LearnersAccountPage from "./Pages/Learners-Account/LearnersAccount";
 import CourseSpecific from "./Pages/Course-Specific/CourseSpecific";
 import LearnersSignUp from "./Pages/Learners-Sign-Up/Learners-Sign-Up";
 
+
 export default function Router() {
   return (
     <BrowserRouter>
@@ -31,6 +32,7 @@ export default function Router() {
         />
         <Route path="/Security" element={<PrivacySecurity />} />
         <Route path="/CourseSpecific" element={<CourseSpecific />} />
+
 
       </Routes>
     </BrowserRouter>
