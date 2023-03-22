@@ -16,7 +16,7 @@ function CourseProgressPage(){
 }
 
 
-export default function CourseProgessPage(){
+export default function CourseProgessPage2(){
     return(
         <LearnersProfileTemplate childComponent={CourseProgressPage}/>
     );
