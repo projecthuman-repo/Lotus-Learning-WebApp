@@ -6,8 +6,10 @@ import PersonalProfile from "./components/Personal-Profile-Components/PersonalPr
 import SearchBar from "./components/SearchBar-Components/SearchBar";
 import CourseProgessPage from "./Pages/Learners-CourseProgress/CourseProgressPage.js";
 
-
 import LearnersProfileNotifications from "./Pages/Learners-Profile-Notifications/LearnersProfileNotifications";
+import PrivacySecurity from "./Pages/Learners-Privacy_Security/PrivacySecurity";
+import LearnersAccountPage from "./Pages/Learners-Account/LearnersAccount";
+import CourseSpecific from "./Pages/Course-Specific/CourseSpecific";
 
 export default function Router() {
   return (
@@ -16,10 +18,16 @@ export default function Router() {
         <Route path="/" element={<App />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/coursecatalogue" element={<LearnersProfile />} />
-        <Route path="/personalprofile" element={<PersonalProfile />} />
+        <Route path="/personalprofile" element={<LearnersAccountPage />} />
         <Route path="/searchbar" element={<SearchBar />} />
-        <Route path="/LearnersNotifications" element={<LearnersProfileNotifications />}/>
-        <Route path="/CourseProgress" element={<CourseProgessPage />}/>
+        <Route
+          path="/LearnersNotifications"
+          element={<LearnersProfileNotifications />}
+        />
+        <Route path="/CourseProgress" element={<CourseProgessPage />} />
+        <Route path="/Security" element={<PrivacySecurity />} />
+        <Route path="/CourseSpecific" element={<CourseSpecific />} />
+
       </Routes>
     </BrowserRouter>
   );

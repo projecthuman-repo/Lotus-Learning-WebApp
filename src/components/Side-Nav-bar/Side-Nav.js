@@ -10,6 +10,7 @@ export default function SideNav() {
           <h4>Dashboard</h4>
         </Container>
         <Container id="SideNavLinks" fluid>
+          
           <Button variant="secondary" size="sm">
             <span>
               <svg
@@ -25,7 +26,7 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            Profile
+            <a href="">Profile</a>
           </Button>
           <Button className="activeLink" variant="secondary" size="sm">
             <span>

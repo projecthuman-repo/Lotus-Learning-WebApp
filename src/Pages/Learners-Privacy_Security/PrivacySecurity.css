@@ -1,0 +1,19 @@
+.profileInfo{
+    /* background-color: red; */
+    width:100%;
+    height: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding: 20px 30px;
+}
+
+
+.personal-content{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.LearnerInfoContainer{
+    height: 50%;
+}
+
