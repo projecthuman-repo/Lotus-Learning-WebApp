@@ -1,64 +1,40 @@
+.container{
+    position: relative;
+    margin:0;
+    margin-right:0;
+    padding:0;
+    width:18.5vw;
+    width:30.5vw;
+    height:48.5vh;
+    height:80vh;
+}
+
 /* GLOBAL Styling */
 .Book-Marked-Courses1 {
     box-sizing: border-box;
 
-    position: absolute;
-    width: 285px;
-    height: 350px;
-    left: 446px;
-    top: 892px;
+    position: relative;
+    width: 100%;
+    height: 100%;
     
+    margin:0;
 
     background: #FFFFFF;
     border: 2px solid #757575;
     border-radius: 20px;
 
-    margin: 0px;
     padding: 0px;
-    
-    padding-bottom: 34;
 }
 
-.Book-Marked-Courses2 {
-    box-sizing: border-box;
-
-    position: absolute;
-    width: 285px;
-    height: 350px;
-    left: 744px;
-    top: 894px;
-    
-    background: #FFFFFF;
-    border: 2px solid #757575;
-    border-radius: 20px;
-}
-
-.Book-Marked-Courses3{
-    box-sizing: border-box;
-
-position: absolute;
-width: 285px;
-height: 350px;
-left: 1041px;
-top: 894px;
-
-margin-right: 114px;
-
-background: #FFFFFF;
-border: 2px solid #757575;
-border-radius: 20px;
-}
 
 /* Image Container */
 .image-container svg {
-    position: absolute;
-width: 281px;
-height: 201px;
+    position: relative;
+    width: 100%;
+    height: 100%;
 
-
-
-margin: 0px;
-padding: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 
@@ -66,16 +42,14 @@ padding: 0px;
 /* Title Styling */
 .title-container a h1 {
     position: absolute;
-width: 182px;
-height: 30px;
-left: 22px;
-top: 217px;
+    left: 8%;
+    top: 62%;
 
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 20px;
-line-height: 30px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.3vw;
+    line-height: 2vw;
 /* identical to box height */
 
 
@@ -91,16 +65,13 @@ color: #000000;
 /* Author Styling */
 .author-container a h2 {
     position: absolute;
-    width: 80px;
-    height: 18px;
-    left: 22px;
-    top: 247px;
+    left:8%;
+    top: 72%;
     
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
+    font-size: .8vw;
     /* identical to box height */
     
     text-decoration-line: underline;
@@ -108,7 +79,7 @@ color: #000000;
     color: #000000;
 
     margin: 0px;
-padding: 0px;
+    padding: 0px;
 }
 
 .author-container a h2:hover {
@@ -118,39 +89,37 @@ padding: 0px;
 /* Description Styling */
 .description-container p {
     
-position: absolute;
-width: 230px;
-height: 18px;
-left: 22px;
-top: 271px;
+    position: absolute;
+    width: 230px;
+    height: 18px;
+    top: 271px;
+    left:8%;
+    top: 78%;
 
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 18px;
-/* identical to box height */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: .78vw;
+    /* identical to box height */
 
 
-color: #757575;
+    color: #757575;
 
-margin: 0px;
-padding: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 /* Age Styling */
 .age-container .age-button {
     position: absolute;
-    width: 58px;
-    height: 21px;
-    left: 22px;
-    top: 309px;
+    width: 21%;
+    height: 6%;
+    top: 89%;
+    left: 8%;
     
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
-    font-size: 10px;
-    line-height: 15px;
 
     margin: 0px;
     padding: 0px;
@@ -161,49 +130,49 @@ padding: 0px;
     border-radius: 21px;
 }
 
-.age-container .age-button p {
+.age-button p {
   
-position: absolute;
-width: 20px;
-height: 15px;
-left: 16px;
-top: 3px;
+    position: relative;
 
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 10px;
-line-height: 15px;
-/* identical to box height */
+    top:20%;
+    left: -9%;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: .65vw;
+    line-height: 15px;
+    /* identical to box height */
 
 
-color: #000000;
+    color: #000000;
 }
 
-.age-container .age-button .age-x-button {
+.x-button {
     
-position: absolute;
-width: 12px;
-height: 12px;
-right: 4px;
-top: 5px;
+    position: absolute;
+    aspect-ratio: 1/1;
+    width: 4%;
+    right: 6%;
+    top: 25%;
+    margin-left:20%;
 
-display: flex;
-align-items: center;
-justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-border-radius: 50%;
-background: #FFFFFF;
+    border-radius: 50%;
+    background: #FFFFFF;
 
-border: #FFFFFF;
+    border: #FFFFFF;
 
-font-family: 'Montserrat';
-font-style: normal;
-font-weight: 500;
-font-size: 8px;
-line-height: 10px;
-text-align: center;
-  }
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: .5vw;
+    line-height: .625vw;
+    text-align: center;
+}
 
 .age-container .age-button:hover {
     background-color: darkgrey;
@@ -217,10 +186,11 @@ text-align: center;
 /* Subject Styling */
 .subject-container .subject-button {
     position: absolute;
-    width: 74px;
-    height: 21px;
-    left: 90px;
-    top: 309px;
+    left: 32%;
+
+    width: 26%;
+    height: 6%;
+    top: 89%;
 
     font-family: 'Poppins';
     font-style: normal;
@@ -238,233 +208,31 @@ text-align: center;
 
 }
 
-.subject-container .subject-button p {
-    position: absolute;
-    width: 38px;
-    height: 15px;
-    left: 14px;
-    top: 3px;
-    
+.subject-button p {
+    position: relative;
+
+    top:20%;
+    left: -9%;
+
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
-    font-size: 10px;
+    font-size: .65vw;
     line-height: 15px;
     /* identical to box height */
-    
-    
+
+
     color: #000000;
 
 }
-.subject-container .subject-button .subject-x-button {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    right: 4px;
-    top: 5px;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    border-radius: 50%;
-    background: #FFFFFF;
-    
-    border: #FFFFFF;
-    
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 8px;
-    line-height: 10px;
-    text-align: center;
-  }
+
 
   .subject-container .subject-button:hover {
     background-color: darkgrey;
 }
 
-.subject-container .subject-button .subject-x-button:hover {
+.x-button:hover {
     background-color: #000000;
     color:#FFFFFF;
 }
 
-/** Responsive **/
-@media only screen and (max-width: 1024px) {
-    .Book-Marked-Courses1,
-    .Book-Marked-Courses2,
-    .Book-Marked-Courses3 {
-        width: 250px;
-        height: 300px;
-        
-    }
-
-    .Book-Marked-Courses2 {
-        left: 710px; 
-     }
-
-    .Book-Marked-Courses3 {
-       left: 180px; 
-    }
-
-    .image-container svg {
-        width: 246px;
-        height: 178px;
-
-        padding: 0px;
-    }
-
-    .title-container a h1 {
-        width: 160px;
-        height: 20px; 
-        font-size: 18px;
-        left: 16px;
-        top: 185px;
-    }
-
-    .author-container a h2 {
-        width: 80px; 
-        height: 16px; 
-        left: 16px; 
-        top: 215px;
-    }
-
-    .description-container p {
-        height: 15px;
-        width: 210px;
-        left: 16px;
-        top: 240px;
-
-        font-size: 11px;
-    }
-
-    .age-container .age-button {
-        left: 16px; 
-        top: 265px;
-    }
-
-    .subject-container .subject-button {
-        left: 90px;
-        top: 265px;
-    }
-
-}
-
-@media only screen and (max-width: 425px){
-    .Book-Marked-Courses1,
-    .Book-Marked-Courses2,
-    .Book-Marked-Courses3 {
-        display: flex; /* Enable flexbox layout for the container */
-        flex-direction: column; /* Set the flex direction to column to stack child elements vertically */
-        justify-content: center; /* Center child elements vertically */
-        align-items: center; /* Center child elements horizontally */
-        width: 350px;
-        height: 500px;
-    }
-
-    .Book-Marked-Courses1{
-        
-      top: 200px;
-      left: 25px;
-    }
-
-    .Book-Marked-Courses2 {
-        top: 750px;
-        left: 25px;
-    }
-
-    .Book-Marked-Courses3 {
-        top: 1300px;
-        left: 25px;
-    }
-
-    .image-container svg {
-        
-        width: 347px;
-        height: 250px;
-
-        top: 0px;
-        left: 0px;
-    }
-
-    .title-container a h1 {
-        width: 300px;
-        height: 40px; 
-        font-size: 30px;
-        left: 22px;
-        top: 270px;
-    }
-
-    .author-container a h2 {
-        width: 300px; 
-        height: 40px; 
-        left: 22px; 
-        top: 320px;
-
-        font-size: 25px;
-    }
-
-    .description-container p {
-        height: 40px;
-        width: 300px;
-        left: 22px;
-        top: 360px;
-
-        font-size: 20px;
-    }
-
-    .age-container .age-button {
-        left: 22px; 
-        top: 425px;
-
-        width: 125px;
-        height: 35px;
-
-        
-    }
-
-    .age-container .age-button p {
-        font-size: 20px;
-        justify-content: center;
-
-        top: 10px;
-        left: 30px;
-    }
-
-    .age-container .age-button .age-x-button {
-        width: 24px;
-        height: 24px;
-
-        right: 10px;
-        top: 6px;
-
-        font-size: 22px;
-    }
-
-    .subject-container .subject-button {
-        left: 165px;
-        top: 425px;
-
-        width: 130px;
-        height: 35px;
-    }
-
-    .subject-container .subject-button p {
-        font-size: 20px;
-        justify-content: center;
-
-        top: 10px;
-        left: 14px;
-    }
-
-    .subject-container .subject-button .subject-x-button {
-        width: 24px;
-        height: 24px;
-
-        right: 8px;
-        top: 6px;
-
-        font-size: 22px;
-    }
-
-}
