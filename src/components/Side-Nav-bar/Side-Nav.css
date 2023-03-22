@@ -20,6 +20,7 @@ h4 {
 
 #SideNavLinks > *,
 #SignOut {
+  text-decoration: none;
   margin: 6px 0;
   text-align: left !important;
   background-color: white;
