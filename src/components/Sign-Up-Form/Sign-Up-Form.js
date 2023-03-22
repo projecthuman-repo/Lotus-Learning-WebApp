@@ -4,7 +4,7 @@ import "./Sign-Up-Form.css"
 
 const LearnersSignUpForm = () => {
     return (
-        <form className="learner-form">
+        <form className="learner-form" action="/personalprofile">
             <div className="basic-info">
                 <label>Full Name*</label>
                 <input type="text" required />
@@ -28,7 +28,7 @@ const LearnersSignUpForm = () => {
                     <option value="toronto">University of Toronto</option>
                 </select>
             </div>
-            <button>Create Account</button>
+            <button type="submit">Create Account</button>
         </form>
     );
 }

@@ -10,6 +10,7 @@ import LearnersProfileNotifications from "./Pages/Learners-Profile-Notifications
 import PrivacySecurity from "./Pages/Learners-Privacy_Security/PrivacySecurity";
 import LearnersAccountPage from "./Pages/Learners-Account/LearnersAccount";
 import CourseSpecific from "./Pages/Course-Specific/CourseSpecific";
+import LearnersSignUp from "./Pages/Learners-Sign-Up/Learners-Sign-Up";
 
 export default function Router() {
   return (
@@ -17,8 +18,9 @@ export default function Router() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/coursecatalogue" element={<LearnersProfile />} />
+        <Route path="/LearnersSignUp" element={<LearnersSignUp />} />
         <Route path="/personalprofile" element={<LearnersAccountPage />} />
+        <Route path="/coursecatalogue" element={<LearnersProfile />} />
         <Route path="/searchbar" element={<SearchBar />} />
         <Route
           path="/LearnersNotifications"
