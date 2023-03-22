@@ -1,0 +1,18 @@
+.alternate-search-row{
+    display: block;
+    width: 30%;  
+}
+
+.alternate-search-row p{
+    margin-left: 20%;
+}
+
+.question-list{
+    width: 70%;
+}
+
+.sideNav {
+    width: 20% !important;
+    height:max-content !important;
+
+}

@@ -25,7 +25,7 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            Profile
+            <a href="/CourseProgressPage2">Profile</a>
           </Button>
           <Button className="activeLink" variant="secondary" size="sm">
             <span>
@@ -44,13 +44,15 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            My Courses
+            <a href="/CourseProgress">My Courses</a>
           </Button>
           <Button variant="secondary" size="sm">
-            <span></span> Games
+            <span></span>
+            <a href="">Games</a>
           </Button>
           <Button variant="secondary" size="sm">
-            <span></span> Library
+            <span></span>
+            <a href="">Library</a>
           </Button>
           <Button variant="secondary" size="sm">
             <span>
@@ -69,7 +71,7 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            Notifications
+            <a href="/LearnersNotifications">Notifications</a>
           </Button>
           <Button variant="secondary" size="sm">
             <span>
@@ -86,7 +88,7 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            Account
+            <a href="/personalprofile">Account</a>
           </Button>
           <Button variant="secondary" size="sm">
             <span>
@@ -105,7 +107,7 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            Privacy & Security
+            <a href="/Security">Privacy & Security</a>
           </Button>
           <Button variant="secondary" size="sm">
             <span>
@@ -122,7 +124,7 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            Help
+            <a href="/LearnersHelp">Help</a>
           </Button>
         </Container>
         <Container fluid>
@@ -141,7 +143,7 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            Sign Out
+            <a href="/signup">Sign Out</a>
           </Button>
         </Container>
       </Container>

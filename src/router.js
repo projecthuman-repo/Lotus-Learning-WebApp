@@ -12,7 +12,7 @@ import PrivacySecurity from "./Pages/Learners-Privacy_Security/PrivacySecurity";
 import LearnersAccountPage from "./Pages/Learners-Account/LearnersAccount";
 import CourseSpecific from "./Pages/Course-Specific/CourseSpecific";
 import LearnersSignUp from "./Pages/Learners-Sign-Up/Learners-Sign-Up";
-import LearnersGamesPage from "./Pages/Learners-Games/LearnersGamesPage";
+
 
 export default function Router() {
   return (
@@ -32,7 +32,7 @@ export default function Router() {
         />
         <Route path="/Security" element={<PrivacySecurity />} />
         <Route path="/CourseSpecific" element={<CourseSpecific />} />
-        <Route path="/LearnersGamesPage" element={<LearnersGamesPage />} />
+
 
       </Routes>
     </BrowserRouter>
