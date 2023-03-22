@@ -1,0 +1,30 @@
+html{
+    height: 100%;
+    width:100%;
+}
+
+.thePage{
+    height: 100%;
+    width: 100%;
+}
+
+.pattyDiv{
+    display: inline-block;
+    display: flex;
+    height: 84%;
+    width: 100%;
+
+    text-align: center;
+}
+
+.sideNav{
+    width:15%;
+    height: 100%;
+}
+
+
+.footer{
+    height: 8%;
+    width: 100%;
+    background-color: #D9D9D9;
+}

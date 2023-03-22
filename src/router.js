@@ -5,7 +5,7 @@ import SignUpPage from "./Pages/Sign-Up-Page/SignUpPage";
 import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
 import SearchBar from "./components/SearchBar-Components/SearchBar";
 
-import BookMarkedCourses from "./components/Book-Marked-Courses/BookMarkedCourses";
+import ProfileMyCourses from "./Pages/Learners-MyCourses/ProfileMyCourses";
 
 export default function Router() {
   return (
@@ -17,7 +17,7 @@ export default function Router() {
         <Route path="/personalprofile" element={<PersonalProfile />} />
         <Route path="/searchbar" element={<SearchBar />} />
 
-        <Route path="/bookmarkedcourses" element={<BookMarkedCourses />} />
+        <Route path="/bookmarkedcourses" element={<ProfileMyCourses />} />
       </Routes>
     </BrowserRouter>
   );
