@@ -12,7 +12,7 @@ import LearnersAccount from "./Pages/Learners-Account/LearnersAccount";
 import SignUpPage from "./Pages/Sign-Up-Page/SignUpPage";
 // import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
 
-
+import LearnersGamesPage from "./Pages/Learners-Games/LearnersGamesPage.js";
 
 
 function App() {
