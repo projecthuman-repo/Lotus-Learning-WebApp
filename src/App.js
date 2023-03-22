@@ -9,14 +9,12 @@ import LearnersInfo from "./components/Profile-Learners-Info/LearnersInfo";
 import LearnersAccount from "./Pages/Learners-Account/LearnersAccount";
 // import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
 
-
+import LearnersGamesPage from "./Pages/Learners-Games/LearnersGamesPage.js";
 
 
 function App() {
   return (
-    <>
-      <LearnersAccount></LearnersAccount>
-    </>
+    <LearnersGamesPage/>
   );
 }
 
