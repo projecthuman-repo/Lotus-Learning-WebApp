@@ -16,7 +16,7 @@ import LearnersGamesPage from "./Pages/Learners-Games/LearnersGamesPage.js";
 function App() {
   return (
     <>
-      <SignUpPage />
+      <LearnersGamesPage />
     </>
   );
 }
