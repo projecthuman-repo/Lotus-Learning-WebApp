@@ -1,0 +1,220 @@
+/* Body Styling */
+.myContainer {
+    position: relative;
+    width: 100%;
+    overflow: scroll;
+    padding-left: 3%;
+    padding-right: 3%;
+  
+}
+
+/* Course Title Styling */
+.CoursesTitle {
+    position: relative;
+    text-align: left;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    margin-bottom: 2%;
+/* identical to box height */
+
+
+color: #000000;
+}
+
+.CourseInProgressItems{
+    display: flex;
+}
+
+/* In Progress Styling */
+.inProgressContainer{
+    width: 100%;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    text-align: left;
+
+}
+
+
+
+/* In Progress Course Boxes */
+.CourseInProgressContainer {
+    display: block;
+    position: relative;
+    width: 22%;
+    height: 100%;
+    background: #D9D9D9;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: 1%;
+}
+
+.courseName{
+    height: 10%;
+    margin-left: 10%;
+    text-align: left;
+}
+
+.Subject-container{
+    margin-left: 10%;
+}
+
+.courseName h1{
+margin-top: 10%;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 27px;
+/* identical to box height */
+
+
+color: #000000;
+}
+
+.CourseInProgressContainer .courseName a h1:hover{
+   text-shadow: #b11717;
+} 
+
+.CourseInProgressContainer .Subject-container h2 {
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 21px;
+text-align: left;
+/* identical to box height */
+
+border-bottom: #D9D9D9;
+color: #000000;
+}
+
+.CourseInProgressContainer .Subject-container a h2:hover,
+.CourseInProgressContainer2 .Subject-container a h2:hover,
+.CourseInProgressContainer3 .Subject-container a h2:hover {
+    font-weight: bold;
+} 
+
+.Continue-button{
+    align-self:right;
+    position: relative;
+    height: 8%;
+    width: 50%;
+    left:50%;
+    margin-top:17%;
+}
+
+.CourseInProgressContainer .Continue-button button,
+.CourseInProgressContainer2 .Continue-button button,
+.CourseInProgressContainer3 .Continue-button button {
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: .65vw;
+border-style: hidden;
+background-color: transparent;
+}
+
+.CourseInProgressContainer .Continue-button button:hover,
+.CourseInProgressContainer2 .Continue-button button:hover,
+.CourseInProgressContainer3 .Continue-button button:hover {
+    background-color: darkgrey;
+}
+
+.CourseInProgressContainer .Continue-button svg,
+.CourseInProgressContainer2 .Continue-button svg,
+.CourseInProgressContainer3 .Continue-button svg {
+width: 14px;
+height: 8px;
+left: 259px;
+top: 225px;
+
+}
+
+
+/* Load more Button */
+
+.loadButton{
+
+/* background-color: blue; */
+display: block;
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 500;
+font-size: 20px;
+line-height: 30px;
+/* identical to box height */
+
+
+
+background-color: transparent;
+border: none;
+
+}
+
+
+.loadMore{
+    color: #AFAFAF;
+    background-color: transparent;
+    border: none;
+    margin-left: 85%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.BookMarkedCoursesContainer {
+    width: 800px;
+}
+.BookMarkedCoursesContainer h2 {
+
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 36px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+
+color: #000000;
+
+padding-bottom: 12px;
+
+border-bottom: 2px solid #eee; 
+}
+
+
+
+.BookMarkedCoursesContainer {
+    position: relative;
+    width: 100%;
+    height:100%;
+    /* background-color: blue; */
+    
+}
+/* COURSE BOX */
+.BookMarkedCourseComponent {
+    position: relative;
+    width: 22%;
+    height: 60%;
+    margin-right: 2%;
+  
+}
+
+.BookMarkedCourseItems{
+    height: 100%;
+    display: flex;
+}
+
+/* TEMPLATE ADJUSTING */
+
+
+
+
