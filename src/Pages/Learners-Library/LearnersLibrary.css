@@ -1,0 +1,144 @@
+.myContainer {
+    width: 80%;
+    height: 100%;
+}
+
+.subName {
+    display:flexbox;
+    
+    height:50%;
+    width:calc(40%/5);
+    font-size: 1vw;
+    margin-top: .5%;
+    margin-bottom: .5%;
+    margin-right: 2%;
+    margin-left:0%;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    background-color: #d9d9d9;
+}
+
+.subName:hover{
+    background-color: #F3F3F3;
+}
+
+.subName:active{
+    background-color: #757575;
+}
+
+.buttonFrame {
+    display:block;
+    width: 100%;
+    height: 10%;
+    margin-left: 8%;
+ 
+}
+
+.pageTitle h1 {
+    margin-top: 5%;
+    margin-left: 8%;
+    text-align: left;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.875vw;
+    line-height: 2vw;
+}
+
+.courseTitle h2 {
+    margin-top: 5%;
+    margin-left: 8%;
+    text-align: left;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.25vw;
+    line-height: 2vw;
+}
+
+.myContainer hr{
+        display:block;
+        background-color:rgb(100,100,100);
+        
+        width:80%;
+        margin-top: 0px;
+        margin-bottom: 1%;
+
+        /* Same as Title's */
+        
+        margin-left: 8%;
+        padding:0;
+        height:.5%;
+
+}
+
+.BookMarkedCoursesContainer {
+   position: relative;
+   width: 100%;
+   height: 100%;
+   margin-left: 8%;
+   
+   
+}
+.BookMarkedCourseComponent {
+    position: relative;
+    width: (100% / 3);
+    height: 60%;
+    margin-right: 8%;
+    
+    margin-bottom: 3%;
+    z-index: 2;
+}
+
+
+.BookMarkedCourseItems{
+    height: 100%;
+    
+    display: flex;
+   flex-wrap: wrap;
+}
+
+.cover {
+    position: absolute;
+    
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, 0.5); 
+  
+    z-index: 1;
+
+    border-radius: 7%;
+
+    
+}
+
+.cover .circle {
+    justify-content: center;
+    width: 100%;
+    justify-self: center;
+    margin-top: 35%;
+}
+
+.cover h3 {
+    margin-top: 5%;
+    font-size: 1.5rem;
+    margin-bottom: 1%;
+    color: white;
+}
+
+.cover .coverButton  {
+    padding: 0.5rem 1rem;
+    font-size: 0.7rem;
+    background-color: rgba(0,0,0,0.5);
+    border: none;
+    border-radius: 2%;
+    color: white;
+    margin-top: 30%;
+    margin-left: 20%;
+}
+
+.cover .arrow {
+    position: relative;
+    top: -7%;
+    left: 37%;
+}
