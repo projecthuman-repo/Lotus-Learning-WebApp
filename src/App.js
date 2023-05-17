@@ -13,13 +13,19 @@ import SignUpPage from "./Pages/Sign-Up-Page/SignUpPage";
 // import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
 
 import LearnersGamesPage from "./Pages/Learners-Games/LearnersGamesPage.js";
+import LearnersLibrary from "./Pages/Learners-Library/LearnersLibrary.js";
 
+import CourseCompletion from "./Pages/Learners-CourseCompletion/CourseCompletion.js";
 
 function App() {
   return (
     <>
 
+< Learners-Library
+      <LearnersLibrary />
+    
       <LearnersGamesPage/>
+> main
 
     </>
   );
