@@ -21,7 +21,11 @@ function App() {
   return (
     <>
 
+< Learners-Library
       <LearnersLibrary />
+    
+      <LearnersGamesPage/>
+> main
 
     </>
   );
