@@ -16,7 +16,7 @@ export default function Header() {
             <a href="/coursecatalogue">COURSES</a>
           </div>
           <div>
-            <a href="/">GAMES</a>
+            <a href="/LearnersGamesPage">GAMES</a>
           </div>
           <div>
             <a href="/">CONTACT</a>
@@ -51,7 +51,7 @@ export default function Header() {
             </a>
           </div>
           <div>
-            <a href="/">
+            <a href="/CourseProgressPage2">
               <svg
                 width="24"
                 height="24"
@@ -67,7 +67,7 @@ export default function Header() {
             </a>
           </div>
           <div>
-            <a href="/">LOGOUT</a>
+            <a href="/signup">LOGOUT</a>
           </div>
         </div>
       </Container>

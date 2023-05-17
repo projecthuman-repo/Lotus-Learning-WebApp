@@ -19,7 +19,7 @@ function App() {
   return (
     <>
 
-      <SignUpPage />
+      <LearnersGamesPage/>
 
     </>
   );

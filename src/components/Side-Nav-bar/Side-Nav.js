@@ -44,15 +44,16 @@ export default function SideNav() {
                 />
               </svg>
             </span>{" "}
-            <a href="/CourseProgress">My Courses</a>
+            <a href="/ProfileMyCourses">My Courses</a>
           </Button>
           <Button variant="secondary" size="sm">
             <span></span>
-            <a href="">Games</a>
+
+            <a href="/LearnersGamesPage">Games</a>
           </Button>
           <Button variant="secondary" size="sm">
             <span></span>
-            <a href="">Library</a>
+            <a href="/CourseBox">Library</a>
           </Button>
           <Button variant="secondary" size="sm">
             <span>
