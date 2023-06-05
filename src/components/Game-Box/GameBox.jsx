@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-
+import './GameBox.css'
 import tempImage from './Temp-Image.jpg'
 
 const GameBox = () => {
@@ -8,7 +8,7 @@ const GameBox = () => {
   const title = 'Title of Game'
 
   return (
-    <GameCard>
+    <><><><GameCard>
       <div className='table-border'>
         <img className='game-image' src={tempImage} alt={title} />
         <TitleHeader>
@@ -25,7 +25,58 @@ const GameBox = () => {
           <TagIcons>Puzzle</TagIcons>
         </GameTagIcons>
       </div>
-    </GameCard>
+    </GameCard><GameCard>
+        <div className='table-border'>
+          <img className='game-image' src={tempImage} alt={title} />
+          <TitleHeader>
+            <h5>Title of Game</h5>
+            <p className='creator-name'><u>Name of Creator</u></p>
+            <p>Completed: Jan 00, 20XX</p>
+          </TitleHeader>
+          <GameDescription>
+            smelly donkey jumps over the fatigued cat and then meets the dirty fox who cleverly distinguishes
+          </GameDescription>
+          <GameTagIcons>
+            <TagIcons>Math</TagIcons>
+            <TagIcons>Strategy</TagIcons>
+            <TagIcons>Puzzle</TagIcons>
+          </GameTagIcons>
+        </div>
+      </GameCard></><GameCard>
+        <div className='table-border'>
+          <img className='game-image' src={tempImage} alt={title} />
+          <TitleHeader>
+            <h5>Title of Game</h5>
+            <p className='creator-name'><u>Name of Creator</u></p>
+            <p>Completed: Jan 00, 20XX</p>
+          </TitleHeader>
+          <GameDescription>
+            smelly donkey jumps over the fatigued cat and then meets the dirty fox who cleverly distinguishes
+          </GameDescription>
+          <GameTagIcons>
+            <TagIcons>Math</TagIcons>
+            <TagIcons>Strategy</TagIcons>
+            <TagIcons>Puzzle</TagIcons>
+          </GameTagIcons>
+        </div>
+      </GameCard></><GameCard>
+        <div className='table-border'>
+          <img className='game-image' src={tempImage} alt={title} />
+          <TitleHeader>
+            <h5>Title of Game</h5>
+            <p className='creator-name'><u>Name of Creator</u></p>
+            <p>Completed: Jan 00, 20XX</p>
+          </TitleHeader>
+          <GameDescription>
+            smelly donkey jumps over the fatigued cat and then meets the dirty fox who cleverly distinguishes
+          </GameDescription>
+          <GameTagIcons>
+            <TagIcons>Math</TagIcons>
+            <TagIcons>Strategy</TagIcons>
+            <TagIcons>Puzzle</TagIcons>
+          </GameTagIcons>
+        </div>
+      </GameCard></>
   )
 }
 

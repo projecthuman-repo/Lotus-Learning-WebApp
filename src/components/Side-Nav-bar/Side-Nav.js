@@ -53,7 +53,7 @@ export default function SideNav() {
           </Button>
           <Button variant="secondary" size="sm">
             <span></span>
-            <a href="/CourseBox">Library</a>
+            <a href="/LearnersLibrary">Library</a>
           </Button>
           <Button variant="secondary" size="sm">
             <span>

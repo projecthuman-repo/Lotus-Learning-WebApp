@@ -16,7 +16,7 @@ export default function Header() {
             <a href="/coursecatalogue">COURSES</a>
           </div>
           <div>
-            <a href="/LearnersGamesPage">GAMES</a>
+            <a href="/GameBox">GAMES</a>
           </div>
           <div>
             <a href="/">CONTACT</a>

@@ -20,12 +20,7 @@ import CourseCompletion from "./Pages/Learners-CourseCompletion/CourseCompletion
 function App() {
   return (
     <>
-
-< Learners-Library
-      <LearnersLibrary />
-    
       <LearnersGamesPage/>
-> main
 
     </>
   );

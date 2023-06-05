@@ -5,6 +5,7 @@ import SignUpPage from "./Pages/Sign-Up-Page/SignUpPage";
 import CourseProgressPage2 from "./Pages/Learners-CourseProgress/CourseProgressPage";
 // import SearchBar from "./components/SearchBar-Components/SearchBar";
 // import CourseProgessPage from "./Pages/Learners-CourseProgress/CourseProgressPage.js";
+import LearnersLibrary from "./Pages/Learners-Library/LearnersLibrary";
 import LearnersGamesPage from "./Pages/Learners-Games/LearnersGamesPage";
 import LearnersHelp from "./Pages/Learners-Help/LearnersHelp";
 import ProfileMyCourses from "./Pages/Learners-MyCourses/ProfileMyCourses";
@@ -13,8 +14,7 @@ import PrivacySecurity from "./Pages/Learners-Privacy_Security/PrivacySecurity";
 import LearnersAccountPage from "./Pages/Learners-Account/LearnersAccount";
 import CourseSpecific from "./Pages/Course-Specific/CourseSpecific";
 import LearnersSignUp from "./Pages/Learners-Sign-Up/Learners-Sign-Up";
-
-
+import GameBox from "./components/Game-Box/GameBox";
 export default function Router() {
   return (
     <BrowserRouter>
@@ -26,9 +26,11 @@ export default function Router() {
         <Route path="/LearnersGamesPage" element={<LearnersGamesPage />} />
         <Route path="/ProfileMyCourses" element={<ProfileMyCourses />} />
         {/* <Route path="/CourseProgress" element={<CourseProgessPage />} /> */}
+        <Route path="/LearnersLibrary" element={<LearnersLibrary />} />
         <Route path="/LearnersHelp" element={<LearnersHelp />} />
         <Route path="/coursecatalogue" element={<LearnersProfile />} />
         <Route path="/CourseProgressPage2" element={<CourseProgressPage2 />} />
+        <Route path="/GameBox" element={<GameBox />} />
         <Route
           path="/LearnersNotifications"
           element={<LearnersProfileNotifications />}
