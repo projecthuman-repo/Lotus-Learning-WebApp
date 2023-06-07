@@ -1,4 +1,5 @@
-body, #root {
+body,
+#root {
   margin: 0;
   font-family: Poppins;
   -webkit-font-smoothing: antialiased;
@@ -7,6 +8,105 @@ body, #root {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+p {
+  margin-bottom: 0px !important;
+}
+
+/* font size utility classes */
+.fs-10 {
+  font-size: 10px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-22 {
+  font-size: 22px;
+}
+
+.fs-24 {
+  font-size: 24px;
+}
+
+/* font weight utility classes */
+.fw-100 {
+  font-weight: 100;
+}
+
+.fw-200 {
+  font-weight: 200;
+}
+
+.fw-300 {
+  font-weight: 300;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+/* colour utility classes */
+.c-gray {
+  color: #707070;
+}
+
+/* background colour utility classes */
+.bgc-lightGray {
+  background-color: #d9d9d9;
+}
+
+/* border colour utility classes */
+.bor-lightGray {
+  border-color: #c4c4c4;
+}
+
+.bor-darkGray {
+  border-color: #757575;
+}
+
+/* border radius utility classes */
+.borRad-10 {
+  border-radius: 10px !important;
+}
+
+.borRad-15 {
+  border-radius: 15px !important;
+}
+
+.borRad-20 {
+  border-radius: 20px !important;
+}
+
+/* hover utility classes */
+.pointer:hover {
+  cursor: pointer;
 }
