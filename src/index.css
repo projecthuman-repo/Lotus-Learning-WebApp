@@ -26,7 +26,7 @@ p {
 }
 
 .fs-14 {
-  font-size: 14px;
+  font-size: 14px !important;
 }
 
 .fs-16 {
@@ -75,6 +75,10 @@ p {
 }
 
 /* colour utility classes */
+.c-black {
+  color: black !important;
+}
+
 .c-gray {
   color: #707070;
 }
@@ -109,4 +113,10 @@ p {
 /* hover utility classes */
 .pointer:hover {
   cursor: pointer;
+}
+
+/* button utility classes */
+.btn-gray-shadow {
+  background-color: #d9d9d9 !important;
+  box-shadow: 0px 5px 5px #757575;
 }
