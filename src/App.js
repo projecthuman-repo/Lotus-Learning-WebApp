@@ -26,11 +26,13 @@ import LearnersProfile from './Pages/Learners-Profile/Learners-Profile';
 import ProfileMyCourses from './Pages/Learners-Library/LearnersLibrary.js';
 import PrivacySecurity from './Pages/Learners-Privacy_Security/PrivacySecurity';
 import Games from './Pages/Learners/Games/Games';
+import Navbar from './components/Navbar/Navbar';
+import Profile from './Pages/Learners/Profile/Profile';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <Navbar />
       <Routes>
         <Route path='/' element={<LearnersProfile />} />
         <Route path='/signup' element={<SignUpPage />} />
@@ -42,7 +44,7 @@ function App() {
         <Route path='/LearnersLibrary' element={<LearnersLibrary />} />
         <Route path='/LearnersHelp' element={<LearnersHelp />} />
         <Route path='/coursecatalogue' element={<LearnersProfile />} />
-        <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path='/games' element={<Games />} />
         <Route
           path='/LearnersNotifications'

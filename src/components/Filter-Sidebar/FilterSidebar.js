@@ -33,9 +33,11 @@ const FilterSidebar = ({ filterSidebarProps }) => {
           </div>
         );
       })}
-      <div className='d-flex justify-content-center mt-4'>
+      <div className='d-sm-flex justify-content-center mt-4 text-center'>
         <button className='btn btn-gray-shadow fs-14 mx-auto'>Clear</button>
-        <button className='btn btn-gray-shadow fs-14 mx-auto'>Search</button>
+        <button className='btn btn-gray-shadow fs-14 mx-auto my-3 my-sm-0'>
+          Search
+        </button>
       </div>
     </div>
   );

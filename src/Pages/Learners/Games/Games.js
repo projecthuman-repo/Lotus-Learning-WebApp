@@ -137,7 +137,7 @@ const Games = () => {
           <FilterSidebar filterSidebarProps={filterSidebarProps} />
         </div>
         <div className='col-7 col-md-9 col-xl-10'>
-          <div className='row row-cols-auto justify-content-center'>
+          <div className='row row-cols-auto '>
             {currentPageGames.map((game, index) => {
               return (
                 <div className='col mb-3' key={index + game.title}>
