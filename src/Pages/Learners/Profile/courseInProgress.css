@@ -1,0 +1,13 @@
+.courseInProgress {
+  width: 275px;
+  height: 225px;
+}
+
+.circleProgress {
+  width: 85px;
+  height: 85px;
+}
+
+/* .CircularProgressbar .CircularProgressbar-path {
+  stroke: white;
+} */

@@ -16,6 +16,10 @@ p {
   margin-bottom: 0px !important;
 }
 
+textarea {
+  resize: none !important;
+}
+
 /* font size utility classes */
 .fs-10 {
   font-size: 10px;
@@ -49,6 +53,18 @@ p {
   font-size: 24px;
 }
 
+.fs-26 {
+  font-size: 26px;
+}
+
+.fs-28 {
+  font-size: 28px;
+}
+
+.fs-30 {
+  font-size: 30px;
+}
+
 /* font weight utility classes */
 .fw-100 {
   font-weight: 100;
@@ -74,6 +90,10 @@ p {
   font-weight: 600;
 }
 
+.fw-700 {
+  font-weight: 700;
+}
+
 /* colour utility classes */
 .c-black {
   color: black !important;
@@ -83,9 +103,21 @@ p {
   color: #707070;
 }
 
+.c-blue {
+  color: #2699fb;
+}
+
+.c-darkBlue {
+  color: #4a6884;
+}
+
 /* background colour utility classes */
 .bgc-lightGray {
   background-color: #d9d9d9;
+}
+
+.bgc-lightLightGray {
+  background-color: #f3f3f3;
 }
 
 /* border colour utility classes */

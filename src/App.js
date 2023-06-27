@@ -26,11 +26,14 @@ import LearnersProfile from './Pages/Learners-Profile/Learners-Profile';
 import ProfileMyCourses from './Pages/Learners-Library/LearnersLibrary.js';
 import PrivacySecurity from './Pages/Learners-Privacy_Security/PrivacySecurity';
 import Games from './Pages/Learners/Games/Games';
+import Navbar from './components/Navbar/Navbar';
+import Profile from './Pages/Learners/Profile/Profile';
+
 import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <Navbar />
       <Routes>
         <Route path='/' element={<CourseCatalogue />} />
         <Route path='/signup' element={<SignUpPage />} />
@@ -41,13 +44,15 @@ function App() {
         {/* <Route path="/CourseProgress" element={<CourseProgessPage />} /> */}
         <Route path='/LearnersLibrary' element={<LearnersLibrary />} />
         <Route path='/LearnersHelp' element={<LearnersHelp />} />
-        <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} />
+        {/* <Route path='/coursecatalogue' element={<LearnersProfile />} /> */}
+        <Route path='/profile' element={<Profile />} />
+        {/* <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} /> */}
         <Route path='/games' element={<Games />} />
         <Route path='/course-catalogue' element={<CourseCatalogue />} />
-        <Route
+        {/* <Route
           path='/LearnersNotifications'
           element={<LearnersProfileNotifications />}
-        />
+        /> */}
         <Route path='/Security' element={<PrivacySecurity />} />
         <Route path='/CourseSpecific' element={<CourseSpecific />} />
       </Routes>
