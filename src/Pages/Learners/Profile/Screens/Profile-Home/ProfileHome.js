@@ -2,8 +2,9 @@ import React from 'react';
 import PhotoPlaceholder from '../../../../../Images/photo.png';
 import './profileHome.css';
 import CourseInProgress from '../../CourseInProgress';
+import badgePlaceHolder from '../../../../../Images/exampleBadge.png';
 
-const ProfileHome = ({ course }) => {
+const ProfileHome = ({ courses }) => {
   const daysOfWeek = [
     'Sunday',
     'Monday',
@@ -13,6 +14,8 @@ const ProfileHome = ({ course }) => {
     'Friday',
     'Saturday',
   ];
+
+  const badges = ['Coding HTML', 'Algebra III', 'Algebra I'];
 
   return (
     <>
@@ -38,8 +41,8 @@ const ProfileHome = ({ course }) => {
       </div>
       <hr className='profileHomeHR' />
       <div className='row my-4'>
-        <div className='col-12'>
-          <div className='d-flex'>
+        <div className='col-sm-12'>
+          <div className='d-sm-flex'>
             {daysOfWeek.map((day, index) => {
               return <DayTag day={day} key={index + day} />;
             })}
@@ -50,9 +53,28 @@ const ProfileHome = ({ course }) => {
       <div className='row'>
         <div className='col-12'>
           <p className='fs-22 fw-600'>In Progress</p>
-          <div className='d-flex mt-5'>
-            <CourseInProgress course={course} />
+          <div className='d-sm-flex mt-3'>
+            {courses.map((course, index) => {
+              return <CourseInProgress course={course} />;
+            })}
           </div>
+          <div className='d-flex mt-3'>
+            <p className='c-gray ms-auto'>Load more...</p>
+          </div>
+        </div>
+      </div>
+      <hr className='profileHomeHR' />
+      <div className='row'>
+        <p className='fs-22 fw-600'>Accomplishments</p>
+        <div className='d-flex mt-3'>
+          {badges.map((badge, index) => {
+            return (
+              <div key={index + badge} className='me-5'>
+                <img src={badgePlaceHolder} className='accBadge' alt='badge' />
+                <p className='text-center'>{badge}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </>
@@ -61,8 +83,8 @@ const ProfileHome = ({ course }) => {
 
 const DayTag = ({ day }) => {
   return (
-    <div className='rounded bgc-lightLightGray p-2 px-3 mx-auto pointer'>
-      <p>{day}</p>
+    <div className='rounded bgc-lightLightGray p-2 px-3 mx-auto my-1 pointer'>
+      <p className='text-center'>{day}</p>
     </div>
   );
 };
