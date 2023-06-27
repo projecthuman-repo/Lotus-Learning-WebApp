@@ -30,7 +30,7 @@ const Navbar = () => {
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav text-center mx-auto ms-lg-auto me-lg-5 mb-2 mb-lg-0'>
             <li className='nav-item mx-3'>
-              <Link className='nav-link'>
+              <Link className='nav-link' to={'/course-catalogue'}>
                 <p className='fs-20 c-black'>COURSES </p>
               </Link>
             </li>
