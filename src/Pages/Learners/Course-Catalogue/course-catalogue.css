@@ -1,0 +1,12 @@
+.search-icon {
+    background-color: white;
+  }
+  
+  .search-bar {
+    border-radius: 0.375rem;
+  }
+  
+  .search-input {
+    border-left: 0px !important;
+  }
+  

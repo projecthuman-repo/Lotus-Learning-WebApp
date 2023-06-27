@@ -26,13 +26,13 @@ import LearnersProfile from './Pages/Learners-Profile/Learners-Profile';
 import ProfileMyCourses from './Pages/Learners-Library/LearnersLibrary.js';
 import PrivacySecurity from './Pages/Learners-Privacy_Security/PrivacySecurity';
 import Games from './Pages/Learners/Games/Games';
-
+import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
 function App() {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path='/' element={<LearnersProfile />} />
+        <Route path='/' element={<CourseCatalogue />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/LearnersSignUp' element={<LearnersSignUp />} />
         <Route path='/personalprofile' element={<LearnersAccountPage />} />
@@ -41,9 +41,9 @@ function App() {
         {/* <Route path="/CourseProgress" element={<CourseProgessPage />} /> */}
         <Route path='/LearnersLibrary' element={<LearnersLibrary />} />
         <Route path='/LearnersHelp' element={<LearnersHelp />} />
-        <Route path='/coursecatalogue' element={<LearnersProfile />} />
         <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} />
         <Route path='/games' element={<Games />} />
+        <Route path='/course-catalogue' element={<CourseCatalogue />} />
         <Route
           path='/LearnersNotifications'
           element={<LearnersProfileNotifications />}
