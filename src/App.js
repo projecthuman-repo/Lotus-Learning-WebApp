@@ -29,12 +29,13 @@ import Games from './Pages/Learners/Games/Games';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './Pages/Learners/Profile/Profile';
 
+import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path='/' element={<LearnersProfile />} />
+        <Route path='/' element={<CourseCatalogue />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/LearnersSignUp' element={<LearnersSignUp />} />
         <Route path='/personalprofile' element={<LearnersAccountPage />} />
@@ -45,7 +46,9 @@ function App() {
         <Route path='/LearnersHelp' element={<LearnersHelp />} />
         <Route path='/coursecatalogue' element={<LearnersProfile />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} />
         <Route path='/games' element={<Games />} />
+        <Route path='/course-catalogue' element={<CourseCatalogue />} />
         <Route
           path='/LearnersNotifications'
           element={<LearnersProfileNotifications />}
