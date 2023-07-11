@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './SearchBar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import Header from '../../components/Header-Components/Logged-In/Header-Logged-In';
+import Header from '../../../components/Header-Components/Logged-In/Header-Logged-In';
 
 // Defining a functional component -> SearchBar
 function SearchBar() {

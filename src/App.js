@@ -11,11 +11,11 @@ import LearnersSignUp from './Pages/Learners-Sign-Up/Learners-Sign-Up.js';
 import LearnersAccount from './Pages/Learners-Account/LearnersAccount';
 import SignUpPage from './Pages/Sign-Up-Page/SignUpPage';
 // import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
-import CourseProgressPage2 from './Pages/Learners-CourseProgress/CourseProgressPage';
+import CourseProgressPage2 from './Archived/Pages/Learners-CourseProgress/CourseProgressPage';
 import CourseSpecific from './Pages/Course-Specific/CourseSpecific';
 import LearnersProfileNotifications from './Pages/Learners-Profile-Notifications/LearnersProfileNotifications';
 
-import LearnersGamesPage from './Pages/Learners-Games/LearnersGamesPage.js';
+import LearnersGamesPage from './Archived/Pages/Learners-Games/LearnersGamesPage.js';
 import LearnersLibrary from './Pages/Learners-Library/LearnersLibrary.js';
 
 import CourseCompletion from './Pages/Learners-CourseCompletion/CourseCompletion.js';
