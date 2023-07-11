@@ -11,11 +11,11 @@ import LearnersSignUp from './Pages/Learners-Sign-Up/Learners-Sign-Up.js';
 import LearnersAccount from './Pages/Learners-Account/LearnersAccount';
 import SignUpPage from './Pages/Sign-Up-Page/SignUpPage';
 // import PersonalProfile from "./components/Personal-Profile-Components/PersonalProfile";
-import CourseProgressPage2 from './Pages/Learners-CourseProgress/CourseProgressPage';
+import CourseProgressPage2 from './Archived/Pages/Learners-CourseProgress/CourseProgressPage';
 import CourseSpecific from './Pages/Course-Specific/CourseSpecific';
 import LearnersProfileNotifications from './Pages/Learners-Profile-Notifications/LearnersProfileNotifications';
 
-import LearnersGamesPage from './Pages/Learners-Games/LearnersGamesPage.js';
+import LearnersGamesPage from './Archived/Pages/Learners-Games/LearnersGamesPage.js';
 import LearnersLibrary from './Pages/Learners-Library/LearnersLibrary.js';
 
 import CourseCompletion from './Pages/Learners-CourseCompletion/CourseCompletion.js';
@@ -30,7 +30,26 @@ import Navbar from './components/Navbar/Navbar';
 import Profile from './Pages/Learners/Profile/Profile';
 
 import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
+
+//temporary picture for user
+import tempProfilePic from './Images/photo.png';
+
 function App() {
+  const user = {
+    userId: 1,
+    userFullName: 'John Doe',
+    userType: 'Student/Learner',
+    userEmail: 'johndoe@gmail.com',
+    userPassword: '******',
+    userPhoneNum: '416-111-1111',
+    userCountry: 'Canada',
+    userProvince: 'Ontario',
+    userCity: 'Toronto',
+    userProfilePic: tempProfilePic,
+    userGender: 'Male',
+  };
+  window.sessionStorage.setItem('user', JSON.stringify(user));
+
   return (
     <BrowserRouter>
       <Navbar />

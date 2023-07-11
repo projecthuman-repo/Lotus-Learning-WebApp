@@ -1,6 +1,7 @@
 import React from 'react';
 import CourseInProgress from '../../CourseInProgress';
 import ProductCard from '../../../../../components/Product-Card/ProductCard';
+import GameHistoryCard from './GameHistoryCard';
 
 const ProfileGames = ({ courses }) => {
   return (
@@ -36,11 +37,11 @@ const ProfileGames = ({ courses }) => {
         <div className='col-12'>
           <p className='fs-22 fw-600'>History</p>
           <hr className='profileHomeHR' />
-          <div className='row row-cols-auto  mt-3'>
+          <div className=' mt-3'>
             {courses.map((course, index) => {
               return (
-                <div className='col mb-1' key={index + course}>
-                  <ProductCard product={course} />
+                <div className='mb-3' key={index + course}>
+                  <GameHistoryCard product={course} />
                 </div>
               );
             })}

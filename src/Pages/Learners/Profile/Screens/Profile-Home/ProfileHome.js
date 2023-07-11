@@ -1,5 +1,5 @@
 import React from 'react';
-import PhotoPlaceholder from '../../../../../Images/photo.png';
+// import PhotoPlaceholder from '../../../../../Images/photo.png';
 import './profileHome.css';
 import CourseInProgress from '../../CourseInProgress';
 import badgePlaceHolder from '../../../../../Images/exampleBadge.png';
@@ -17,20 +17,23 @@ const ProfileHome = ({ courses }) => {
 
   const badges = ['Coding HTML', 'Algebra III', 'Algebra I'];
 
+  const user = JSON.parse(window.sessionStorage.getItem('user'));
+  // console.log(user.userFullName);
+
   return (
     <>
       <div className='row my-5'>
         <div className='col-sm-4'>
           <p className='fs-22 fw-600'>Profile (Public)</p>
           <img
-            src={PhotoPlaceholder}
+            src={user.userProfilePic}
             alt='ProfilePic'
             width={250}
             height={250}
           />
         </div>
         <div className='col-sm-8 mt-3 mt-sm-5'>
-          <p className='fs-22 fw-600'>John Doe</p>
+          <p className='fs-22 fw-600'>{user.userFullName}</p>
           <p className='fs-16'>Student/Learner</p>
           <textarea
             className='form-control mt-3'
@@ -55,7 +58,13 @@ const ProfileHome = ({ courses }) => {
           <p className='fs-22 fw-600'>In Progress</p>
           <div className='d-sm-flex mt-3'>
             {courses.map((course, index) => {
-              return <CourseInProgress course={course} />;
+              return (
+                <CourseInProgress
+                  className='mx-1'
+                  course={course}
+                  key={index + course}
+                />
+              );
             })}
           </div>
           <div className='d-flex mt-3'>

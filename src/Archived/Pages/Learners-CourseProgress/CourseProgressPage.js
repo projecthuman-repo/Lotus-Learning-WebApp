@@ -1,6 +1,6 @@
-import LearnersProfileTemplate from '../Learners-Profile-Template/Learners-Profile-Template.js';
-import CourseInProgress from '../../components/Course-in-progress/Course-in-progress.js';
-import PersonalProfile from '../../components/Personal-Profile-Components/PersonalProfile.js';
+import LearnersProfileTemplate from '../../../Pages/Learners-Profile-Template/Learners-Profile-Template.js';
+import CourseInProgress from '../../Components/Course-in-progress/Course-in-progress.js';
+import PersonalProfile from '../../../components/Personal-Profile-Components/PersonalProfile.js';
 import './CourseProgressPage.css';
 
 /* Page is built, should look better once resizeable components are uploaded to github */

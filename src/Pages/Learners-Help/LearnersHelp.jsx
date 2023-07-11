@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Header from "../../components/Header-Components/Logged-In/Header-Logged-In";
-import SideNav from "../../components/Side-Nav-bar/Side-Nav";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { Button, Dropdown } from "react-bootstrap";
-import InfoTable from "../../components/Info-Table/InfoTable";
-import "./Learners-Help.css";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Header from '../../components/Header-Components/Logged-In/Header-Logged-In';
+import SideNav from '../../Archived/Components/Side-Nav-bar/Side-Nav';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Button, Dropdown } from 'react-bootstrap';
+import InfoTable from '../../components/Info-Table/InfoTable';
+import './Learners-Help.css';
 const LearnersHelp = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -18,34 +18,34 @@ const LearnersHelp = () => {
     <>
       <Header></Header>
       <SplitRow>
-        <SplitCol className="sideNav">
+        <SplitCol className='sideNav'>
           <SideNav></SideNav>
         </SplitCol>
-        <SplitCol >
+        <SplitCol>
           <HelpHeader>
             HELP CENTER
             <SearchBox>
-              <div className="search-field">
-                <FontAwesomeIcon className="icon-search" icon={faSearch} />
+              <div className='search-field'>
+                <FontAwesomeIcon className='icon-search' icon={faSearch} />
                 <SearchInput
-                  type={"text"}
-                  placeholder="search..."
+                  type={'text'}
+                  placeholder='search...'
                 ></SearchInput>
               </div>
               <SearchButton>Search</SearchButton>
             </SearchBox>
           </HelpHeader>
-          <SplitCol className="faq-content">
+          <SplitCol className='faq-content'>
             <HeadingTitle>Frequently Asked Questions</HeadingTitle>
             <SplitRow>
-              <SplitCol className="question-list">
+              <SplitCol className='question-list'>
                 <InfoTable></InfoTable>
                 <InfoTable></InfoTable>
                 <InfoTable></InfoTable>
                 <InfoTable></InfoTable>
                 <InfoTable></InfoTable>
               </SplitCol>
-              <div className="alternate-search-row">
+              <div className='alternate-search-row'>
                 {/* <SplitCol className='alternate-search-col'>Can't Find An Answer?</SplitCol> */}
                 <p>Can't Find An Answer?</p>
                 <p>Contact Us</p>
