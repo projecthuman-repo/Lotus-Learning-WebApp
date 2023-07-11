@@ -16,8 +16,12 @@ const GameHistoryCard = ({ product }) => {
           {product.creator}
         </p>
       </div>
-      <p className='fs-12 c-gray'>{product.description}</p>
-      <div className='d-flex'>
+      <p className='ms-3 fs-12 c-gray'>
+        Description of game goes here... Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Fusce lacus massa, hendrerit nec ex nec, commodo
+        consectetur...{' '}
+      </p>
+      <div className='d-flex ms-auto mt-2'>
         {product.tags.map((tag, index) => {
           return (
             <div className='col' key={index + tag}>

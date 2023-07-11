@@ -30,7 +30,26 @@ import Navbar from './components/Navbar/Navbar';
 import Profile from './Pages/Learners/Profile/Profile';
 
 import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
+
+//temporary picture for user
+import tempProfilePic from './Images/photo.png';
+
 function App() {
+  const user = {
+    userId: 1,
+    userFullName: 'John Doe',
+    userType: 'Student/Learner',
+    userEmail: 'johndoe@gmail.com',
+    userPassword: '******',
+    userPhoneNum: '416-111-1111',
+    userCountry: 'Canada',
+    userProvince: 'Ontario',
+    userCity: 'Toronto',
+    userProfilePic: tempProfilePic,
+    userGender: 'Male',
+  };
+  window.sessionStorage.setItem('user', JSON.stringify(user));
+
   return (
     <BrowserRouter>
       <Navbar />

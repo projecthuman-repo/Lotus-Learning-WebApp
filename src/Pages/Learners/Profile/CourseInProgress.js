@@ -10,7 +10,7 @@ const CourseInProgress = ({ course }) => {
   //   number += 10;
   // };
   return (
-    <div className='d-flex flex-column courseInProgress borRad-10 bgc-lightGray p-3'>
+    <div className='d-flex flex-column courseInProgress borRad-10 bgc-lightGray p-3 mx-1'>
       <p className='fw-600'>{course.title}</p>
       <p className='fs-14'>{course.name}</p>
       <div className='mx-auto mt-3 circleProgress'>

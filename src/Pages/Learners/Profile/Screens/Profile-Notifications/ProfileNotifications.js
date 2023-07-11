@@ -4,14 +4,26 @@ import NotificationCard from '../../../../../components/Notification-Card/Notifi
 
 const ProfileNotifications = () => {
   const notis = [
-    { status: 1, message: 'asdasdasdasdasdasdasd', image: placeHolder },
-    { status: 0, message: 'asdasdasdasdasdasdasd', image: placeHolder },
+    {
+      status: 0,
+      message:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna',
+      image: placeHolder,
+    },
+    {
+      status: 1,
+      message:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna',
+      image: placeHolder,
+    },
   ];
   return (
     <>
       <div className='row mt-5'>
         <p className='fs-18 fw-500 mt-5'>Today</p>
-        <NotificationCard />
+        {notis.map((noti, index) => {
+          return <NotificationCard notification={noti} key={noti + index} />;
+        })}
       </div>
     </>
   );

@@ -9,6 +9,8 @@ import ProfileMyCourse from './Screens/Profile-MyCourses/ProfileMyCourse';
 import './profile.css';
 import ProfileGames from './Screens/Profile-Games/ProfileGames';
 import ProfileNotifications from './Screens/Profile-Notifications/ProfileNotifications';
+import ProfileAccount from './Screens/Profile-Account/ProfileAccount';
+import ProfilePrivacy from './Screens/Profile-Privacy/ProfilePrivacy';
 
 const courses = [
   {
@@ -59,10 +61,15 @@ const sideDashboardOptions = [
     title: 'Notifications',
     component: <ProfileNotifications />,
   },
-  { icon: <FaUserAlt className='c-blue' size={20} />, title: 'Account' },
+  {
+    icon: <FaUserAlt className='c-blue' size={20} />,
+    title: 'Account',
+    component: <ProfileAccount />,
+  },
   {
     icon: <IoMdLock className='c-blue' size={20} />,
     title: 'Privacy & Security',
+    component: <ProfilePrivacy />,
   },
   { icon: <IoMdHelpCircle className='c-blue' size={20} />, title: 'Help' },
 ];
