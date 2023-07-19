@@ -12,6 +12,7 @@ import ProfileNotifications from './Screens/Profile-Notifications/ProfileNotific
 import ProfileAccount from './Screens/Profile-Account/ProfileAccount';
 import ProfilePrivacy from './Screens/Profile-Privacy/ProfilePrivacy';
 import ProfileHelp from './Screens/Profile-Help/ProfileHelp';
+import ProfileLibrary from './Screens/Profile-Library/ProfileLibrary';
 
 const courses = [
   {
@@ -56,7 +57,11 @@ const sideDashboardOptions = [
     title: 'Games',
     component: <ProfileGames courses={courses} />,
   },
-  { icon: <ImBooks className='c-blue' size={20} />, title: 'Library' },
+  {
+    icon: <ImBooks className='c-blue' size={20} />,
+    title: 'Library',
+    component: <ProfileLibrary courses={courses} />,
+  },
   {
     icon: <FaBell className='c-blue' size={20} />,
     title: 'Notifications',
@@ -85,7 +90,7 @@ const Profile = () => {
   );
 
   return (
-    <div className='container-fluid '>
+    <div className='container-fluid'>
       <div className='row'>
         <div className='col-3 border bor-lightGray py-5 px-md-3 px-lg-5'>
           <SideDashboard
@@ -93,7 +98,7 @@ const Profile = () => {
             setCurrentScreen={setCurrentScreen}
           />
         </div>
-        <div className='col-9 '>{currentScreen}</div>
+        <div className='col-9'>{currentScreen}</div>
       </div>
     </div>
   );

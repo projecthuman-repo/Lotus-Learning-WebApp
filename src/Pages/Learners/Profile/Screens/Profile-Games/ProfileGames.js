@@ -5,7 +5,7 @@ import GameHistoryCard from './GameHistoryCard';
 
 const ProfileGames = ({ courses }) => {
   return (
-    <>
+    <div className='px-5'>
       <div className='row mt-5'>
         <p className='fs-30 fw-700 mt-5'>My Games List</p>
       </div>
@@ -51,7 +51,7 @@ const ProfileGames = ({ courses }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

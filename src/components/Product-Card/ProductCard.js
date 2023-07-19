@@ -1,11 +1,39 @@
 import React from 'react';
 import './productCard.css';
 import ProductCardTag from './ProductCardTag';
+import { AiOutlineArrowRight } from 'react-icons/ai';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 // import asd from '../../Images';
 
-const ProductCard = ({ product }) => {
+//complete param is a temporary solution until we get database structured
+const ProductCard = ({ product, complete }) => {
   return (
     <div className='card border-2 bor-darkGray borRad-15 productCard'>
+      <div className={complete === true ? 'overlay borRad-15 h-100' : 'd-none'}>
+        <div className='d-flex flex-column h-100'>
+          <div className='text-center my-auto mx-auto'>
+            <div className='mx-auto' style={{ width: '80px' }}>
+              <CircularProgressbar
+                value={100}
+                maxValue={100}
+                strokeWidth={15}
+                styles={buildStyles({
+                  strokeLinecap: 'butt',
+                  pathColor: 'white',
+                  textColor: 'black',
+                  trailColor: '#E7E7E7',
+                })}
+              />
+            </div>
+
+            <p className='fs-20 fw-500 c-white mt-2'>100% Completed</p>
+          </div>
+          <div className='ms-auto me-2 mb-2 d-flex pointer'>
+            <p className='fs-14 c-white'>Review Lesson</p>
+            <AiOutlineArrowRight className='c-white my-auto ms-1' />
+          </div>
+        </div>
+      </div>
       <img
         src={require('../../Images/placeholderimage.PNG')}
         className='card-img-top borRad-15 productCardImage'

@@ -5,7 +5,7 @@ import { BiPencil } from 'react-icons/bi';
 const ProfilePrivacy = () => {
   const user = JSON.parse(window.sessionStorage.getItem('user'));
   return (
-    <>
+    <div className='px-5'>
       <div className='row mt-5'>
         <div className='d-flex'>
           <p className='fs-20 fw-600'>Two Factor Authentication</p>
@@ -86,12 +86,13 @@ const ProfilePrivacy = () => {
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
                 placeholder='00-10000 Random, Address X1V 3T4'
+                style={{ width: '500px' }}
               />
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
