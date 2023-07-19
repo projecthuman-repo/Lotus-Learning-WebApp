@@ -11,6 +11,8 @@ import ProfileGames from './Screens/Profile-Games/ProfileGames';
 import ProfileNotifications from './Screens/Profile-Notifications/ProfileNotifications';
 import ProfileAccount from './Screens/Profile-Account/ProfileAccount';
 import ProfilePrivacy from './Screens/Profile-Privacy/ProfilePrivacy';
+import ProfileHelp from './Screens/Profile-Help/ProfileHelp';
+import ProfileLibrary from './Screens/Profile-Library/ProfileLibrary';
 
 const courses = [
   {
@@ -55,7 +57,11 @@ const sideDashboardOptions = [
     title: 'Games',
     component: <ProfileGames courses={courses} />,
   },
-  { icon: <ImBooks className='c-blue' size={20} />, title: 'Library' },
+  {
+    icon: <ImBooks className='c-blue' size={20} />,
+    title: 'Library',
+    component: <ProfileLibrary courses={courses} />,
+  },
   {
     icon: <FaBell className='c-blue' size={20} />,
     title: 'Notifications',
@@ -71,7 +77,11 @@ const sideDashboardOptions = [
     title: 'Privacy & Security',
     component: <ProfilePrivacy />,
   },
-  { icon: <IoMdHelpCircle className='c-blue' size={20} />, title: 'Help' },
+  {
+    icon: <IoMdHelpCircle className='c-blue' size={20} />,
+    title: 'Help',
+    component: <ProfileHelp />,
+  },
 ];
 
 const Profile = () => {
@@ -80,15 +90,15 @@ const Profile = () => {
   );
 
   return (
-    <div className='container-fluid g-0'>
-      <div className='row g-0'>
+    <div className='container-fluid'>
+      <div className='row'>
         <div className='col-3 border bor-lightGray py-5 px-md-3 px-lg-5'>
           <SideDashboard
             sideDashboardOptions={sideDashboardOptions}
             setCurrentScreen={setCurrentScreen}
           />
         </div>
-        <div className='col-9 px-5'>{currentScreen}</div>
+        <div className='col-9'>{currentScreen}</div>
       </div>
     </div>
   );

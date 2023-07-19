@@ -4,7 +4,7 @@ import ProductCard from '../../../../../components/Product-Card/ProductCard';
 
 const ProfileMyCourse = ({ courses }) => {
   return (
-    <>
+    <div className='px-5'>
       <div className='row mt-5'>
         <p className='fs-30 fw-700 mt-5'>Courses</p>
       </div>
@@ -44,7 +44,7 @@ const ProfileMyCourse = ({ courses }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
