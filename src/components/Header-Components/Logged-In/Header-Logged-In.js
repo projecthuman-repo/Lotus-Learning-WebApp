@@ -19,7 +19,7 @@ export default function Header() {
             <a href='/games'>GAMES</a>
           </div>
           <div>
-            <a href='/'>CONTACT</a>
+            <a href='/contact'>CONTACT</a>
           </div>
           <div>
             <div className='BellActive off-screen'>

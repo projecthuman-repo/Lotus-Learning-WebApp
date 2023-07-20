@@ -11,7 +11,7 @@ const Navbar = () => {
         <Link className='navbar-brand ms-sm-5'>
           <div className='d-flex'>
             <img src={BLNLogo} width={45} alt='logo' />
-            <p className='my-auto ms-2 fs-30 fw-500'>Black Lotus Learning</p>
+            <p className='my-auto ms-2 fs-30 fw-500'>Black Lily Nursery</p>
           </div>
         </Link>
         <div className='d-flex mx-auto mx-sm-0 me-sm-5'>
@@ -40,7 +40,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='nav-item mx-3'>
-              <Link className='nav-link'>
+              <Link className='nav-link' to={'/contact'}>
                 <p className='fs-20 c-black'>CONTACT</p>
               </Link>
             </li>

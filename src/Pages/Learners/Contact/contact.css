@@ -1,0 +1,49 @@
+
+  .form-control {
+    border: 2px solid black;
+    font-weight: normal;
+  }
+
+  .submit-button {
+    width: 100%; /* Set the width to 100% to match the input fields' width */
+    margin-top: 10px; /* Add some top margin to separate it from the inputs */
+  }
+
+  /* Custom styles for the left side content */
+.left-side {
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 20px; /* Add some padding to the left side content */
+    margin-left: -180px; /* Negative margin to compensate for Bootstrap's default padding */
+    margin-right: 180px; /* Negative margin to compensate for Bootstrap's default padding */
+}
+
+/* Social Media Icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .social-icons a {
+    color: #333;
+    font-size: 24px;
+    transition: color 0.3s ease-in-out;
+    margin-right: 10px; /* Add margin between icons */
+  }
+  
+  /* Use flexbox to space out the social media icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* Adjust the gap value as needed */
+  }
+  
+  .social-icons a {
+    color: #333;
+    font-size: 24px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .social-icons a:hover {
+    color: #1877f2; /* Change to your desired hover color */
+  }

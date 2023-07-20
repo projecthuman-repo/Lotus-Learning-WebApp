@@ -28,6 +28,7 @@ import PrivacySecurity from './Pages/Learners-Privacy_Security/PrivacySecurity';
 import Games from './Pages/Learners/Games/Games';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './Pages/Learners/Profile/Profile';
+import Contact from './Pages/Learners/Contact/Contact';
 
 import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
 
@@ -68,6 +69,7 @@ function App() {
         {/* <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} /> */}
         <Route path='/games' element={<Games />} />
         <Route path='/course-catalogue' element={<CourseCatalogue />} />
+        <Route path='/contact' element={<Contact />} />
         {/* <Route
           path='/LearnersNotifications'
           element={<LearnersProfileNotifications />}
