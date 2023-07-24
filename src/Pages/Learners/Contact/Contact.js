@@ -2,14 +2,7 @@ import React from "react";
 
 const ContactForm = () => {
   const submitButtonStyle = {
-    backgroundColor: "black",
-    color: "white",
     width: "100%",
-  };
-
-  const formControlStyle = {
-    border: "2px solid black",
-    fontWeight: "normal",
   };
 
   const leftSideStyle = {
@@ -17,18 +10,14 @@ const ContactForm = () => {
     padding: "20px",
     marginLeft: "0px",
     minHeight: "90vh",
-    position: "relative",
+ 
   };
 
   const socialIconStyle = {
     position: "absolute",
     bottom: "20px",
-    left: "50%",
-    transform: "translateX(-50%)",
-    display: "flex",
-    justifyContent: "center",
-    gap: "50px",
-    marginBottom: "10px",
+    left: "30%",
+    
   };
 
   return (
@@ -181,7 +170,7 @@ const ContactForm = () => {
             <div className="d-flex justify-content-center">
               <button
                 type="submit"
-                className="btn btn-primary btn-lg submit-button"
+                className="btn btn-primary btn-lg submit-button bg-black"
                 style={submitButtonStyle}
               >
                 Submit
