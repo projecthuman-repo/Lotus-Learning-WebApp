@@ -1,20 +1,49 @@
 import React from "react";
-import "./contact.css";
+
 const ContactForm = () => {
   const submitButtonStyle = {
     backgroundColor: "black",
     color: "white",
+    width: "100%",
   };
+
+  const formControlStyle = {
+    border: "2px solid black",
+    fontWeight: "normal",
+  };
+
+  const leftSideStyle = {
+    backgroundColor: "lightgray",
+    padding: "20px",
+    marginLeft: "0px",
+    minHeight: "90vh",
+    position: "relative",
+  };
+
+  const socialIconStyle = {
+    position: "absolute",
+    bottom: "20px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    display: "flex",
+    justifyContent: "center",
+    gap: "50px",
+    marginBottom: "10px",
+  };
+
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
         {/* Left Side */}
-        <div className="col-lg-4 left-side">
-          <h3 style={{ fontWeight: "bold" }}>Get in touch</h3>
+        <div
+          className="col-lg-4 offset-lg-2"
+          style={{ ...leftSideStyle, ...{ position: "relative" } }}
+        >
+          <h3 className="fw-bold">Get in touch</h3>
           <p>
             We would love to hear from you. Our team is always here to chat.
           </p>
-          <br></br>
+          <br />
           <h3>
             <img
               src="https://img.icons8.com/?size=512&id=60688&format=png"
@@ -24,9 +53,9 @@ const ContactForm = () => {
             Email us
           </h3>
           <p>Our friendly team is here to help</p>
-          <br></br>
-          <p style={{ fontWeight: "bold" }}>email@projecthumancity.com</p>
-          <br></br>
+          <br />
+          <p className="fw-bold">email@projecthumancity.com</p>
+          <br />
           <h3>
             <img
               src="https://img.icons8.com/?size=512&id=78382&format=png"
@@ -36,27 +65,14 @@ const ContactForm = () => {
             Phone
           </h3>
           <p>Mon-Fri from 8am to 5pm</p>
-          <br></br>
+          <br />
           <p>416-###-####</p>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <div className="social-icons">
+          <br />
+          <br />
+          <div
+            className="social-icons d-flex justify-content-center gap-3"
+            style={{ ...socialIconStyle }}
+          >
             <img
               src="https://www.svgrepo.com/show/3885/facebook.svg"
               alt="icon"
@@ -87,11 +103,11 @@ const ContactForm = () => {
         </div>
 
         {/* Right Side */}
-        <div className="col-lg-8">
+        <div className="container-fluid col-lg-8 justify-content-center">
           <form>
-            <br></br>
+            <br />
             <div className="form-group">
-              <label htmlFor="name" style={{ fontWeight: "bold" }}>
+              <label htmlFor="name" className="fw-bold">
                 Name
               </label>
               <input
@@ -99,11 +115,11 @@ const ContactForm = () => {
                 className="form-control"
                 id="name"
                 value="John Doe"
-                style={{ marginBottom: "20px" }}
+                style={{ marginBottom: "20px", border: "2px solid black" }}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="email" style={{ fontWeight: "bold" }}>
+              <label htmlFor="email" className="fw-bold">
                 E-mail
               </label>
               <input
@@ -111,14 +127,17 @@ const ContactForm = () => {
                 className="form-control"
                 id="email"
                 value="error@gmail.com"
-                style={{ marginBottom: "20px" }}
+                style={{ marginBottom: "20px", border: "2px solid black" }}
               />
             </div>
-            <div className="form-group form-control">
-              <label htmlFor="phone" style={{ fontWeight: "bold" }}>
+            <div
+              className="form-group fw-bold form-control"
+              style={{ marginBottom: "20px", border: "2px solid black" }}
+            >
+              <label htmlFor="phone" className="fw-bold">
                 Phone Number
               </label>
-              <select>
+              <select className="form-select">
                 <option value="CAN">CAN</option>
                 <option value="USA">USA</option>
                 <option value="UK">UK</option>
@@ -133,13 +152,13 @@ const ContactForm = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="topics" style={{ fontWeight: "bold" }}>
+              <label htmlFor="topics" className="fw-bold">
                 Topic
               </label>
               <select
-                className="form-control"
+                className="form-select"
                 id="topics"
-                style={{ marginBottom: "20px" }}
+                style={{ marginBottom: "20px", border: "2px solid black" }}
               >
                 <option value="Lorem Ipsum">Lorem Ipsum</option>
                 <option value="Lorem Ipsum">Lorem Ipsum</option>
@@ -148,14 +167,14 @@ const ContactForm = () => {
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="message" style={{ fontWeight: "bold" }}>
+              <label htmlFor="message" className="fw-bold">
                 How can we help?
               </label>
               <textarea
                 className="form-control"
                 id="message"
                 rows="3"
-                style={{ marginBottom: "20px" }}
+                style={{ marginBottom: "20px", border: "2px solid black" }}
               />
             </div>
 
