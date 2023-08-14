@@ -21,7 +21,7 @@ const ProfileHome = ({ courses }) => {
   // console.log(user.userFullName);
 
   return (
-    <>
+    <div className='px-5'>
       <div className='row my-5'>
         <div className='col-sm-4'>
           <p className='fs-22 fw-600'>Profile (Public)</p>
@@ -86,7 +86,7 @@ const ProfileHome = ({ courses }) => {
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

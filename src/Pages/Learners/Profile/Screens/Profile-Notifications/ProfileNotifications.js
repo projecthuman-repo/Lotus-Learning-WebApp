@@ -18,14 +18,14 @@ const ProfileNotifications = () => {
     },
   ];
   return (
-    <>
+    <div className='px-5'>
       <div className='row mt-5'>
         <p className='fs-18 fw-500 mt-5'>Today</p>
         {notis.map((noti, index) => {
           return <NotificationCard notification={noti} key={noti + index} />;
         })}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -8,3 +8,11 @@
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
 }
+
+.overlay {
+  position: absolute;
+  z-index: 10000;
+  background-color: black;
+  opacity: 0.8;
+  width: 275px;
+}

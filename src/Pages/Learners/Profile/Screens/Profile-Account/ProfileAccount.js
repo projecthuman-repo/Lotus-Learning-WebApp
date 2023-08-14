@@ -6,7 +6,7 @@ const ProfileAccount = () => {
   const user = JSON.parse(window.sessionStorage.getItem('user'));
 
   return (
-    <>
+    <div className='px-5'>
       <div className='row my-5'>
         <div className='col-sm-4'>
           <img
@@ -290,7 +290,7 @@ const ProfileAccount = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

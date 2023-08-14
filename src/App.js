@@ -29,6 +29,8 @@ import Games from './Pages/Learners/Games/Games';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './Pages/Learners/Profile/Profile';
 import Contact from './Pages/Learners/Contact/Contact';
+import CourseInfo from './Pages/Learners/Course-Catalogue/Course-Info/CourseInfo';
+import AuthorInfo from './Pages/Learners/Course-Catalogue/Author-Info/AuthorInfo';
 
 import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
 
@@ -69,7 +71,10 @@ function App() {
         {/* <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} /> */}
         <Route path='/games' element={<Games />} />
         <Route path='/course-catalogue' element={<CourseCatalogue />} />
+
         <Route path='/contact' element={<Contact />} />
+        <Route path='/CourseInfo' element={<CourseInfo />} />
+        <Route path='/AuthorInfo' element={<AuthorInfo />} />
         {/* <Route
           path='/LearnersNotifications'
           element={<LearnersProfileNotifications />}

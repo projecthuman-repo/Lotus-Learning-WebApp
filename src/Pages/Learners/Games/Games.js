@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { BiSearch } from 'react-icons/bi';
+
 import './games.css';
 import FilterSidebar from '../../../components/Filter-Sidebar/FilterSidebar';
 import ProductCard from '../../../components/Product-Card/ProductCard';
 import Pagination from '../../../components/Pagination/Pagination';
+import Searchbar from '../../../components/Searchbar/Searchbar';
 
 const Games = () => {
   const [currentPageGames, setCurrentPageGames] = useState([]);
@@ -141,14 +142,7 @@ const Games = () => {
       <div className='row justify-content-center'>
         <div className='col-10 col-md-8'>
           <h1 className='text-center mt-5 mb-4'>Games</h1>
-          <div className='input-group search-bar mb-3 border border-2'>
-            <span className='input-group-text search-icon border-0'>
-              <BiSearch size={25} />
-            </span>
-
-            <input type='text' className='form-control search-input border-0' />
-            <span className='input-group-text border-0'>Search</span>
-          </div>
+          <Searchbar />
           <p className='fs-14 c-gray'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lacus
             massa, hendrerit nec ex nec, commodo consectetur risus. Maecenas
