@@ -36,6 +36,8 @@ import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue'
 
 //temporary picture for user
 import tempProfilePic from './Images/photo.png';
+import Author from './Pages/Learners/Author/Author';
+import Login from './Pages/Login/Login';
 
 function App() {
   const user = {
@@ -51,13 +53,33 @@ function App() {
     userProfilePic: tempProfilePic,
     userGender: 'Male',
   };
+
+  const author = {
+    userId: 1,
+    userFullName: 'Professor Smith',
+    userType: 'Educator',
+    userEmail: 'johndoe@gmail.com',
+    userPassword: '******',
+    userPhoneNum: '416-111-1111',
+    userCountry: 'Canada',
+    userProvince: 'Ontario',
+    userCity: 'Toronto',
+    userProfilePic: tempProfilePic,
+    userGender: 'Male',
+    userRating: '4.6/5',
+    userBio:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in turpis et odio ullamcorper posuere. Aenean risus lectus, consequat eu gravida sed, congue et nisi. Etiam suscipit erat sit amet placerat lacinia.',
+  };
+
+  window.sessionStorage.setItem('author', JSON.stringify(author));
   window.sessionStorage.setItem('user', JSON.stringify(user));
 
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path='/' element={<CourseCatalogue />} />
+        <Route path='/' element={<Login />} />
+        <Route path='/course-catologue' element={<CourseCatalogue />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/LearnersSignUp' element={<LearnersSignUp />} />
         <Route path='/personalprofile' element={<LearnersAccountPage />} />
@@ -67,7 +89,7 @@ function App() {
         <Route path='/LearnersLibrary' element={<LearnersLibrary />} />
         <Route path='/LearnersHelp' element={<LearnersHelp />} />
         {/* <Route path='/coursecatalogue' element={<LearnersProfile />} /> */}
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/learner-profile' element={<Profile />} />
         {/* <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} /> */}
         <Route path='/games' element={<Games />} />
         <Route path='/course-catalogue' element={<CourseCatalogue />} />
@@ -81,6 +103,11 @@ function App() {
         /> */}
         <Route path='/Security' element={<PrivacySecurity />} />
         <Route path='/CourseSpecific' element={<CourseSpecific />} />
+
+        <Route path='/author/:name' element={<Author />} />
+
+        {/* Educator Routes */}
+        <Route path='/educator-profile' element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
