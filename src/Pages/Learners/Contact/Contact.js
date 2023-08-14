@@ -23,7 +23,7 @@ const ContactForm = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Left Side */}
+        
         <div
           className="col-lg-4 offset-lg-2"
           style={{ ...leftSideStyle, ...{ position: "relative" } }}
