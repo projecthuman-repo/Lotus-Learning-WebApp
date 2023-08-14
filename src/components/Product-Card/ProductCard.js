@@ -3,6 +3,7 @@ import './productCard.css';
 import ProductCardTag from './ProductCardTag';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { Link } from 'react-router-dom';
 // import asd from '../../Images';
 
 //complete param is a temporary solution until we get database structured
@@ -41,10 +42,15 @@ const ProductCard = ({ product, complete }) => {
       />
       <div className='card-body'>
         <p className='fs-18 fw-500'>{product.title}</p>
-        <p className='fs-12 fw-500 text-decoration-underline'>
-          {product.creator}
-        </p>
-        <p className='fs-12 c-gray my-3'>{product.description}</p>
+        <Link
+          to={`/author/${product.creator.userFullName}`}
+          state={{ author: product.creator }}
+        >
+          <p className='fs-12 fw-500 pointer creatorName'>
+            {product.creator.userFullName}
+          </p>
+        </Link>
+        <p className='fs-12 c-gray mb-3 mt-1'>{product.description}</p>
         <div className='row row-cols-auto g-0'>
           {product.tags.map((tag, index) => {
             return (

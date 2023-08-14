@@ -9,6 +9,8 @@ import Searchbar from '../../../components/Searchbar/Searchbar';
 const Games = () => {
   const [currentPageGames, setCurrentPageGames] = useState([]);
 
+  const author = JSON.parse(window.sessionStorage.getItem('author'));
+
   const handleSetCurrentPageGames = (itemOffset, endOffset) => {
     const tempCurrentGames = games.slice(itemOffset, endOffset);
     setCurrentPageGames(tempCurrentGames);
@@ -47,67 +49,67 @@ const Games = () => {
   const games = [
     {
       title: 'Game 1',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 2',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 3',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 4',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 5',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 6',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 7',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 8',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 9',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 10',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
     {
       title: 'Game 11',
-      creator: 'Name of Creator',
+      creator: author,
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
