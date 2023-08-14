@@ -111,6 +111,30 @@ const Games = () => {
       description: 'Description of the game',
       tags: ['Math', 'Strategy', 'Puzzle'],
     },
+    {
+      title: 'Game 12',
+      creator: 'Name of Creator',
+      description: 'Description of the game',
+      tags: ['Math', 'Strategy', 'Puzzle'],
+    },
+    {
+      title: 'Game 13',
+      creator: 'Name of Creator',
+      description: 'Description of the game',
+      tags: ['Math', 'Strategy', 'Puzzle'],
+    },
+    {
+      title: 'Game 14',
+      creator: 'Name of Creator',
+      description: 'Description of the game',
+      tags: ['Math', 'Strategy', 'Puzzle'],
+    },
+    {
+      title: 'Game 15',
+      creator: 'Name of Creator',
+      description: 'Description of the game',
+      tags: ['Math', 'Strategy', 'Puzzle'],
+    },
   ];
 
   return (
@@ -146,7 +170,7 @@ const Games = () => {
         <div className='col-12'>
           <div className='d-flex justify-content-center'>
             <Pagination
-              itemsPerPage={9}
+              itemsPerPage={12}
               items={games}
               handleSetCurrentPageItems={handleSetCurrentPageGames}
             />
