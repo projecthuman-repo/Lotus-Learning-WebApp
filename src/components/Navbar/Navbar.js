@@ -50,7 +50,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='nav-item mx-3'>
-              <Link className='nav-link' to={'/profile'}>
+              <Link className='nav-link' to={'/educator-profile'}>
                 <FaUserCircle size={30} color='black' />
               </Link>
             </li>

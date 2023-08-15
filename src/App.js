@@ -38,6 +38,7 @@ import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue'
 import tempProfilePic from './Images/photo.png';
 import Author from './Pages/Learners/Author/Author';
 import Login from './Pages/Login/Login';
+import SignUp from './Pages/SignUp/SignUp';
 
 function App() {
   const user = {
@@ -79,6 +80,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
+
         <Route path='/course-catologue' element={<CourseCatalogue />} />
         <Route path='/signup' element={<SignUpPage />} />
         <Route path='/LearnersSignUp' element={<LearnersSignUp />} />
