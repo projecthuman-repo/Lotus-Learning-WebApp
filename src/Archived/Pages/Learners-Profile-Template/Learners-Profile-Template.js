@@ -1,7 +1,7 @@
 import './Learners-Profile-Template.css';
 
-import Header from '../../components/Header-Components/Logged-In/Header-Logged-In';
-import SideNav from '../../Archived/Components/Side-Nav-bar/Side-Nav';
+import Header from '../../../components/Header-Components/Logged-In/Header-Logged-In';
+import SideNav from '../../Components/Side-Nav-bar/Side-Nav';
 
 // This is a template Component for the Learns Profile
 

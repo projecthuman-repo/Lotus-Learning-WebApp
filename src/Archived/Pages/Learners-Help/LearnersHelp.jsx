@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from '../../components/Header-Components/Logged-In/Header-Logged-In';
-import SideNav from '../../Archived/Components/Side-Nav-bar/Side-Nav';
+import Header from '../../../components/Header-Components/Logged-In/Header-Logged-In';
+import SideNav from '../../Components/Side-Nav-bar/Side-Nav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Button, Dropdown } from 'react-bootstrap';
-import InfoTable from '../../components/Info-Table/InfoTable';
+import InfoTable from '../../../components/Info-Table/InfoTable';
 import './Learners-Help.css';
 const LearnersHelp = () => {
   const [searchTerm, setSearchTerm] = useState('');

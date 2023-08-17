@@ -1,29 +1,29 @@
-import "./PrivacySecurity.css";
-import React from "react";
-import styled from "styled-components";
-import LearnersProfileTemplate from "../Learners-Profile-Template/Learners-Profile-Template";
+import './PrivacySecurity.css';
+import React from 'react';
+import styled from 'styled-components';
+import LearnersProfileTemplate from '../Learners-Profile-Template/Learners-Profile-Template';
 
 function SecurityInfo() {
   return (
     <>
-      <div className="profileInfo">
+      <div className='profileInfo'>
         <div>
           <HeadingTitle>Two Factor Authentication ✎</HeadingTitle>
           <InfoTable>
-            <div className="table-border">
+            <div className='table-border'>
               <InputRow>
                 <Key>Email:</Key>
-                <Value placeholder="johndoe@gmail.com"></Value>
+                <Value placeholder='johndoe@gmail.com'></Value>
               </InputRow>
               <hr></hr>
               <InputRow>
                 <Key>Secondary Email:</Key>
-                <Value placeholder="johndoe2@gmail.com"></Value>
+                <Value placeholder='johndoe2@gmail.com'></Value>
               </InputRow>
               <hr></hr>
               <InputRow>
                 <Key>Phone Number:</Key>
-                <Value placeholder="XXX-XXX-XXX"></Value>
+                <Value placeholder='XXX-XXX-XXX'></Value>
               </InputRow>
             </div>
           </InfoTable>
@@ -31,15 +31,15 @@ function SecurityInfo() {
         <div>
           <HeadingTitle>Billing Information ✎</HeadingTitle>
           <InfoTable>
-            <div className="table-border">
+            <div className='table-border'>
               <InputRow>
                 <Key>Payment Method:</Key>
-                <Value placeholder="johndoe@gmail.com"></Value>
+                <Value placeholder='johndoe@gmail.com'></Value>
               </InputRow>
               <hr></hr>
               <InputRow>
                 <Key>Billing Address:</Key>
-                <Value placeholder="00-10000 Random, Address X1V 3T4"></Value>
+                <Value placeholder='00-10000 Random, Address X1V 3T4'></Value>
               </InputRow>
             </div>
           </InfoTable>

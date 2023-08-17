@@ -9,11 +9,21 @@ import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 const SignUp = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [currentScreen, setCurrentScreen] = useState();
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [country, setCountry] = useState('');
+  const [stateProvince, setStateProvince] = useState('');
+  const [accountType, setAccountType] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmedPassword, setConfirmedPassword] = useState('');
+  const [school, setSchool] = useState('');
 
+  //onLoad set the first screen to create profile screen
   useEffect(() => {
     setCurrentScreen(<CreateProfile />);
   }, []);
 
+  //when the currentStep of profile creation is updated, change screens
   useEffect(() => {
     if (currentStep === 1) {
       setCurrentScreen(<CreateProfile />);
@@ -24,6 +34,32 @@ const SignUp = () => {
     }
   }, [currentStep]);
 
+  //this needs fixing
+  const validateProfile = () => {
+    console.log(fullName);
+    console.log(email);
+    console.log(country);
+    console.log(stateProvince);
+    console.log(password);
+    console.log(confirmedPassword);
+    console.log(school);
+    if (
+      fullName.trim() !== '' &&
+      email.trim() !== '' &&
+      country.trim() !== '' &&
+      stateProvince.trim() !== '' &&
+      password.trim() !== '' &&
+      confirmedPassword.trim() !== '' &&
+      school.trim() !== ''
+    ) {
+      if (password === confirmedPassword) {
+        setCurrentStep(2);
+      }
+    } else {
+    }
+  };
+
+  //first screen in the profile creation process
   const CreateProfile = () => {
     return (
       <div className='bgc-lightLightGray p-5'>
@@ -33,35 +69,86 @@ const SignUp = () => {
               <label htmlFor='signupFullName'>
                 <p className='fs-18 fw-500'>Full Name*</p>
               </label>
-              <input className='form-control' id='signupFullName' />
+              <input
+                className='form-control'
+                id='signupFullName'
+                type='text'
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                }}
+              />
             </div>
 
             <div className='mt-4'>
               <label htmlFor='signupEmail'>
                 <p className='fs-18 fw-500'>Email*</p>
               </label>
-              <input className='form-control' id='signupEmail' />
+              <input
+                className='form-control'
+                id='signupEmail'
+                type='text'
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className='mt-4'>
+              <label htmlFor='signupPassword'>
+                <p className='fs-18 fw-500'>Password*</p>
+              </label>
+              <input
+                className='form-control'
+                id='signupPassword'
+                type='password'
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div className='mt-4'>
+              <label htmlFor='signupConfirmPassword'>
+                <p className='fs-18 fw-500'>Confirm Password*</p>
+              </label>
+              <input
+                className='form-control'
+                id='signupConfirmPassword'
+                type='password'
+                onChange={(e) => setConfirmedPassword(e.target.value)}
+              />
             </div>
 
             <div className='mt-4'>
               <label htmlFor='signupCountry'>
                 <p className='fs-18 fw-500'>Country*</p>
               </label>
-              <input className='form-control' id='signupCountry' />
+              <input
+                className='form-control'
+                id='signupCountry'
+                type='text'
+                onChange={(e) => setCountry(e.target.value)}
+              />
             </div>
 
             <div className='mt-4'>
               <label htmlFor='signupStateProvince'>
                 <p className='fs-18 fw-500'>State/Province*</p>
               </label>
-              <input className='form-control' id='signupStateProvince' />
+              <input
+                className='form-control'
+                id='signupStateProvince'
+                type='text'
+                onChange={(e) => setStateProvince(e.target.value)}
+              />
             </div>
 
             <div className='mt-4'>
               <label htmlFor='signupAccountType'>
                 <p className='fs-18 fw-500'>Type of Account*</p>
               </label>
-              <select className='form-select' id='signupAccountType'>
+              <select
+                className='form-select'
+                id='signupAccountType'
+                onChange={(e) => setAccountType(e.target.value)}
+                defaultValue={'Learner'}
+              >
                 <option value={'Learner'}>Learner</option>
                 <option value={'Educator'}>Educator</option>
                 <option value={'Admin'}>Admin</option>
@@ -72,7 +159,12 @@ const SignUp = () => {
               <label htmlFor='signupSchool'>
                 <p className='fs-18 fw-500'>School (Optional)</p>
               </label>
-              <input className='form-control' id='signupSchool' />
+              <input
+                className='form-control'
+                id='signupSchool'
+                type='text'
+                onChange={(e) => setSchool(e.target.value)}
+              />
             </div>
           </div>
 
@@ -93,9 +185,7 @@ const SignUp = () => {
             <div className='d-flex'>
               <button
                 className='btn btn-gray-shadow w-50 fs-22 p-2 ms-auto'
-                onClick={() => {
-                  setCurrentStep(2);
-                }}
+                onClick={validateProfile}
               >
                 Next
               </button>
@@ -106,6 +196,7 @@ const SignUp = () => {
     );
   };
 
+  //second screen in the profile creation process
   const TermsAndConditions = () => {
     return (
       <div className='bgc-lightLightGray p-5'>
@@ -200,6 +291,7 @@ const SignUp = () => {
     );
   };
 
+  //third and final screen in the profile creation process
   const CompleteProfile = () => {
     return (
       <div className='p-5 border text-center'>

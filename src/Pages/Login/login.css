@@ -1,0 +1,11 @@
+.socialSignUp {
+  width: 400px;
+  height: 50px;
+  border: 2px solid #c4c4c4;
+  cursor: pointer;
+}
+
+/* .socialSignUp:active {
+  outline-style: solid;
+  outline-color: #3366bb;
+} */
