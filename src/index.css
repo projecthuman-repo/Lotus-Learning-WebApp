@@ -55,35 +55,35 @@ textarea {
 }
 
 .fs-16 {
-  font-size: 16px;
+  font-size: 16px !important;
 }
 
 .fs-18 {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 
 .fs-20 {
-  font-size: 20px;
+  font-size: 20px !important;
 }
 
 .fs-22 {
-  font-size: 22px;
+  font-size: 22px !important;
 }
 
 .fs-24 {
-  font-size: 24px;
+  font-size: 24px !important;
 }
 
 .fs-26 {
-  font-size: 26px;
+  font-size: 26px !important;
 }
 
 .fs-28 {
-  font-size: 28px;
+  font-size: 28px !important;
 }
 
 .fs-30 {
-  font-size: 30px;
+  font-size: 30px !important;
 }
 
 /* font weight utility classes */
@@ -128,6 +128,10 @@ textarea {
   color: #707070;
 }
 
+.c-darkGray {
+  color: #757575;
+}
+
 .c-blue {
   color: #2699fb;
 }
@@ -159,7 +163,7 @@ textarea {
 }
 
 .bor-darkGray {
-  border-color: #757575;
+  border-color: #757575 !important;
 }
 
 .bor-blue {

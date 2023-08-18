@@ -1,4 +1,4 @@
-import Header from '../../components/Header-Components/Logged-In/Header-Logged-In';
+import Header from '../../../components/Header-Components/Logged-In/Header-Logged-In';
 
 import './CourseCompletion.css';
 

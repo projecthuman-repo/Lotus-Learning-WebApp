@@ -1,5 +1,5 @@
 import './CourseSpecific.css';
-import Header from '../../components/Header-Components/Logged-In/Header-Logged-In';
+import Header from '../../../components/Header-Components/Logged-In/Header-Logged-In';
 import { Container } from 'react-bootstrap';
 
 export default function CourseSpecific() {

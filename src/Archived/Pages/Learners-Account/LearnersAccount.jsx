@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import GameBox from '../../components/Game-Box/GameBox';
-import NotificationInfo from '../../components/Notification-Info/NotificationInfo';
-import PasswordInfo from '../../components/Password-Info/PasswordInfo';
-import PersonalInfo from '../../components/Personal-Information/PersonalInfo';
-import PreferencesInfo from '../../components/Preferences-Info/PreferencesInfo';
-import LearnersInfo from '../../components/Profile-Learners-Info/LearnersInfo';
-import SideNav from '../../Archived/Components/Side-Nav-bar/Side-Nav';
-import LearnersProfile from '../Learners-Profile/Learners-Profile';
+import GameBox from '../../../components/Game-Box/GameBox';
+import NotificationInfo from '../../../components/Notification-Info/NotificationInfo';
+import PasswordInfo from '../../../components/Password-Info/PasswordInfo';
+import PersonalInfo from '../../../components/Personal-Information/PersonalInfo';
+import PreferencesInfo from '../../../components/Preferences-Info/PreferencesInfo';
+import LearnersInfo from '../../../components/Profile-Learners-Info/LearnersInfo';
+import SideNav from '../../Components/Side-Nav-bar/Side-Nav';
+import LearnersProfile from '../../../Pages/Learners-Profile/Learners-Profile';
 
 import LearnersProfileTemplate from '../Learners-Profile-Template/Learners-Profile-Template.js';
 import './LearnersAccount.css';
