@@ -7,9 +7,9 @@ import BLNLogo from '../../Images/BLN_Logo.png';
 const Navbar = () => {
   return (
     <nav className='navbar navbar-expand-lg navbar-light bgc-lightGray'>
-      <div className='container-fluid mt-4'>
-        <Link className='navbar-brand ms-sm-5'>
-          <div className='d-flex'>
+      <div className='container mt-4'>
+        <Link className='navbar-brand mx-auto ms-sm-5'>
+          <div className='d-flex '>
             <img src={BLNLogo} width={45} alt='logo' />
             <p className='my-auto ms-2 fs-30 fw-500'>Black Lily Nursery</p>
           </div>
@@ -50,7 +50,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='nav-item mx-3'>
-              <Link className='nav-link' to={'/educator-profile'}>
+              <Link className='nav-link' to={'/profile'}>
                 <FaUserCircle size={30} color='black' />
               </Link>
             </li>

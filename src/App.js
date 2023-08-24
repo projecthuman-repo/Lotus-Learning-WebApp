@@ -28,7 +28,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Games from './Pages/Learners/Games/Games';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './Pages/Learners/Profile/Profile';
+import Profile from './Pages/Profile/Profile';
 import Contact from './Pages/Learners/Contact/Contact';
 import CourseInfo from './Pages/Learners/Course-Catalogue/Course-Info/CourseInfo';
 import AuthorInfo from './Pages/Learners/Course-Catalogue/Author-Info/AuthorInfo';
@@ -55,7 +55,7 @@ function App() {
   const user = {
     userId: 1,
     userFullName: 'John Doe',
-    userType: 'Student/Learner',
+    userType: 'Educator',
     userEmail: 'johndoe@gmail.com',
     userPassword: '******',
     userPhoneNum: '416-111-1111',
@@ -105,7 +105,7 @@ function App() {
         {/* <Route path='/LearnersLibrary' element={<LearnersLibrary />} />
         <Route path='/LearnersHelp' element={<LearnersHelp />} /> */}
         {/* <Route path='/coursecatalogue' element={<LearnersProfile />} /> */}
-        <Route path='/learner-profile' element={<Profile />} />
+        <Route path='/profile' element={<Profile />} />
         {/* <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} /> */}
         <Route path='/games' element={<Games />} />
         <Route path='/course-catalogue' element={<CourseCatalogue />} />
@@ -123,7 +123,6 @@ function App() {
         <Route path='/author/:name' element={<Author />} />
 
         {/* Educator Routes */}
-        <Route path='/educator-profile' element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

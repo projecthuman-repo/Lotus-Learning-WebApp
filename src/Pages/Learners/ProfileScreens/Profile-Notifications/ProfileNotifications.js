@@ -1,6 +1,6 @@
 import React from 'react';
-import placeHolder from '../../../../../Images/placeholderimage.PNG';
-import NotificationCard from '../../../../../components/Notification-Card/NotificationCard';
+import placeHolder from '../../../../Images/placeholderimage.PNG';
+import NotificationCard from '../../../../components/Notification-Card/NotificationCard';
 
 const ProfileNotifications = () => {
   const notis = [

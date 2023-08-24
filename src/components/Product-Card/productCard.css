@@ -1,9 +1,8 @@
 .productCard {
-  width: 275px;
+  width: 275px !important;
 }
 
 .productCardImage {
-  width: 271px;
   height: 175px;
   border-bottom-left-radius: 0px !important;
   border-bottom-right-radius: 0px !important;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiTwotoneMail } from 'react-icons/ai';
 import { BsTelephoneFill } from 'react-icons/bs';
-import Searchbar from '../../../../../components/Searchbar/Searchbar';
+import Searchbar from '../../../../components/Searchbar/Searchbar';
 import FaqDropdown from './FaqDropdown';
 
 const faqList = [

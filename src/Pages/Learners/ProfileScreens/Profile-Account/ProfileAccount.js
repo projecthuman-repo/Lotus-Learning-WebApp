@@ -1,12 +1,13 @@
 import React from 'react';
-import './profileAccount.css';
+
 import { BiPencil } from 'react-icons/bi';
+import './profileAccount.css';
 
 const ProfileAccount = () => {
   const user = JSON.parse(window.sessionStorage.getItem('user'));
 
   return (
-    <div className='px-5'>
+    <div className='px-md-4'>
       <div className='row my-5'>
         <div className='col-sm-4'>
           <img
@@ -20,7 +21,7 @@ const ProfileAccount = () => {
           <p className='fs-22 fw-600'>{user.userFullName}</p>
           <p className='fs-16'>Student/Learner</p>
           <div className='row mt-4'>
-            <div className='col-6'>
+            <div className='col-sm-6'>
               <p className='fs-14'>
                 <span className='fw-600'>Email:</span>
                 {user.userEmail}
@@ -34,7 +35,7 @@ const ProfileAccount = () => {
                 {user.userPhoneNum}
               </p>
             </div>
-            <div className='col-6'>
+            <div className='col-sm-6'>
               <p className='fs-14'>
                 <span className='fw-600'>Country:</span>
                 {user.userCountry}

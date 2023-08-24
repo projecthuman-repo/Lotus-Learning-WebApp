@@ -140,7 +140,7 @@ const Games = () => {
   ];
 
   return (
-    <div className='container-fluid'>
+    <div className='container'>
       <div className='row justify-content-center'>
         <div className='col-10 col-md-8'>
           <h1 className='text-center mt-5 mb-4'>Games</h1>
@@ -153,11 +153,11 @@ const Games = () => {
         </div>
       </div>
       <div className='row justify-content-around mt-5'>
-        <div className='col-4 col-md-3 col-xl-2'>
+        <div className='col col-sm-4 col-md-3 col-xl-2'>
           <FilterSidebar filterSidebarProps={filterSidebarProps} />
         </div>
-        <div className='col-7 col-md-9 col-xl-10'>
-          <div className='row row-cols-auto '>
+        <div className='col col-sm-7 col-md-9 col-xl-10 mt-5 mt-sm-0'>
+          <div className='row row-cols-auto justify-content-center justify-content-sm-start'>
             {currentPageGames.map((game, index) => {
               return (
                 <div className='col mb-3' key={index + game.title}>

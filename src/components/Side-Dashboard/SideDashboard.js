@@ -8,8 +8,8 @@ const SideDashboard = ({ sideDashboardOptions, setCurrentScreen }) => {
   return (
     //need to make bootstrap offcanvas for mobile view
     <div className='mt-5'>
-      <p className='fs-20 c-darkBlue fw-500'>Dashboard</p>
-      <div className='px-4 px-sm-0'>
+      <p className='fs-20 c-darkBlue fw-500'>Menu</p>
+      <div>
         {sideDashboardOptions.map((option, index) => {
           return (
             <div
@@ -32,7 +32,7 @@ const SideDashboard = ({ sideDashboardOptions, setCurrentScreen }) => {
           );
         })}
       </div>
-      <div className='px-4 px-sm-0' style={{ marginTop: '100%' }}>
+      <div style={{ marginTop: '100%' }}>
         <div>
           <div className='d-flex rounded px-3 py-2 my-4 pointer'>
             <div className='mx-auto mx-sm-0'>

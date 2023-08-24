@@ -1,8 +1,8 @@
 import React from 'react';
 // import PhotoPlaceholder from '../../../../../Images/photo.png';
 import './profileHome.css';
-import CourseInProgress from '../../CourseInProgress';
-import badgePlaceHolder from '../../../../../Images/exampleBadge.png';
+import CourseInProgress from '../CourseInProgress';
+import badgePlaceHolder from '../../../../Images/exampleBadge.png';
 
 const ProfileHome = ({ courses }) => {
   const daysOfWeek = [
@@ -21,18 +21,18 @@ const ProfileHome = ({ courses }) => {
   // console.log(user.userFullName);
 
   return (
-    <div className='px-5'>
+    <div className='px-md-4'>
       <div className='row my-5'>
-        <div className='col-sm-4'>
+        <div className='col-md-4'>
           <p className='fs-22 fw-600'>Profile (Public)</p>
           <img
             src={user.userProfilePic}
             alt='ProfilePic'
-            width={250}
-            height={250}
+            width={200}
+            height={200}
           />
         </div>
-        <div className='col-sm-8 mt-3 mt-sm-5'>
+        <div className='col-md-8 mt-3 mt-sm-5'>
           <p className='fs-22 fw-600'>{user.userFullName}</p>
           <p className='fs-16'>Student/Learner</p>
           <textarea
@@ -75,7 +75,7 @@ const ProfileHome = ({ courses }) => {
       <hr className='profileHomeHR' />
       <div className='row'>
         <p className='fs-22 fw-600'>Accomplishments</p>
-        <div className='d-flex mt-3'>
+        <div className='d-sm-flex text-center mt-3'>
           {badges.map((badge, index) => {
             return (
               <div key={index + badge} className='me-5'>

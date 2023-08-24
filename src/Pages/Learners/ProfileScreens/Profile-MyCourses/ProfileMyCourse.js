@@ -1,6 +1,6 @@
 import React from 'react';
-import CourseInProgress from '../../CourseInProgress';
-import ProductCard from '../../../../../components/Product-Card/ProductCard';
+import CourseInProgress from '../CourseInProgress';
+import ProductCard from '../../../../components/Product-Card/ProductCard';
 
 const ProfileMyCourse = ({ courses }) => {
   return (

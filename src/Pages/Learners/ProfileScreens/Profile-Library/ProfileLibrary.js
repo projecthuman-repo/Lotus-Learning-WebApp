@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductCard from '../../../../../components/Product-Card/ProductCard';
+import ProductCard from '../../../../components/Product-Card/ProductCard';
 
 const ProfileLibrary = ({ courses }) => {
   return (

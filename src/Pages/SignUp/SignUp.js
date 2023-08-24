@@ -36,27 +36,28 @@ const SignUp = () => {
 
   //this needs fixing
   const validateProfile = () => {
-    console.log(fullName);
-    console.log(email);
-    console.log(country);
-    console.log(stateProvince);
-    console.log(password);
-    console.log(confirmedPassword);
-    console.log(school);
-    if (
-      fullName.trim() !== '' &&
-      email.trim() !== '' &&
-      country.trim() !== '' &&
-      stateProvince.trim() !== '' &&
-      password.trim() !== '' &&
-      confirmedPassword.trim() !== '' &&
-      school.trim() !== ''
-    ) {
-      if (password === confirmedPassword) {
-        setCurrentStep(2);
-      }
-    } else {
-    }
+    setCurrentStep(2);
+    // console.log(fullName);
+    // console.log(email);
+    // console.log(country);
+    // console.log(stateProvince);
+    // console.log(password);
+    // console.log(confirmedPassword);
+    // console.log(school);
+    // if (
+    //   fullName.trim() !== '' &&
+    //   email.trim() !== '' &&
+    //   country.trim() !== '' &&
+    //   stateProvince.trim() !== '' &&
+    //   password.trim() !== '' &&
+    //   confirmedPassword.trim() !== '' &&
+    //   school.trim() !== ''
+    // ) {
+    //   if (password === confirmedPassword) {
+    //     setCurrentStep(2);
+    //   }
+    // } else {
+    // }
   };
 
   //first screen in the profile creation process
@@ -64,8 +65,18 @@ const SignUp = () => {
     return (
       <div className='bgc-lightLightGray p-5'>
         <div className='row '>
-          <div className='col-6 '>
-            <div className='mt-4'>
+          <div className='col-sm-6 '>
+            <div className='d-flex d-sm-none justify-content-end mt-4'>
+              <div className='d-flex flex-column'>
+                <PhotoPlaceholder />
+                <div className='d-flex mx-auto mt-3'>
+                  <FileUploadOutlinedIcon />
+                  <p className='fw-500'>Upload Profile Photo</p>
+                </div>
+              </div>
+            </div>
+
+            <div className='mt-6 mt-sm-4'>
               <label htmlFor='signupFullName'>
                 <p className='fs-18 fw-500'>Full Name*</p>
               </label>
@@ -168,7 +179,7 @@ const SignUp = () => {
             </div>
           </div>
 
-          <div className='col-6'>
+          <div className='col-sm-6 d-none d-sm-block'>
             <div className='d-flex justify-content-end mt-4'>
               <div className='d-flex flex-column'>
                 <PhotoPlaceholder />
@@ -180,11 +191,11 @@ const SignUp = () => {
             </div>
           </div>
         </div>
-        <div className='row justify-content-end p-3'>
-          <div className='col-6'>
-            <div className='d-flex'>
+        <div className='row justify-content-sm-end p-3'>
+          <div className='col-sm-6'>
+            <div className='d-flex mt-4 mt-sm-0'>
               <button
-                className='btn btn-gray-shadow w-50 fs-22 p-2 ms-auto'
+                className='btn btn-gray-shadow w-50 fs-22 p-2 mx-auto mx-sm-0 ms-sm-auto'
                 onClick={validateProfile}
               >
                 Next
@@ -199,11 +210,11 @@ const SignUp = () => {
   //second screen in the profile creation process
   const TermsAndConditions = () => {
     return (
-      <div className='bgc-lightLightGray p-5'>
+      <div className='bgc-lightLightGray p-4 p-sm-5'>
         <div className='row'>
-          <div className='pt-5 px-5 text-center bg-white'>
+          <div className='pt-5 px-3 px-sm-5 text-center bg-white'>
             <p className='fs-30 fw-600'>TERMS & CONDITIONS</p>
-            <p className='fs-14 p-5 text-start'>
+            <p className='fs-14 p-3 p-sm-5 text-start'>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
               non fringilla massa. Pellentesque porttitor ultricies risus, nec
               facilisis tortor porta ac. Nulla aliquam et nibh quis venenatis.
@@ -299,13 +310,13 @@ const SignUp = () => {
         <p className='fs-28 fw-600 mt-5'>Verify your email address</p>
         <p className='p-3'>
           Please click on the{' '}
-          <span className='text-decoration-underline'>link</span>that has just
+          <span className='text-decoration-underline'>link</span> that has just
           been sent to your{' '}
-          <span className='text-decoration-underline'>email</span>to verify your
-          email address and continue the registration process
+          <span className='text-decoration-underline'>email</span> to verify
+          your email address and continue the registration process
         </p>
 
-        <Link to={'/course-catologue'}>
+        <Link to={'/course-catalogue'}>
           <p className='text-decoration-underline'>Back to homepage</p>
         </Link>
       </div>
@@ -316,7 +327,7 @@ const SignUp = () => {
     <div className='container'>
       <div className='row justify-content-center mt-5'>
         <SetupProgressBar step={currentStep} setCurrentStep={setCurrentStep} />
-        <div className='col-10 mt-5'>{currentScreen}</div>
+        <div className='col-sm-10 mt-5 mb-1'>{currentScreen}</div>
       </div>
     </div>
   );

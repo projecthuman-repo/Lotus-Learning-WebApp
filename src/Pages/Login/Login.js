@@ -9,12 +9,12 @@ import './login.css';
 
 const Login = () => {
   return (
-    <div className='container-fluid'>
-      <div className='row justify-content-center'>
-        <div className='col-8'>
-          <div className='border border-2 rounded  my-5'>
-            <div className='row justify-content-center'>
-              <div className='col-9 text-center'>
+    <div className='container'>
+      <div className='row justify-content-center '>
+        <div className='col-sm-8 '>
+          <div className='border border-2 rounded my-5'>
+            <div className='row justify-content-center '>
+              <div className='col-10 text-center '>
                 <img
                   className='mt-5 me-5 ms-3'
                   src={Logo}
@@ -64,7 +64,7 @@ const Login = () => {
                     </p>
                   </div>
                 </div>
-                <p className='fs-14text-center pe-4 c-gray mt-3 my-5'>
+                <p className='fs-14 text-center pe-4 c-gray mt-4 my-5'>
                   Need an account?{' '}
                   <Link to={'/signup'} className='w-100'>
                     <span>Create your account</span>

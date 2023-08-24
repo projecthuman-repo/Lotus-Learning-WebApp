@@ -183,6 +183,11 @@ textarea {
   border-radius: 20px !important;
 }
 
+.borRadTop-20 {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
 /* hover utility classes */
 .pointer:hover {
   cursor: pointer;

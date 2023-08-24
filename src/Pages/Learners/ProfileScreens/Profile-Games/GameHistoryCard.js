@@ -1,11 +1,11 @@
 import React from 'react';
-import ProductCardTag from '../../../../../components/Product-Card/ProductCardTag';
+import ProductCardTag from '../../../../components/Product-Card/ProductCardTag';
 
 const GameHistoryCard = ({ product }) => {
   return (
     <div className='d-flex border borRad-15 bor-darkGray bor-shadow p-1'>
       <img
-        src={require('../../../../../Images/placeholderimage.PNG')}
+        src={require('../../../../Images/placeholderimage.PNG')}
         className='borRad-15'
         alt='...'
         width={80}
