@@ -34,6 +34,12 @@ import CourseInfo from './Pages/Learners/Course-Catalogue/Course-Info/CourseInfo
 import AuthorInfo from './Pages/Learners/Course-Catalogue/Author-Info/AuthorInfo';
 
 import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
+import Document from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Document';
+import Video from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Video';
+import Audio from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Audio';
+import Completed from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Completed';
+
+
 
 //temporary picture for user
 import tempProfilePic from './Images/photo.png';
@@ -113,6 +119,11 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/CourseInfo' element={<CourseInfo />} />
         <Route path='/AuthorInfo' element={<AuthorInfo />} />
+        <Route path='/Document' element={<Document />} />
+        <Route path='/Video' element={<Video />} />'
+        <Route path='/Audio' element={<Audio />} />'
+        <Route path='/Completed' element={<Completed />} />'
+
         {/* <Route
           path='/LearnersNotifications'
           element={<LearnersProfileNotifications />}

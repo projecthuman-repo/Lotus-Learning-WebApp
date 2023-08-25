@@ -10,6 +10,11 @@
     width: 100px;
     background-color: lightgray;
   }
+
+  .small-image {
+    max-width: 30px; /* Set the desired width */
+    height: auto; /* Automatically adjust height */
+  }
   
  
  
