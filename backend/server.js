@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-const User = require('./models/User'); // Assuming you have a User model defined
+const User = require('./models/User');
+const Game = require('./models/Game');
 
 // Create an Express app
 const app = express();
@@ -56,7 +57,7 @@ app.post('/login', async (req, res) => {
     }
 
     // Password is correct, user is authenticated
-    res.json({ message: 'Login successful' });
+    res.json({ message: 'Login successful', user: user });
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ message: 'An error occurred' });
@@ -67,6 +68,7 @@ app.post('/register', async (req, res) => {
   const { name, email, password, accountType, country, stateProvince, school } =
     req.body;
 
+  console.log(req.body);
   try {
     // Check if the user with the same email already exists
     const existingUser = await User.findOne({ email });
@@ -96,10 +98,22 @@ app.post('/register', async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res
+      .status(201)
+      .json({ message: 'User registered successfully', user: newUser });
   } catch (error) {
     console.error('Error during registration:', error);
     res.status(500).json({ message: 'An error occurred' });
+  }
+});
+
+app.get('/fetchGames', async (req, res) => {
+  try {
+    const games = await Game.find();
+    res.status(201).json({ message: 'Games fetched', games: games });
+  } catch (error) {
+    console.error('Error fetching games:', error);
+    res.status(500).json({ message: 'An error occurred fetching games' });
   }
 });
 

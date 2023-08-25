@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './games.css';
 import FilterSidebar from '../../../components/Filter-Sidebar/FilterSidebar';
 import ProductCard from '../../../components/Product-Card/ProductCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Searchbar from '../../../components/Searchbar/Searchbar';
+import fetchGames from '../../../helpers/api/fetchGames';
 
 const Games = () => {
   const [currentPageGames, setCurrentPageGames] = useState([]);
+  const [games, setCurrentGames] = useState([]);
 
   const author = JSON.parse(window.sessionStorage.getItem('author'));
+
+  useEffect(() => {
+    const setPosts = async () => {
+      try {
+        let data = await fetchGames();
+        if (data.length > 0) {
+          console.log(data);
+          setCurrentGames(data);
+          setCurrentPageGames(data);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    // setCurrentPageGames(games);
+    setPosts();
+  }, []);
 
   const handleSetCurrentPageGames = (itemOffset, endOffset) => {
     const tempCurrentGames = games.slice(itemOffset, endOffset);
@@ -46,98 +66,13 @@ const Games = () => {
     ],
   };
 
-  const games = [
-    {
-      title: 'Game 1',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 2',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 3',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 4',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 5',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 6',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 7',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 8',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 9',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 10',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 11',
-      creator: author,
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 12',
-      creator: 'Name of Creator',
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 13',
-      creator: 'Name of Creator',
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 14',
-      creator: 'Name of Creator',
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-    {
-      title: 'Game 15',
-      creator: 'Name of Creator',
-      description: 'Description of the game',
-      tags: ['Math', 'Strategy', 'Puzzle'],
-    },
-  ];
+  // const games = [
+  //   {
+  //     title: 'Game 1',
+  //     creator: author,
+  //     description: 'Description of the game',
+  //     tags: ['Math', 'Strategy', 'Puzzle'],
+  //   },
 
   return (
     <div className='container'>

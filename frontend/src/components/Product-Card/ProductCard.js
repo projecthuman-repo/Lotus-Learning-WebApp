@@ -43,12 +43,10 @@ const ProductCard = ({ product, complete }) => {
       <div className='card-body'>
         <p className='fs-18 fw-500'>{product.title}</p>
         <Link
-          to={`/author/${product.creator.userFullName}`}
+          to={`/author/${product.creator}`}
           state={{ author: product.creator }}
         >
-          <p className='fs-12 fw-500 pointer creatorName'>
-            {product.creator.userFullName}
-          </p>
+          <p className='fs-12 fw-500 pointer creatorName'>{product.creator}</p>
         </Link>
         <p className='fs-12 c-gray mb-3 mt-1'>{product.description}</p>
         <div className='row row-cols-auto g-0'>

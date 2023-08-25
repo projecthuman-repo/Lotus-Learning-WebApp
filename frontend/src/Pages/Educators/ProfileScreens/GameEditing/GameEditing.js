@@ -1,7 +1,7 @@
 import React from 'react';
 import CourseGameCard from '../../../../components/Educators/CourseGameCard/CourseGameCard';
 
-const CourseEditing = () => {
+const GameEditing = () => {
   const games = [
     {
       title: 'Game 1',
@@ -38,15 +38,15 @@ const CourseEditing = () => {
     <div className='px-md-4'>
       <div className='d-flex mt-6'>
         <div className='bgc-lightGray borRadTop-20 px-4'>
-          <p className='fs-20 fw-500'>Active Courses</p>
+          <p className='fs-20 fw-500'>Active Games</p>
         </div>
 
         <div className='bgc-lightGray borRadTop-20 px-4 ms-2'>
-          <p className='fs-20 fw-500'>Saved Courses</p>
+          <p className='fs-20 fw-500'>Saved Games</p>
         </div>
 
         <div className='ms-auto'>
-          <btn className='btn btn-outline-danger'>Create a Course</btn>
+          <btn className='btn btn-outline-danger'>Create a Game</btn>
         </div>
       </div>
 
@@ -71,4 +71,4 @@ const CourseEditing = () => {
   );
 };
 
-export default CourseEditing;
+export default GameEditing;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PhotoPlaceholder from '../../../../Images/photo.png';
 
 import { BiPencil } from 'react-icons/bi';
 import './profileAccount.css';
@@ -11,7 +12,7 @@ const ProfileAccount = () => {
       <div className='row my-5'>
         <div className='col-sm-4'>
           <img
-            src={user.userProfilePic}
+            src={PhotoPlaceholder}
             alt='ProfilePic'
             width={200}
             height={200}
@@ -23,29 +24,29 @@ const ProfileAccount = () => {
           <div className='row mt-4'>
             <div className='col-sm-6'>
               <p className='fs-14'>
-                <span className='fw-600'>Email:</span>
-                {user.userEmail}
+                <span className='fw-600'>Email: </span>
+                {user.email}
               </p>
               <p className='fs-14'>
-                <span className='fw-600'>Password:</span>
-                {user.userPassword}
+                <span className='fw-600'>Password: </span>
+                ****
               </p>
               <p className='fs-14'>
-                <span className='fw-600'>Phone Number:</span>
+                <span className='fw-600'>Phone Number: </span>
                 {user.userPhoneNum}
               </p>
             </div>
             <div className='col-sm-6'>
               <p className='fs-14'>
-                <span className='fw-600'>Country:</span>
-                {user.userCountry}
+                <span className='fw-600'>Country: </span>
+                {user.country}
               </p>
               <p className='fs-14'>
-                <span className='fw-600'>Province:</span>
-                {user.userProvince}
+                <span className='fw-600'>Province: </span>
+                {user.stateProvince}
               </p>
               <p className='fs-14'>
-                <span className='fw-600'>City:</span>
+                <span className='fw-600'>City: </span>
                 {user.userCity}
               </p>
             </div>

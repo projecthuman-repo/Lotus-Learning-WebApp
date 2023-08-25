@@ -40,11 +40,12 @@ import tempProfilePic from './Images/photo.png';
 import Author from './Pages/Learners/Author/Author';
 import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
-  //login authentification
-  // const [token, setToken] = useState();
+  // login authentification
+  const [token, setToken] = useState();
+
   // if (window.localStorage.getItem('token') === null) {
   //   return (
   //     <>
@@ -52,47 +53,48 @@ function App() {
   //     </>
   //   );
   // }
-  const user = {
-    userId: 1,
-    userFullName: 'John Doe',
-    userType: 'Educator',
-    userEmail: 'johndoe@gmail.com',
-    userPassword: '******',
-    userPhoneNum: '416-111-1111',
-    userCountry: 'Canada',
-    userProvince: 'Ontario',
-    userCity: 'Toronto',
-    userProfilePic: tempProfilePic,
-    userGender: 'Male',
-  };
+  // const user = {
+  //   userId: 1,
+  //   userFullName: 'John Doe',
+  //   userType: 'Educator',
+  //   userEmail: 'johndoe@gmail.com',
+  //   userPassword: '******',
+  //   userPhoneNum: '416-111-1111',
+  //   userCountry: 'Canada',
+  //   userProvince: 'Ontario',
+  //   userCity: 'Toronto',
+  //   userProfilePic: tempProfilePic,
+  //   userGender: 'Male',
+  // };
 
-  const author = {
-    userId: 1,
-    userFullName: 'Professor Smith',
-    userType: 'Educator',
-    userEmail: 'johndoe@gmail.com',
-    userPassword: '******',
-    userPhoneNum: '416-111-1111',
-    userCountry: 'Canada',
-    userProvince: 'Ontario',
-    userCity: 'Toronto',
-    userProfilePic: tempProfilePic,
-    userGender: 'Male',
-    userRating: '4.6/5',
-    userBio:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in turpis et odio ullamcorper posuere. Aenean risus lectus, consequat eu gravida sed, congue et nisi. Etiam suscipit erat sit amet placerat lacinia.',
-  };
+  // const author = {
+  //   userId: 1,
+  //   userFullName: 'Professor Smith',
+  //   userType: 'Educator',
+  //   userEmail: 'johndoe@gmail.com',
+  //   userPassword: '******',
+  //   userPhoneNum: '416-111-1111',
+  //   userCountry: 'Canada',
+  //   userProvince: 'Ontario',
+  //   userCity: 'Toronto',
+  //   userProfilePic: tempProfilePic,
+  //   userGender: 'Male',
+  //   userRating: '4.6/5',
+  //   userBio:
+  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in turpis et odio ullamcorper posuere. Aenean risus lectus, consequat eu gravida sed, congue et nisi. Etiam suscipit erat sit amet placerat lacinia.',
+  // };
 
-  window.sessionStorage.setItem('author', JSON.stringify(author));
-  window.sessionStorage.setItem('user', JSON.stringify(user));
+  // window.sessionStorage.setItem('author', JSON.stringify(author));
+  // window.sessionStorage.setItem('user', JSON.stringify(user));
 
   //write me a way to display the navbar component only if the user has successfully logged in
 
   return (
     <BrowserRouter>
-      <Navbar />
+      {window.sessionStorage.getItem('token') != null ? <Navbar /> : null}
+
       <Routes>
-        <Route path='/' element={<Login />} />
+        <Route path='/' element={<Login setToken={setToken} />} />
         <Route path='/signup' element={<SignUp />} />
 
         {/* <Route path='/course-catologue' element={<CourseCatalogue />} /> */}

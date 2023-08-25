@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../Images/BLN_Logo.png';
 import fbIcon from '../../Images/fb_icon.svg';
 import googleIcon from '../../Images/Googleicon.svg';
@@ -8,9 +8,11 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { Link } from 'react-router-dom';
 import './login.css';
 
-const Login = () => {
+const Login = ({ setToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,16 +32,19 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const token = await response.json();
 
-      if (response.message === 'Login successful') {
+      if (token.message === 'Login successful') {
         // Registration successful
-        console.log(data.message);
-        return <Navigate to='/games' />;
+        console.log(token.user);
+        setToken(token);
+        window.sessionStorage.setItem('token', token);
+        window.sessionStorage.setItem('user', JSON.stringify(token.user));
+        navigate('/games');
         // You might redirect the user to another page or perform other actions here
       } else {
         // Registration failed
-        console.error(data.message);
+        console.error(token.message);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -47,8 +52,8 @@ const Login = () => {
   };
 
   return (
-    <div className='container'>
-      <div className='row justify-content-center '>
+    <div className='container h-100 '>
+      <div className='row justify-content-center h-100 align-items-center'>
         <div className='col-sm-8 '>
           <div className='border border-2 rounded my-5'>
             <div className='row justify-content-center '>
@@ -79,6 +84,7 @@ const Login = () => {
                   <input
                     className='form-control '
                     placeholder='Password'
+                    type='password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />

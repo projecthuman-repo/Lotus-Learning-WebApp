@@ -14,6 +14,9 @@ import ProfileAccount from '../Learners/ProfileScreens/Profile-Account/ProfileAc
 import ProfilePrivacy from '../Learners/ProfileScreens/Profile-Privacy/ProfilePrivacy';
 import ProfileHelp from '../Learners/ProfileScreens/Profile-Help/ProfileHelp';
 import CourseEditing from '../Educators/ProfileScreens/CourseEditing/CourseEditing';
+import EducatorProfileHome from '../Educators/ProfileScreens/EducatorProfileHome/EducatorProfileHome';
+import GameEditing from '../Educators/ProfileScreens/GameEditing/GameEditing';
+import EducatorAccount from '../Educators/ProfileScreens/EducatorAccount/EducatorAccount';
 
 // import ProfileHome from '../Learners/Profile/Screens/Profile-Home/ProfileHome';
 // import ProfileMyCourse from '../Learners/Profile/Screens/Profile-MyCourses/ProfileMyCourse';
@@ -98,7 +101,7 @@ const educatorSideDashboardOptions = [
   {
     icon: <FaUserAlt className='c-blue' size={20} />,
     title: 'Profile',
-    component: <ProfileHome courses={courses} />,
+    component: <EducatorProfileHome courses={courses} />,
   },
   {
     icon: <IoMdBookmarks className='c-blue' size={20} />,
@@ -108,13 +111,13 @@ const educatorSideDashboardOptions = [
   {
     icon: <GiCardAceClubs className='c-blue' size={20} />,
     title: 'Game Editing',
-    component: <ProfileGames courses={courses} />,
+    component: <GameEditing courses={courses} />,
   },
 
   {
     icon: <FaUserAlt className='c-blue' size={20} />,
     title: 'Account',
-    component: <ProfileAccount />,
+    component: <EducatorAccount />,
   },
   {
     icon: <FaBell className='c-blue' size={20} />,
@@ -138,6 +141,7 @@ const Profile = () => {
     <ProfileHome courses={courses} />
   );
 
+  // console.log(window.sessionStorage.getItem('user'));
   const user = JSON.parse(window.sessionStorage.getItem('user'));
 
   return (
@@ -146,7 +150,7 @@ const Profile = () => {
         <div className='col-3 border-end bor-lightGray py-5 px-md-3 px-lg-5'>
           <SideDashboard
             sideDashboardOptions={
-              user.userType === 'Learner'
+              user.accountType === 'Learner'
                 ? learnerSideDashboardOptions
                 : educatorSideDashboardOptions
             }
