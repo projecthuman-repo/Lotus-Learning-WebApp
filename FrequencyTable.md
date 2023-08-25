@@ -1,7 +1,3 @@
-# BLN-WebApp
-
-## Frequency Table
-
 | Task | Estimated Time | Status |
 | ------------- | ------------- | ------------ |
 | Complete frontend to match new figma designs  | 3 weeks  | in progress |
