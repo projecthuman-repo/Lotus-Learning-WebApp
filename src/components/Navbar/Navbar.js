@@ -55,7 +55,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className='nav-item mx-3 my-auto'>
-              <Link className='nav-link'>
+              <Link className='nav-link' to={'/'}>
                 <p className='fs-16 c-black'>LOGOUT</p>
               </Link>
             </li>

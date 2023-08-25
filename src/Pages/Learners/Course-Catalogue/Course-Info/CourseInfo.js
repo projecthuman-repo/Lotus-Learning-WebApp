@@ -85,8 +85,33 @@ const CourseInfo = () => {
 
                   {/* Right Side (Details) */}
                   <Col md={9} className="course-details">
-                    <h3>{course.title}</h3>
-                    <p>{course.description}</p>
+                  <h3>{course.title}</h3>
+  <p>{course.description}</p>
+  <div className="d-flex justify-content-end align-items-center">
+    <a href="/Document" className="mx-1">
+      <img
+        src="https://img.icons8.com/?size=2x&id=fpAVFn3MN108&format=png"
+        alt="Image 1"
+        className="img-fluid small-image"
+      />
+    </a>
+    <a href="/Video" className="mx-1">
+      <img
+        src="https://img.icons8.com/?size=512&id=59756&format=png"
+        alt="Image 2"
+        className="img-fluid small-image"
+      />
+    </a>
+    <a href="/Audio" className="mx-1">
+      <img
+        src="https://img.icons8.com/?size=512&id=lRJANxH5RReH&format=png"
+        alt="Image 3"
+        className="img-fluid small-image"
+      />
+    </a>
+  
+</div>
+                  
                     {/* Add more course details here as needed */}
                   </Col>
                 </Row>
