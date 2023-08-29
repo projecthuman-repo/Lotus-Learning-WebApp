@@ -40,11 +40,15 @@ const Confetti = () => {
         ></div>
       ))}
       <div className="message">
-        <h2>Congratulations!</h2>
-        <p>You earned a badge.</p>
-        <button className="btn btn-secondary" onClick={redirectToAnotherPage}>Claim</button>
+  <span className="grey-circle"></span>
+  <h2>Congratulations!</h2>
+  <p>You earned a badge.</p>
+  <br></br>
+  <button className="btn btn-secondary" onClick={redirectToAnotherPage}>
+    Claim
+  </button>
+</div>
 
-      </div>
     </div>
   );
 };

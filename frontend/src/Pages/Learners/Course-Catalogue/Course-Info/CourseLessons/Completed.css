@@ -23,25 +23,21 @@
   
   
   .message {
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
   }
   
-  @keyframes fall {
-    to {
-      transform: translateY(100vh);
-    }
+  .grey-circle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background-color: grey;
+    border-radius: 50%;
+    position: relative;
+    top: -20px;
+    margin-right: 10px;
+    display: inline-block;
   }
-  
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
