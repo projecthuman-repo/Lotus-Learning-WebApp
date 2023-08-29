@@ -38,6 +38,7 @@ import Document from './Pages/Learners/Course-Catalogue/Course-Info/CourseLesson
 import Video from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Video';
 import Audio from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Audio';
 import Completed from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Completed';
+import ProfileHome from './Pages/Learners/ProfileScreens/Profile-Home/ProfileHome';
 
 
 
@@ -125,7 +126,7 @@ function App() {
         <Route path='/Video' element={<Video />} />'
         <Route path='/Audio' element={<Audio />} />'
         <Route path='/Completed' element={<Completed />} />'
-
+        <Route path='/ProfileHome' element={<ProfileHome />} />'
         {/* <Route
           path='/LearnersNotifications'
           element={<LearnersProfileNotifications />}
