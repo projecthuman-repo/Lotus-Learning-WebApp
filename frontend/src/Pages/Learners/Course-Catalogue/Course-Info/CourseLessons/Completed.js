@@ -3,7 +3,7 @@ import './Completed.css';
 
 const Confetti = () => {
     const redirectToAnotherPage = () => {
-        window.location.href = '/educator-profile';
+        window.location.href = '/profile';
     };
   const [confettiItems, setConfettiItems] = useState([]);
 
@@ -16,7 +16,7 @@ const Confetti = () => {
           ...confettiItems,
           {
             left: Math.random() * 100,
-            animationDelay: Math.random() * 3,
+            animationDelay: Math.random() * 0,
             color: colors[Math.floor(Math.random() * colors.length)],
           },
         ]);
