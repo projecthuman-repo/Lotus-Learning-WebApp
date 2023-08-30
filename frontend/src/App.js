@@ -34,12 +34,6 @@ import CourseInfo from './Pages/Learners/Course-Catalogue/Course-Info/CourseInfo
 import AuthorInfo from './Pages/Learners/Course-Catalogue/Author-Info/AuthorInfo';
 
 import CourseCatalogue from './Pages/Learners/Course-Catalogue/course-catalogue';
-import Document from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Document';
-import Video from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Video';
-import Audio from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Audio';
-import Completed from './Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Completed';
-
-
 
 //temporary picture for user
 import tempProfilePic from './Images/photo.png';
@@ -47,6 +41,10 @@ import Author from './Pages/Learners/Author/Author';
 import Login from './Pages/Login/Login';
 import SignUp from './Pages/SignUp/SignUp';
 import { useEffect, useState } from 'react';
+import Confetti from './Pages/Course-Catalogue/Course-Info/CourseLessons/Completed';
+import Video from './Pages/Course-Catalogue/Course-Info/CourseLessons/Video';
+import Document from './Pages/Course-Catalogue/Course-Info/CourseLessons/Document';
+import Audio from './Pages/Course-Catalogue/Course-Info/CourseLessons/Audio';
 
 function App() {
   // login authentification
@@ -102,39 +100,17 @@ function App() {
       <Routes>
         <Route path='/' element={<Login setToken={setToken} />} />
         <Route path='/signup' element={<SignUp />} />
-
-        {/* <Route path='/course-catologue' element={<CourseCatalogue />} /> */}
-        {/* <Route path='/signup' element={<SignUpPage />} /> */}
-        {/* <Route path='/LearnersSignUp' element={<LearnersSignUp />} />
-        <Route path='/personalprofile' element={<LearnersAccountPage />} />
-        <Route path='/LearnersGamesPage' element={<LearnersGamesPage />} />
-        <Route path='/ProfileMyCourses' element={<ProfileMyCourses />} /> */}
-        {/* <Route path="/CourseProgress" element={<CourseProgessPage />} /> */}
-        {/* <Route path='/LearnersLibrary' element={<LearnersLibrary />} />
-        <Route path='/LearnersHelp' element={<LearnersHelp />} /> */}
-        {/* <Route path='/coursecatalogue' element={<LearnersProfile />} /> */}
         <Route path='/profile' element={<Profile />} />
-        {/* <Route path='/CourseProgressPage2' element={<CourseProgressPage2 />} /> */}
         <Route path='/games' element={<Games />} />
         <Route path='/course-catalogue' element={<CourseCatalogue />} />
-
         <Route path='/contact' element={<Contact />} />
-        <Route path='/CourseInfo' element={<CourseInfo />} />
-        <Route path='/AuthorInfo' element={<AuthorInfo />} />
+        {/* <Route path='/CourseInfo' element={<CourseInfo />} />
+        <Route path='/AuthorInfo' element={<AuthorInfo />} /> */}
         <Route path='/Document' element={<Document />} />
         <Route path='/Video' element={<Video />} />'
         <Route path='/Audio' element={<Audio />} />'
-        <Route path='/Completed' element={<Completed />} />'
-
-        {/* <Route
-          path='/LearnersNotifications'
-          element={<LearnersProfileNotifications />}
-        /> */}
-        {/* <Route path='/Security' element={<PrivacySecurity />} />
-        <Route path='/CourseSpecific' element={<CourseSpecific />} /> */}
-
-        <Route path='/author/:name' element={<Author />} />
-
+        <Route path='/Completed' element={<Confetti />} />'
+        <Route path='/creator/:id' element={<Author />} />
         {/* Educator Routes */}
       </Routes>
     </BrowserRouter>

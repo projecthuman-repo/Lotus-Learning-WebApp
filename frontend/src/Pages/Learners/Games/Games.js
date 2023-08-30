@@ -9,7 +9,7 @@ import fetchGames from '../../../helpers/api/fetchGames';
 
 const Games = () => {
   const [currentPageGames, setCurrentPageGames] = useState([]);
-  const [games, setCurrentGames] = useState([]);
+  const [games, setGames] = useState([]);
 
   const author = JSON.parse(window.sessionStorage.getItem('author'));
 
@@ -18,9 +18,8 @@ const Games = () => {
       try {
         let data = await fetchGames();
         if (data.length > 0) {
-          console.log(data);
-          setCurrentGames(data);
-          setCurrentPageGames(data);
+          setGames(data);
+          setCurrentPageGames(data.slice(0, 12));
         }
       } catch (error) {
         console.error('Error:', error);
@@ -65,14 +64,6 @@ const Games = () => {
       },
     ],
   };
-
-  // const games = [
-  //   {
-  //     title: 'Game 1',
-  //     creator: author,
-  //     description: 'Description of the game',
-  //     tags: ['Math', 'Strategy', 'Puzzle'],
-  //   },
 
   return (
     <div className='container'>

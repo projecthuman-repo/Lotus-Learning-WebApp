@@ -33,33 +33,46 @@ const wordDocumentContent = `
     ...
 `;
 
-function App() {
-    const redirectToAnotherPage = () => {
-        window.location.href = '/Video';
-    };
-    return (
-        <div className="d-flex flex-column vh-80">
-            <div className="container">
-                <h2 className="mt-5">Title of Course</h2>
-                
-                <p className="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id leo est. Ut sit amet turpis accumsan, faucibus eros sed, tempus est. Morbi dapibus felis vitae mi ornare dapibus. Curabitur vitae consectetur libero, a feugiat ante. Mauris blandit dui interdum lorem pharetra accumsan. Pellentesque efficitur ipsum et tortor porttitor viverra</p>
-            </div>
-            
-            <div className="container bg-light p-4 mt-auto rounded-lg" style={{ overflowX: 'hidden' }}>
-                <div className="word-document" dangerouslySetInnerHTML={{ __html: wordDocumentContent }} />
-            </div>
-            
-            <div className="container mt-3 d-flex justify-content-between">
-                <div className="d-flex">
-                    <button className="btn btn-secondary">Download</button>
-                    <button className="btn btn-secondary ml-2">Print</button>
-                </div>
-            
-                <button className="btn btn-secondary" onClick={redirectToAnotherPage}>Next</button>
-        
-            </div>
+function Document() {
+  const redirectToAnotherPage = () => {
+    window.location.href = '/Video';
+  };
+  return (
+    <div className='d-flex flex-column vh-80'>
+      <div className='container'>
+        <h2 className='mt-5'>Title of Course</h2>
+
+        <p className='lead'>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id leo
+          est. Ut sit amet turpis accumsan, faucibus eros sed, tempus est. Morbi
+          dapibus felis vitae mi ornare dapibus. Curabitur vitae consectetur
+          libero, a feugiat ante. Mauris blandit dui interdum lorem pharetra
+          accumsan. Pellentesque efficitur ipsum et tortor porttitor viverra
+        </p>
+      </div>
+
+      <div
+        className='container bg-light p-4 mt-auto rounded-lg'
+        style={{ overflowX: 'hidden' }}
+      >
+        <div
+          className='word-document'
+          dangerouslySetInnerHTML={{ __html: wordDocumentContent }}
+        />
+      </div>
+
+      <div className='container mt-3 d-flex justify-content-between'>
+        <div className='d-flex'>
+          <button className='btn btn-secondary'>Download</button>
+          <button className='btn btn-secondary ml-2'>Print</button>
         </div>
-    );
+
+        <button className='btn btn-secondary' onClick={redirectToAnotherPage}>
+          Next
+        </button>
+      </div>
+    </div>
+  );
 }
 
-export default App;
+export default Document;

@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   accountType: {
     type: String,
+    enum: ['Learner', 'Educator', 'Admin'],
     required: true,
   },
   country: {
@@ -29,6 +30,10 @@ const userSchema = new mongoose.Schema({
   },
   school: {
     type: String,
+  },
+  profilePic: {
+    type: String,
+    required: true,
   },
 });
 
