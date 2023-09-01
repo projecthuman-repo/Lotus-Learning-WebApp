@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PhotoPlaceholder from '../../components/PhotoPlaceholder/PhotoPlaceholder';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 
@@ -11,34 +11,38 @@ const CreateProfile = ({ setCurrentStep }) => {
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [school, setSchool] = useState('');
+  const profilePic = useRef(null);
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    console.log(e);
+    // console.log(e);
 
-    const formData = {
-      name,
-      email,
-      password,
-      accountType,
-      country,
-      stateProvince,
-      school,
-    };
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('accountType', accountType);
+    formData.append('country', country);
+    formData.append('stateProvince', stateProvince);
+    formData.append('school', school);
+    formData.append('profilePic', profilePic.current.files[0]);
 
-    // console.log(JSON.stringify(formData));
+    // for (const value of formData.values()) {
+    //   console.log(value);
+    // }
+    // console.log(formData.values());
     try {
       const response = await fetch('http://localhost:5000/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
+        body: formData,
       });
 
+      // console.log('Data: ' + response.json());
       const data = await response.json();
-      console.log(data);
 
       if (data.message === 'User registered successfully') {
         // Registration successful
@@ -55,11 +59,16 @@ const CreateProfile = ({ setCurrentStep }) => {
     }
   };
 
+  const onProfilePicClick = () => {
+    profilePic.current.click();
+  };
+
   return (
-    <form onSubmit={(e) => handleRegister(e)}>
+    <form onSubmit={(e) => handleRegister(e)} encType='multipart/form-data'>
       <div className='bgc-lightLightGray p-5'>
         <div className='row '>
           <div className='col-sm-6 '>
+            {/* This is repeating only for mobile view */}
             <div className='d-flex d-sm-none justify-content-end mt-4'>
               <div className='d-flex flex-column'>
                 <PhotoPlaceholder />
@@ -72,7 +81,7 @@ const CreateProfile = ({ setCurrentStep }) => {
 
             <div className='mt-6 mt-sm-4'>
               <label htmlFor='signupFullName'>
-                <p className='fs-18 fw-500'>Full Name* {name}</p>
+                <p className='fs-18 fw-500'>Full Name*</p>
               </label>
               <input
                 className='form-control'
@@ -183,11 +192,17 @@ const CreateProfile = ({ setCurrentStep }) => {
 
           <div className='col-sm-6 d-none d-sm-block'>
             <div className='d-flex justify-content-end mt-4'>
-              <div className='d-flex flex-column'>
+              <div className='d-flex flex-column' onClick={onProfilePicClick}>
                 <PhotoPlaceholder />
                 <div className='d-flex mx-auto mt-3'>
                   <FileUploadOutlinedIcon />
-                  <p className='fw-500'>Upload Profile Photo</p>
+                  Upload Profile Photo
+                  <input
+                    type='file'
+                    name='profilePic'
+                    ref={profilePic}
+                    style={{ display: 'none' }}
+                  />
                 </div>
               </div>
             </div>
