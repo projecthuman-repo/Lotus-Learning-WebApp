@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   accountType: {
     type: String,
+    enum: ['Learner', 'Educator', 'Admin'],
     required: true,
   },
   country: {
@@ -30,22 +31,26 @@ const userSchema = new mongoose.Schema({
   school: {
     type: String,
   },
+  // profilePic: {
+  //   type: String,
+  //   required: true,
+  // },
 });
 
 // Hash the password before saving
-userSchema.pre('save', async function (next) {
-  try {
-    if (!this.isModified('password')) {
-      return next();
-    }
+// userSchema.pre('save', async function (next) {
+//   try {
+//     if (!this.isModified('password')) {
+//       return next();
+//     }
 
-    const hashedPassword = await bcrypt.hash(this.password, 10);
-    this.password = hashedPassword;
-    next();
-  } catch (error) {
-    return next(error);
-  }
-});
+//     const hashedPassword = await bcrypt.hash(this.password, 10);
+//     this.password = hashedPassword;
+//     next();
+//   } catch (error) {
+//     return next(error);
+//   }
+// });
 
 const User = mongoose.model('User', userSchema);
 

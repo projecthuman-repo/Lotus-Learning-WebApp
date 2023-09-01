@@ -1,5 +1,5 @@
 import React from 'react';
-import PhotoPlaceholder from '../../../../Images/photo.png';
+// import PhotoPlaceholder from '../../../../../../backend/uploads/';
 import './profileHome.css';
 import CourseInProgress from '../CourseInProgress';
 import badgePlaceHolder from '../../../../Images/exampleBadge.png';
@@ -18,6 +18,7 @@ const ProfileHome = ({ courses }) => {
   const badges = ['Coding HTML', 'Algebra III', 'Algebra I'];
 
   const user = JSON.parse(window.sessionStorage.getItem('user'));
+  console.log(user);
 
   return (
     <div className='px-md-4'>
@@ -25,7 +26,7 @@ const ProfileHome = ({ courses }) => {
         <div className='col-md-4'>
           <p className='fs-22 fw-600'>Profile (Public)</p>
           <img
-            src={PhotoPlaceholder}
+            src={`/uploads/${user.profilePic}`}
             alt='ProfilePic'
             width={200}
             height={200}

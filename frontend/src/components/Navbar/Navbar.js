@@ -61,7 +61,9 @@ const Navbar = () => {
                 onClick={() => {
                   window.sessionStorage.removeItem('token');
                 }}
-              ></Link>
+              >
+                <p className='fs-20 c-black'>LOGOUT</p>
+              </Link>
             </li>
           </ul>
         </div>
