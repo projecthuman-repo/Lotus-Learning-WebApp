@@ -8,31 +8,62 @@ import { Link } from 'react-router-dom';
 import fetchCourses from '../../../helpers/api/fetchCourses';
 import Searchbar from '../../../components/Searchbar/Searchbar';
 import CourseCard from '../../../components/CourseCard/CourseCard';
+import { useQuery } from '@apollo/client';
+import { gql } from 'graphql-tag';
+
+const GET_COURSES = gql`
+  query {
+    courses {
+      _id
+      title
+      creator
+      description
+      age
+      subject
+    }
+  }
+`;
 
 const Courses = () => {
   const [currentPageCourse, setCurrentPageCourses] = useState([]);
-  const [courses, setCurrentCourses] = useState([]);
-
-  const author = JSON.parse(window.sessionStorage.getItem('author'));
+  const [courses, setCourses] = useState([]);
+  const { loading, error, data } = useQuery(GET_COURSES);
 
   useEffect(() => {
-    const setPosts = async () => {
-      try {
-        let data = await fetchCourses();
-        console.log(data);
-        if (data.length > 0) {
-          console.log(data);
-          setCurrentCourses(data);
-          setCurrentPageCourses(data);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
+    // if (loading) return <p>Loading...</p>;
+    // if (error) return <p>Error: {error.message}</p>;
+    console.log(data);
+    if (data) {
+      setCourses(data.courses);
+      setCurrentPageCourses(data.courses);
+    }
+  }, [data]);
 
-    // setCurrentPageGames(games);
-    setPosts();
-  }, []);
+  // const author = JSON.parse(window.sessionStorage.getItem('author'));
+
+  // const { loading, error, data } = useQuery(GET_COURSES);
+
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error.message}</p>;
+
+  // useEffect(() => {
+  //   const setPosts = async () => {
+  //     try {
+  //       let data = await fetchCourses();
+  //       console.log(data);
+  //       if (data.length > 0) {
+  //         console.log(data);
+  //         setCurrentCourses(data);
+  //         setCurrentPageCourses(data);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   };
+
+  //   // setCurrentPageGames(games);
+  //   setPosts();
+  // }, []);
 
   const handleSetCurrentPageCourses = (itemOffset, endOffset) => {
     const tempCurrentGames = courses.slice(itemOffset, endOffset);
