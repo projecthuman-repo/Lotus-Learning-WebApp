@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 
 module.exports = {
+  /* The `createUser` function is an asynchronous function that takes an argument `args`. It is
+  responsible for creating a new user in the database. */
   createUser: async (args) => {
     try {
       const existingUser = await User.findOne({ email: args.userInput.email });
@@ -30,6 +32,10 @@ module.exports = {
       throw err;
     }
   },
+  /* The `login` function is an asynchronous function that takes an object with `email` and `password`
+  properties as its argument. It is responsible for authenticating a user by checking if the
+  provided email exists in the database and if the provided password matches the hashed password
+  stored in the database. */
   login: async ({ email, password }) => {
     try {
       const user = await User.findOne({ email: email });
@@ -47,7 +53,7 @@ module.exports = {
           userId: user.id,
           email: user.email,
         },
-        'somesupersecretkey',
+        'secretkey',
         {
           expiresIn: '1h',
         }

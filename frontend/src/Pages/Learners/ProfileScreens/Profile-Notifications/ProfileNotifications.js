@@ -1,5 +1,5 @@
 import React from 'react';
-import placeHolder from '../../../../Images/placeholderimage.PNG';
+import placeHolder from '../../../../images/placeholderimage.PNG';
 import NotificationCard from '../../../../components/Notification-Card/NotificationCard';
 
 const ProfileNotifications = () => {

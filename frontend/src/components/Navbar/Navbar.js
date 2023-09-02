@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { VscBellDot } from 'react-icons/vsc';
 import { FaUserCircle } from 'react-icons/fa';
-import BLNLogo from '../../Images/BLN_Logo.png';
+import BLNLogo from '../../images/BLN_Logo.png';
 import { useAuth } from '../../context/auth-context';
 
 const Navbar = () => {

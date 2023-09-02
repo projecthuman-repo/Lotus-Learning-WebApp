@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../Images/BLN_Logo.png';
+import Logo from '../../images/BLN_Logo.png';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Link } from 'react-router-dom';
@@ -16,6 +16,11 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  /* 
+  - useLazyQuery hook from Apollo Client to execute a GraphQL query called `LOGIN_QUERY`.
+  - loginQuery is used to trigger the useLazyQuery
+  - loading/error/data are the states of the query
+  */
   const [loginQuery, { loading, error, data }] = useLazyQuery(LOGIN_QUERY);
 
   useEffect(() => {

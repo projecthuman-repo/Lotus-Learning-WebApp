@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import './sideDashboard.css';
 
+// Side dashboard for profile section
+
 const SideDashboard = ({ sideDashboardOptions, setCurrentScreen }) => {
   const [highlightedOption, setHighlightedOption] = useState(-1);
 

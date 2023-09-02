@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PhotoPlaceholder from '../../components/PhotoPlaceholder/PhotoPlaceholder';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import { useMutation } from '@apollo/client';
-import { CREATE_USER_MUTATION } from '../../helpers/api/queries';
+import { CREATE_USER_MUTATION } from '../../helpers/api/mutations';
 
 const CreateProfile = ({
   setCurrentStep,
@@ -39,7 +39,9 @@ const CreateProfile = ({
       setAcceptedEmail(email);
       setAcceptedPassword(password);
       setCurrentStep(2);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // const onProfilePicClick = () => {

@@ -21,6 +21,12 @@ const courseSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  lessons: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Lesson',
+    },
+  ],
 });
 
 const Course = mongoose.model('Course', courseSchema);

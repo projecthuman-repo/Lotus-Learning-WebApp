@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { BiSearch } from 'react-icons/bi';
 import './course-catalogue.css';
 import FilterSidebar from '../../../components/Filter-Sidebar/FilterSidebar';
-import ProductCard from '../../../components/Product-Card/ProductCard';
 import Pagination from '../../../components/Pagination/Pagination';
-import { Link } from 'react-router-dom';
-import fetchCourses from '../../../helpers/api/fetchCourses';
 import Searchbar from '../../../components/Searchbar/Searchbar';
 import CourseCard from '../../../components/CourseCard/CourseCard';
 import { useQuery } from '@apollo/client';
@@ -32,11 +28,13 @@ const Courses = () => {
 
   useEffect(() => {
     if (loading) {
+      //we can return a loading symbol
     }
     if (error) {
-      console.log(error);
+      //we can return an error message
     }
     if (data) {
+      //set the courses we are going to display
       setCourses(data.getCourses);
       setCurrentPageCourses(data.getCourses);
     }

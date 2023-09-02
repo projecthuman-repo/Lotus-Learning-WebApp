@@ -2,6 +2,10 @@ const Course = require('../../models/Course');
 const { transformCourse } = require('./merge');
 
 module.exports = {
+  /* The `getCourses` function is an asynchronous function that retrieves all courses from the database
+  using the `Course.find()` method. It then maps over the array of courses and transforms each course
+  using the `transformCourse` function. The transformed courses are then returned as an array. If an
+  error occurs during the retrieval process, the error is thrown. */
   getCourses: async () => {
     try {
       const courses = await Course.find();
@@ -13,10 +17,15 @@ module.exports = {
     }
   },
 
+  /*The `createCourse` function is an asynchronous function that creates a new course in the database.
+  The code `if (!req.isAuth) { throw new Error('Unauthenticated'); }` is checking if the user
+  making the request is authenticated. If the user is not authenticated, it throws an error with
+  the message 'Unauthenticated'. This is a security measure to ensure that only authenticated
+  users can create a new course in the database. */
   createCourse: async (args, req) => {
-    // if (!req.isAuth) {
-    //   throw new Error('Unauthenticated');
-    // }
+    if (!req.isAuth) {
+      throw new Error('Unauthenticated');
+    }
     const course = new Course({
       title: args.courseInput.title,
       description: args.courseInput.description,

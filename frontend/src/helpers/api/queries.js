@@ -1,14 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const CREATE_USER_MUTATION = gql`
-  mutation CreateUser($userInput: UserInput!) {
-    createUser(userInput: $userInput) {
-      _id
-      email
-      password
-    }
-  }
-`;
+/* The code is defining GraphQL queries using the `gql` function from the `@apollo/client` library. */
 
 export const LOGIN_QUERY = gql`
   query Login($email: String!, $password: String!) {
@@ -19,6 +11,3 @@ export const LOGIN_QUERY = gql`
     }
   }
 `;
-
-// export default CREATE_USER_MUTATION;
-// export default CREATE_USER_MUTATION;

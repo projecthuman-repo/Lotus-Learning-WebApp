@@ -37,7 +37,7 @@ const CourseCard = ({ course }) => {
         </div>
       </div>
       <img
-        src={require('../../Images/placeholderimage.PNG')}
+        src={require('../../images/placeholderimage.PNG')}
         className='card-img-top borRad-15 productCardImage'
         alt='...'
       />

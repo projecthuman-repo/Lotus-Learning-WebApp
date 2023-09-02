@@ -1,6 +1,5 @@
 import React from 'react';
-import PhotoPlaceholder from '../../../../Images/photo.png';
-import badgePlaceHolder from '../../../../Images/exampleBadge.png';
+import PhotoPlaceholder from '../../../../images/photo.png';
 
 const EducatorProfileHome = ({ courses }) => {
   const badges = ['Coding HTML', 'Algebra III', 'Algebra I'];

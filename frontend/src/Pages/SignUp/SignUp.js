@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Placeholder from '../../Images/placeholderimage.PNG';
+import Placeholder from '../../images/placeholderimage.PNG';
 import { useNavigate } from 'react-router-dom';
 import SetupProgressBar from '../../components/SetupProgressBar/SetupProgressBar';
 import CreateProfile from './CreateProfile';

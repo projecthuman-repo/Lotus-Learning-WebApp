@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import './pagination.css';
 
+/**
+ * The `Pagination` component is a reusable component in JavaScript that handles pagination logic and
+ * rendering using the ReactPaginate library.
+ * @returns The Pagination component is returning a ReactPaginate component with various props and
+ * classNames.
+ */
 const Pagination = ({ itemsPerPage, items, handleSetCurrentPageItems }) => {
   const [itemOffset, setItemOffset] = useState(0);
 
