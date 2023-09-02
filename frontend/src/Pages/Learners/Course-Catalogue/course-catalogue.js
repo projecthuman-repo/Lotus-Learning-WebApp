@@ -11,15 +11,16 @@ import CourseCard from '../../../components/CourseCard/CourseCard';
 import { useQuery } from '@apollo/client';
 import { gql } from 'graphql-tag';
 
-const GET_COURSES = gql`
+const GET_COURSES_QUERY = gql`
   query {
-    courses {
-      _id
+    getCourses {
       title
-      creator
       description
       age
       subject
+      creator {
+        name
+      }
     }
   }
 `;
@@ -27,43 +28,19 @@ const GET_COURSES = gql`
 const Courses = () => {
   const [currentPageCourse, setCurrentPageCourses] = useState([]);
   const [courses, setCourses] = useState([]);
-  const { loading, error, data } = useQuery(GET_COURSES);
+  const { loading, error, data } = useQuery(GET_COURSES_QUERY);
 
   useEffect(() => {
-    // if (loading) return <p>Loading...</p>;
-    // if (error) return <p>Error: {error.message}</p>;
-    console.log(data);
-    if (data) {
-      setCourses(data.courses);
-      setCurrentPageCourses(data.courses);
+    if (loading) {
     }
-  }, [data]);
-
-  // const author = JSON.parse(window.sessionStorage.getItem('author'));
-
-  // const { loading, error, data } = useQuery(GET_COURSES);
-
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error.message}</p>;
-
-  // useEffect(() => {
-  //   const setPosts = async () => {
-  //     try {
-  //       let data = await fetchCourses();
-  //       console.log(data);
-  //       if (data.length > 0) {
-  //         console.log(data);
-  //         setCurrentCourses(data);
-  //         setCurrentPageCourses(data);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //     }
-  //   };
-
-  //   // setCurrentPageGames(games);
-  //   setPosts();
-  // }, []);
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      setCourses(data.getCourses);
+      setCurrentPageCourses(data.getCourses);
+    }
+  }, [data, loading, error]);
 
   const handleSetCurrentPageCourses = (itemOffset, endOffset) => {
     const tempCurrentGames = courses.slice(itemOffset, endOffset);
@@ -100,14 +77,6 @@ const Courses = () => {
       },
     ],
   };
-
-  // const games = [
-  //   {
-  //     title: 'Game 1',
-  //     creator: author,
-  //     description: 'Description of the game',
-  //     tags: ['Math', 'Strategy', 'Puzzle'],
-  //   },
 
   return (
     <div className='container'>
@@ -146,8 +115,6 @@ const Courses = () => {
               items={courses}
               handleSetCurrentPageItems={handleSetCurrentPageCourses}
             />
-            {/* <p className='c-gray'>Previous Page</p>
-            <p className='text-decoration-underline'>Next Page</p> */}
           </div>
         </div>
       </div>

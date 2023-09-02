@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Completed.css';
+import { Link } from 'react-router-dom';
 
-const Confetti = () => {
+const Completed = () => {
   const redirectToAnotherPage = () => {
     window.location.href = '/profile';
   };
@@ -46,12 +47,12 @@ const Confetti = () => {
         <h2>Congratulations!</h2>
         <p>You earned a badge.</p>
         <br></br>
-        <button className='btn btn-secondary' onClick={redirectToAnotherPage}>
-          Claim
-        </button>
+        <Link to={'/profile'}>
+          <button className='btn btn-secondary'>Claim</button>
+        </Link>
       </div>
     </div>
   );
 };
 
-export default Confetti;
+export default Completed;
