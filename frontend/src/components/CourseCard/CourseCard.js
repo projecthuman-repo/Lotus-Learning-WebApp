@@ -1,29 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import ProductCardTag from '../Product-Card/ProductCardTag';
-import fetchUserById from '../../helpers/api/fetchUserById';
 
 const CourseCard = ({ course }) => {
-  const [creatorName, setCreatorName] = useState('');
-
-  useEffect(() => {
-    const setCreator = async () => {
-      try {
-        let user = await fetchUserById(course.creator);
-        if (user) {
-          setCreatorName(user.name);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    // setCurrentPageGames(games);
-    setCreator();
-  }, []);
-
   return (
     <div className='card border-2 bor-darkGray borRad-15 productCard'>
       <div
@@ -56,7 +37,7 @@ const CourseCard = ({ course }) => {
         </div>
       </div>
       <img
-        src={require('../../Images/placeholderimage.PNG')}
+        src={require('../../images/placeholderimage.PNG')}
         className='card-img-top borRad-15 productCardImage'
         alt='...'
       />
@@ -66,7 +47,9 @@ const CourseCard = ({ course }) => {
           to={`/creator/${course.creator}`}
           state={{ author: course.creator }}
         >
-          <p className='fs-12 fw-500 pointer creatorName'>{creatorName}</p>
+          <p className='fs-12 fw-500 pointer creatorName'>
+            {course.creator.name}
+          </p>
         </Link>
         <p className='fs-12 c-gray mb-3 mt-1'>{course.description}</p>
         <div className='row row-cols-auto g-0'>

@@ -5,30 +5,27 @@ import FilterSidebar from '../../../components/Filter-Sidebar/FilterSidebar';
 import ProductCard from '../../../components/Product-Card/ProductCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Searchbar from '../../../components/Searchbar/Searchbar';
-import fetchGames from '../../../helpers/api/fetchGames';
 
 const Games = () => {
   const [currentPageGames, setCurrentPageGames] = useState([]);
   const [games, setGames] = useState([]);
 
-  const author = JSON.parse(window.sessionStorage.getItem('author'));
+  // useEffect(() => {
+  //   const setPosts = async () => {
+  //     try {
+  //       let data = await fetchGames();
+  //       if (data.length > 0) {
+  //         setGames(data);
+  //         setCurrentPageGames(data.slice(0, 12));
+  //       }
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   };
 
-  useEffect(() => {
-    const setPosts = async () => {
-      try {
-        let data = await fetchGames();
-        if (data.length > 0) {
-          setGames(data);
-          setCurrentPageGames(data.slice(0, 12));
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-
-    // setCurrentPageGames(games);
-    setPosts();
-  }, []);
+  //   // setCurrentPageGames(games);
+  //   setPosts();
+  // }, []);
 
   const handleSetCurrentPageGames = (itemOffset, endOffset) => {
     const tempCurrentGames = games.slice(itemOffset, endOffset);
@@ -102,8 +99,6 @@ const Games = () => {
               items={games}
               handleSetCurrentPageItems={handleSetCurrentPageGames}
             />
-            {/* <p className='c-gray'>Previous Page</p>
-            <p className='text-decoration-underline'>Next Page</p> */}
           </div>
         </div>
       </div>

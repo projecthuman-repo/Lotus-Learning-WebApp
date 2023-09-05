@@ -2,7 +2,7 @@ import React from 'react';
 // import PhotoPlaceholder from '../../../../../../backend/uploads/';
 import './profileHome.css';
 import CourseInProgress from '../CourseInProgress';
-import badgePlaceHolder from '../../../../Images/exampleBadge.png';
+import badgePlaceHolder from '../../../../images/exampleBadge.png';
 
 const ProfileHome = ({ courses }) => {
   const daysOfWeek = [

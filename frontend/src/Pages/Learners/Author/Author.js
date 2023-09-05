@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import profilePic from '../../../Images/photo.png';
+import profilePic from '../../../images/photo.png';
 import { useLocation } from 'react-router-dom';
 
 const Author = () => {

@@ -1,12 +1,7 @@
 import React from 'react';
-import { IoCheckmarkSharp } from 'react-icons/io5';
-import { ProgressBar } from 'react-bootstrap';
 import './setupProgressBar.css';
 
 const SetupProgressBar = ({ step, setCurrentStep }) => {
-  const Checkmark = () => {
-    return <IoCheckmarkSharp color='black' />;
-  };
   const onCircleClick = (stepClicked) => {
     if (stepClicked < step) {
       setCurrentStep(stepClicked);
@@ -40,7 +35,6 @@ const SetupProgressBar = ({ step, setCurrentStep }) => {
               : 'progress-circle-noncurrent text-center pointer'
           }
           onClick={() => onCircleClick(3)}
-          // className='progress-circle-unfinished'
         ></div>
       </div>
       <div className='d-flex justify-content-center text-center text-nowrap mx-sm-5 mt-2'>

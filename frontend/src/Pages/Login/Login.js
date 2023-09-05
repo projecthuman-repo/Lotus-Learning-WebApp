@@ -1,54 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../Images/BLN_Logo.png';
-import fbIcon from '../../Images/fb_icon.svg';
-import googleIcon from '../../Images/Googleicon.svg';
+import Logo from '../../images/BLN_Logo.png';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Link } from 'react-router-dom';
 import './login.css';
+import { useLazyQuery } from '@apollo/client';
+import { useAuth } from '../../context/auth-context';
+import { LOGIN_QUERY } from '../../helpers/api/queries';
 
-const Login = ({ setToken }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  /* 
+  - useLazyQuery hook from Apollo Client to execute a GraphQL query called `LOGIN_QUERY`.
+  - loginQuery is used to trigger the useLazyQuery
+  - loading/error/data are the states of the query
+  */
+  const [loginQuery, { loading, error, data }] = useLazyQuery(LOGIN_QUERY);
 
-    console.log(password);
-    const formData = {
-      email,
-      password,
-    };
-
-    try {
-      const response = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const token = await response.json();
-
-      if (token.message === 'Login successful') {
-        // Registration successful
-        console.log(token.user);
-        setToken(token);
-        window.sessionStorage.setItem('token', token);
-        window.sessionStorage.setItem('user', JSON.stringify(token.user));
-        navigate('/games');
-        // You might redirect the user to another page or perform other actions here
-      } else {
-        // Registration failed
-        console.error(token.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
+  useEffect(() => {
+    if (data && data.login) {
+      const { token } = data.login;
+      login(token);
+      navigate('/courses');
     }
+  }, [data]);
+
+  const handleLogin = () => {
+    loginQuery({ variables: { email, password } });
   };
 
   return (
@@ -64,10 +48,6 @@ const Login = ({ setToken }) => {
                   alt='Logo'
                   width={'70px'}
                 ></img>
-                {/* <div className='d-flex justify-content-center border-bottom mt-5'>
-                  <p className='fs-30 border-end pe-5 py-3'>Login</p>
-                  <p className='fs-30 ps-5 py-3'>Sign Up</p>
-                </div> */}
                 <p className='fs-30 border-bottom text-center pe-4 py-3'>
                   LOGIN
                 </p>

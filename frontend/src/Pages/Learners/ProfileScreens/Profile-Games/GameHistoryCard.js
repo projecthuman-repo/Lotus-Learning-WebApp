@@ -5,7 +5,7 @@ const GameHistoryCard = ({ product }) => {
   return (
     <div className='d-flex border borRad-15 bor-darkGray bor-shadow p-1'>
       <img
-        src={require('../../../../Images/placeholderimage.PNG')}
+        src={require('../../../../images/placeholderimage.PNG')}
         className='borRad-15'
         alt='...'
         width={80}

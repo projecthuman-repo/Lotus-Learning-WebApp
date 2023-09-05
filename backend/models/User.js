@@ -31,6 +31,24 @@ const userSchema = new mongoose.Schema({
   school: {
     type: String,
   },
+  enrolledCourses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Enrollment',
+    },
+  ],
+  createdCourses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course',
+    },
+  ],
+  accomplishments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Accomplishment',
+    },
+  ],
   // profilePic: {
   //   type: String,
   //   required: true,

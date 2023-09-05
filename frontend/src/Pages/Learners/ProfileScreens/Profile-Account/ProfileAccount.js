@@ -1,5 +1,5 @@
 import React from 'react';
-import PhotoPlaceholder from '../../../../Images/photo.png';
+import PhotoPlaceholder from '../../../../images/photo.png';
 
 import { BiPencil } from 'react-icons/bi';
 import './profileAccount.css';

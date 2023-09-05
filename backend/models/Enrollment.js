@@ -12,14 +12,18 @@ const enrollmentSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    progress: {
-      type: Number,
-      min: 0,
-      max: 1,
-      required: true,
+    currentLesson: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Lesson',
     },
+    completedLessons: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Lesson',
+      },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true } //createdAt + updatedAt
 );
 
 const Enrollment = mongoose.model('Enrollment', enrollmentSchema);

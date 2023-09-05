@@ -18,15 +18,6 @@ import EducatorProfileHome from '../Educators/ProfileScreens/EducatorProfileHome
 import GameEditing from '../Educators/ProfileScreens/GameEditing/GameEditing';
 import EducatorAccount from '../Educators/ProfileScreens/EducatorAccount/EducatorAccount';
 
-// import ProfileHome from '../Learners/Profile/Screens/Profile-Home/ProfileHome';
-// import ProfileMyCourse from '../Learners/Profile/Screens/Profile-MyCourses/ProfileMyCourse';
-// import ProfileGames from '../Learners/Profile/Screens/Profile-Games/ProfileGames';
-// import ProfileNotifications from '../Learners/Profile/Screens/Profile-Notifications/ProfileNotifications';
-// import ProfileAccount from '../Learners/Profile/Profile-Account/ProfileAccount';
-// import ProfilePrivacy from '../Learners/Profile/Profile-Privacy/ProfilePrivacy';
-// import ProfileHelp from '../Learners/Profile/Screens/Profile-Help/ProfileHelp';
-// import ProfileLibrary from '../Learners/Profile/Screens/Profile-Library/ProfileLibrary';
-
 const courses = [
   {
     title: 'Title of Course',

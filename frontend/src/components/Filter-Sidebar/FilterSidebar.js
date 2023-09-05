@@ -1,5 +1,8 @@
 import React from 'react';
 
+//The FilterSidebar component renders a sidebar with filter options and buttons for clearing and
+//searching and is used in the courses and games pages.
+
 const FilterSidebar = ({ filterSidebarProps }) => {
   return (
     <div className='border border-2 bor-lightGray rounded p-2 p-sm-3'>
