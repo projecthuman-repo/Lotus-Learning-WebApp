@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { graphqlHTTP } = require('express-graphql');
 const cors = require('cors');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
@@ -26,7 +27,7 @@ app.use(
 );
 
 mongoose
-  .connect('mongodb://localhost:27017')
+  .connect(process.env.BLN_CONNECT)
   .then(() => {
     app.listen(5000);
   })
