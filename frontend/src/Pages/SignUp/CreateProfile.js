@@ -37,11 +37,12 @@ const CreateProfile = ({
       school,
     };
     try {
-      const data = await createUserMutation({
+      const {data} = await createUserMutation({
         variables: {
-          userInput,
+          userInput
         },
       });
+
       setAcceptedEmail(email);
       setAcceptedPassword(password);
       setCurrentStep(2);
@@ -429,6 +430,7 @@ const DropDownInput = ({ value, id, onError, options, changeValue }) => {
   return (
     <div className="relative" ref={dropDownRef}>
       <input
+        onChange={()=>{}}
         placeholder="-"
         className="w-full focus:outline-none p-2 rounded-md mt-1  border-[0.05rem] border-zinc-400 focus:border-zinc-600"
         value={value}
