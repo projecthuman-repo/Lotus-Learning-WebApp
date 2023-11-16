@@ -6,6 +6,7 @@ import RcmdCourseCard from "../../../../components/RcmdCouseCard/RcmdCourseCard"
 import TestImg from "../../../../Images/Game_Image.jpg";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
+import { BsPinAngle } from "react-icons/bs";
 
 const ProfileHome = ({ courses }) => {
   // const daysOfWeek = [
@@ -98,19 +99,32 @@ const ProfileHome = ({ courses }) => {
         <div className="flex flex-wrap ">
           <RcmdCourseCard
             img={TestImg}
+            courseName={'testName'}
             text={"test text test text text text text "}
+            creator={'creator'}
+            pins={["pinA", "pinB", "pinC", "pinD"]}
+
           />
           <RcmdCourseCard
             img={TestImg}
+            courseName={'testName'}
             text={"test text test text text text text "}
+            creator={'creator'}
+            pins={["pinA", "pinB", "pinC", "pinD"]}
           />
           <RcmdCourseCard
             img={TestImg}
+            courseName={'testName'}
             text={"test text test text text text text "}
+            creator={'creator'}
+            pins={["pinA", "pinB", "pinC", "pinD"]}
           />
           <RcmdCourseCard
             img={TestImg}
+            courseName={'testName'}
             text={"test text test text text text text "}
+            creator={'creator'}
+            pins={["pinA", "pinB", "pinC", "pinD"]}
           />
         </div>
         {/* LOAD MORE */}
