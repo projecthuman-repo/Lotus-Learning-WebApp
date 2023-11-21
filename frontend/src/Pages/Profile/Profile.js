@@ -141,7 +141,7 @@ const Profile = () => {
         <div className='col-3 border-end bor-lightGray py-5 px-md-3 px-lg-5'>
           <SideDashboard
             sideDashboardOptions={
-              user.accountType === 'Learner'
+              user?.accountType === 'Learner'
                 ? learnerSideDashboardOptions
                 : educatorSideDashboardOptions
             }

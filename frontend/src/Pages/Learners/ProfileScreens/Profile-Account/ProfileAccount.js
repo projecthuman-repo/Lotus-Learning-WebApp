@@ -19,13 +19,13 @@ const ProfileAccount = () => {
 					/>
 				</div>
 				<div className="col-sm-8 mt-3 mt-sm-5">
-					<p className="fs-22 fw-600">{user.userFullName}</p>
+					<p className="fs-22 fw-600">{user?.userFullName}</p>
 					<p className="fs-16">Student/Learner</p>
 					<div className="row mt-4">
 						<div className="col-sm-6">
 							<p className="fs-14">
 								<span className="fw-600">Email: </span>
-								{user.email}
+								{user?.email}
 							</p>
 							<p className="fs-14">
 								<span className="fw-600">Password: </span>
@@ -33,21 +33,21 @@ const ProfileAccount = () => {
 							</p>
 							<p className="fs-14">
 								<span className="fw-600">Phone Number: </span>
-								{user.userPhoneNum}
+								{user?.userPhoneNum}
 							</p>
 						</div>
 						<div className="col-sm-6">
 							<p className="fs-14">
 								<span className="fw-600">Country: </span>
-								{user.country}
+								{user?.country}
 							</p>
 							<p className="fs-14">
 								<span className="fw-600">Province: </span>
-								{user.stateProvince}
+								{user?.stateProvince}
 							</p>
 							<p className="fs-14">
 								<span className="fw-600">City: </span>
-								{user.userCity}
+								{user?.userCity}
 							</p>
 						</div>
 					</div>
@@ -72,7 +72,7 @@ const ProfileAccount = () => {
 						<div className="my-auto">
 							<input
 								className="form-input-noline ms-3 c-gray borRad-10"
-								placeholder={user.userEmail}
+								placeholder={user?.userEmail}
 							/>
 						</div>
 					</div>
@@ -86,7 +86,7 @@ const ProfileAccount = () => {
 						<div className="my-auto">
 							<input
 								className="form-input-noline ms-3 c-gray borRad-10"
-								placeholder={user.userPhoneNum}
+								placeholder={user?.userPhoneNum}
 							/>
 						</div>
 					</div>
@@ -100,7 +100,7 @@ const ProfileAccount = () => {
 						<div className="my-auto">
 							<input
 								className="form-input-noline ms-3 c-gray borRad-10"
-								placeholder={user.userGender}
+								placeholder={user?.userGender}
 							/>
 						</div>
 					</div>
@@ -114,7 +114,7 @@ const ProfileAccount = () => {
 						<div className="my-auto">
 							<input
 								className="form-input-noline ms-3 c-gray borRad-10"
-								placeholder={user.userCountry}
+								placeholder={user?.userCountry}
 							/>
 						</div>
 					</div>
@@ -128,7 +128,7 @@ const ProfileAccount = () => {
 						<div className="my-auto">
 							<input
 								className="form-input-noline ms-3 c-gray borRad-10"
-								placeholder={user.userProvince}
+								placeholder={user?.userProvince}
 							/>
 						</div>
 					</div>
@@ -150,7 +150,7 @@ const ProfileAccount = () => {
 						<div className="my-auto">
 							<input
 								className="form-input-noline ms-3 c-gray borRad-10"
-								placeholder={user.userPassword}
+								placeholder={user?.userPassword}
 							/>
 						</div>
 					</div>
@@ -168,7 +168,7 @@ const ProfileAccount = () => {
 						<div className="my-auto ms-auto w-50">
 							{/* <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               /> */}
 							<select className="form-select language-selection bor-blue c-darkBlue">
 								<option selected value="english">
@@ -194,7 +194,7 @@ const ProfileAccount = () => {
 						<div className="my-auto ms-auto">
 							{/* <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               /> */}
 							<div className="form-check form-switch">
 								<input
@@ -215,7 +215,7 @@ const ProfileAccount = () => {
 						<div className="my-auto ms-auto">
 							{/* <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               /> */}
 							<select className="form-select language-selection bor-blue c-darkBlue">
 								<option selected value="10:00pm">
@@ -237,7 +237,7 @@ const ProfileAccount = () => {
 						<div className="my-auto ms-auto">
 							{/* <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               /> */}
 							<div className="form-check form-switch">
 								<input
@@ -258,7 +258,7 @@ const ProfileAccount = () => {
 						<div className="my-auto ms-auto">
 							{/* <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               /> */}
 							<div className="form-check form-switch">
 								<input
@@ -279,7 +279,7 @@ const ProfileAccount = () => {
 						<div className="my-auto ms-auto">
 							{/* <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               /> */}
 							<div className="form-check form-switch">
 								<input

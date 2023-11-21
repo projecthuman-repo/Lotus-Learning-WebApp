@@ -19,8 +19,8 @@ const EducatorProfileHome = ({ courses }) => {
 					/>
 				</div>
 				<div className="col-md-8 mt-3 mt-sm-5">
-					<p className="fs-22 fw-600">{user.name}</p>
-					<p className="fs-16">{user.accountType}</p>
+					<p className="fs-22 fw-600">{user?.name}</p>
+					<p className="fs-16">{user?.accountType}</p>
 					<textarea
 						className="form-control mt-3"
 						rows={4}
