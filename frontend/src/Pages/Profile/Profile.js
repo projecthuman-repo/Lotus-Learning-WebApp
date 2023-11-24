@@ -140,7 +140,7 @@ const Profile = () => {
       <div className='row '>
           <SideDashboard
             sideDashboardOptions={
-              user.accountType === 'Learner'
+              user?.accountType === 'Learner'
                 ? learnerSideDashboardOptions
                 : educatorSideDashboardOptions
             }
