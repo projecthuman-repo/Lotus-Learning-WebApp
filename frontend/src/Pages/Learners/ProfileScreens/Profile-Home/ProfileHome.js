@@ -2,23 +2,25 @@ import React from "react";
 // import PhotoPlaceholder from '../../../../../../backend/uploads/';
 import "./profileHome.css";
 import CourseInProgress from "../CourseInProgress";
-import badgePlaceHolder from "../../../../Images/exampleBadge.png";
+import RcmdCourseCard from "../../../../components/RcmdCouseCard/RcmdCourseCard";
+import TestImg from "../../../../Images/Game_Image.jpg";
+import AddIcon from "@mui/icons-material/Add";
+import { Link } from "react-router-dom";
 
 const ProfileHome = ({ courses }) => {
-	const daysOfWeek = [
-		"Sunday",
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday",
-		"Saturday",
-	];
+  // const daysOfWeek = [
+  //   "Sunday",
+  //   "Monday",
+  //   "Tuesday",
+  //   "Wednesday",
+  //   "Thursday",
+  //   "Friday",
+  //   "Saturday",
+  // ];
 
-	const badges = ["Coding HTML", "Algebra III", "Algebra I"];
+  const badges = ["Coding HTML", "Algebra III", "Algebra I"];
 
-	const user = JSON.parse(window.sessionStorage.getItem("user"));
-	console.log(user);
+  const user = JSON.parse(window.sessionStorage.getItem("user")); 
 
 	return (
 		<div className="px-md-4">
@@ -92,14 +94,15 @@ const ProfileHome = ({ courses }) => {
 			</div>
 		</div>
 	);
+
 };
 
 const DayTag = ({ day }) => {
-	return (
-		<div className="rounded bgc-lightLightGray p-2 px-3 mx-auto my-1 pointer">
-			<p className="text-center">{day}</p>
-		</div>
-	);
+  return (
+    <div className="rounded bgc-lightLightGray p-2 px-3 mx-auto my-1 pointer">
+      <p className="text-center">{day}</p>
+    </div>
+  );
 };
 
 export default ProfileHome;

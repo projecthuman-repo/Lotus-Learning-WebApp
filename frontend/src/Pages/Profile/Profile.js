@@ -136,9 +136,8 @@ const Profile = () => {
   const user = JSON.parse(window.sessionStorage.getItem('user'));
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col-3 border-end bor-lightGray py-5 px-md-3 px-lg-5'>
+    <div className='container relative'>
+      <div className='row '>
           <SideDashboard
             sideDashboardOptions={
               user?.accountType === 'Learner'
@@ -147,8 +146,7 @@ const Profile = () => {
             }
             setCurrentScreen={setCurrentScreen}
           />
-        </div>
-        <div className='col-9'>{currentScreen}</div>
+        <div className='md:w-[75%] w-full'>{currentScreen}</div>
       </div>
     </div>
   );
