@@ -8,15 +8,15 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 
 const ProfileHome = ({ courses }) => {
-  // const daysOfWeek = [
-  //   "Sunday",
-  //   "Monday",
-  //   "Tuesday",
-  //   "Wednesday",
-  //   "Thursday",
-  //   "Friday",
-  //   "Saturday",
-  // ];
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   const badges = ["Coding HTML", "Algebra III", "Algebra I"];
 
@@ -82,7 +82,7 @@ const ProfileHome = ({ courses }) => {
 						return (
 							<div key={index + badge} className="me-5">
 								<img
-									src={badgePlaceHolder}
+									src={""}
 									className="accBadge"
 									alt="badge"
 								/>

@@ -174,12 +174,7 @@ const Login = () => {
             </div>
 
             <button
-              onClick={() =>{
-				 
-				  handleLogin
-				}
-			  } 
-				
+              onClick={handleLogin}
               className="hover:bg-zinc-300 w-full mt-3 bg-zinc-200 text-zinc-700 font-semibold rounded-sm py-2"
             >
               Login
