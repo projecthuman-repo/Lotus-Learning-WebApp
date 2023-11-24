@@ -26,15 +26,15 @@ const ProfileHome = ({ courses }) => {
 				<div className="col-md-4">
 					<p className="fs-22 fw-600">Profile (Public)</p>
 					<img
-						src={`/uploads/${user.profilePic}`}
+						src={`/uploads/${user?.profilePic}`}
 						alt="ProfilePic"
 						width={200}
 						height={200}
 					/>
 				</div>
 				<div className="col-md-8 mt-3 mt-sm-5">
-					<p className="fs-22 fw-600">{user.name}</p>
-					<p className="fs-16">{user.accountType}</p>
+					<p className="fs-22 fw-600">{user?.name}</p>
+					<p className="fs-16">{user?.accountType}</p>
 					<textarea
 						className="form-control mt-3"
 						rows={4}
