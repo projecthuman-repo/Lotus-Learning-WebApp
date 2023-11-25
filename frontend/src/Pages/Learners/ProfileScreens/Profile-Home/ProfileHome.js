@@ -6,6 +6,7 @@ import RcmdCourseCard from "../../../../components/RcmdCouseCard/RcmdCourseCard"
 import TestImg from "../../../../Images/Game_Image.jpg";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
+import badgePlaceHolder from '../../Images/exampleBadge.png';
 
 const ProfileHome = ({ courses }) => {
   const daysOfWeek = [
@@ -82,7 +83,7 @@ const ProfileHome = ({ courses }) => {
 						return (
 							<div key={index + badge} className="me-5">
 								<img
-									src={""}
+									src={badgePlaceHolder}
 									className="accBadge"
 									alt="badge"
 								/>
