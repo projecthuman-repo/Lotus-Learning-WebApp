@@ -21,7 +21,7 @@ const ProfilePrivacy = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               />
             </div>
           </div>
@@ -35,7 +35,7 @@ const ProfilePrivacy = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               />
             </div>
           </div>
@@ -49,7 +49,7 @@ const ProfilePrivacy = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               />
             </div>
           </div>
@@ -71,7 +71,7 @@ const ProfilePrivacy = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               />
             </div>
           </div>

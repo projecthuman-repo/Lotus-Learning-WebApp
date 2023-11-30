@@ -22,7 +22,7 @@ const EducatorAccount = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userEmail}
+                placeholder={user?.userEmail}
               />
             </div>
           </div>
@@ -36,7 +36,7 @@ const EducatorAccount = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userPhoneNum}
+                placeholder={user?.userPhoneNum}
               />
             </div>
           </div>
@@ -50,7 +50,7 @@ const EducatorAccount = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userGender}
+                placeholder={user?.userGender}
               />
             </div>
           </div>
@@ -64,7 +64,7 @@ const EducatorAccount = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userCountry}
+                placeholder={user?.userCountry}
               />
             </div>
           </div>
@@ -78,7 +78,7 @@ const EducatorAccount = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userProvince}
+                placeholder={user?.userProvince}
               />
             </div>
           </div>
@@ -101,7 +101,7 @@ const EducatorAccount = () => {
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
                 type='text'
-                placeholder={user.name}
+                placeholder={user?.name}
               />
             </div>
           </div>
@@ -124,7 +124,7 @@ const EducatorAccount = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userPassword}
+                placeholder={user?.userPassword}
               />
             </div>
           </div>
@@ -135,7 +135,7 @@ const EducatorAccount = () => {
             <div className='my-auto'>
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
-                placeholder={user.userPassword}
+                placeholder={user?.userPassword}
               />
             </div>
           </div>
@@ -159,7 +159,7 @@ const EducatorAccount = () => {
               <input
                 className='form-input-noline ms-3 c-gray borRad-10'
                 type='text'
-                placeholder={user.email}
+                placeholder={user?.email}
               />
             </div>
           </div>
