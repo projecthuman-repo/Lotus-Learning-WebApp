@@ -13,6 +13,8 @@ const CreateProfile = ({
   setCurrentStep,
   setAcceptedEmail,
   setAcceptedPassword,
+  setUserBeingCreated,
+  
 }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -49,6 +51,7 @@ const CreateProfile = ({
           userInput,
         },
       });
+      setUserBeingCreated(userInput)
       setLoading(false)
       setAcceptedEmail(email);
       setAcceptedPassword(password);

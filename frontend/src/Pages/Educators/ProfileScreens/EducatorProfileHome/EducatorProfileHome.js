@@ -2,91 +2,108 @@ import React from "react";
 import PhotoPlaceholder from "../../../../Images/photo.png";
 
 const EducatorProfileHome = ({ courses }) => {
-	const badges = ["Coding HTML", "Algebra III", "Algebra I"];
+  const badges = ["Coding HTML", "Algebra III", "Algebra I"];
 
-	const user = JSON.parse(window.sessionStorage.getItem("user"));
+  // const user = JSON.parse(window.sessionStorage.getItem("user"));
 
-	return (
-		<div className="px-md-4">
-			<div className="row my-5">
-				<div className="col-md-4">
-					<p className="fs-22 fw-600">Profile (Public)</p>
-					<img
-						src={PhotoPlaceholder}
-						alt="ProfilePic"
-						width={200}
-						height={200}
-					/>
-				</div>
-				<div className="col-md-8 mt-3 mt-sm-5">
-					<p className="fs-22 fw-600">{user.name}</p>
-					<p className="fs-16">{user.accountType}</p>
-					<textarea
-						className="form-control mt-3"
-						rows={4}
-						placeholder="Description Here"
-					/>
-				</div>
-			</div>
-			<hr className="profileHomeHR" />
+  // Delete this
+  const user = {
+    name: "John",
+    profilePic:
+      "https://images.panda.org/assets/images/pages/welcome/orangutan_1600x1000_279157.jpg",
+    accountType: "Learner",
+  };
 
-			<div className="row">
-				<p className="fs-22 fw-600 mb-5">Experience</p>
+  return (
+    <div className="px-3">
+      <div className=" my-4">
+        <div className="flex md:flex-row flex-col md:items-end items-center justify-center">
+          <img
+            src={PhotoPlaceholder}
+            alt="ProfilePic"
+            className="md:h-[200px] md:w-[200px] h-[120px] w-[120px]"
+          />
+          <div className="md:ml-4 md:mb-3">
+            <p className="fs-22 fw-600">{user.name}</p>
+            <p className="fs-16">{user.accountType}</p>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center py-4">
+          <textarea
+            className="form-control mt-3 md:w-[500px] sm:w-[80%] w-[95%]"
+            rows={4}
+            placeholder="Description Here"
+          />
+        </div>
+      </div>
+      <hr className="border-zinc-700 my-3" />
 
-				<div className="col-3">
-					<p className="fs-16 mb-3">Title:</p>
-					<p className="fs-16 mb-3">Company Name:</p>
-					<p className="fs-16 mb-3">City:</p>
-				</div>
-				<div className="col-3">
-					<input
-						className="form-control form-control-sm mb-2"
-						id="title"
-						type="text"
-					/>
-					<input
-						className="form-control form-control-sm mb-2"
-						id="company"
-						type="text"
-					/>
-					<input
-						className="form-control form-control-sm mb-2"
-						id="city"
-						type="text"
-					/>
-				</div>
+      <div className="mb-5">
+        <p className="md:text-xl text-lg fw-600 mb-3">Experience</p>
+        <div className="lg:space-y-0 space-y-3 flex lg:flex-row items-center flex-col justify-evenly my-4">
+          <div className="space-y-3 lg:w-[45%] md:w-[70%] w-full">
+            <div className="flex flex-col items-start justify-between ">
+              <p className="mr-1 text-sm ">Title:</p>
+              <input
+                className="form-control form-control-sm "
+                id="title"
+                type="text"
+              />
+            </div>
+            <div className="flex flex-col items-start justify-between ">
+              <p className="mr-1 text-sm  ">Company Name:</p>
+              <input
+                className="form-control form-control-sm "
+                id="title"
+                type="text"
+              />
+            </div>
+            <div className="flex flex-col items-start justify-between ">
+              <p className="mr-1 text-sm  ">City:</p>
+              <input
+                className="form-control form-control-sm "
+                id="title"
+                type="text"
+              />
+            </div>
+          </div>
 
-				<div className="col-3">
-					<p className="fs-16 mb-3">From (Month/Year):</p>
-					<p className="fs-16 mb-3">To (Month/Year):</p>
-					<p className="fs-16 mb-3">Country:</p>
-				</div>
-				<div className="col-3">
-					<input
-						className="form-control form-control-sm mb-2"
-						id="fromDate"
-						type="text"
-					/>
-					<input
-						className="form-control form-control-sm mb-2"
-						id="toDate"
-						type="text"
-					/>
-					<input
-						className="form-control form-control-sm mb-2"
-						id="country"
-						type="text"
-					/>
-				</div>
-				<p className="fs-16 mt-2">Highlights and Accomplishments:</p>
-				<textarea className="form-control mt-3" rows={4} />
-			</div>
+          <div className="space-y-3 lg:w-[45%] md:w-[70%] w-full">
+            <div className="flex flex-col items-start justify-between">
+              <p className="mr-1 text-sm  ">From (Month/Year):</p>
+              <input
+                className="form-control form-control-sm "
+                id="title"
+                type="text"
+              />
+            </div>
+			<div className="flex flex-col items-start justify-between ">
+              <p className="mr-1 text-sm  ">To (Month/Year):</p>
+              <input
+                className="form-control form-control-sm "
+                id="title"
+                type="text"
+              />
+            </div>
+			<div className="flex flex-col items-start justify-between ">
+              <p className="mr-1 text-sm  ">Country:</p>
+              <input
+                className="form-control form-control-sm "
+                id="title"
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+        <p className="fs-16 mt-2">Highlights and Accomplishments:</p>
+        <textarea className="form-control mt-3" rows={4} />
+      </div>
 
-			<hr className="profileHomeHR" />
+      <hr className="profileHomeHR" />
 
-			<hr className="profileHomeHR" />
-		</div>
-	);
+      <hr className="profileHomeHR" />
+    </div>
+  );
 };
 
 export default EducatorProfileHome;

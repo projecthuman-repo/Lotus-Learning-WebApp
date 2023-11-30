@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { VscBellDot } from "react-icons/vsc";
-import { FaUserCircle } from "react-icons/fa";
+import { Link, Redirect, Navigate  } from "react-router-dom";
+
 import BLNLogo from "../../Images/BLN_Logo.png";
 import { useAuth } from "../../context/auth-context";
+//REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser } from "../../redux/slice/user/userSlice";
 
 // MUI ICONS
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -11,11 +13,19 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 //CSS
 import "./Navbar.css";
+import { deleteUserCookies } from "../../cookie-handler/cookieHandler";
+
 
 const Navbar = () => {
-  const { token, logout } = useAuth();
+  //REDUX
+  const authUser = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
+  const { token, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32,6 +42,15 @@ const Navbar = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+
+  const LogOut = () =>{
+    deleteUserCookies();
+    dispatch(clearUser());
+    window.location.href = '/';
+
+  }
+
 
   return (
     <nav className="h-[50px] md:h-[70px] w-full bgc-lightGray flex items-center justify-between px-3 boxShadow">
@@ -51,7 +70,11 @@ const Navbar = () => {
         </div>
       </Link>
 
-      {token ? (
+      {
+      // auth token storaged in the redux
+      authUser
+      // token <== Old auth token handled by "../../context/auth-context"
+      ? (
         <>
           {/* Desktop Display */}
           <div
@@ -104,8 +127,8 @@ const Navbar = () => {
                       className="rounded-full bg-black w-[60px] h-[60px]"
                     />
                     <div className="ml-2 flex flex-col">
-                      <p className="text-md font-semibold">User Name</p>
-                      <p className="text-xs">userMail@email.com</p>
+                      <p className="text-md font-semibold">{authUser.name}</p>
+                      <p className="text-xs">{authUser.email}</p>
                     </div>
                   </div>
                 </Link>
@@ -127,7 +150,9 @@ const Navbar = () => {
                 <div className="border-b px-4 py-3 space-y-2 flex items-start justify-center flex-col">
                   <p className="hover:text-zinc-400 w-full">Help</p>
                   {/* LOGOUT                                                                                                                LOGOUT */}
-                  <p className="hover:text-red-400 w-full">Log Out</p>
+                  <p 
+                  onClick={() => LogOut()}
+                  className="hover:text-red-400 w-full">Log Out</p>
                 </div>
               </div>
             </div>
@@ -155,8 +180,8 @@ const Navbar = () => {
                     className="rounded-full bg-black w-[60px] h-[60px]"
                   />
                   <div className="ml-2 flex flex-col">
-                    <p className="text-sm font-semibold">User Name</p>
-                    <p className="text-xs">userMail@email.com</p>
+                    <p className="text-sm font-semibold">{authUser.name}</p>
+                    <p className="text-xs">{authUser.email}</p>
                   </div>
                 </div>
               </Link>
@@ -178,7 +203,7 @@ const Navbar = () => {
                 <Link>
                   <p className="hover:text-zinc-400 w-full">Help</p>
                 </Link>
-                <Link>
+                <Link onClick={() => LogOut()} >
                   <p className="hover:text-red-400 w-full">Log Out</p>
                 </Link>
               </div>
@@ -190,10 +215,10 @@ const Navbar = () => {
         // NO TOKEN AVAILABLE 
         <div className="h-full space-x-3 flex items-center justify-center font-semibold ">
           <Link to={'/'}>
-            <button className="w-[100px] bg-[#ffffff] hover:bg-[#eeeeee] px-1 py-2 text-sm border-1 border-transparent text-zinc-500  hover:text-black rounded-sm">Log in</button>
+            <button className="md:w-[100px] w-[60px] px-1 py-2 md:text-sm text-xs bg-[#ffffff] hover:bg-[#eeeeee]   border-1 border-transparent text-zinc-500  hover:text-black rounded-sm">Log in</button>
           </Link>
           <Link to={'/signup'}>
-            <button className="w-[100px] bg-[#ffffff00] hover:bg-[#7676763d] text-white hover:text-white px-1 py-2 text-sm border-1 border-white rounded-sm">Sign up</button>
+            <button className="md:w-[100px] w-[60px] px-1 py-2 md:text-sm text-xs bg-[#ffffff00] hover:bg-[#7676763d] text-white hover:text-white  border-1 border-white rounded-sm">Sign up</button>
           </Link>
 
         </div>

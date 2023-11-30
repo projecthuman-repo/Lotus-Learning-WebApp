@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SideDashboard from '../../components/Side-Dashboard/SideDashboard';
 import { FaUserAlt, FaBell } from 'react-icons/fa';
 import { IoMdBookmarks, IoMdLock, IoMdHelpCircle } from 'react-icons/io';
 import { GiCardAceClubs } from 'react-icons/gi';
 import { ImBooks } from 'react-icons/im';
-import './profile.css';
 import ProfileHome from '../Learners/ProfileScreens/Profile-Home/ProfileHome';
 import ProfileMyCourse from '../Learners/ProfileScreens/Profile-MyCourses/ProfileMyCourse';
 import ProfileGames from '../Learners/ProfileScreens/Profile-Games/ProfileGames';
@@ -17,6 +16,17 @@ import CourseEditing from '../Educators/ProfileScreens/CourseEditing/CourseEditi
 import EducatorProfileHome from '../Educators/ProfileScreens/EducatorProfileHome/EducatorProfileHome';
 import GameEditing from '../Educators/ProfileScreens/GameEditing/GameEditing';
 import EducatorAccount from '../Educators/ProfileScreens/EducatorAccount/EducatorAccount';
+
+//navigation login
+import { setScreen } from './ProfileNavigation';
+
+//redux
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/slice/user/userSlice";
+//PARAMS
+import { useParams } from 'react-router-dom';
+//STYLES
+import './profile.css';
 
 const courses = [
   {
@@ -50,41 +60,55 @@ const learnerSideDashboardOptions = [
     icon: <FaUserAlt className='c-blue' size={20} />,
     title: 'Profile',
     component: <ProfileHome courses={courses} />,
+    route: undefined,
   },
   {
     icon: <IoMdBookmarks className='c-blue' size={20} />,
     title: 'My Courses',
     component: <ProfileMyCourse courses={courses} />,
+    route: 'mycourses',
+
   },
   {
     icon: <GiCardAceClubs className='c-blue' size={20} />,
     title: 'Games',
     component: <ProfileGames courses={courses} />,
+    route: 'games',
   },
   {
     icon: <ImBooks className='c-blue' size={20} />,
     title: 'Library',
     component: <ProfileLibrary courses={courses} />,
+    route: 'library',
+
   },
   {
     icon: <FaBell className='c-blue' size={20} />,
     title: 'Notifications',
     component: <ProfileNotifications />,
+    route: 'notifications',
+
   },
   {
     icon: <FaUserAlt className='c-blue' size={20} />,
     title: 'Account',
     component: <ProfileAccount />,
+    route: 'account',
+
   },
   {
     icon: <IoMdLock className='c-blue' size={20} />,
     title: 'Privacy & Security',
     component: <ProfilePrivacy />,
+    route: 'privacy&security',
+
   },
   {
     icon: <IoMdHelpCircle className='c-blue' size={20} />,
     title: 'Help',
     component: <ProfileHelp />,
+    route: 'help',
+
   },
 ];
 
@@ -93,41 +117,59 @@ const educatorSideDashboardOptions = [
     icon: <FaUserAlt className='c-blue' size={20} />,
     title: 'Profile',
     component: <EducatorProfileHome courses={courses} />,
+    route: undefined,
   },
   {
     icon: <IoMdBookmarks className='c-blue' size={20} />,
     title: 'Course Editing',
     component: <CourseEditing courses={courses} />,
+    route: 'courseEditing',
   },
   {
     icon: <GiCardAceClubs className='c-blue' size={20} />,
     title: 'Game Editing',
     component: <GameEditing courses={courses} />,
+    route: 'gameEditing',
+
   },
 
   {
     icon: <FaUserAlt className='c-blue' size={20} />,
     title: 'Account',
     component: <EducatorAccount />,
+    route: 'account',
+
   },
   {
     icon: <FaBell className='c-blue' size={20} />,
     title: 'Notifications',
     component: <ProfileNotifications />,
+    route: 'notifications',
+    
   },
   {
     icon: <IoMdLock className='c-blue' size={20} />,
     title: 'Privacy & Security',
     component: <ProfilePrivacy />,
+    route: 'privacy&security',
+
   },
   {
     icon: <IoMdHelpCircle className='c-blue' size={20} />,
     title: 'Help',
     component: <ProfileHelp />,
+    route: 'help',
   },
 ];
 
-const Profile = () => {
+const Profile = (props) => {
+  //params
+  const { screen } = useParams();
+  //redux
+  const dispatch = useDispatch();
+  const authUser = useSelector((state) => state.user); 
+  
+
   const [currentScreen, setCurrentScreen] = useState(
     <ProfileHome courses={courses} />
   );
@@ -135,12 +177,20 @@ const Profile = () => {
   // console.log(window.sessionStorage.getItem('user'));
   const user = JSON.parse(window.sessionStorage.getItem('user'));
 
+  useEffect(() =>{
+    setCurrentScreen(setScreen(screen, authUser.accountType))
+
+  },[screen])
+
+
   return (
     <div className='container relative'>
       <div className='row '>
           <SideDashboard
             sideDashboardOptions={
-              user.accountType === 'Learner'
+              // user.accountType === 'Learner' <=== old from window.sessionStorage.getItem('user')
+              authUser.accountType === 'Learner'
+              // true
                 ? learnerSideDashboardOptions
                 : educatorSideDashboardOptions
             }

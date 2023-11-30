@@ -10,12 +10,34 @@ import { useAuth } from "../../context/auth-context";
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 
 import "./Signup.css";
+//cookies
+import { saveUserCookies } from "../../cookie-handler/cookieHandler";
+// redux
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slice/user/userSlice";
 
 const SignUp = () => {
+
+  const dispatch = useDispatch();
+
+
   const [currentStep, setCurrentStep] = useState(1);
   const [currentScreen, setCurrentScreen] = useState();
   const [acceptedEmail, setAcceptedEmail] = useState("");
   const [acceptedPassword, setAcceptedPassword] = useState("");
+  const [userBeingCreated, setUserBeingCreated] = useState(
+    // {
+    // name,
+    // email, 
+    // country,
+    // state,
+    // type,
+    // password,
+    // school,
+    // image(pfp),
+    // }
+
+  )
 
   const [loginQuery, { loading, error, data }] = useLazyQuery(LOGIN_QUERY);
 
@@ -32,6 +54,8 @@ const SignUp = () => {
     if (currentStep === 1) {
       setCurrentScreen(
         <CreateProfile
+          userBeingCreated={userBeingCreated}
+          setUserBeingCreated={setUserBeingCreated}
           setCurrentStep={setCurrentStep}
           setAcceptedEmail={setAcceptedEmail}
           setAcceptedPassword={setAcceptedPassword}
@@ -67,6 +91,10 @@ const SignUp = () => {
 
 	const gotToNextStep = () => {
 		if(agreePP && agreeTandC){
+      //SAVING USER INTO THE COOKIES
+      saveUserCookies(userBeingCreated)
+      dispatch(setUser(userBeingCreated));
+
 			setCurrentStep(3)
 		}
 		else{

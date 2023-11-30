@@ -7,6 +7,7 @@ import TestImg from "../../../../Images/Game_Image.jpg";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import { BsPinAngle } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 const ProfileHome = ({ courses }) => {
   // const daysOfWeek = [
@@ -20,16 +21,17 @@ const ProfileHome = ({ courses }) => {
   // ];
 
   const badges = ["Coding HTML", "Algebra III", "Algebra I"];
+  const authUser = useSelector((state) => state.user); 
 
-  const user = JSON.parse(window.sessionStorage.getItem("user")); 
+  // const user = JSON.parse(window.sessionStorage.getItem("user")); 
 
   // Delete this
-  // const user = {
-  //   name: "John",
-  //   profilePic:
-  //     "https://images.panda.org/assets/images/pages/welcome/orangutan_1600x1000_279157.jpg",
-  //   accountType: "Learner",
-  // };
+  const user = {
+    name: "John",
+    profilePic:
+      "https://images.panda.org/assets/images/pages/welcome/orangutan_1600x1000_279157.jpg",
+    accountType: "Learner",
+  };
 
   console.log(user);
 
@@ -38,8 +40,8 @@ const ProfileHome = ({ courses }) => {
       <div className="flex flex-col justify-center items-center lg:flex-row  my-5">
         <div className="w-[200px]  flex items-center justify-center relative">
           <img
-            src={`/uploads/${user.profilePic}`} 
-            // src={user.profilePic}
+            // src={`/uploads/${user.profilePic}`} 
+            src={user.profilePic}
             className="rounded-full w-[120px] h-[120px] md:w-[150px] md:h-[150px] lg:w-[200px] lg:h-[200px] object-cover ml-5 shadow-md"
             alt="ProfilePic"
           />
@@ -49,8 +51,8 @@ const ProfileHome = ({ courses }) => {
         </div>
         <div className="w-[70%] h-[200px] flex  flex-col items-center lg:items-center justify-center ml-0 lg:ml-5">
           <div className="flex w-[70%] flex-col lg:items-start items-center">
-            <p className="font-bold text-2xl">{user.name}</p>
-            <p className="">{user.accountType}</p>
+            <p className="font-bold text-2xl">{authUser.name}</p>
+            <p className="">{authUser.accountType}</p>
           </div>
 
           <textarea

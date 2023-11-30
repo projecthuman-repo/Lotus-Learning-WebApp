@@ -1,4 +1,4 @@
-import "./App.css";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,32 +22,89 @@ import Completed from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLesso
 
 import { AuthProvider } from "./context/auth-context";
 import Login from "./Pages/Login/Login";
+import { getLogedInCookies } from "./cookie-handler/cookieHandler";
+
+//REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./redux/slice/user/userSlice";
+import ProtectedRoute from "./ProtectedRoute";
+
+//STYLE
+import "./App.css";
 
 function App() {
-	// login authentification
+  //redux
+  const dispatch = useDispatch();
+  const authUser = useSelector((state) => state.user);
 
-	return (
-		<BrowserRouter>
-			<AuthProvider>
-				<Navbar />
 
-				<Routes>
-					<Route path="/" element={<Login />} />
-					<Route path="/signup" element={<SignUp />} />
-					<Route path="/profile" element={<Profile />} />
-					<Route path="/games" element={<Games />} />
-					<Route path="/courses" element={<CourseCatalogue />} />
-					<Route path="/contact" element={<Contact />} />
-					<Route path="/Document" element={<Document />} />
-					<Route path="/Video" element={<Video />} />'
-					<Route path="/Audio" element={<Audio />} />'
-					<Route path="/author/:name" element={<Author />} />
-					<Route path="/Completed" element={<Completed />} />'
-					<Route path="/creator/:id" element={<Author />} />
-				</Routes>
-			</AuthProvider>
-		</BrowserRouter>
-	);
+  const [loadingUser, setLoadingUser] = useState(true)
+
+  // login authentification
+
+  const setAuthUser = async () => {
+    setLoadingUser(true)
+    // finds user storaged into the cookies  as 'userDataAuth'
+    const foundUser = await getLogedInCookies();
+
+    if (foundUser) {
+      // saves the found user into the redux for auth
+      return new Promise((resolve) => {
+        dispatch(setUser(foundUser.userData));
+        resolve();
+      });
+    }
+    return Promise.resolve();
+
+  };
+
+  useEffect(() => {
+    setAuthUser().then(() => {
+      
+      setLoadingUser(false);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      setLoadingUser(false);
+    });
+  }, []);
+
+
+
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Navbar />
+
+        <Routes>
+          <Route path="/" element={ 
+            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? false: true} reRouteTo={'/profile'}>
+              <Login />
+            </ProtectedRoute>
+          } />
+          <Route path="/signup" element={
+            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? false: true} reRouteTo={'/profile'}>
+              <SignUp />
+            </ProtectedRoute> 
+          }/>
+          <Route path="/profile/:screen?" element={
+          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
+            <Profile />
+          </ProtectedRoute>
+          }/>
+          <Route path="/games" element={<Games />} />
+          <Route path="/courses" element={<CourseCatalogue />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/Document" element={<Document />} />
+          <Route path="/Video" element={<Video />} />'
+          <Route path="/Audio" element={<Audio />} />'
+          <Route path="/author/:name" element={<Author />} />
+          <Route path="/Completed" element={<Completed />} />'
+          <Route path="/creator/:id" element={<Author />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
 export default App;
