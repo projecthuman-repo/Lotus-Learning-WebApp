@@ -275,9 +275,9 @@ const LessionDropDown = ({ lession, index }) => {
           displayLessions ? "displayLessions" : "hideLessions"
         }`}
       >
-        <div className="p-3 flex ">
+        <div className="p-3 flex sm:flex-row flex-col  items-center justify-center ">
           <img
-            className="h-[120px] max-w-[200px] object-cover"
+            className="h-[120px] max-w-[200px] object-cover mb-2"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png"
           />
           <p className="text-xs ml-3 text-justify">{lession.description}</p>
