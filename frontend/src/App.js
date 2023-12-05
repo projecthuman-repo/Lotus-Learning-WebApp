@@ -24,6 +24,9 @@ import { AuthProvider } from "./context/auth-context";
 import Login from "./Pages/Login/Login";
 import { getLogedInCookies } from "./cookie-handler/cookieHandler";
 
+import CourseEditing from "./Pages/Educators/ProfileScreens/CourseEditing/CourseEditing";
+import CourseCreation from "./Pages/Educators/ProfileScreens/CourseCreation/CourseCreation";
+
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./redux/slice/user/userSlice";
@@ -31,6 +34,8 @@ import ProtectedRoute from "./ProtectedRoute";
 
 //STYLE
 import "./App.css";
+import CoursePage from "./Pages/Course/CoursePage/CoursePage";
+
 
 function App() {
   //redux
@@ -92,8 +97,14 @@ function App() {
             <Profile />
           </ProtectedRoute>
           }/>
+          <Route path="/profile/courseEditing/createCourse" element={
+          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
+            <CourseCreation />
+          </ProtectedRoute>
+          }/>
           <Route path="/games" element={<Games />} />
           <Route path="/courses" element={<CourseCatalogue />} />
+          <Route path="/course" element={<CoursePage/>}/>
           <Route path="/contact" element={<Contact />} />
           <Route path="/Document" element={<Document />} />
           <Route path="/Video" element={<Video />} />'

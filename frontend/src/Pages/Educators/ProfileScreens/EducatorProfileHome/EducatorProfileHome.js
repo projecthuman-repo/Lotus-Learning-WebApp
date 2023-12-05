@@ -1,10 +1,14 @@
 import React from "react";
 import PhotoPlaceholder from "../../../../Images/photo.png";
 
+//redux
+import { useSelector } from "react-redux";
+
 const EducatorProfileHome = ({ courses }) => {
   const badges = ["Coding HTML", "Algebra III", "Algebra I"];
 
   // const user = JSON.parse(window.sessionStorage.getItem("user"));
+  const authUser = useSelector((state) => state.user); 
 
   // Delete this
   const user = {
@@ -24,8 +28,8 @@ const EducatorProfileHome = ({ courses }) => {
             className="md:h-[200px] md:w-[200px] h-[120px] w-[120px]"
           />
           <div className="md:ml-4 md:mb-3">
-            <p className="fs-22 fw-600">{user.name}</p>
-            <p className="fs-16">{user.accountType}</p>
+            <p className="fs-22 fw-600">{authUser.name}</p>
+            <p className="fs-16">{authUser.accountType}</p>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center py-4">
