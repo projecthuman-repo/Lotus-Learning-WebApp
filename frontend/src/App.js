@@ -35,6 +35,7 @@ import ProtectedRoute from "./ProtectedRoute";
 //STYLE
 import "./App.css";
 import CoursePage from "./Pages/Course/CoursePage/CoursePage";
+import CourseSuscriptionPage from "./Pages/Course/CourseSuscriptionPage/CourseSuscriptionPage";
 
 
 function App() {
@@ -105,6 +106,11 @@ function App() {
           <Route path="/games" element={<Games />} />
           <Route path="/courses" element={<CourseCatalogue />} />
           <Route path="/course" element={<CoursePage/>}/>
+          <Route path="/course/suscription" element={
+          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
+            <CourseSuscriptionPage />
+          </ProtectedRoute>
+          }/>
           <Route path="/contact" element={<Contact />} />
           <Route path="/Document" element={<Document />} />
           <Route path="/Video" element={<Video />} />'

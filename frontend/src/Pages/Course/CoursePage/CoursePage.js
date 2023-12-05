@@ -155,13 +155,14 @@ const CoursePage = () => {
           </button>
         </div>
 
-        <p className="text-2xl font-semibold mt-3 mb-1 text-neutral-800">
+
+        {/* LESSIONS */}
+        <div className="flex justify-between md:flex-row flex-col-reverse">
+          {/* left side */}
+          <div className="flex flex-col md:w-[65%] w-[90%]  md:mx-0 mx-auto mt-4">
+          <p className="text-2xl font-semibold mb-3 text-neutral-800 ">
           Course Content
         </p>
-        {/* LESSIONS */}
-        <div className="flex justify-between">
-          {/* left side */}
-          <div className="flex flex-col w-[65%] mt-4">
             {lessions.map((item, index) => {
               return (
                 <div key={index + item.title}>
@@ -199,8 +200,8 @@ const CoursePage = () => {
           </div>
 
           {/* Rigth Side */}
-          <div className="w-[30%] p-3 flex flex-col items-end space-y-3  text-sm rounded-sm">
-            <p className="text-neutral-800 text-xl font-semibold">
+          <div className="md:w-[30%] w-[90%]  md:mx-0 mx-auto  p-3 flex flex-col md:items-end items-center space-y-3  text-sm rounded-sm">
+            <p className="text-neutral-800 text-xl font-semibold ">
               Course Media
             </p>
             <div className="flex items-center space-x-4">
