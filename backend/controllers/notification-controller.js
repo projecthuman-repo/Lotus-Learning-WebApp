@@ -7,7 +7,7 @@ interacting with the notification service and potentially other services as need
 Import Joi and NotificationService from notificationService
 */
 const Joi = require("joi");
-const NotificationService = require("../services/notificationService");
+const NotificationService = require("../services/notification-service");
 
 /*
 Here, we define several Joi schemas to validate incoming request data.

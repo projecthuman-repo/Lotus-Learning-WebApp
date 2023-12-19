@@ -29,7 +29,6 @@ a JSON response is sent back with a success message.
 Error Handling: If the promise is rejected (meaning there was an error in triggering the notification),
 an error response with a status code of 500 (Internal Server Error) is sent back. The error details are included in the response.
  */
-
   handleNotificationTrigger(req.body)
     .then(() => {
       res.json({ message: "Notification triggered successfully" });

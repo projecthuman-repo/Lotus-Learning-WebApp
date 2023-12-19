@@ -3,7 +3,7 @@
 
 //Import connectToQueue and publishQueueService from messageQueueService, Notification from models
 const { connectToQueue, publishMessage } = require("./message-queue-service");
-const Notification = require("./models/Notification");
+const Notification = require("../models/Notification");
 
 // Connect to message queue.This line calls connectToQueue to establish a connection with the message queue.
 //It's crucial to have this connection set up before handling notification triggers

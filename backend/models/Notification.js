@@ -1,6 +1,7 @@
 /*
 This code snippet is a part of a Node.js application that uses Mongoose, an Object Data Modeling (ODM) library for MongoDB and Node.js.
 It defines a schema for a Notification model and a handleNotificationTrigger function*/
+const mongoose = require("mongoose");
 
 const notificationSchema = mongoose.Schema({
   //mongoose.Schema: This function creates a new Mongoose schema with the given structure.
@@ -18,5 +19,3 @@ A model is essentially a constructor compiled from the Schema definition.
 Exporting the Model: The model is exported so it can be used elsewhere in the application to interact with the notifications collection in the MongoDB database.
 */
 module.exports = mongoose.model("Notification", notificationSchema);
-
-module.exports = { handleNotificationTrigger }; //Finally, we export the handleNotificationTrigger function so it can be used elsewhere in our application.

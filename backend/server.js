@@ -9,6 +9,7 @@ const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
 const isAuth = require('./middleware/is-auth');
 const { connectToDatabases } = require('./db/connection');
+const notificationRoutes = require('./routes/notification');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,8 @@ app.use(
 );
 app.use(cookieParser());
 app.use(isAuth);
+
+app.use('/api', notificationRoutes);
 
 app.use(
   '/graphql',

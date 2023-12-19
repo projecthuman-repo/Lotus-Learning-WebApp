@@ -102,8 +102,6 @@ async function sendPushNotification(notification) {
   }
 }
 
-module.exports = { sendEmail, sendSMS, sendPushNotification };
-
 /*
 This line exports the sendEmail, sendSMS, and sendPushNotification functions so they can be used elsewhere in your application,
 particularly in the worker service that processes and sends out notifications.
