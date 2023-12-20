@@ -18,4 +18,6 @@ A model is essentially a constructor compiled from the Schema definition.
 'Notification': This is the name of the model. Mongoose will automatically look for the plural, lowercased version of this name in the database (i.e., 'notifications').
 Exporting the Model: The model is exported so it can be used elsewhere in the application to interact with the notifications collection in the MongoDB database.
 */
-module.exports = mongoose.model("Notification", notificationSchema);
+const Notification = mongoose.model("Notification", notificationSchema);
+
+module.exports = Notification; //Finally, we export the handleNotificationTrigger function so it can be used elsewhere in our application.
