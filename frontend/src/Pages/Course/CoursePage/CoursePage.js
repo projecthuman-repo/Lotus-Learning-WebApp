@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // MUI
 import StarIcon from "@mui/icons-material/Star";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import VideoCameraBackIcon from "@mui/icons-material/VideoCameraBack";
 import HeadsetIcon from "@mui/icons-material/Headset";

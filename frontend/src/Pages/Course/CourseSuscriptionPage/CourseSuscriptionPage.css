@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.displayOnHover{
+    display: none;
+}
+
+.hoverClass:hover .displayOnHover{
+    display: flex;
+}
+
+
+.progress-circle {
+    transform: rotate(90deg);
+}
+
+.progress-background {
+    fill: none;
+    stroke-width: 7;
+    stroke: #60a5fa;
+}
+
+.progress {
+    fill: none;
+    stroke-width: 8;
+    stroke: #d4d4d4;
+    transition: stroke-dasharray 0.5s ease;
+}

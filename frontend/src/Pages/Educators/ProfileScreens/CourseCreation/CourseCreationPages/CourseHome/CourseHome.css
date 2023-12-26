@@ -1,0 +1,8 @@
+.arrow{
+    clip-path: polygon(100% 0, 100% 60%, 50% 100%, 0 60%, 0 0);
+}
+
+.barBackground{
+    background: rgb(162,255,174);
+background: linear-gradient(90deg, rgba(162,255,174,0.3127626050420168) 0%, rgba(189,189,189,0.3295693277310925) 48%, rgba(255,49,0,0.14189425770308128) 100%);
+}

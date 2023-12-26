@@ -36,6 +36,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import "./App.css";
 import CoursePage from "./Pages/Course/CoursePage/CoursePage";
 import CourseSuscriptionPage from "./Pages/Course/CourseSuscriptionPage/CourseSuscriptionPage";
+import CourseLearningPage from "./Pages/Course/CourseLearningPage/CourseLearningPage";
 
 
 function App() {
@@ -98,7 +99,7 @@ function App() {
             <Profile />
           </ProtectedRoute>
           }/>
-          <Route path="/profile/courseEditing/createCourse" element={
+          <Route path="/profile/courseEditing/createCourse/:screen?" element={
           <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
             <CourseCreation />
           </ProtectedRoute>
@@ -110,6 +111,11 @@ function App() {
           <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
             <CourseSuscriptionPage />
           </ProtectedRoute>
+          }/>
+          <Route path="/course/learning" element={
+            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
+              <CourseLearningPage />
+            </ProtectedRoute>
           }/>
           <Route path="/contact" element={<Contact />} />
           <Route path="/Document" element={<Document />} />
