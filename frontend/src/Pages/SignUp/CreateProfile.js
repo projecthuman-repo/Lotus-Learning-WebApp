@@ -8,12 +8,13 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 // MUI ICONS
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 
 const CreateProfile = ({
   setCurrentStep,
   setAcceptedEmail,
   setAcceptedPassword,
+  setUserBeingCreated,
+  
 }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,11 +23,19 @@ const CreateProfile = ({
   const [accountType, setAccountType] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [notMatched, setNotMatched] = useState(false);
   const [school, setSchool] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const [loading, setLoading] = useState(false)
 
   const [createUserMutation] = useMutation(CREATE_USER_MUTATION);
 
   const handleRegister = async () => {
+    if(notMatched){
+      return
+    }
+    setLoading(true)
     const userInput = {
       name,
       email,
@@ -37,20 +46,35 @@ const CreateProfile = ({
       school,
     };
     try {
-      const {data} = await createUserMutation({
+      const { data } = await createUserMutation({
         variables: {
-          userInput
+          userInput,
         },
       });
-
+      setUserBeingCreated(userInput)
+      setLoading(false)
       setAcceptedEmail(email);
       setAcceptedPassword(password);
       setCurrentStep(2);
     } catch (err) {
+      setLoading(false)
       console.log(err);
     }
   };
 
+    // Handle image selection
+    const handleImageSelect = (event) => {
+      const image = event.target.files[0];
+      setSelectedImage(URL.createObjectURL(image));
+    };
+
+    useEffect(()=>{
+      if(password != confirmedPassword){
+        setNotMatched(true)
+      }else{
+        setNotMatched(false)
+      }
+    },[confirmedPassword, password])
   // const onProfilePicClick = () => {
   //   profilePic.current.click();
   // };
@@ -217,41 +241,66 @@ const CreateProfile = ({
     // </div>
 
     // STYLED USING TAILWIND
-    <div className="w-full p-5 bg-zinc-200 rounded-sm flex  flex-col-reverse lg:flex-row text-sm md:text-base">
-      {/* INPUTS */}
-      <div className="lg:w-[60%] w-full">
-        {/* FULL NAME */}
-        <div className="flex flex-col">
-          <label htmlFor="signupFullName">
-            <p className="font-semibold">Full Name *</p>
-          </label>
-          <FormInput
-            placeholder=""
-            id="signupFullName"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+
+    <div className="flex flex-col items-center justify-center md:text-base md:mt-0 mt-10 py-3 md:py-0">
+      <div className="lg:w-[60%] w-full ">
+        <div className="flex justify-between flex-col sm:flex-row items-center">
+          <div className="flex flex-col items-center justify-center m-3 ">
+            <div
+              style={{ userSelect: "none" }}
+              className="cursor-pointer border relative overflow-hidden  w-[150px] h-[150px] lg:w-[170px] lg:h-[170px] flex flex-col-reverse items-center justify-center text-white bg-zinc-300 rounded-full "
+            >
+              <p className="text-center mt-2 font-semibold text-xs w-[70%]">
+                UPLOAD PROFILE PICTURE
+              </p>
+              <div className="md:block hidden" >
+                <FileUploadOutlinedIcon sx={{ fontSize: "50px" }} />
+              </div>
+              <input type="file" accept="image/*" onChange={handleImageSelect} className="cursor-pointer z-50 absolute opacity-0  h-full w-full  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"/>
+              {selectedImage&&
+               <img src={selectedImage} alt="Selected Image" className="cursor-pointer object-cover h-full  bg-white w-full z-40 absolute  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"/>
+              }
+              
+
+            </div>
+
+          </div>
+          <div className="w-full">
+            {/* FULL NAME */}
+            <div className="flex flex-col ">
+              <label htmlFor="signupFullName">
+                <p className="font-medium text-sm">Full Name *</p>
+              </label>
+              <FormInput
+                placeholder=""
+                id="signupFullName"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            {/* EMAIL */}
+            <div className="flex flex-col mt-3">
+              <label htmlFor="signupEmail">
+                <p className="font-medium text-sm">Email *</p>
+              </label>
+              <FormInput
+                placeholder=""
+                id="signupEmail"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
-        {/* EMAIL */}
-        <div className="flex flex-col mt-3">
-          <label htmlFor="signupEmail">
-            <p className="font-semibold">Email *</p>
-          </label>
-          <FormInput
-            placeholder=""
-            id="signupEmail"
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+
         {/* PASSWORD - CONFIRM PASSWORD */}
         <div className="flex flex-col md:flex-row items-center justify-between w-full">
           {/* PASSWORD */}
           <div className="flex flex-col mt-3 md:w-[49%] w-full">
             <label htmlFor="signupPassword">
-              <p className="font-semibold">Password *</p>
+              <p className="font-medium text-sm">Password *</p>
             </label>
             <FormInput
               placeholder=""
@@ -265,7 +314,7 @@ const CreateProfile = ({
           {/* CONFIRM PASSWORD */}
           <div className="flex flex-col mt-3 md:w-[49%] w-full">
             <label htmlFor="signupConfirmPassword">
-              <p className="font-semibold">Confirm Password *</p>
+              <p className="font-medium text-sm">Confirm Password *  <span className="text-xs font-light text-red-500">{notMatched && "passwords don't match"}</span></p>
             </label>
             <FormInput
               placeholder=""
@@ -282,7 +331,7 @@ const CreateProfile = ({
           {/* COUNTRY */}
           <div className="flex flex-col mt-3 md:w-[49%] w-full">
             <label htmlFor="signupCountry">
-              <p className="font-semibold">Country *</p>
+              <p className="font-medium text-sm">Country *</p>
             </label>
             <FormInput
               placeholder=""
@@ -295,7 +344,7 @@ const CreateProfile = ({
           {/* STATE PROVINCE */}
           <div className="flex flex-col mt-3 md:w-[49%] w-full">
             <label htmlFor="signupStateProvince">
-              <p className="font-semibold">State/Province *</p>
+              <p className="font-medium text-sm">State/Province *</p>
             </label>
             <FormInput
               placeholder=""
@@ -310,7 +359,7 @@ const CreateProfile = ({
         {/* TYPE OF ACCOUNT */}
         <div className="flex flex-col mt-3">
           <label htmlFor="signupAccountType">
-            <p className="font-semibold">Type of Account *</p>
+            <p className="font-medium text-sm">Type of Account *</p>
           </label>
           <DropDownInput
             value={accountType}
@@ -323,7 +372,7 @@ const CreateProfile = ({
         {/* SCHOOL */}
         <div className="flex flex-col mt-3">
           <label htmlFor="signupSchool">
-            <p className="font-semibold">School </p>
+            <p className="font-medium text-sm">School </p>
           </label>
           <FormInput
             placeholder=""
@@ -333,38 +382,18 @@ const CreateProfile = ({
             onChange={(e) => setSchool(e.target.value)}
           />
         </div>
-        <div className="block lg:hidden  w-full">
+        <div className="flex items-center justify-center w-full">
           <button
-          onClick={handleRegister}
-          className="hover:bg-zinc-300  mt-3 bg-zinc-200 text-zinc-700 font-semibold rounded-sm py-2 w-full shadow-lg">
-            Next
-          </button>
-        </div>
-      </div>
-      <div className="lg:w-[40%] w-full mb-3 flex flex-col items-center justify-between">
-        <div className="">
-          <div className="flex flex-col items-center justify-center mt-4 ">
-              <div className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] lg:w-[220px] lg:h-[220px] flex items-center justify-center text-zinc-100 bg-zinc-300 rounded-full ">
-                <AddAPhotoOutlinedIcon 
-                sx={{ fontSize: '70px', color: 'white' }}/>
+            onClick={handleRegister}
+            className="hover:bg-zinc-100  mt-3 border-sm text-zinc-700 font-semibold rounded-sm py-2 md:w-[400px] w-full border"
+          >
+            {loading?
+              <div className="w-full flex items-center justify-center">
+                <div className="custom-loader"></div>
               </div>
-              <div className="flex mx-auto mt-3 cursor-pointer">
-                <FileUploadOutlinedIcon />
-                Upload Profile Photo
-                {/* <input
-                    type='file'
-                    name='profilePic'
-                    ref={profilePic}
-                    style={{ display: 'none' }}
-                  /> */}
-              </div>
-          </div>
-        </div>
-        <div className="hidden lg:block  w-[70%]">
-          <button 
-          onClick={handleRegister}
-          className="hover:bg-zinc-300  mt-3 bg-zinc-200 text-zinc-700 font-semibold rounded-sm py-2 w-full shadow-lg">
-            Next
+              :
+              "Next"
+            }
           </button>
         </div>
       </div>
@@ -386,7 +415,7 @@ const FormInput = ({
   return (
     <div className="relative ">
       <input
-        className="w-full focus:outline-none p-2 rounded-md mt-1 border-[0.05rem] border-zinc-400 focus:border-zinc-600"
+        className="w-full focus:outline-none px-2 py-[.4rem] rounded-md mt-1 border-[0.05rem] border-zinc-400 focus:border-zinc-600"
         placeholder={placeholder}
         value={value}
         onChange={onChange}
@@ -430,9 +459,9 @@ const DropDownInput = ({ value, id, onError, options, changeValue }) => {
   return (
     <div className="relative" ref={dropDownRef}>
       <input
-        onChange={()=>{}}
+        onChange={() => {}}
         placeholder="-"
-        className="w-full focus:outline-none p-2 rounded-md mt-1  border-[0.05rem] border-zinc-400 focus:border-zinc-600"
+        className="w-full focus:outline-none px-2 py-[.4rem] rounded-md mt-1  border-[0.05rem] border-zinc-400 focus:border-zinc-600"
         value={value}
         id={id}
         onClick={toggleDropDown}
@@ -443,7 +472,10 @@ const DropDownInput = ({ value, id, onError, options, changeValue }) => {
           {options.map((item, i) => {
             return (
               <div
-                onClick={() => changeValue(item)}
+                onClick={() =>{
+                  setOpenDropDown(false)
+                  changeValue(item)
+                  }}
                 key={i}
                 className="py-1 w-full px-2 cursor-pointer bg-zinc-50 hover:bg-zinc-300 "
               >

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser'); 
 const { graphqlHTTP } = require('express-graphql');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -13,8 +14,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use(cors());
-
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
+app.use(cookieParser());
 app.use(isAuth);
 
 app.use(
@@ -25,6 +29,10 @@ app.use(
     graphiql: true,
   })
 );
+
+//COOKIES
+const cookeHandler = require('./middleware/cookie-handler');
+app.use('/cookies', cookeHandler);
 
 mongoose
   .connect(process.env.BLN_CONNECT)
