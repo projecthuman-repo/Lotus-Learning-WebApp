@@ -38,19 +38,29 @@ import CoursePage from "./Pages/Course/CoursePage/CoursePage";
 import CourseSuscriptionPage from "./Pages/Course/CourseSuscriptionPage/CourseSuscriptionPage";
 import CourseLearningPage from "./Pages/Course/CourseLearningPage/CourseLearningPage";
 
+// Debug For Firebase Messaging
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("./firebase-messaging-sw.js")
+    .then(function (registration) {
+      console.log("Registration successful, scope is:", registration.scope);
+    })
+    .catch(function (err) {
+      console.log("Service worker registration failed, error:", err);
+    });
+}
 
 function App() {
   //redux
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user);
 
-
-  const [loadingUser, setLoadingUser] = useState(true)
+  const [loadingUser, setLoadingUser] = useState(true);
 
   // login authentification
 
   const setAuthUser = async () => {
-    setLoadingUser(true)
+    setLoadingUser(true);
     // finds user storaged into the cookies  as 'userDataAuth'
     const foundUser = await getLogedInCookies();
 
@@ -62,21 +72,18 @@ function App() {
       });
     }
     return Promise.resolve();
-
   };
 
   useEffect(() => {
-    setAuthUser().then(() => {
-      
-      setLoadingUser(false);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      setLoadingUser(false);
-    });
+    setAuthUser()
+      .then(() => {
+        setLoadingUser(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoadingUser(false);
+      });
   }, []);
-
-
 
   return (
     <BrowserRouter>
@@ -84,39 +91,81 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={ 
-            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? false: true} reRouteTo={'/profile'}>
-              <Login />
-            </ProtectedRoute>
-          } />
-          <Route path="/signup" element={
-            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? false: true} reRouteTo={'/profile'}>
-              <SignUp />
-            </ProtectedRoute> 
-          }/>
-          <Route path="/profile/:screen?" element={
-          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
-            <Profile />
-          </ProtectedRoute>
-          }/>
-          <Route path="/profile/courseEditing/createCourse/:screen?" element={
-          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
-            <CourseCreation />
-          </ProtectedRoute>
-          }/>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute
+                loading={loadingUser}
+                isAuthenticated={authUser ? false : true}
+                reRouteTo={"/profile"}
+              >
+                <Login />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <ProtectedRoute
+                loading={loadingUser}
+                isAuthenticated={authUser ? false : true}
+                reRouteTo={"/profile"}
+              >
+                <SignUp />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/:screen?"
+            element={
+              <ProtectedRoute
+                loading={loadingUser}
+                isAuthenticated={authUser ? true : false}
+                reRouteTo={"/"}
+              >
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/courseEditing/createCourse/:screen?"
+            element={
+              <ProtectedRoute
+                loading={loadingUser}
+                isAuthenticated={authUser ? true : false}
+                reRouteTo={"/"}
+              >
+                <CourseCreation />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/games" element={<Games />} />
           <Route path="/courses" element={<CourseCatalogue />} />
-          <Route path="/course" element={<CoursePage/>}/>
-          <Route path="/course/suscription" element={
-          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
-            <CourseSuscriptionPage />
-          </ProtectedRoute>
-          }/>
-          <Route path="/course/learning" element={
-            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
-              <CourseLearningPage />
-            </ProtectedRoute>
-          }/>
+          <Route path="/course" element={<CoursePage />} />
+          <Route
+            path="/course/suscription"
+            element={
+              <ProtectedRoute
+                loading={loadingUser}
+                isAuthenticated={authUser ? true : false}
+                reRouteTo={"/"}
+              >
+                <CourseSuscriptionPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/course/learning"
+            element={
+              <ProtectedRoute
+                loading={loadingUser}
+                isAuthenticated={authUser ? true : false}
+                reRouteTo={"/"}
+              >
+                <CourseLearningPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/contact" element={<Contact />} />
           <Route path="/Document" element={<Document />} />
           <Route path="/Video" element={<Video />} />'

@@ -12,11 +12,12 @@ It's a placeholder indicating where you would integrate a push notification serv
 const nodemailer = require("nodemailer"); // For sending emails
 const twilio = require("twilio"); // For sending SMS (if using Twilio)
 const admin = require("firebase-admin"); // Importing Firebase Admin SDK
+const config = require("../utils/config");
 
 // Initialize Firebase Admin SDK with your project credentials
 admin.initializeApp({
   credential: admin.credential.cert(
-    require("/path/to/your/firebase-service-account-file.json")
+    require(config.FIREBASE_ADMIN_SECRET_KEY_PATH)
   ),
 });
 
@@ -24,15 +25,22 @@ admin.initializeApp({
 nodemailer.createTransport(): This function creates a transporter object that can send mail.
 It's being configured to use Gmail as the email service.
 service: The email service provider, in this case, Gmail.
-auth: Authentication object for the email service. process.env.EMAIL_USER and process.env.EMAIL_PASSWORD
+auth: Authentication object for the email service. process.env.EMAIL_SENDER and process.env.EMAIL_PASSWORD
 are environment variables that store your email username and password.
 */
 // Configure email transporter
+// doc: https://nodemailer.com/smtp/oauth2/
 const emailTransporter = nodemailer.createTransport({
-  service: "gmail", // Replace with your email service
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
+    type: "OAuth2",
+    user: config.EMAIL_SENDER,
+    clientId: config.CLIENT_ID,
+    clientSecret: config.CLIENT_SECRET,
+    refreshToken: config.REFRESH_TOKEN,
+    accessToken: config.ACCESS_TOKEN,
   },
 });
 
@@ -49,12 +57,13 @@ const smsClient = twilio(
  */
 // Function to send Email
 async function sendEmail(notification) {
-  const { to, subject, body } = notification.details;
+  const { userId, message } = notification;
+
   await emailTransporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: to,
-    subject: subject,
-    text: body,
+    from: config.EMAIL_SENDER,
+    to: config.EMAIL_RECIPIENT,
+    subject: message,
+    text: message,
   });
 }
 
@@ -85,17 +94,18 @@ async function sendSMS(notification) {
 
 // Function to send Push Notification using Firebase Cloud Messaging
 async function sendPushNotification(notification) {
-  const { title, body, token } = notification.details; // Extract details from notification
-  const message = {
+  const { userId, message } = notification;
+
+  const payload = {
     notification: {
-      title: title, // Notification title
-      body: body, // Notification body
+      title: message, // Notification title
+      body: message, // Notification body
     },
-    token: token, // Target device token
+    token: config.FCM_DEVICE_TOKEN, // Target device token
   };
 
   try {
-    const response = await admin.messaging().send(message);
+    const response = await admin.messaging().send(payload);
     console.log("Successfully sent push notification:", response);
   } catch (error) {
     console.error("Error sending push notification:", error);

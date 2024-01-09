@@ -9,7 +9,7 @@ const {
   sendSMS,
   sendPushNotification,
 } = require("./notification-channels");
-const Notification = require("./models/Notification");
+const Notification = require("../models/Notification");
 
 /* Function to process notifications.
 A function named processNotifications is defined. It doesn't take any parameters and
