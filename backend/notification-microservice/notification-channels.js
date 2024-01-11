@@ -57,12 +57,13 @@ const smsClient = twilio(
  */
 // Function to send Email
 async function sendEmail(notification) {
-  const { userId, message } = notification;
+  const { userId, title, message } = notification;
+  // TODO: Fetch user's email from database using userId
 
   await emailTransporter.sendMail({
     from: config.EMAIL_SENDER,
     to: config.EMAIL_RECIPIENT,
-    subject: message,
+    subject: title,
     text: message,
   });
 }
@@ -94,11 +95,11 @@ async function sendSMS(notification) {
 
 // Function to send Push Notification using Firebase Cloud Messaging
 async function sendPushNotification(notification) {
-  const { userId, message } = notification;
+  const { userId, title, message } = notification;
 
   const payload = {
     notification: {
-      title: message, // Notification title
+      title: title, // Notification title
       body: message, // Notification body
     },
     token: config.FCM_DEVICE_TOKEN, // Target device token
