@@ -6,7 +6,9 @@
 .pnp.js
 .history
 
+# credentials
 .env
+public/swenv.js
 
 # testing
 /coverage
