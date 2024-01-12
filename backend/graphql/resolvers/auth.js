@@ -14,7 +14,7 @@ const checkAuth = (req) => {
 const updateUser = async (args, req) => {
   checkAuth(req); // Ensure the user is authenticated
 
-  const userId = args.id; // Get the user ID from the arguments
+  const userId = args.userId;
   const userUpdates = args.userInput;
 
   // Hash the new password if it's being changed
@@ -36,7 +36,7 @@ const updateUser = async (args, req) => {
 const deleteUser = async (args, req) => {
   checkAuth(req); // Ensure the user is authenticated
 
-  const userId = args.id; // Get the user ID from the arguments
+  const userId = args.userId;
 
   const deletedUser = await User.findByIdAndDelete(userId);
   if (!deletedUser) {
