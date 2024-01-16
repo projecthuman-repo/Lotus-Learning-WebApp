@@ -3,7 +3,7 @@ Importing subscribeToQueue from messageQueueService
 import sendEmail, sendSMS, sendPushNotification from notificationChannels
 import Notification MongoDB model
 */
-const { subscribeToQueue } = require("./message-queue-service");
+const { subscribeToQueue, publishMessage } = require("./message-queue-service");
 const {
   sendEmail,
   sendSMS,
@@ -43,15 +43,35 @@ const processNotifications = () => {
       await Notification.findByIdAndUpdate(notification._id, {
         status: "delivered",
       });
-      //If an error occurs during processing, it is logged, and the notification's status is updated to 'failed'
     } catch (error) {
       console.error("Error processing notification:", error);
-      await Notification.findByIdAndUpdate(notification._id, {
-        status: "failed",
-      });
+
+      if (notification.retryCount < 3) {
+        // Retry notification up to 3 times
+        console.log("Retrying notification...");
+        const updatedNotification = await Notification.findByIdAndUpdate(
+          notification._id,
+          {
+            retryCount: notification.retryCount + 1,
+            status: "pending",
+          },
+          {
+            new: true,
+          }
+        );
+        await publishMessage(updatedNotification);
+      } else {
+        // Mark notification as failed after 3 retries
+        await Notification.findByIdAndUpdate(notification._id, {
+          status: "failed",
+        });
+      }
     }
   });
 };
 
+// For testing purposes
 //processNotifications is called to start listening to the message queue and process incoming notifications.
-processNotifications();
+// processNotifications();
+
+module.exports = { processNotifications };

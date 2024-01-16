@@ -57,14 +57,14 @@ const smsClient = twilio(
  */
 // Function to send Email
 async function sendEmail(notification) {
-  const { userId, title, message } = notification;
+  const { userId, payload } = notification;
   // TODO: Fetch user's email from database using userId
 
   await emailTransporter.sendMail({
     from: config.EMAIL_SENDER,
     to: config.EMAIL_RECIPIENT,
-    subject: title,
-    text: message,
+    subject: payload.title,
+    text: payload.body,
   });
 }
 
@@ -95,18 +95,19 @@ async function sendSMS(notification) {
 
 // Function to send Push Notification using Firebase Cloud Messaging
 async function sendPushNotification(notification) {
-  const { userId, title, message } = notification;
+  const { userId, payload } = notification;
+  // TODO: Pass userId to payloadToSend if frontend needs it
 
-  const payload = {
+  const payloadToSend = {
     notification: {
-      title: title, // Notification title
-      body: message, // Notification body
+      title: payload.title, // Notification title
+      body: payload.body, // Notification body
     },
     token: config.FCM_DEVICE_TOKEN, // Target device token
   };
 
   try {
-    const response = await admin.messaging().send(payload);
+    const response = await admin.messaging().send(payloadToSend);
     console.log("Successfully sent push notification:", response);
   } catch (error) {
     console.error("Error sending push notification:", error);

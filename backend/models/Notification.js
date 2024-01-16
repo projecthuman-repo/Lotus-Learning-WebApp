@@ -8,9 +8,9 @@ const notificationSchema = mongoose.Schema({
   userId: { type: String, required: true }, //userId: A string that's required. It represents the ID of the user to whom the notification belongs.
   courseId: String, //It's the ID of the course related to the notification.
   type: { type: String, required: true }, //A required string. This could be the type of notification (like 'New Course', 'Course Completed', etc.).
-  title: { type: String, required: true }, //A required string. This is the content of the notification.
-  message: { type: String, required: true }, //A required string. This is the content of the notification.
+  payload: { type: Object, required: true }, //A required string. This is the content of the notification.
   status: { type: String, default: "pending" }, //A string with a default value of 'pending'. This field can be used to track the delivery status of the notification (e.g., 'pending', 'delivered', 'failed')
+  retryCount: { type: Number, default: 0 },
 });
 
 /*
