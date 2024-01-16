@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   accountType: {
     type: String,
-    enum: ['Learner', 'Educator', 'Admin'],
+    enum: ["Learner", "Educator", "Admin"],
     required: true,
   },
   country: {
@@ -34,19 +34,19 @@ const userSchema = new mongoose.Schema({
   enrolledCourses: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Enrollment',
+      ref: "Enrollment",
     },
   ],
   createdCourses: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course',
+      ref: "Course",
     },
   ],
   accomplishments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Accomplishment',
+      ref: "Accomplishment",
     },
   ],
   // profilePic: {
@@ -70,6 +70,6 @@ const userSchema = new mongoose.Schema({
 //   }
 // });
 
-const User = mongoose.model('User2', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

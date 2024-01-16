@@ -1,4 +1,4 @@
-const { buildSchema } = require('graphql');
+const { buildSchema } = require("graphql");
 
 /* - Types: the structure of an object in the GraphQL schema.
    - Inputs: group together arguments to pass in as one argument
@@ -77,6 +77,8 @@ module.exports = buildSchema(`
       type RootMutation {
         createCourse(courseInput: CourseInput): Course
         createUser(userInput: UserInput): User
+        updateUser(userId: ID!, userInput: UserInput): User
+        deleteUser(userId: ID!): User
         createEnrollment(courseId: ID!): Enrollment!
       }
 
