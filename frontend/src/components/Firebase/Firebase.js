@@ -1,10 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration. For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -15,22 +12,22 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Cloud Messaging and get a reference to the service
+// Initialize Firebase Cloud Messaging
 const messaging = getMessaging(app);
 
+// Listen for push notifications
 export const onMessageListener = () => {
-  console.log("onMessageListener");
-
   return new Promise((resolve) => {
     onMessage(messaging, (payload) => {
+      console.log("onMessageListener: ", payload);
       resolve(payload);
     });
   });
 };
 
+// This token is used in the backend to send push notifications
 export const getFirebaseMessageToken = async () => {
   return getToken(messaging, {
     vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
@@ -47,8 +44,31 @@ export const getFirebaseMessageToken = async () => {
         return null;
       }
     })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
+    .catch((error) => {
+      console.error(`An error occurred while retrieving token: ${error}`);
       return null;
     });
+};
+
+// For debugging purposes to ensure that the service worker is registered correctly
+// https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
+export const registerServiceWorker = async () => {
+  const scriptURL = "./firebase-messaging-sw.js";
+  if ("serviceWorker" in navigator) {
+    try {
+      const registration = await navigator.serviceWorker.register(scriptURL);
+
+      if (registration.installing) {
+        console.log(`Service worker installing: ${registration.scope}`);
+      } else if (registration.waiting) {
+        console.log(`Service worker installed: ${registration.scope}`);
+      } else if (registration.active) {
+        console.log(`Service worker active: ${registration.scope}`);
+      }
+    } catch (error) {
+      console.error(`Service worker registration failed: ${error}`);
+    }
+  } else {
+    console.error("Service workers are not supported.");
+  }
 };

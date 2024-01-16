@@ -16,6 +16,11 @@ import Audio from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/A
 
 import Author from "./Pages/Learners/Author/Author";
 
+<<<<<<< HEAD
+=======
+import Notification from "./components/Firebase/Notification";
+
+>>>>>>> e94af87 (Add firebase component and refactor a service worker)
 import SignUp from "./Pages/SignUp/SignUp";
 
 import Completed from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Completed";
@@ -51,12 +56,15 @@ if ("serviceWorker" in navigator) {
 }
 
 function App() {
+<<<<<<< HEAD
   //redux
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user);
 
   const [loadingUser, setLoadingUser] = useState(true);
 
+=======
+>>>>>>> e94af87 (Add firebase component and refactor a service worker)
   // login authentification
 
   const setAuthUser = async () => {
@@ -86,10 +94,12 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Navbar />
+    <>
+      <BrowserRouter>
+        <AuthProvider>
+          <Navbar />
 
+<<<<<<< HEAD
         <Routes>
           <Route
             path="/"
@@ -176,6 +186,26 @@ function App() {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
+=======
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/courses" element={<CourseCatalogue />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/Document" element={<Document />} />
+            <Route path="/Video" element={<Video />} />'
+            <Route path="/Audio" element={<Audio />} />'
+            <Route path="/author/:name" element={<Author />} />
+            <Route path="/Completed" element={<Completed />} />'
+            <Route path="/creator/:id" element={<Author />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+      <Notification />
+    </>
+>>>>>>> e94af87 (Add firebase component and refactor a service worker)
   );
 }
 

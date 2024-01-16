@@ -1,7 +1,12 @@
-importScripts("https://www.gstatic.com/firebasejs/5.9.4/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/5.9.4/firebase-messaging.js");
+// Give the service worker access to Firebase Messaging.
+// Note that you can only use Firebase Messaging here. Other Firebase libraries
+// are not available in the service worker.
+importScripts("https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/8.3.1/firebase-messaging.js");
 importScripts("swenv.js");
 
+// Initialize the Firebase app in the service worker by passing in your app's Firebase config object.
+// https://firebase.google.com/docs/web/setup#config-object
 firebase.initializeApp({
   apiKey: swenv.REACT_APP_FIREBASE_API_KEY,
   authDomain: swenv.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -14,25 +19,7 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.setBackgroundMessageHandler((payload) => {
-  const promiseChain = clients
-    .matchAll({
-      type: "window",
-      includeUncontrolled: true,
-    })
-    .then((windowClients) => {
-      for (let i = 0; i < windowClients.length; i++) {
-        const windowClient = windowClients[i];
-        windowClient.postMessage(payload);
-      }
-    })
-    .then(() => {
-      return registration.showNotification("my notification title");
-    });
-
-  return promiseChain;
-});
-
+// For debugging purposes
 self.addEventListener("push", (event) => {
   console.log("push event", event);
   const data = event.data.json();
