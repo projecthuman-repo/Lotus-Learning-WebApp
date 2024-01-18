@@ -46,8 +46,8 @@ const processNotifications = () => {
     } catch (error) {
       console.error("Error processing notification:", error);
 
-      if (notification.retryCount < 3) {
-        // Retry notification up to 3 times
+      // Retry notification if max retry attempts not reached
+      if (notification.retryCount < notification.maxRetryAttempts) {
         console.log("Retrying notification...");
         const updatedNotification = await Notification.findByIdAndUpdate(
           notification._id,
@@ -61,7 +61,7 @@ const processNotifications = () => {
         );
         await publishMessage(updatedNotification);
       } else {
-        // Mark notification as failed after 3 retries
+        // Mark notification as failed if max retry attempts reached
         await Notification.findByIdAndUpdate(notification._id, {
           status: "failed",
         });

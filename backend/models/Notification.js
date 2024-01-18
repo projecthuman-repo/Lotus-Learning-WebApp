@@ -11,6 +11,8 @@ const notificationSchema = mongoose.Schema({
   payload: { type: Object, required: true }, //A required string. This is the content of the notification.
   status: { type: String, default: "pending" }, //A string with a default value of 'pending'. This field can be used to track the delivery status of the notification (e.g., 'pending', 'delivered', 'failed')
   retryCount: { type: Number, default: 0 },
+  // TODO: Change maxRetryAttempts to a more reasonable value depending on your use case
+  maxRetryAttempts: { type: Number, default: 3 },
 });
 
 /*
