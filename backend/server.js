@@ -1,23 +1,26 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser'); 
+const cookieParser = require('cookie-parser');
 const { graphqlHTTP } = require('express-graphql');
+const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
 require('dotenv').config();
 
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
 const isAuth = require('./middleware/is-auth');
+const { connectToDatabases } = require('./db/connection');
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(isAuth);
 
@@ -34,11 +37,12 @@ app.use(
 const cookeHandler = require('./middleware/cookie-handler');
 app.use('/cookies', cookeHandler);
 
-mongoose
-  .connect(process.env.BLN_CONNECT)
+connectToDatabases()
   .then(() => {
-    app.listen(5000);
+    app.listen(PORT, () => {
+      console.log(`App is running on port ${PORT}`);
+    });
   })
   .catch((err) => {
-    console.log(err);
+    console.error(err);
   });
