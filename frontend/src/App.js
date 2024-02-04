@@ -112,11 +112,7 @@ function App() {
             <CourseSuscriptionPage />
           </ProtectedRoute>
           }/>
-          <Route path="/course/learning" element={
-            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
-              <CourseLearningPage />
-            </ProtectedRoute>
-          }/>
+
           <Route path="/contact" element={<Contact />} />
           <Route path="/Document" element={<Document />} />
           <Route path="/Video" element={<Video />} />'
