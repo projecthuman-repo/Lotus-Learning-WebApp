@@ -9,10 +9,10 @@ It's a placeholder indicating where you would integrate a push notification serv
 //npm install firebase-admin
 
 // notification-channels.js
-const nodemailer = require("nodemailer"); // For sending emails
-const twilio = require("twilio"); // For sending SMS (if using Twilio)
-const admin = require("firebase-admin"); // Importing Firebase Admin SDK
-const config = require("../utils/config");
+const nodemailer = require('nodemailer'); // For sending emails
+const twilio = require('twilio'); // For sending SMS (if using Twilio)
+const admin = require('firebase-admin'); // Importing Firebase Admin SDK
+const config = require('../utils/config');
 
 // Initialize Firebase Admin SDK with your project credentials
 admin.initializeApp({
@@ -31,11 +31,11 @@ are environment variables that store your email username and password.
 // Configure email transporter
 // doc: https://nodemailer.com/smtp/oauth2/
 const emailTransporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: 'smtp.gmail.com',
   port: 465,
   secure: true,
   auth: {
-    type: "OAuth2",
+    type: 'OAuth2',
     user: config.EMAIL_SENDER,
     clientId: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET,
@@ -45,10 +45,7 @@ const emailTransporter = nodemailer.createTransport({
 });
 
 // Configure SMS service (example using Twilio)
-const smsClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+const smsClient = twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
 
 /*
  sendEmail: This is an asynchronous function to send an email.
@@ -78,11 +75,11 @@ async function sendEmail(notification) {
 
 async function sendSMS(notification) {
   // Function to send SMS
-  const { to, message } = notification.details;
+  const { userId, payload } = notification;
   await smsClient.messages.create({
-    to: to,
-    from: process.env.TWILIO_PHONE_NUMBER,
-    body: message,
+    to: '',
+    from: config.TWILIO_PHONE_NUMBER,
+    body: payload.body,
   });
 }
 
@@ -108,9 +105,9 @@ async function sendPushNotification(notification) {
 
   try {
     const response = await admin.messaging().send(payloadToSend);
-    console.log("Successfully sent push notification:", response);
+    console.log('Successfully sent push notification:', response);
   } catch (error) {
-    console.error("Error sending push notification:", error);
+    console.error('Error sending push notification:', error);
   }
 }
 

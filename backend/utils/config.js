@@ -1,5 +1,5 @@
 // In notification-channels.js, it doesn't recognize the .env file inside backend directory without specifying the path.
-require("dotenv").config({ path: "./backend/.env" });
+require('dotenv').config({ path: './backend/.env' });
 
 /**
  * @const PORT port backend will run on
@@ -7,6 +7,8 @@ require("dotenv").config({ path: "./backend/.env" });
  */
 const PORT = process.env.PORT || 3000;
 const BLN_CONNECT = process.env.BLN_CONNECT;
+const DATABASE_CROSS_PLATFORM_CONNECTION =
+  process.env.DATABASE_CROSS_PLATFORM_CONNECTION;
 
 // NOTE: EMAIL_RECIPIENT is for testing purposes only. This email should be the user's email.
 // Email notifications
@@ -25,6 +27,7 @@ const FCM_DEVICE_TOKEN = process.env.FCM_DEVICE_TOKEN;
 module.exports = {
   PORT,
   BLN_CONNECT,
+  DATABASE_CROSS_PLATFORM_CONNECTION,
   EMAIL_SENDER,
   EMAIL_RECIPIENT,
   CLIENT_ID,

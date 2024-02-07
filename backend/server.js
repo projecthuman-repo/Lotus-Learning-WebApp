@@ -3,15 +3,13 @@ const cookieParser = require('cookie-parser');
 const { graphqlHTTP } = require('express-graphql');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config();
 
-const graphqlSchema = require('./graphql/schema/schema');
-const graphqlResolvers = require('./graphql/resolvers/resolvers');
-const isAuth = require('./middleware/is-auth');
+const config = require('./utils/config');
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
 const isAuth = require('./middleware/is-auth');
 const notificationRoutes = require('./routes/notification');
-const config = require('./utils/config');
 const { connectToDatabases } = require('./db/connection');
 const {
   processNotifications,
