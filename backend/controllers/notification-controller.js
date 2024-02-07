@@ -1,3 +1,5 @@
+// TODO: Unused file. Please ask Anupama about this.
+
 /*
 This controller will handle the logic for creating and managing notifications,
 interacting with the notification service and potentially other services as needed.
@@ -6,8 +8,8 @@ interacting with the notification service and potentially other services as need
 /*
 Import Joi and NotificationService from notificationService
 */
-const Joi = require("joi");
-const NotificationService = require("../services/notification-service");
+const Joi = require('joi');
+const NotificationService = require('../services/notification-service');
 
 /*
 Here, we define several Joi schemas to validate incoming request data.
@@ -45,7 +47,7 @@ const notificationController = {
       if (error) {
         return res
           .status(400)
-          .json({ message: "Invalid request data", error: error.details });
+          .json({ message: 'Invalid request data', error: error.details });
       }
       /*After validation, we extract the necessary fields from req.body and use NotificationService to create the notification.
           We respond with a 201 Created status code and include the created notification in the response.
@@ -59,13 +61,13 @@ const notificationController = {
       });
 
       res.status(201).json({
-        message: "Notification created successfully",
+        message: 'Notification created successfully',
         data: notification,
       });
     } catch (error) {
       res
         .status(500)
-        .json({ message: "Error creating notification", error: error.message });
+        .json({ message: 'Error creating notification', error: error.message });
     }
   },
 
@@ -77,7 +79,7 @@ const notificationController = {
       if (error) {
         return res
           .status(400)
-          .json({ message: "Invalid user ID", error: error.details });
+          .json({ message: 'Invalid user ID', error: error.details });
       }
 
       const { userId } = req.params;
@@ -85,12 +87,12 @@ const notificationController = {
         userId
       );
       res.status(200).json({
-        message: "Notifications fetched successfully",
+        message: 'Notifications fetched successfully',
         data: notifications,
       });
     } catch (error) {
       res.status(500).json({
-        message: "Error fetching notifications",
+        message: 'Error fetching notifications',
         error: error.message,
       });
     }
@@ -103,7 +105,7 @@ const notificationController = {
       if (error) {
         return res
           .status(400)
-          .json({ message: "Invalid request data", error: error.details });
+          .json({ message: 'Invalid request data', error: error.details });
       }
 
       const { notificationId, updates } = req.body;
@@ -112,13 +114,13 @@ const notificationController = {
         updates
       );
       res.status(200).json({
-        message: "Notification updated successfully",
+        message: 'Notification updated successfully',
         data: updatedNotification,
       });
     } catch (error) {
       res
         .status(500)
-        .json({ message: "Error updating notification", error: error.message });
+        .json({ message: 'Error updating notification', error: error.message });
     }
   },
 
@@ -127,19 +129,18 @@ const notificationController = {
     try {
       if (!req.params.notificationId) {
         // Assuming a simple ID validation
-        return res.status(400).json({ message: "Invalid notification ID" });
+        return res.status(400).json({ message: 'Invalid notification ID' });
       }
 
       const { notificationId } = req.params;
       await NotificationService.deleteNotification(notificationId);
-      res.status(200).json({ message: "Notification deleted successfully" });
+      res.status(200).json({ message: 'Notification deleted successfully' });
     } catch (error) {
       res
         .status(500)
-        .json({ message: "Error deleting notification", error: error.message });
+        .json({ message: 'Error deleting notification', error: error.message });
     }
   },
 };
 
-//Finally, we export the notificationController object so it can be used in other parts of our application, like our route definitions.
 module.exports = notificationController;

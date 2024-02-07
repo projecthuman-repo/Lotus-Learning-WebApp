@@ -1,17 +1,6 @@
-/*
-nodemailer: This is a module for Node.js to send emails. It's a popular choice for handling email in Node.js applications.
-twilio: This is the Node.js client for Twilio, a cloud communications platform that provides services for making and
-receiving phone calls, sending and receiving text messages, and performing other communication functions.
-pushService: This represents a custom module you would create for handling push notifications.
-It's a placeholder indicating where you would integrate a push notification service.
-*/
-
-//npm install firebase-admin
-
-// notification-channels.js
 const nodemailer = require('nodemailer'); // For sending emails
-const twilio = require('twilio'); // For sending SMS (if using Twilio)
-const admin = require('firebase-admin'); // Importing Firebase Admin SDK
+const twilio = require('twilio'); // For sending SMS notifications
+const admin = require('firebase-admin'); // For sending push notifications
 const config = require('../utils/config');
 
 // Initialize Firebase Admin SDK with your project credentials
@@ -21,15 +10,7 @@ admin.initializeApp({
   ),
 });
 
-/*
-nodemailer.createTransport(): This function creates a transporter object that can send mail.
-It's being configured to use Gmail as the email service.
-service: The email service provider, in this case, Gmail.
-auth: Authentication object for the email service. process.env.EMAIL_SENDER and process.env.EMAIL_PASSWORD
-are environment variables that store your email username and password.
-*/
-// Configure email transporter
-// doc: https://nodemailer.com/smtp/oauth2/
+// Nodemailer OAuth2: https://nodemailer.com/smtp/oauth2/
 const emailTransporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
@@ -44,15 +25,13 @@ const emailTransporter = nodemailer.createTransport({
   },
 });
 
-// Configure SMS service (example using Twilio)
-const smsClient = twilio(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
+// Twilio Messaging Services: https://www.twilio.com/docs/messaging/services
+const twilioClient = twilio(
+  config.TWILIO_ACCOUNT_SID,
+  config.TWILIO_AUTH_TOKEN
+);
 
-/*
- sendEmail: This is an asynchronous function to send an email.
- notification.details: Contains the email details like recipient (to), subject, and body of the email.
- await emailTransporter.sendMail: Sends the email. await is used because sendMail is an asynchronous operation
- */
-// Function to send Email
+// Function to send emails
 async function sendEmail(notification) {
   const { userId, payload } = notification;
   // TODO: Fetch user's email from database using userId
@@ -65,32 +44,17 @@ async function sendEmail(notification) {
   });
 }
 
-/*
- sendSMS: An asynchronous function to send an SMS.
- notification.details: Contains the details for the SMS,
- including the recipient's number (to) and the message text.
- await smsClient.messages.create: Sends the SMS using Twilio's client.
- It specifies the sender's number (from, which is an environment variable) and the message body.
-*/
-
+// Function to send SMS notifications using Twilio
 async function sendSMS(notification) {
-  // Function to send SMS
   const { userId, payload } = notification;
-  await smsClient.messages.create({
-    to: '',
+  await twilioClient.messages.create({
+    to: '+12366886495',
     from: config.TWILIO_PHONE_NUMBER,
     body: payload.body,
   });
 }
 
-/*
- sendPushNotification: This is a placeholder function for sending push notifications.
- The actual implementation will depend on the push notification service you choose to use.
- notification.details: Contains details needed to send the push notification, like the device token, message, etc.
- pushService.send: Calls a method (presumably send) on the pushService object, which should handle the push notification sending logic.
- */
-
-// Function to send Push Notification using Firebase Cloud Messaging
+// Function to send Push notifications using Firebase Cloud Messaging
 async function sendPushNotification(notification) {
   const { userId, payload } = notification;
   // TODO: Pass userId to payloadToSend if frontend needs it
@@ -111,8 +75,4 @@ async function sendPushNotification(notification) {
   }
 }
 
-/*
-This line exports the sendEmail, sendSMS, and sendPushNotification functions so they can be used elsewhere in your application,
-particularly in the worker service that processes and sends out notifications.
-*/
 module.exports = { sendEmail, sendSMS, sendPushNotification };
