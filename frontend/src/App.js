@@ -3,40 +3,21 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Games from "./Pages/Learners/Games/Games";
-import Navbar from "./components/Navbar/Navbar";
-import Profile from "./Pages/Profile/Profile";
-import Contact from "./Pages/Learners/Contact/Contact";
-
-import CourseCatalogue from "./Pages/Learners/Course-Catalogue/course-catalogue";
-
-import Document from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Document";
-import Video from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Video";
-import Audio from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Audio";
-
-import Author from "./Pages/Learners/Author/Author";
-
-import SignUp from "./Pages/SignUp/SignUp";
-
-import Completed from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Completed";
 
 import { AuthProvider } from "./context/auth-context";
-import Login from "./Pages/Login/Login";
 import { getLogedInCookies } from "./cookie-handler/cookieHandler";
 
-import CourseEditing from "./Pages/Educators/ProfileScreens/CourseEditing/CourseEditing";
-import CourseCreation from "./Pages/Educators/ProfileScreens/CourseCreation/CourseCreation";
 
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./redux/slice/user/userSlice";
-import ProtectedRoute from "./ProtectedRoute";
 
 //STYLE
 import "./App.css";
-import CoursePage from "./Pages/Course/CoursePage/CoursePage";
-import CourseSuscriptionPage from "./Pages/Course/CourseSuscriptionPage/CourseSuscriptionPage";
-import CourseLearningPage from "./Pages/Course/CourseLearningPage/CourseLearningPage";
+import Registration from "./Pages/newPages/registration/Registration";
+import Profile from "./Pages/newPages/Profile/Profile";
+import HomePage from "./Pages/newPages/homePage/HomePage";
+import CoursePage from "./Pages/newPages/coursePage/CoursePage";
 
 
 function App() {
@@ -81,46 +62,13 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Navbar />
-
         <Routes>
-          <Route path="/" element={ 
-            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? false: true} reRouteTo={'/profile'}>
-              <Login />
-            </ProtectedRoute>
-          } />
-          <Route path="/signup" element={
-            <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? false: true} reRouteTo={'/profile'}>
-              <SignUp />
-            </ProtectedRoute> 
-          }/>
-          <Route path="/profile/:screen?" element={
-          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
-            <Profile />
-          </ProtectedRoute>
-          }/>
-          <Route path="/profile/courseEditing/createCourse/:screen?" element={
-          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
-            <CourseCreation />
-          </ProtectedRoute>
-          }/>
-          <Route path="/games" element={<Games />} />
-          <Route path="/courses" element={<CourseCatalogue />} />
           <Route path="/course" element={<CoursePage/>}/>
-          <Route path="/course/suscription" element={
-          <ProtectedRoute loading={loadingUser} isAuthenticated={authUser? true: false} reRouteTo={'/'}>
-            <CourseSuscriptionPage />
-          </ProtectedRoute>
-          }/>
-
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/Document" element={<Document />} />
-          <Route path="/Video" element={<Video />} />'
-          <Route path="/Audio" element={<Audio />} />'
-          <Route path="/author/:name" element={<Author />} />
-          <Route path="/Completed" element={<Completed />} />'
-          <Route path="/creator/:id" element={<Author />} />
+          <Route path="/registration" element={<Registration/>}/>
+          <Route path="/profile/:screen?/:secondscreen?" element={<Profile/>}/>
+          <Route path="/" element={<HomePage/>}/>
         </Routes>
+
       </AuthProvider>
     </BrowserRouter>
   );
