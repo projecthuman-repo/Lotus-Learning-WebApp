@@ -7,11 +7,31 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
+
+
+
+
+
+/* Disable selection */
 .no-select {
     user-select: none;
 }
 
 
+
+.fadeout_bottom {
+    --mask: linear-gradient(to bottom, 
+        rgba(0,0,0, 1) 0,   rgba(0,0,0, 1) 40%, 
+        rgba(0,0,0, 0) 95%, rgba(0,0,0, 0) 0
+    ) 100% 50% / 100% 100% repeat-x;
+    
+    -webkit-mask: var(--mask); 
+    mask: var(--mask);
+    
+  }
+
+
+/* Linear Gradients */
 /* Background Linear Gradient */
 
 .linearGradient_ver1 {
@@ -51,7 +71,6 @@
     animation: gradientAnimation 10s ease infinite;
 }
 
-
 /* Text Linear Gradient */
 .text_linearGradient_ver1 {
     background-image: linear-gradient(278deg, rgba(207, 68, 68, 1) 0%, rgba(217, 110, 85, 1) 27%, rgba(215, 62, 197, 1) 74%, rgba(207, 68, 68, 1) 97%) !important;
@@ -59,6 +78,8 @@
     color: transparent;
 }
 
+
+/* Hover to display children */
 .hover-children {
     opacity: 0;
     transition: opacity 0.1s ease;
@@ -73,9 +94,24 @@
     opacity: 1;
 }
 
+
+/* Point down arrow form to a div */
 .arrow {
     clip-path: polygon(100% 0, 100% 60%, 50% 100%, 0 60%, 0 0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 @keyframes gradientAnimation {
     0% {
         background-position: 0% 50%;
