@@ -60,4 +60,4 @@ const processNotifications = () => {
   });
 };
 
-module.exports = { processNotifications };
+module.exports = processNotifications;

@@ -13,7 +13,9 @@ async function connectToQueue() {
 
     //Ensures that the queue exists. If it doesn't, RabbitMQ will create it.
     await channel.assertQueue(queueName, { durable: false });
-    console.log('Connected to RabbitMQ and queue asserted');
+    console.log(
+      `Connected to RabbitMQ ${connectionString} and queue asserted ${queueName}`
+    );
 
     return channel;
   } catch (error) {
