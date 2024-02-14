@@ -6,9 +6,12 @@
 .pnp.js
 .history
 
+# Firebase Cloud Messaging (FCM) key files
+public/swEnv.js
+public/manifest.json
+
 # credentials
 .env
-public/swenv.js
 
 # testing
 /coverage

@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   registerServiceWorker,
   getFirebaseMessageToken,
   onMessageListener,
-} from "./Firebase";
+} from './Firebase';
 
 const Notification = () => {
-  const [notification, setNotification] = useState({ title: "", body: "" });
+  const [notification, setNotification] = useState({ title: '', body: '' });
 
   // Initialize Firebase Cloud Messaging
   useEffect(() => {
@@ -18,8 +18,8 @@ const Notification = () => {
   // DIsplay push notification
   useEffect(() => {
     if (notification?.title) {
-      alert("title: " + notification?.title + "\nbody: " + notification?.body);
-      setNotification({ title: "", body: "" });
+      alert('title: ' + notification?.title + '\nbody: ' + notification?.body);
+      setNotification({ title: '', body: '' });
     }
   }, [notification]);
 
@@ -31,7 +31,7 @@ const Notification = () => {
         body: payload?.notification?.body,
       });
     })
-    .catch((error) => console.log("failed: ", error));
+    .catch((error) => console.log('failed: ', error));
 
   return <div />;
 };

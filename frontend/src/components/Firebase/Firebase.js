@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 // Firebase configuration. For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -21,7 +21,7 @@ const messaging = getMessaging(app);
 export const onMessageListener = () => {
   return new Promise((resolve) => {
     onMessage(messaging, (payload) => {
-      console.log("onMessageListener: ", payload);
+      console.log('onMessageListener: ', payload);
       resolve(payload);
     });
   });
@@ -39,7 +39,7 @@ export const getFirebaseMessageToken = async () => {
         return currentToken;
       } else {
         console.log(
-          "No Instance ID token available. Request permission to generate one."
+          'No Instance ID token available. Request permission to generate one.'
         );
         return null;
       }
@@ -53,8 +53,8 @@ export const getFirebaseMessageToken = async () => {
 // For debugging purposes to ensure that the service worker is registered correctly
 // https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
 export const registerServiceWorker = async () => {
-  const scriptURL = "./firebase-messaging-sw.js";
-  if ("serviceWorker" in navigator) {
+  const scriptURL = './firebase-messaging-sw.js';
+  if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register(scriptURL);
 
@@ -69,6 +69,6 @@ export const registerServiceWorker = async () => {
       console.error(`Service worker registration failed: ${error}`);
     }
   } else {
-    console.error("Service workers are not supported.");
+    console.error('Service workers are not supported.');
   }
 };

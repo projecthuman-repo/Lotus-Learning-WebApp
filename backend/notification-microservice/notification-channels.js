@@ -34,7 +34,7 @@ const twilioClient = twilio(
 // Function to send emails
 async function sendEmail(notification) {
   const { userId, payload } = notification;
-  // TODO: Fetch user's email from database using userId
+  // TODO: Retrieve a user's email from database using userId
 
   await emailTransporter.sendMail({
     from: config.EMAIL_SENDER,
@@ -47,8 +47,10 @@ async function sendEmail(notification) {
 // Function to send SMS notifications using Twilio
 async function sendSMS(notification) {
   const { userId, payload } = notification;
+  // TODO: Retrieve a user's phone number from database using userId
+
   await twilioClient.messages.create({
-    to: '+12366886495',
+    to: '+1234567890', // replace with your phone number to receive sms for testing
     from: config.TWILIO_PHONE_NUMBER,
     body: payload.body,
   });
