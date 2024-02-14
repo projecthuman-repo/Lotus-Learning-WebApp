@@ -5,13 +5,15 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 
+const config = require('./utils/config');
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
 const isAuth = require('./middleware/is-auth');
+const notificationRoutes = require('./routes/notification');
 const { connectToDatabases } = require('./db/connection');
+const processNotifications = require('./notification-microservice/worker-service');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
@@ -23,6 +25,8 @@ app.use(
 );
 app.use(cookieParser());
 app.use(isAuth);
+
+app.use('/api', notificationRoutes);
 
 app.use(
   '/graphql',
@@ -39,9 +43,9 @@ app.use('/cookies', cookeHandler);
 
 connectToDatabases()
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`App is running on port ${PORT}`);
-    });
+    app.listen(config.PORT);
+    console.log(`Server running port ${config.PORT}`);
+    processNotifications();
   })
   .catch((err) => {
     console.error(err);
