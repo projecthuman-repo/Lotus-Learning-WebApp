@@ -18,6 +18,7 @@ import Registration from "./Pages/newPages/registration/Registration";
 import Profile from "./Pages/newPages/Profile/Profile";
 import HomePage from "./Pages/newPages/homePage/HomePage";
 import CoursePage from "./Pages/newPages/coursePage/CoursePage";
+import Learning from "./Pages/newPages/learningPage/Learning";
 
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
         <Routes>
           <Route path="/course" element={<CoursePage/>}/>
           <Route path="/registration" element={<Registration/>}/>
+          <Route path="/learning" element={<Learning/>}/>
           <Route path="/profile/:screen?/:secondscreen?" element={<Profile/>}/>
           <Route path="/" element={<HomePage/>}/>
         </Routes>
