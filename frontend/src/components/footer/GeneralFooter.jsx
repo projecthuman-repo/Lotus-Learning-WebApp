@@ -3,7 +3,7 @@ import Icon from "../../Images/LotusLogoW2.png";
 
 const GeneralFooter = () => {
   return (
-    <div className="w-full bg-stone-800 mt-10">
+    <div className="w-full bg-stone-800 ">
       <p className="text-white  border-b border-stone-700 p-3 font-semibold">
         Let's give learning a different perspective!
       </p>

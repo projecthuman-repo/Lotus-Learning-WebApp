@@ -66,7 +66,7 @@ function App() {
         <Routes>
           <Route path="/course" element={<CoursePage/>}/>
           <Route path="/registration" element={<Registration/>}/>
-          <Route path="/learning" element={<Learning/>}/>
+          <Route path="/learning/:courseName?" element={<Learning/>}/>
           <Route path="/profile/:screen?/:secondscreen?" element={<Profile/>}/>
           <Route path="/" element={<HomePage/>}/>
         </Routes>

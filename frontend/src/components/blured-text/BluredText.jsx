@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 
-const BluredText = ({text, limit}) => {
+const BluredText = ({text, limit = 500}) => {
 
     const [openText, setOpenText] = useState(false)
     const limitedText = text.slice(0, limit);
@@ -19,7 +19,7 @@ const BluredText = ({text, limit}) => {
         </p>
       </div>
       <div className="w-full flex justify-end">
-        <p onClick={() => setOpenText(!openText)} className="sm:text-sm text-xs  flex items-center cursor-pointer text_linearGradient_ver1 hover:underline">
+        <p onClick={() => setOpenText(!openText)} className="sm:text-sm text-xs font-semibold  flex items-center cursor-pointer text_linearGradient_ver1 hover:underline">
           {openText? "See less" : "See more"}
         </p>
       </div>
