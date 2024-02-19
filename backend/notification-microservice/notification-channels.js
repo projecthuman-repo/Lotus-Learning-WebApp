@@ -20,6 +20,7 @@ const emailTransporter = nodemailer.createTransport({
     user: config.EMAIL_SENDER,
     clientId: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET,
+    // TODO: Implement a function to refresh the tokens using https://www.npmjs.com/package/googleapis
     refreshToken: config.REFRESH_TOKEN,
     accessToken: config.ACCESS_TOKEN,
   },
@@ -66,6 +67,7 @@ async function sendPushNotification(notification) {
       title: payload.title, // Notification title
       body: payload.body, // Notification body
     },
+    // TODO: Receive FCM device token from frontend, and store it in the database if needed
     token: config.FCM_DEVICE_TOKEN, // Target device token
   };
 
