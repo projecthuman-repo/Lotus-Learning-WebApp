@@ -19,6 +19,7 @@ import Profile from "./Pages/newPages/Profile/Profile";
 import HomePage from "./Pages/newPages/homePage/HomePage";
 import CoursePage from "./Pages/newPages/coursePage/CoursePage";
 import Learning from "./Pages/newPages/learningPage/Learning";
+import NotFoundPage from "./Pages/newPages/notFoundPage/NotFoundPage";
 
 
 function App() {
@@ -69,6 +70,8 @@ function App() {
           <Route path="/learning/:courseName?" element={<Learning/>}/>
           <Route path="/profile/:screen?/:secondscreen?" element={<Profile/>}/>
           <Route path="/" element={<HomePage/>}/>
+          {/* NOT FOUND PAGE 404 */}
+          <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
 
       </AuthProvider>

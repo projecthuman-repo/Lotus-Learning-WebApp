@@ -3,10 +3,12 @@ import { HiArrowRight } from "react-icons/hi2";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiTrash } from "react-icons/ci";
 import { CiStar } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
 
 const OnProgressCourses = () => {
   const divRef = useRef(null);
 
+  const navigate = useNavigate()
   const [openOptions, setOpenOptions] = useState(false)
 
 
@@ -25,11 +27,18 @@ const OnProgressCourses = () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []); 
-
+  const handleClick = (event) => {
+    // Verificar si el clic ocurrió dentro del elemento referenciado por divRef
+    if (divRef.current && divRef.current.contains(event.target)) {
+      return
+    } else {
+      navigate('/learning/courseName?watch=AAAA')
+    }
+  }
 
 
   return (
-    <div className='cursor-pointer w-full   bg-white border   p-2 relative no-select'>
+    <div  onClick={(e) => handleClick(e)} className='cursor-pointer w-full   bg-white border   p-2 relative no-select'>
 
       <div className='flex items-center justify-between space-x-2  h-full'>
         <img className='md:h-[90px] md:w-[180px] h-[70px] w-[130px] object-cover rounded-md' src='https://contenthub-static.grammarly.com/blog/wp-content/uploads/2023/07/Subject-Complement.png'/>
@@ -46,7 +55,7 @@ const OnProgressCourses = () => {
           </div>
           <div>
             <p className='font-ligth text_linearGradient_ver1 text-end  text-xs'>Course Name - 75%</p>
-            <p className='font-ligth text-stone-500  text-end md:text-sm text-xs flex items-center  hover:underline'>Continue my Lesson <HiArrowRight className='ml-1'/></p> 
+            <p className='font-ligth text-stone-500  text-end md:text-sm text-xs flex justify-end items-center  hover:underline '>Algebra II  <HiArrowRight className='ml-1'/></p> 
           </div>
 
         </div>

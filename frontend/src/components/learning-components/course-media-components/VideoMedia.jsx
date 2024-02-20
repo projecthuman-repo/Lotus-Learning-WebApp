@@ -160,7 +160,7 @@ const VideoMedia = () => {
 
   return (
     <div className="w-full ">
-      <div ref={parentDivRef} className="bg-stone-800 relative md:h-[500px] h-[250px]  hoverParentOppacity">
+      <div ref={parentDivRef} className="bg-stone-800 relative md:h-[500px] h-full  hoverParentOppacity">
         {/* Loading spinner */}
         {isLoading && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

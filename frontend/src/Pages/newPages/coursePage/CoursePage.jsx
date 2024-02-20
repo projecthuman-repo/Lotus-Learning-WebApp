@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 
@@ -14,6 +14,16 @@ import RedommendedCourse from "../../../components/recommended-course/Redommende
 import BluredText from "../../../components/blured-text/BluredText";
 
 const CoursePage = () => {
+
+
+  useEffect(() => {
+    if (document.documentElement.scrollTop) {
+      document.documentElement.scrollTop = 0;
+    } else {
+      document.body.scrollTop = 0;
+    }
+  },[])
+
   return (
     <div className="h-full w-full ">
       <GeneralNavbar />

@@ -17,7 +17,7 @@ const Settings = () => {
 
   return (
     <div className="min-h-[80vh]">
-      <div className="flex items-center mx-auto  max-w-[1400px] ">
+      <div className="flex items-center mx-auto mt-2  max-w-[1400px] ">
         <div className="flex items-center space-x-3 px-2 md:px-0">
           <div className="flex flex-col items-center  justify-center space-y-2">
             <div className="md:h-[150px] md:w-[150px] sm:h-[100px] sm:w-[100px] h-[75px] w-[75px] bg-black rounded-full flex items-center justify-center overflow-hidden">

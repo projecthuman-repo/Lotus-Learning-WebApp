@@ -16,34 +16,17 @@ const LearningNavbar = () => {
   const [notificationsDropDown, setNotificationsDropDown] = useState(false);
   const [wishListDropDown, setWishListDropDown] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
-  const [isFixed, setIsFixed] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0 && !isFixed) {
-        setIsFixed(true);
-      } else if (window.scrollY === 0 && isFixed) {
-        setIsFixed(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isFixed]);
 
   return (
     <div
-      className={` w-full h-[4rem] mb-[0.25rem] box-shadow bg-white ${
-        isFixed && "fixed top-0"
-      } z-50`}
+      className={` w-full h-[4rem] mb-[0.25rem] box-shadow bg-white  z-50`}
     >
       <div
-        className={`absolute z-[1000] ${
+        className={`absolute z-[1111110] ${
           openSideMenu ? "left-0" : "-left-[100%]"
         } h-screen top-0 w-[400px] bg-white border-r transition-all`}
       >

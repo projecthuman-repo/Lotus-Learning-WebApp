@@ -61,6 +61,7 @@ const Learning = () => {
   ]
 
   useEffect(() =>{
+
     if(!courseName){
       navigate("/")
     }
@@ -115,7 +116,7 @@ const Learning = () => {
         <div
           className={` h-full  ${
             openSideMenu ? "md:relative fixed left-0" : " absolute -left-[100%]"
-          } md:w-full w-[70vw] top-0 z-[1000] bg-white transition-all`}
+          } lg:w-[30vw] md:w-[45vw] w-[70vw] top-0 z-[1000] bg-white transition-all`}
 
         >
           <div className="flex justify-between items-center py-2 px-3">
@@ -151,10 +152,10 @@ const Learning = () => {
               </p>
             </div>
           )}
-          <div className="w-full  bg-white no-select min-h-[50vh]">
+          <div className="w-full  bg-white no-select h-auto">
             {currentClass && currenCourse()}
           </div>
-          <div className="w-full bg-stone-700">
+          <div className="w-full h-[45vh] sm:h-auto bg-stone-700">
             <div className="p-3 w-full border-b border-stone-600 flex justify-between items-center">
               <p className="font-semibold text-white">Class Name</p>
               <div className="flex space-x-2">

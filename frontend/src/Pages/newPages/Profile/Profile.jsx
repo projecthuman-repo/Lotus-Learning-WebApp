@@ -15,6 +15,9 @@ const Profile = () => {
 
   const [displayScreen, setDisplayScreen] = useState("");
 
+
+
+
   const changeScreen = (value) => {
     switch (value) {
       case "courses":
@@ -41,6 +44,11 @@ const Profile = () => {
       navigate("/profile/courses");
     } else {
       setDisplayScreen(screen);
+    }
+    if (document.documentElement.scrollTop) {
+      document.documentElement.scrollTop = 0;
+    } else {
+      document.body.scrollTop = 0;
     }
   }, [screen]);
 
