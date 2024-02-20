@@ -1,3 +1,4 @@
+const config = require('../utils/config');
 const mongoose = require('mongoose');
 
 // Connection options (optional)
@@ -9,7 +10,7 @@ const dbOptions = {
 // Connect to the learningsystem database
 const connectToBLNDatabase = async () => {
   try {
-    await mongoose.connect(process.env.BLN_CONNECT, dbOptions);
+    await mongoose.connect(config.BLN_CONNECT, dbOptions);
     console.log('Connected to the default database');
   } catch (error) {
     throw new Error(`Connecting to the default database: ${error}`);
@@ -18,7 +19,7 @@ const connectToBLNDatabase = async () => {
 
 // Create a connection to the CrossPlatform database
 const crossPlatformDatabase = mongoose.createConnection(
-  process.env.DATABASE_CROSS_PLATFORM_CONNECTION,
+  config.DATABASE_CROSS_PLATFORM_CONNECTION,
   dbOptions
 );
 
