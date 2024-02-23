@@ -12,10 +12,63 @@ import { IoIosArrowDown } from "react-icons/io";
 import ReviewCard from "../../../components/review-card/ReviewCard";
 import RedommendedCourse from "../../../components/recommended-course/RedommendedCourse";
 import BluredText from "../../../components/blured-text/BluredText";
+import CommentsPopUp from "../../../components/coments-pop-up/CommentsPopUp";
 
 const CoursePage = () => {
 
 
+  const testDataReviews =[
+    {
+      id: "_twxm5sbdg",
+      at: "2021-11-09T13:53:43.000Z",
+      user: {
+        userName: "user123",
+        pfp: "https://i.imgur.com/fHMzxUM.jpeg"
+      },
+      comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla leo nec leo dictum, vel viverra turpis consequat.",
+      stars: 3
+    },
+    {
+      id: "_kf1cmuj0z",
+      at: "2020-05-24T06:11:23.000Z",
+      user: {
+        userName: "cool_user",
+        pfp: "https://i.imgur.com/fHMzxUM.jpeg"
+      },
+      comment: "Aenean id lacus in tortor rutrum lacinia sed ac dolor. Integer efficitur, orci et tincidunt bibendum, libero arcu finibus lectus, nec convallis turpis velit eu purus. Nullam aliquam purus in justo posuere, vitae egestas neque dignissim.",
+      stars: 5
+    },
+    {
+      id: "_2ox5mly2m",
+      at: "2019-12-01T08:36:34.000Z",
+      user: {
+        userName: "john_doe",
+        pfp: "https://i.imgur.com/fHMzxUM.jpeg"
+      },
+      comment: "Pellentesque tincidunt urna in massa consequat, a facilisis turpis volutpat. Integer pretium, quam id lacinia congue, est turpis tempus eros, vitae gravida eros sem id orci.",
+      stars: 4
+    },
+    {
+      id: "_mo9znei4a",
+      at: "2022-06-21T20:39:20.000Z",
+      user: {
+        userName: "random_user123",
+        pfp: "https://i.imgur.com/fHMzxUM.jpeg"
+      },
+      comment: "Duis id lorem in quam faucibus cursus ac nec libero. Sed viverra risus a tortor tincidunt, quis aliquet odio venenatis.",
+      stars: 2
+    },
+    {
+      id: "_nz3j1pam3",
+      at: "2023-02-28T01:45:56.000Z",
+      user: {
+        userName: "awesome_user99",
+        pfp: "https://i.imgur.com/fHMzxUM.jpeg"
+      },
+      comment: "Vestibulum et nunc eget metus tincidunt fermentum. Integer ullamcorper urna velit, ut consequat elit aliquam et.",
+      stars: 1
+    }
+  ]
   useEffect(() => {
     if (document.documentElement.scrollTop) {
       document.documentElement.scrollTop = 0;
@@ -156,10 +209,15 @@ const CoursePage = () => {
           <RedommendedCourse />
           <p className="text-md font-bold mt-3">Reviews</p>
           {/* MAX 4 REVIEWS  */}
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
-          <ReviewCard />
+          {
+            testDataReviews.map((item, index) => {
+              return (
+                <div key={item.id}>
+                  <ReviewCard data={item}/>   
+                </div>
+              )
+            })
+          }
         </div>
       </div>
       <GeneralFooter />
