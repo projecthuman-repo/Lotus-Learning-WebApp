@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 import { AuthProvider } from "./context/auth-context";
 import { getLogedInCookies } from "./cookie-handler/cookieHandler";
 
@@ -21,19 +20,29 @@ import CoursePage from "./Pages/newPages/coursePage/CoursePage";
 import Learning from "./Pages/newPages/learningPage/Learning";
 import NotFoundPage from "./Pages/newPages/notFoundPage/NotFoundPage";
 
+// Debug For Firebase Messaging
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("./firebase-messaging-sw.js")
+    .then(function (registration) {
+      console.log("Registration successful, scope is:", registration.scope);
+    })
+    .catch(function (err) {
+      console.log("Service worker registration failed, error:", err);
+    });
+}
 
 function App() {
   //redux
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user);
 
-
-  const [loadingUser, setLoadingUser] = useState(true)
+  const [loadingUser, setLoadingUser] = useState(true);
 
   // login authentification
 
   const setAuthUser = async () => {
-    setLoadingUser(true)
+    setLoadingUser(true);
     // finds user storaged into the cookies  as 'userDataAuth'
     const foundUser = await getLogedInCookies();
 
@@ -45,21 +54,18 @@ function App() {
       });
     }
     return Promise.resolve();
-
   };
 
   useEffect(() => {
-    setAuthUser().then(() => {
-      
-      setLoadingUser(false);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      setLoadingUser(false);
-    });
+    setAuthUser()
+      .then(() => {
+        setLoadingUser(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setLoadingUser(false);
+      });
   }, []);
-
-
 
   return (
     <BrowserRouter>
@@ -76,6 +82,7 @@ function App() {
 
       </AuthProvider>
     </BrowserRouter>
+
   );
 }
 

@@ -59,6 +59,7 @@ module.exports = buildSchema(`
       input UserInput {
         name: String!
         email: String!
+        phoneNumber: String!
         password: String!
         accountType: AccountType!
         country: String!
@@ -77,6 +78,8 @@ module.exports = buildSchema(`
       type RootMutation {
         createCourse(courseInput: CourseInput): Course
         createUser(userInput: UserInput): User
+        updateUser(userId: ID!, userInput: UserInput): User
+        deleteUser(userId: ID!): User
         createEnrollment(courseId: ID!): Enrollment!
       }
 
