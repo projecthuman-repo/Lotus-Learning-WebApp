@@ -55,6 +55,11 @@
 }
 
 /* Animated lineargradient brackground*/
+.animated_linearGradient_ver1 {
+    background: linear-gradient(278deg, rgba(207, 68, 68, 1) 0%, rgba(217, 110, 85, 1) 27%, rgba(215, 62, 197, 1) 74%, rgba(215, 62, 197, 1) 97%);
+    background-size: 300% 300%;
+    animation: gradientAnimation 10s ease infinite;
+}
 .animated_linearGradient_ver2 {
     background: linear-gradient(238deg, rgba(68, 207, 78, 1) 0%, rgba(204, 217, 85, 1) 27%, rgba(62, 215, 122, 1) 74%, rgba(68, 207, 78, 1) 97%);
     background-size: 300% 300%;

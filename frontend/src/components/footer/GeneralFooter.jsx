@@ -3,8 +3,8 @@ import Icon from "../../Images/LotusLogoW2.png";
 
 const GeneralFooter = () => {
   return (
-    <div className="w-full bg-stone-800 ">
-      <p className="text-white  border-b border-stone-700 p-3 font-semibold">
+    <div className="w-full animated_linearGradient_ver1">
+      <p className="text-white  border-b  p-3 font-semibold">
         Let's give learning a different perspective!
       </p>
       <div className="text-white  text-xs px-4 py-3 flex justify-between">
