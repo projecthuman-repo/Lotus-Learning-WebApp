@@ -45,7 +45,7 @@ function App() {
     setLoadingUser(true);
     // finds user storaged into the cookies  as 'userDataAuth'
     const foundUser = await getLogedInCookies();
-
+    console.log('user found', foundUser);
     if (foundUser) {
       // saves the found user into the redux for auth
       return new Promise((resolve) => {

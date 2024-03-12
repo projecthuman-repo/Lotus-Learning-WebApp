@@ -5,13 +5,30 @@ const lessonSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  instructions: {
+  description: {
     type: String,
     required: true,
   },
-  //   content: {
-  //     Files
-  //   },
+  mainContent: {
+    type: String,
+
+  },
+  extraActivities: [
+    {
+      type: {
+        type: String,
+        enum: ['quiz', 'openQuestion'],
+        required: true,
+      },
+      openQuestion: {
+        type: String, 
+      },
+      quiz: [{
+        text: String,
+        correct: Boolean,
+      }], 
+    },
+  ],
 });
 
 const Lesson = mongoose.model('Lesson', lessonSchema);

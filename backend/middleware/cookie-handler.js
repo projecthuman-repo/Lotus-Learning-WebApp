@@ -8,7 +8,6 @@ router.post(
     '/save-user',
     (req, res) => {
       try{
-        console.log(req.body)
         res.cookie('userDataAuth', JSON.stringify(req.body), { httpOnly: true, sameSite: 'None', secure: true });
         res.status(200).json({ res: 'Success' , data: req.body });
       }catch(err){

@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
   },
   password: {
@@ -23,15 +23,15 @@ const userSchema = new mongoose.Schema({
   accountType: {
     type: String,
     enum: ['Learner', 'Educator', 'Admin'],
-    required: true,
+    // required: true,
   },
   country: {
     type: String,
-    required: true,
+    // required: true,
   },
   stateProvince: {
     type: String,
-    required: true,
+    // required: true,
   },
   school: {
     type: String,
@@ -61,20 +61,19 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash the password before saving
-// userSchema.pre('save', async function (next) {
-//   try {
-//     if (!this.isModified('password')) {
-//       return next();
-//     }
+userSchema.pre('save', async function (next) {
+  try {
+    if (!this.isModified('password')) {
+      return next();
+    }
 
-//     const hashedPassword = await bcrypt.hash(this.password, 10);
-//     this.password = hashedPassword;
-//     next();
-//   } catch (error) {
-//     return next(error);
-//   }
-// });
-
+    const hashedPassword = await bcrypt.hash(this.password, 10);
+    this.password = hashedPassword;
+    next();
+  } catch (error) {
+    return next(error);
+  }
+});
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

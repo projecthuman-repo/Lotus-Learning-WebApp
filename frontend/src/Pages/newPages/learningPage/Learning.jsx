@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import audio from "../../../components/learning-components/course-media-components/testAudio.mp3"
 import video from "../../../components/learning-components/course-media-components/testVideo.mp4"
 import pdf from "../../../components/learning-components/course-media-components/testPdf.pdf"
+import PdfInterpreter from "../../../components/pdf/Pdf-interpreter";
 
 
 const Learning = () => {
@@ -88,7 +89,7 @@ const Learning = () => {
       case('audio'):
         return <AudioMedia media={media}/>
       case('file'):
-        return <TextFileMedia media={media}/>
+        return <PdfInterpreter media={media}/>
       case('game'):
         return <VideoMedia media={media}/>
       default:

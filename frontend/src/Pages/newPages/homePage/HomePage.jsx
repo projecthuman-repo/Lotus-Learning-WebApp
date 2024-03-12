@@ -6,6 +6,7 @@ import CarrouselShowCase from "../../../components/carrousel-show-case/Carrousel
 import { SwiperSlide } from "swiper/react";
 import ItemSlide from "../../../components/carrousel-show-case/ItemSlide";
 import GeneralCourseCard from "../../../components/course-cards/GeneralCourseCard";
+import PdfInterpreter from "../../../components/pdf/Pdf-interpreter";
 
 const HomePage = () => {
   return (
@@ -57,6 +58,7 @@ const HomePage = () => {
         </div>
       </div>
       </div>
+      <PdfInterpreter/>
       <GeneralFooter />
     </div>
   );
