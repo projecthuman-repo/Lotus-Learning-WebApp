@@ -2,9 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { AiFillFileImage } from "react-icons/ai";
+import createNewCourseProxy from '../../../../BackendProxy/courseProxy/createNewCourse';
+import { useSelector } from 'react-redux';
 
 
 const CreateEditHome = () => {
+
+    const authUser = useSelector((state) => state.user);
+
     const [courseTitle, setCourseTitle] = useState('');
     const [courseDesc, setCourseDesc] = useState('');
     const [courseImage, setCourseImage] = useState(null);
@@ -54,6 +59,19 @@ const CreateEditHome = () => {
       setCourseImage(null);
       setCategories([]);
     };
+
+
+    //save - create new course
+    const saveNewCourse = () => {
+      createNewCourseProxy({
+        title: courseTitle,
+        description: courseDesc,
+        categories: categories,
+        age: complexity,
+        creator: authUser
+      })
+    } 
+
   
     return (
       <div className='p-3 bg-white'>
@@ -127,7 +145,7 @@ const CreateEditHome = () => {
           <div className='mt-3'>
             <div className='flex items-center justify-end space-x-3'>
               <button onClick={() => resetValues()} className='border px-2 py-1 font-medium text-stone-600 hover:bg-slate-50'>Discard</button>
-              <button className='px-2 py-1 font-medium text-white linearGradient_ver1'>Save</button>
+              <button onClick={() => saveNewCourse()} className='px-2 py-1 font-medium text-white linearGradient_ver1'>Save</button>
             </div>
           </div>
         </div>
@@ -228,7 +246,7 @@ const CreateEditHome = () => {
   const ComplexBar = ({ setComplexity}) => {
     const cursorRef = useRef(null);
     const [cursorPosition, setCursorPosition] = useState(50); 
-    const [holding, setHolding] = useState(false)
+    const [holding, setHolding] = useState(false);
   
     const handleMouseDown = (e) => {
       e.preventDefault();
@@ -268,19 +286,19 @@ const CreateEditHome = () => {
     const checkFinalResult = (value) =>{
       switch(value){
         case 0:
-          setComplexity('Foundational')
+          setComplexity('Easy (8-10)')
           break;
         case 25:
-          setComplexity('Practical')
+          setComplexity('Medium (11-13)')
           break;
         case 50:
-          setComplexity('Intermediate')
+          setComplexity('Intermediate (13-15)')
           break;
         case 75:
-          setComplexity('Advanced')
+          setComplexity('Advanced (16-19)')
           break;
         case 100:
-          setComplexity('Innovative')
+          setComplexity('Innovative (20+)')
           break;
         default:
           setComplexity('NaN')

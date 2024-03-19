@@ -75,7 +75,7 @@ const PdfInterpreter = ({ media }) => {
 
   const nextPage = () => {
     if (page + 1 > textByPage.length) {
-      MdKeyboardReturn;
+      return;
     }
     setPage(page + 1);
   };

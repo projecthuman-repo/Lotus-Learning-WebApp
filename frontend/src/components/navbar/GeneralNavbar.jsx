@@ -5,7 +5,6 @@ import styles from "../../Styles";
 import { MdOutlineSearch } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
-import { CiShoppingCart } from "react-icons/ci";
 import NotificationsDropDown from "./notifications-dropdown/NotificationsDropDown";
 import WishListDropDown from "./wishList-dropdown/WishListDropDown";
 import ProfileDropDown from "./profile-dropdown/ProfileDropDown";
