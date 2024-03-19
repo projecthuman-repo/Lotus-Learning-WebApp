@@ -9,15 +9,9 @@ const config = require('./utils/config');
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
 const isAuth = require('./middleware/is-auth');
-<<<<<<< Updated upstream
 // const notificationRoutes = require('./routes/notification');
 const { connectToDatabases } = require('./db/connection');
 // const processNotifications = require('./notification-microservice/worker-service');
-=======
-//const notificationRoutes = require('./routes/notification');
-const { connectToDatabases } = require('./db/connection');
-//const processNotifications = require('./notification-microservice/worker-service');
->>>>>>> Stashed changes
 
 const app = express();
 
