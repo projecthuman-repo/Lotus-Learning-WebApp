@@ -49,7 +49,7 @@ router.post('/login-user', async(req, res, next) => {
         user: foundUser.user
       });
     }else{
-      return res.status(200).json({
+      return res.status(400).json({
         success: false,
         error: foundUser.msg
       });

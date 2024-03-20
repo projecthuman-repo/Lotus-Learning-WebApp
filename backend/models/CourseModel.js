@@ -22,13 +22,13 @@ const courseSchema = new mongoose.Schema({
     ref: 'User',
   },
   objectives: {
-    objective1: {
+    one: {
       type: String,
     },
-    objective2: {
+    two: {
       type: String,
     },
-    objective3: {
+    three: {
       type: String,
     },
   },
@@ -40,6 +40,6 @@ const courseSchema = new mongoose.Schema({
   ],
 });
 
-const Course = mongoose.model('CourseModel', courseSchema);
+const Course = mongoose.model('courses', courseSchema);
 
 module.exports = Course;

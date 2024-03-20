@@ -42,8 +42,10 @@ const cookeHandler = require('./middleware/cookie-handler');
 app.use('/cookies', cookeHandler);
 
 // ROUTES
-const userRegistration = require('./routes/user-routes/user-routes');
-app.use('/user', userRegistration);
+const userRoutes = require('./routes/user-routes/user-routes');
+app.use('/user', userRoutes);
+const courseRoutes = require('./routes/course-routes/course-routes');
+app.use('/course', courseRoutes);
 
 app.use("/test", (req, res) => {
   res.send("hello world!");
