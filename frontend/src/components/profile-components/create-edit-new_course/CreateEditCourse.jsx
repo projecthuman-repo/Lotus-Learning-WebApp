@@ -3,6 +3,8 @@ import { checkScreen } from "./Navigation";
 import { useParams, useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { SlOptionsVertical } from "react-icons/sl";
+import getCourseData from "../../../BackendProxy/courseProxy/getCourseData";
+import SpinnerLoader from "../../loaders/SpinnerLoader";
 
 const CreateEditCourse = () => {
   const navigate = useNavigate();
@@ -11,9 +13,8 @@ const CreateEditCourse = () => {
 
   const [isFixed, setIsFixed] = useState(false);
   const [openSibeBar, setOpenSideBar] = useState(false);
-
-  const [creatingCourse, setCreatingCourse] = useState(false);
-
+  const [loading, setLoading] = useState(true);
+  const [courseData, setCourseData] = useState(null);
   // Function to switch screens
   const switchScreen = (switchTo) => {
     navigate("/profile/course-editor/" + switchTo);
@@ -33,25 +34,27 @@ const CreateEditCourse = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [isFixed]);
+
+  const fetchCourseData = async(id) => {
+    try{
+      const coursedata = await getCourseData(id);
+      setLoading(false)
+      setCourseData(coursedata.data)
+    }catch(e){
+      setLoading(false)
+      console.log(e)
+      // navigate('/')
+    }
+
+  }
+
   //   useEffect to handle initial screen setup
   useEffect(() => {
     if (!secondscreen) {
       navigate("/profile/course-editor/homePage");
     }
-    console.log(courseid);
-    // fetch from the url  /profile/course-editor?courseid=ID => courseid
-    // if there is a courseid in the url the CreateEditCourse will be to edit an existing course
-    // if there is no courseid in the url, CreateEditCourse will be to create a new course
-
-    if (courseid === undefined) {
-      //the component will work to create a course from zero
-      setCreatingCourse(false);
-    } else {
-      setCreatingCourse(true);
-      // fetch from db the existent course to proceed with the editing
-    }
+    fetchCourseData(courseid)
   }, []);
-  // this state will work to determine the componen to work as a course editor or creator (True <= creator) (False <= editor)
 
   return (
     <div className="">
@@ -156,7 +159,15 @@ const CreateEditCourse = () => {
         {/* Main Content Area */}
         <div className="lg:w-[calc(100vw-300px)] w-[100vw]  min-h-[100vh]  lg:p-8 p-1">
           <div className="bg-white min-h-[90vh] w-full shadow-md border">
-            {checkScreen(secondscreen)}
+            {
+            !loading && courseData?
+   
+            checkScreen(secondscreen, courseData, setCourseData)
+            :
+            <div className="h-[90vh] w-full flex items-center justify-center">
+              <SpinnerLoader/>
+              </div>
+            }
           </div>
         </div>
       </div>

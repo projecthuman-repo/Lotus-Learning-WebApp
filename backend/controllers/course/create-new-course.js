@@ -2,13 +2,9 @@ const Course = require("../../models/CourseModel.js");
 
 
 const createNewCourse = async(newCourseObj) => {
-
-    console.log(newCourseObj)
-
     try{
         const newCourse = new Course({...newCourseObj});
         const savedCourse = await newCourse.save();
-
         return {
             res: 201,
             savedData: savedCourse,
@@ -19,7 +15,6 @@ const createNewCourse = async(newCourseObj) => {
             err: err
         }
     }
-
 }
 
 module.exports = {createNewCourse}

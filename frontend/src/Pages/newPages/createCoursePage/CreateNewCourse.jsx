@@ -13,7 +13,6 @@ const CreateNewCourse = () => {
   const { step } = useParams();
 
   const [loading, setLoading] = useState(false)
-  const [savedCourse, setSavedCourse] = useState(null)
   const [newCourseObj, setNewCourseObj] = useState({
     title: '',
     description: '',

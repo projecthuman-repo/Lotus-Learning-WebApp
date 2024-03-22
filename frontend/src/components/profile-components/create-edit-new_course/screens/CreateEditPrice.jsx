@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
-const CreateEditPrice = () => {
+const CreateEditPrice = ({courseData}) => {
   // Array of currency options
   const currencies = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'SEK', 'NZD'];
 

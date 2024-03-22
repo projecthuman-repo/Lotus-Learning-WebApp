@@ -4,7 +4,7 @@ import { MdAdd } from "react-icons/md";
 
 import ClassEditor from "./components/ClassEditor.jsx";
 
-const CreateEditProgramme = () => {
+const CreateEditProgramme = ({courseData, setCourseData}) => {
   // State for search input and courses
   const [searchValues, setSearchValues] = useState('');
   const [courses, setCourses] = useState([
@@ -20,7 +20,7 @@ const CreateEditProgramme = () => {
 
   // Function to add a new class to the courses list
   const addNewClass = () => {
-    const coursesList = courses.slice();
+    const coursesList = courseData.lessons.slice();
     const timeAsId = new Date().toISOString();
     coursesList.push({
       id: timeAsId,
@@ -30,7 +30,11 @@ const CreateEditProgramme = () => {
       type: undefined,
       attachedFile: undefined,
     });
-    setCourses([...coursesList]);
+    setCourseData(prevState => ({
+      ...prevState,
+      lessons: [...coursesList]
+    }))
+    // setCourses([...coursesList]);
   }
 
   // Function to filter courses by title based on search term
@@ -45,6 +49,8 @@ const CreateEditProgramme = () => {
     );
     return results;
   }
+
+
 
   return (
     <div className="p-3 bg-white h-full ">
@@ -71,14 +77,14 @@ const CreateEditProgramme = () => {
 
       {/* Course List */}
       <div className="w-full min-h-[500px]  mt-4 border shadow-md">
-        {filterByTitle(courses, searchValues).map((item, i) => {
+        {filterByTitle(courseData.lessons, searchValues).map((item, i) => {
           return (
             <div key={item.title + i}>
               {/* Class Editor Component */}
               <ClassEditor
                 courseIndex={i}
                 course={item}
-                setCourses={setCourses}
+                setCourses={setCourseData}
               />
             </div>
           );
