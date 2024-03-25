@@ -58,7 +58,6 @@ const HomePage = () => {
         </div>
       </div>
       </div>
-      <PdfInterpreter/>
       <GeneralFooter />
     </div>
   );

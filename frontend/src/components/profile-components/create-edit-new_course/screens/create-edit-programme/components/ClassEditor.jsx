@@ -45,11 +45,14 @@ const ClassEditor = ({ course, setCourses, courseIndex }) => {
   // Save changes to the course
   const handleSave = () => {
     setCourses((prevValue) => {
-      const prevValues = [...prevValue];
+      const prevValues = [...prevValue.lessons];
       prevValues[courseIndex] = {
         ...clonedCourse,
       };
-      return prevValues;
+      return {
+        ...prevValue,
+        lessons: prevValues
+      };
     });
     setUpdating(false);
   };
@@ -78,10 +81,14 @@ const ClassEditor = ({ course, setCourses, courseIndex }) => {
 
   // Delete the class
   const deleteClass = () => {
-    setCourses((prevValue) => {
-      const coursesList = [...prevValue];
+    setCourses( prevValue => {
+      const coursesList = [...prevValue.lessons];
       coursesList.splice(courseIndex, 1);
-      return coursesList;
+      
+      return {
+        ...prevValue,
+        lessons: [...coursesList]
+      };
     });
   };
 

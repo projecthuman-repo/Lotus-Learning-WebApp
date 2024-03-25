@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 
-const CreateEditObjectives = () => {
+const CreateEditObjectives = ({courseData, setCourseData}) => {
   // State to manage main objectives and requirements
   const [objectives, setObjectives] = useState({
     objtv1: "",
@@ -9,6 +9,8 @@ const CreateEditObjectives = () => {
     objtv3: "",
   });
   const [requirements, setRequirements] = useState("");
+
+
 
   // Reset objectives and requirements to initial state
   const resetValues = () => {
@@ -38,33 +40,42 @@ const CreateEditObjectives = () => {
         <input
           placeholder="Objective 1"
           className="focus:outline-none p-2 border w-full"
-          value={objectives.objtv1}
+          value={courseData.objectives.one}
           onChange={(e) => {
-            setObjectives((prevObjectives) => ({
+            setCourseData((prevObjectives) => ({
               ...prevObjectives,
-              objtv1: e.target.value,
+              objectives: {
+                ...prevObjectives.objectives, 
+                one: e.target.value
+              },
             }));
           }}
         />
         <input
           placeholder="Objective 2"
           className="focus:outline-none p-2 border w-full"
-          value={objectives.objtv2}
+          value={courseData.objectives.two}
           onChange={(e) => {
-            setObjectives((prevObjectives) => ({
+            setCourseData((prevObjectives) => ({
               ...prevObjectives,
-              objtv2: e.target.value,
+              objectives: {
+                ...prevObjectives.objectives, 
+                two: e.target.value
+              },
             }));
           }}
         />
         <input
           placeholder="Objective 3"
           className="focus:outline-none p-2 border w-full"
-          value={objectives.objtv3}
+          value={courseData.objectives.three}
           onChange={(e) => {
-            setObjectives((prevObjectives) => ({
+            setCourseData((prevObjectives) => ({
               ...prevObjectives,
-              objtv3: e.target.value,
+              objectives: {
+                ...prevObjectives.objectives, 
+                three: e.target.value
+              },
             }));
           }}
         />

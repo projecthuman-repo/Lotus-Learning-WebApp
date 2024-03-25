@@ -2,6 +2,12 @@ import React, { useState } from 'react'
 import { BsFillPuzzleFill, BsPersonVideo2 } from 'react-icons/bs'
 import { IoDocumentTextSharp } from 'react-icons/io5'
 import { MdAudiotrack, MdFileUpload } from 'react-icons/md'
+import { pdfjs } from "react-pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.js",
+  import.meta.url
+).toString();
 
 const ClassMedia = ({ setUpdatingMedia, setSelectedFile }) => {
   // State variables
@@ -45,9 +51,38 @@ const ClassMedia = ({ setUpdatingMedia, setSelectedFile }) => {
         file: e.target.result,
         filename: file.name,
       });
+      extractTextFromPDF(e.target.result); 
     };
     reader.readAsDataURL(file);
   };
+  async function extractTextFromPDF(dataURL) {
+    try {
+      const pdf = await pdfjs.getDocument(dataURL).promise;
+      const totalPages = pdf.numPages;
+      const extractedTextByPage = [];
+  
+      // Iterate over all pages of the PDF and extract text
+      for (let i = 1; i <= totalPages; i++) {
+        const text = await getTextFromPage(pdf, i);
+        if (text.length >= 800) {
+          // Check if text has at least 200 characters
+          extractedTextByPage.push({ page: i, text });
+        }
+      }
+      console.log(extractedTextByPage)
+      // setTextByPage(extractedTextByPage);
+    } catch (error) {
+      console.error("Error extracting text from PDF:", error);
+    }
+  }
+  async function getTextFromPage(pdf, pageNumber) {
+    const page = await pdf.getPage(pageNumber);
+    const textContent = await page.getTextContent();
+    const textItems = textContent.items.map((item) => item.str);
+    return textItems.join(" ");
+  }
+
+
 
   return (
     <div className="border p-3">
