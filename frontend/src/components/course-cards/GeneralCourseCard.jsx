@@ -18,10 +18,10 @@ const GeneralCourseCard = () => {
       <div className="px-2 flex flex-col justify-between h-[3rem] ">
         <p className="flex justify-between text-sm font-semibold">
           {" "}
-          <span>Zapatos la puta</span> <span className="font-medium">10 CAD</span>{" "}
+          <span>Course Name</span> <span className="font-medium">$10 CAD</span>{" "}
         </p>
 
-        <p className=" font-semibold text-xs">#algebra #geometry #science</p>
+        <p className=" font-semibold text-xs">Instructor: John Smith </p>
       </div>
     </div>
   );

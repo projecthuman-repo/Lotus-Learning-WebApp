@@ -10,8 +10,8 @@ const ItemSlide = () => {
               <img  className="h-full w-full object-cover rounded-sm" src="https://contenthub-static.grammarly.com/blog/wp-content/uploads/2023/07/Subject-Complement.png" alt="" />
           </div>
           <div className="px-2 flex flex-col items-start  md:h-[6rem]  h-auto ">
-              <p className="flex justify-between flex-col text-sm font-semibold"> <span>Class name • Lesson 10</span> <span className="font-medium">Course Name</span> </p>
-              <p className=" font-semibold text-xs">#algebra #geometry #science</p>
+              <p className="flex justify-between flex-col text-sm font-semibold"> <span>Course Name • Lesson 10</span> <span className="font-medium">Course Name</span> </p>
+              <p className=" font-semibold text-xs">Instructor: John Smith</p>
           </div>
       </div>
     )
