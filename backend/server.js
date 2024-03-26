@@ -14,7 +14,7 @@ const { connectToDatabases } = require('./db/connection');
 // const processNotifications = require('./notification-microservice/worker-service');
 
 const app = express();
-
+app.use(express.static('../frontend/public'));
 app.use(bodyParser.json());
 
 app.use(
@@ -25,6 +25,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(isAuth);
+
 
 // app.use('/api', notificationRoutes);
 
@@ -47,9 +48,18 @@ app.use('/user', userRoutes);
 const courseRoutes = require('./routes/course-routes/course-routes');
 app.use('/course', courseRoutes);
 
+
+
 app.use("/test", (req, res) => {
   res.send("hello world!");
 })
+
+//highlight function developing --zelong
+app.use("/highlight", (req, res) => {
+  const selectedText = req.body.selectedText;
+  console.log(selectedText);
+});
+
 
 
 connectToDatabases()

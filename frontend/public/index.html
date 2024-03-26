@@ -35,5 +35,54 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
+    <!--
+    highlighting function by zelong; 20240326
+    frontend button + backend req: https://gist.github.com/aerrity/fd393e5511106420fba0c9602cc05d35
+    highlight: https://stackoverflow.com/questions/5379120/get-the-highlighted-selected-text
+    This is a comment. Comments are not displayed in the browser-->
+
+
+
+    <p>An apple is a round, edible fruit produced by an apple tree (Malus spp., among them the domestic or orchard apple; Malus domestica). Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found. Apples have been grown for thousands of years in Asia and Europe and were introduced to North America by European colonists. Apples have religious and mythological significance in many cultures, including Norse, Greek, and European Christian tradition.</p>
+    <button onclick="getSelectionText()">getSelectedText</button>
+
+    <p id="demo"></p>
+
+    <script>
+
+    function getSelectionText() {
+
+        var selectedText = "";
+        if (window.getSelection) {
+            selectedText = window.getSelection().toString();
+        } else if (document.selection && document.selection.type != "Control") {
+            selectedText = document.selection.createRange().selectedText;
+        }
+        document.getElementById("demo").innerHTML = selectedText;
+
+        // Example POST request using Fetch API
+        fetch('/highlight', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ selectedText: selectedText })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json(); // Assuming the server responds with JSON
+        })
+        .then(data => {
+          console.log('Response from server:', data);
+        })
+        .catch(error => {
+          console.error('There was a problem with your fetch operation:', error);
+        });
+    }
+    </script>
+
   </body>
 </html>
