@@ -1,0 +1,18 @@
+.Leaners-Info-Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.Learners-Info-profile-pic {
+    padding: 20px 30px;
+}
+
+.Learners-Info-UserInfo {
+    display: flex;
+}
+
+.Learners-Info-UserInfo > div {
+    padding: 10px 20px;
+}

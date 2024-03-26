@@ -1,0 +1,84 @@
+/* .container {
+  display: block;
+  overflow: scroll;
+} */
+
+/* hr {
+  margin: 0;
+  border: 2px solid #d9d9d9;
+} */
+
+/* .container h1 {
+  text-align: left;
+  margin-bottom: 5%;
+  font-weight: bold;
+} */
+
+.saved-header {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5%;
+  text-align: left;
+  min-width: max-content;
+}
+
+.saved-header h2 {
+  display: inline;
+  font-weight: bold;
+  margin: 0;
+  margin-right: 70%;
+}
+
+.saved-header p {
+  display: inline-block;
+}
+
+.saved-header .sorters {
+  text-align: right;
+  margin: 0;
+  margin-right: 1%;
+  align-self: flex-end;
+}
+
+.seperator {
+  margin-right: 1%;
+  margin-top: auto;
+  margin-bottom: 0;
+  color: #d9d9d9;
+}
+
+.buttonTest {
+  width: 100%;
+  margin-left: 0;
+}
+
+.buttonFrame {
+  text-align: left;
+}
+
+.buttonFrame .weekdayButtons {
+  background-color: #d9d9d9;
+  color: #666666;
+  border: 1px solid #b3b3b3;
+  margin-right: 1.5%;
+}
+
+.buttonFrame .weekdayButtons:hover {
+  background-color: #757575;
+  color: #ffffff;
+  border: 1px solid black;
+}
+
+/* COURSE BOX */
+.BookMarkedCourseComponent {
+  position: relative;
+  width: 22%;
+  height: 60%;
+  margin-right: 2%;
+}
+
+.BookMarkedCourseItems {
+  margin-top: 2%;
+  height: 90%;
+  display: flex;
+}

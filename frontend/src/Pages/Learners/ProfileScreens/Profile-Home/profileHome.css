@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.profileHomeHR {
+  border-top: 1px !important;
+  color: #eeeeee !important;
+  height: 2px !important;
+}

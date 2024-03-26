@@ -1,0 +1,90 @@
+
+
+/* Coded by: T.J. Sherwood */
+
+/* Global Styling */
+.Personal-Profile-container {
+    
+    
+position: relative;
+width: 100%;
+height: 100%;
+
+background: #FFFFFF;
+}
+
+
+/* Profile Picture Styling */
+.big-profile-picture svg {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    left: 0px;
+    top: 88px;
+}
+
+.small-profile-picture svg{
+    position: absolute;
+width: 58px;
+height: 58px;
+left: 202px;
+top: 268px;
+
+}
+
+.profile-picture-container:hover svg{
+    fill: gray;
+}
+
+/* Name and Description Styling */
+.Name-Description-container h1 {
+    position: absolute;
+    width: 120px;
+    height: 29px;
+    left: 431px;
+    top: 119px;
+    
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    
+    color: #000000;
+}
+
+.Name-Description-container p {
+    
+position: absolute;
+width: 134px;
+height: 20px;
+left: 431px;
+top: 152px;
+
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 20px;
+/* identical to box height */
+
+
+color: #000000;
+
+}
+
+.description-box textarea{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 589px;
+    height: 127px;
+    left: 431px;
+    top: 199px;
+    
+    background: #FFFFFF;
+    border: 1px solid #B3B3B3;
+    border-radius: 8px;  
+
+    margin-right: 120px;
+}

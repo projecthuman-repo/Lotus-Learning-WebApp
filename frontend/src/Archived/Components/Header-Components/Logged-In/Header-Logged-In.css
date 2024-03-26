@@ -1,0 +1,72 @@
+.logOuted-Header {
+    height: 8%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #D9D9D9;
+    align-items: center;
+    z-index: 1;
+}
+
+.Logo-Title {
+    display: flex;
+}
+
+.Title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 500px;
+}
+
+.Logo {
+    width: 55px;
+    height: 55px;
+}
+
+.Links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Every Element inside Link's */
+.Links > * {
+    padding: 0 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Every a tag inside Link's */
+.Links > div > a {
+    text-decoration: none;
+    color: black;
+}
+
+.Links > div > a > svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Every Element inside Logo-Title Div */
+.Logo-Title > * {
+    padding: 0 10px;
+}
+
+/* Bell Active */
+.BellActive {
+    position: relative;
+    top: -10px;
+    left: 23px;
+    height: fit-content;
+    width: fit-content;
+    z-index: 2;
+}
+
+/* .off-screen {
+    display: none;
+} */

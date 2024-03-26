@@ -1,0 +1,209 @@
+/* Sizing mostly using pixels for now */
+
+/* Could probably refactor styling to reduce total amount of lines */
+
+/*Coded by: Taylor Oxelgren */
+
+
+
+.contentBox{
+    height:86vh;
+    width:700px;
+    margin-top: 3.21vw;
+    margin-bottom: 3.21vw;
+    margin-left: auto;
+    margin-right: auto;
+
+    box-sizing: border-box;
+
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 22px;
+}
+
+
+.exitIcon{
+    display: block;
+    position: relative;
+    float:right;
+    margin-right: 10px;
+    top: 2vh;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    /* background-color: black; */
+    background-image: url("../../Images/Exit.svg");
+}
+
+.exitIcon:hover{
+    background-color: #E6E6E6;
+}
+
+.logo{
+    display: flex;
+    width: 3.2vw;
+    height: 3.2vw;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    margin-top:3.14vw;
+    margin-bottom: 62px;
+    object-fit: contain;
+    padding: 0;
+    justify-content: center;
+
+}
+
+.logo-img{
+    width: 70px;
+    height: 70px;
+}
+
+
+
+.log-sign-selector{
+    /* display: inline-block; */
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+
+    text-align: center;
+    line-height: 1.9vw;
+}
+
+
+.loginSelector, .signUpSelector{
+    display: inline-block;
+    padding-right: 1vw;
+    padding-left: 1vw;
+    border-bottom: 1px solid #B8B6B6;
+    width: 160px;
+    
+    font-weight: 500;
+    /* font-size: 1.33vw; */
+    font-size: 28px;
+    line-height: 55px;
+
+    color: #292929;
+}
+
+.signUpSelector{
+    border-left: 1px solid #B8B6B6;
+}
+
+.signUp{
+    margin-top: 8.2vh;
+    width:390px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.signUpBox{
+    width:390px;
+    border: 0px;
+    border-bottom: 1px solid #B8B6B6;
+
+    /* background-color:red; */
+    height: 3vh;
+}
+
+::placeholder{
+    color:#D9D9D9;
+}
+
+ #password{
+    margin-top: 2vh;
+}
+
+
+.signUpButton{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    width:390px;
+    height: 5vh;
+    margin-top: 4.1vh;
+    margin-bottom: 1.5vh;
+
+    background: #E6E6E6;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 0;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+
+.or{
+    text-align: center;
+    font-family: "Montserrat",sans-serif !important;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 23px;
+    
+    margin-bottom: 4vh;
+    margin-top: 4vh;
+
+    color: #757575;
+}
+
+.lines{
+    display: inline-block;
+    width:6vw;
+
+    position: relative;
+    top: .5vh;
+    margin-left: 2.33vw;
+    margin-right: 2.33vw;
+    background-color: #C4C4C4;
+    border: 0;
+    height: 1px;
+
+}
+
+.su-With{
+    text-align: center;
+    line-height: 4vh;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-size: 19px;
+
+    border: 1px solid #B8B6B6;
+    margin-top: 1vw;
+    margin-left: auto;
+    margin-right: auto;
+    width:295px;
+    height:4vh;
+
+    color: #757575;
+    
+}
+
+.signUpFooter{
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 15px;
+    /* identical to box height */
+    margin-top: 2vh;
+
+    color: #757575;
+}
+
+.icons{
+    margin-left: 0px; 
+    margin-right: 10px;
+    margin-bottom: 3px;
+    width:20px;
+}
+
+#fbIcon{
+    margin-left: 25px;
+}

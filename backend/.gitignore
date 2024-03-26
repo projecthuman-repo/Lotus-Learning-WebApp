@@ -1,0 +1,4 @@
+node_modules
+.env
+
+firebase-account-key-dev.json

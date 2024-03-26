@@ -1,0 +1,75 @@
+
+
+/* Content Container */
+.CongratsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    
+    max-width: 30%;
+    margin: 0 auto;
+    margin-top: 3%;
+    box-sizing: border-box;
+
+   border-radius: 5%;
+
+   background-color: #373737;
+
+}
+
+
+/* Badge Container */
+.myBadgeContainer {
+margin-top: 15%;
+margin-bottom: 10%;
+}
+
+/* Congrats Container */
+.myCongratsContainer h1{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 2vw;
+    margin-bottom: 8%;
+
+    color: #fff;
+}
+
+/* Earned Badge Container */
+.myEarnedBadgeContainer p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: .8vw;
+    width: 100%;
+    margin-bottom: 8%;
+
+    color: #fff;
+
+    text-align: center;
+}
+
+/* Name of Course */
+.myEarnedBadgeContainer p span {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-size: 0.8vw;
+    color: #FFE8A3;
+}
+
+/* Button Style */
+.myClaimButtonContainer  {
+    margin-bottom: 8%;
+}
+
+.claimButton {
+    background-color: #FFE8A3;
+    border: 2px #FFE8A3;
+
+    border-radius: 20px;
+
+    width: 150%; 
+    font-size: 1vw;
+
+    margin-left: -22%;
+    padding: 0;
+}
