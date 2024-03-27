@@ -7,6 +7,7 @@ import GeneralFooter from "../../../components/footer/GeneralFooter";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import LowProfileNavbar from "../../../components/navbar/LowProfileNavbar";
+import LotusLogo from "../../../Images/LotusLogoColour.webp"; // Importing image
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -31,10 +32,17 @@ const Registration = () => {
       <LowProfileNavbar />
       <div className="flex items-center justify-evenly h-[calc(100%-10rem)] w-full ">
         <div className="space-y-2 md:block hidden">
-          <p className="font-bold text-4xl">
-            Join <br /> Lotus Learning
-          </p>
-          <p>Let's give learning a different perspective!</p>
+        <div className="grid place-items-center">
+  <img src={LotusLogo} alt="Lotus Logo" style={{ width: "350px", height: "auto" }} /> 
+  <div className="text-center">
+    <p className="font-bold text-4xl">
+      <br></br>
+      Join <br /> Lotus Learning
+    </p>
+    <p>Let's give learning a different perspective!</p>
+  </div>
+</div>
+
         </div>
         {screen === "login" &&
         <Login />}
