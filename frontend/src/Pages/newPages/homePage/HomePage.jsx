@@ -6,7 +6,6 @@ import CarrouselShowCase from "../../../components/carrousel-show-case/Carrousel
 import { SwiperSlide } from "swiper/react";
 import ItemSlide from "../../../components/carrousel-show-case/ItemSlide";
 import GeneralCourseCard from "../../../components/course-cards/GeneralCourseCard";
-import PdfInterpreter from "../../../components/pdf/Pdf-interpreter";
 
 const HomePage = () => {
   return (
@@ -36,8 +35,6 @@ const HomePage = () => {
             <SwiperSlide className="flex items-start justify-center pb-5">
               <ItemSlide />
             </SwiperSlide>
-
-
           </CarrouselShowCase>
 
         </div>
@@ -47,6 +44,10 @@ const HomePage = () => {
         <div className="max-w-[1400px] mx-auto py-2 flex items-center justify-center">
           
         <div className="grid md:gap-1 gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 ">
+          <GeneralCourseCard/>
+          <GeneralCourseCard/>
+          <GeneralCourseCard/>
+          <GeneralCourseCard/>
           <GeneralCourseCard/>
           <GeneralCourseCard/>
           <GeneralCourseCard/>

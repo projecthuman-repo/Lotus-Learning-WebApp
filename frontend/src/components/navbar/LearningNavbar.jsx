@@ -11,12 +11,16 @@ import { CiBellOn } from "react-icons/ci";
 import { SlMenu } from "react-icons/sl";
 import { MdOutlineSearch } from "react-icons/md";
 import { CgClose } from "react-icons/cg";
+import { noPfpGenerator } from "../../components/navbar/GeneralNavbar"; // Importing the noPfpGenerator function
+import { useDispatch, useSelector } from "react-redux";
+
 
 const LearningNavbar = () => {
   const [notificationsDropDown, setNotificationsDropDown] = useState(false);
   const [wishListDropDown, setWishListDropDown] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
+  const authUser = useSelector((state) => state.user);
 
   const navigate = useNavigate();
 
@@ -111,7 +115,7 @@ const LearningNavbar = () => {
             className="relative md:px-2 px-0"
           >
             <div className="h-[35px] w-[35px] bg-stone-800 rounded-full flex items-center justify-center cursor-pointer no-select ">
-              <p className="text-sm font-bold text-white">PP</p>
+              <p className="text-sm font-bold text-white">{noPfpGenerator(authUser.name)}</p>
             </div>
             {profileDropDown && (
               <div className="absolute top-[100%] right-0 z-30">
