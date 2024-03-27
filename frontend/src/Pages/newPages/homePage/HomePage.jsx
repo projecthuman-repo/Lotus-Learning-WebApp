@@ -6,6 +6,9 @@ import CarrouselShowCase from "../../../components/carrousel-show-case/Carrousel
 import { SwiperSlide } from "swiper/react";
 import ItemSlide from "../../../components/carrousel-show-case/ItemSlide";
 import GeneralCourseCard from "../../../components/course-cards/GeneralCourseCard";
+import Math11CourseCard from "../../../components/course-cards/Math11CourseCard";
+import Math12CourseCard from "../../../components/course-cards/Math12CourseCard";
+
 
 const HomePage = () => {
   return (
@@ -53,8 +56,8 @@ const HomePage = () => {
           <GeneralCourseCard/>
           <GeneralCourseCard/>
           <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
+          <Math12CourseCard/>
+          <Math11CourseCard/>
           <GeneralCourseCard/>
         </div>
       </div>
