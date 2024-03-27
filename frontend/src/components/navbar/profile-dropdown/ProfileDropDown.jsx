@@ -3,15 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const ProfileDropDown = () => {
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user);
 
   useEffect(() => {
     
-  },[authUser])
+  },[authUser]);
+
+  const logout = () => {
+    // Perform any logout actions here, such as clearing user data, etc.
+    // Then, navigate to registration page and reload the page
+    navigate('/registration');
+    window.location.reload();
+  };
 
   const noPfpGenerator = (name) => {
     const firstSplit =  name.split(' ');
@@ -27,10 +32,11 @@ const ProfileDropDown = () => {
         }
         return((secondSplit[0]+secondSplit[1]).toUpperCase())
     }
-  }
+  };
+
   return (
     <div className="w-[300px] border rounded-sm bg-white">
-      <div onClick={() => {navigate('/profile/courses')}} className="p-2 border-b flex items-center space-x-2 cursor-pointer hover:bg-stone-50">
+      <div onClick={() => navigate('/profile/courses')} className="p-2 border-b flex items-center space-x-2 cursor-pointer hover:bg-stone-50">
         <div className="h-[35px] w-[35px] bg-stone-800 rounded-full flex items-center justify-center cursor-pointer no-select overflow-hidden">
           {authUser.profilePic ? 
             <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?cs=srgb&dl=pexels-mohamed-abdelghaffar-771742.jpg&fm=jpg" className="h-full w-full object-cover"/>
@@ -50,9 +56,7 @@ const ProfileDropDown = () => {
         <p className="text-sm cursor-pointer px-2 hover:text-red-300">Notifications</p>
         <p className="text-sm cursor-pointer px-2 hover:text-red-300 border-b pb-2">My Courses</p>
         <p className="text-sm cursor-pointer px-2 hover:text-red-300">Help</p>
-        <p onClick={() => navigate('/registration')}className="text-sm cursor-pointer px-2 text-red-500 hover:text-red-400">Logout</p>
-        
-       
+        <p onClick={logout} className="text-sm cursor-pointer px-2 text-red-500 hover:text-red-400">Logout</p>
         </div>
       </div>
     </div>
