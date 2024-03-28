@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Math11CourseCard = () => {
+const Geography10CourseCard = () => {
 
   const navigate = useNavigate()
 
@@ -11,20 +11,20 @@ const Math11CourseCard = () => {
       <div className="w-full h-[calc(100%-6rem)] sm:h-[calc(100%-4rem)] flex items-center justify-center p-2 ">
         <img
           className="h-full w-full object-cover rounded-sm"
-          src="https://business.uoregon.edu/sites/default/files/styles/feature/public/Enews-Accounting-Data-Analytics-banner-202111.jpg"
+          src="https://static.vecteezy.com/system/resources/previews/005/676/794/non_2x/travel-background-geography-symbols-seamless-pattern-in-hand-drawn-doodle-style-tourism-and-adventure-colorful-icons-illustration-vector.jpg"
           alt=""
         />
       </div>
       <div className="px-2 flex flex-col justify-between h-[3rem] ">
         <p className="flex justify-between text-sm font-semibold">
           {" "}
-          <span>Math Grade 11</span> <span className="font-medium">$50 CAD</span>{" "}
+          <span>Geography Grade 10</span> <span className="font-medium">$50 CAD</span>{" "}
         </p>
 
-        <p className=" font-semibold text-xs">Instructor: Moe Daniel </p>
+        <p className=" font-semibold text-xs">Instructor: Rainer Waseem </p>
       </div>
     </div>
   );
 };
 
-export default Math11CourseCard;
+export default Geography10CourseCard;

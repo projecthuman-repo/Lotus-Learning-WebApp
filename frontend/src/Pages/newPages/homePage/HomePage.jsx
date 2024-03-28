@@ -8,6 +8,12 @@ import ItemSlide from "../../../components/carrousel-show-case/ItemSlide";
 import GeneralCourseCard from "../../../components/course-cards/GeneralCourseCard";
 import Math11CourseCard from "../../../components/course-cards/Math11CourseCard";
 import Math12CourseCard from "../../../components/course-cards/Math12CourseCard";
+import English12CourseCard from "../../../components/course-cards/Englsh12CourseCard";
+import English11CourseCard from "../../../components/course-cards/English11CourseCard";
+import Geography10CourseCard from "../../../components/course-cards/Geography10CourseCard";
+import Geoscience12CourseCard from "../../../components/course-cards/Geoscience12CourseCard";
+import Astronomy9CourseCard from "../../../components/course-cards/Astronomy9CourseCard";
+import ComputerScience11CourseCard from "../../../components/course-cards/ComputerScience11CourseCard";
 
 
 const HomePage = () => {
@@ -24,19 +30,19 @@ const HomePage = () => {
           </p>
           <CarrouselShowCase>
             <SwiperSlide className="flex items-start justify-center pb-5">
-              <ItemSlide />
+              <Math11CourseCard/>
+            </SwiperSlide>
+            <SwiperSlide className="flex items-start justify-center pb-5">
+              <Geoscience12CourseCard/>
+            </SwiperSlide>
+            <SwiperSlide className="flex items-start justify-center pb-5">
+              <ComputerScience11CourseCard/>
             </SwiperSlide>
             <SwiperSlide className="flex items-start justify-center pb-5">
               <ItemSlide />
             </SwiperSlide>
             <SwiperSlide className="flex items-start justify-center pb-5">
-              <ItemSlide />
-            </SwiperSlide>
-            <SwiperSlide className="flex items-start justify-center pb-5">
-              <ItemSlide />
-            </SwiperSlide>
-            <SwiperSlide className="flex items-start justify-center pb-5">
-              <ItemSlide />
+              <English11CourseCard/>
             </SwiperSlide>
           </CarrouselShowCase>
 
@@ -47,18 +53,17 @@ const HomePage = () => {
         <div className="max-w-[1400px] mx-auto py-2 flex items-center justify-center">
           
         <div className="grid md:gap-1 gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 ">
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <GeneralCourseCard/>
-          <Math12CourseCard/>
+
+          {/* Added placeholder course cards for testing purposes */}
+          <ComputerScience11CourseCard/>
+          <Astronomy9CourseCard/>
+          <Geoscience12CourseCard/>
           <Math11CourseCard/>
-          <GeneralCourseCard/>
+          <English12CourseCard/>
+          <Math12CourseCard/>
+          <Geography10CourseCard/>
+          <English11CourseCard/>
+
         </div>
       </div>
       </div>

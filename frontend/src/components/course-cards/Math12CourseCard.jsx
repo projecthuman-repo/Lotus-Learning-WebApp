@@ -18,7 +18,7 @@ const Math12CourseCard = () => {
         <div className="px-2 flex flex-col justify-between h-[3rem] ">
           <p className="flex justify-between text-sm font-semibold">
             {" "}
-            <span>Math 12</span> <span className="font-medium">$55 CAD</span>{" "}
+            <span>Math Grade 12</span> <span className="font-medium">$55 CAD</span>{" "}
           </p>
   
           <p className=" font-semibold text-xs">Instructor: Jennifer Stone </p>

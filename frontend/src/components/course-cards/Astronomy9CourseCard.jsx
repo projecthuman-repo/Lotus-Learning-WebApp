@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Math11CourseCard = () => {
+const Astronomy9CourseCard = () => {
 
   const navigate = useNavigate()
 
@@ -11,20 +11,20 @@ const Math11CourseCard = () => {
       <div className="w-full h-[calc(100%-6rem)] sm:h-[calc(100%-4rem)] flex items-center justify-center p-2 ">
         <img
           className="h-full w-full object-cover rounded-sm"
-          src="https://business.uoregon.edu/sites/default/files/styles/feature/public/Enews-Accounting-Data-Analytics-banner-202111.jpg"
+          src="https://cdnb.artstation.com/p/assets/images/images/029/971/859/large/keavon-chambers-astronomy.jpg?1599190249"
           alt=""
         />
       </div>
       <div className="px-2 flex flex-col justify-between h-[3rem] ">
         <p className="flex justify-between text-sm font-semibold">
           {" "}
-          <span>Math Grade 11</span> <span className="font-medium">$50 CAD</span>{" "}
+          <span>Astronomy Grade 9</span> <span className="font-medium">$50 CAD</span>{" "}
         </p>
 
-        <p className=" font-semibold text-xs">Instructor: Moe Daniel </p>
+        <p className=" font-semibold text-xs">Instructor: Jessica Water </p>
       </div>
     </div>
   );
 };
 
-export default Math11CourseCard;
+export default Astronomy9CourseCard;
