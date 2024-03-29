@@ -8,6 +8,7 @@ import StepThree from "./steps/StepThree";
 import StepFour from "./steps/StepFour";
 import createNewCourseProxy from "../../../BackendProxy/courseProxy/createNewCourse";
 import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
+
 const CreateNewCourse = () => {
   const navigate = useNavigate();
   const { step } = useParams();
@@ -25,20 +26,19 @@ const CreateNewCourse = () => {
     },
   });
 
-  const sendNewCourse = async() => {
-    if(!loading){
+  const sendNewCourse = async () => {
+    if (!loading) {
       setLoading(true);
-      try{
-        const response  = await createNewCourseProxy(newCourseObj)
+      try {
+        const response = await createNewCourseProxy(newCourseObj);
         navigate('/profile/course-editor/homePage/' + response.data.savedData._id);
-      }
-      catch(error){
+      } catch (error) {
         console.error("Error creating course", error);
-      }finally{
+      } finally {
         setLoading(false);
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (!step) {
@@ -90,26 +90,24 @@ const CreateNewCourse = () => {
 
   const stepFlowMannager = () => {
     const firstStepCheck = () => {
-      if(!newCourseObj.title || !newCourseObj.description || newCourseObj.title.trim() === "" || newCourseObj.description.trim() === "") 
-        {
-          navigate("/create-new-course/1");
-          return;
-        }
-    } 
+      if (!newCourseObj.title || !newCourseObj.description || newCourseObj.title.trim() === "" || newCourseObj.description.trim() === "") {
+        navigate("/create-new-course/1");
+        return;
+      }
+    }
     const secondStepCheck = () => {
-      if(newCourseObj.categories.length <= 0)
-      {
+      if (newCourseObj.categories.length <= 0) {
         navigate("/create-new-course/2");
         return;
       }
-    } 
+    }
     const thirdCheck = () => {
       const allObjectivesEmpty = Object.values(newCourseObj.objectives).every(obj => obj.trim() === "");
       if (allObjectivesEmpty) {
         navigate("/create-new-course/3");
       }
     };
-    switch (step){
+    switch (step) {
       case '2':
         firstStepCheck();
         break;
@@ -125,23 +123,26 @@ const CreateNewCourse = () => {
       default:
         return;
     }
-
-  }
-
+  };
 
   const progressBar = (value, total) => {
     return (value * 100) / total;
   };
+
+  const handleExit = () => {
+    navigate('/profile/my-courses');
+  };
+
   return (
     <>
       <div className="h-screen">
         <div className="w-full h-[65px] ">
           <div className="w-full h-full bg-white border-b  flex justify-between items-center px-3">
             <div className="h-full">
-              <img src={logo} className="h-full p-3 " />
+              <img src={logo} className="h-full p-3 " alt="Logo" />
             </div>
             <div>
-              <button className="bg-white text-stone-600 rounded-full flex items-center space-x-2 hover:text-stone-700">
+              <button className="bg-white text-stone-600 rounded-full flex items-center space-x-2 hover:text-stone-700" onClick={handleExit}>
                 <p className="font-semibold text-base"> Exit </p>
                 <BiExit />
               </button>
@@ -156,7 +157,7 @@ const CreateNewCourse = () => {
         </div>
         {/* sections */}
 
-        {loading? 
+        {loading ? 
         <div className="h-[calc(90vh-65px)] w-full flex items-center justify-center">
           <SpinnerLoader/>
         </div>

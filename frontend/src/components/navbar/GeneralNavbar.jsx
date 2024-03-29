@@ -142,20 +142,21 @@ const GeneralNavbar = () => {
           </div>
         ) : (
           <div>
-            <div>
-              <button
-                onClick={() => navigate("/registration?screen=signup")}
-                className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded-full mr-2"
-              >
-                Create an account
-              </button>
-              <button
-                onClick={() => navigate("/registration?screen=login")}
-                className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded-full"
-              >
-                Sign In
-              </button>
-            </div>
+           <div style={{ display: 'flex' }}>
+  <button
+    onClick={() => navigate("/registration?screen=signup")}
+    className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded mr-2"
+  >
+    Create an account
+  </button>
+  <button
+    onClick={() => navigate("/registration?screen=login")}
+    className="font-semibold text-white linearGradient_ver1 text-sm px-3 py- rounded"
+  >
+    Sign In
+  </button>
+</div>
+
           </div>
         )}
       </div>
