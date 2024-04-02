@@ -1,7 +1,10 @@
 const express = require('express');
 const Course = require("../../models/CourseModel.js");
-const {createNewCourse} = require('../../controllers/course/create-new-course.js')
+const {createNewCourse} = require('../../controllers/course/create-new-course.js');
+const { updateCourseData } = require('../../controllers/course/update-course-content.js');
 const router = express.Router();
+const zlib = require('zlib');
+const decompressData = require('../../helpers/decompressData.js');
 
 
 router.get('/get-course-data', async(req, res, next) => {
@@ -27,7 +30,6 @@ router.get('/get-course-data', async(req, res, next) => {
   }
 })
 
-
 router.post('/create-new-course', async(req, res, next) => {
   try{
     const newCourseObj = req.body
@@ -49,6 +51,17 @@ router.post('/create-new-course', async(req, res, next) => {
 
 
   }catch (error) {
+    return next(error.message);
+  }
+})
+
+router.post('/update-course', async(req, res, next) => {
+  try { 
+    const course = req.body
+    // DeCompress Data
+     const courseData = await decompressData(course.data)
+    const updatedCourseResponse = await updateCourseData(courseData)
+  } catch (error) {
     return next(error.message);
   }
 })

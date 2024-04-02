@@ -4,6 +4,8 @@ import { RiErrorWarningFill } from "react-icons/ri";
 import { IoTrashBinSharp } from "react-icons/io5";
 import ClassMedia from "./ClassMedia.jsx";
 import ClassInputs from "./ClassInputs.jsx";
+import ClassExtraActivities from "./ClassExtraActivities.jsx";
+import OnHoverExtraHud from "../../../../../OnHoverExtraHud.jsx";
 
 const ClassEditor = ({ course, setCourses, courseIndex }) => {
   // State variables
@@ -44,14 +46,17 @@ const ClassEditor = ({ course, setCourses, courseIndex }) => {
 
   // Save changes to the course
   const handleSave = () => {
-    setCourses((prevValue) => {
+    if(hasEmptyOrNullValues(clonedCourse)) {
+      return
+    }
+    setCourses((prevValue) => {  
       const prevValues = [...prevValue.lessons];
       prevValues[courseIndex] = {
         ...clonedCourse,
       };
       return {
         ...prevValue,
-        lessons: prevValues
+        lessons: prevValues,
       };
     });
     setUpdating(false);
@@ -60,9 +65,24 @@ const ClassEditor = ({ course, setCourses, courseIndex }) => {
   // Discard changes and reset to the original course
   const discardChanges = () => {
     setClonedCourse(course);
-    if (course.file === undefined || course.file === null) {
+    if (course.attachedFile === undefined || course.attachedFile === null) {
       setUpdatingMedia(true);
+    }else{
+      setUpdatingMedia(false);
+
     }
+  };
+
+  const hasEmptyOrNullValues = (object) => {
+    const isEmptyOrNull = (value) => {
+      return value === "" || value === null || value === undefined;
+    };
+    for (const key in object) {
+      if (key !== "extraActivities" && isEmptyOrNull(object[key])) {
+        return true; // Retorna true si encuentra un valor vacío o nulo
+      }
+    }
+    return false; // Retorna false si no hay valores vacíos o nulos
   };
 
   // Replace the input file for the class
@@ -81,13 +101,13 @@ const ClassEditor = ({ course, setCourses, courseIndex }) => {
 
   // Delete the class
   const deleteClass = () => {
-    setCourses( prevValue => {
+    setCourses((prevValue) => {
       const coursesList = [...prevValue.lessons];
       coursesList.splice(courseIndex, 1);
-      
+
       return {
         ...prevValue,
-        lessons: [...coursesList]
+        lessons: [...coursesList],
       };
     });
   };
@@ -99,6 +119,10 @@ const ClassEditor = ({ course, setCourses, courseIndex }) => {
     );
     return checker;
   };
+
+  useEffect(() => {
+    console.log(updatingMedia);
+  },[updatingMedia])
 
   return (
     <div style={{ userSelect: "none" }} className=" cursor-pointer border-b">
@@ -135,8 +159,9 @@ const ClassEditor = ({ course, setCourses, courseIndex }) => {
           {/* Delete class button */}
           <div
             onClick={() => deleteClass()}
-            className="p-2 rounded-full hover:bg-stone-50"
+            className="p-2 rounded-full hover:bg-stone-50  hover-parent"
           >
+            <OnHoverExtraHud name="Delete"/>
             <IoTrashBinSharp className="text-lg " />
           </div>
         </div>
@@ -195,41 +220,54 @@ const ClassEditor = ({ course, setCourses, courseIndex }) => {
           />
         ) : (
           <div className="flex flex-col">
-            <div className="flex items-center justify-between space-x-4 border p-3">
-              {/* Display file details */}
-              <div className="flex flex-col w-[40%]">
-                <p className="text-sm font-medium inline-block">File Name</p>
-                <p className="inline-block text-sm">
-                  {clonedCourse.attachedFile && clonedCourse.filename}
-                </p>
+              <div className="flex items-center justify-between space-x-4 border p-3">
+                {/* Display file details */}
+                <div className="flex flex-col w-[40%]">
+                  <p className="text-sm font-medium inline-block">File Name</p>
+                  <p className="inline-block text-sm">
+                    {clonedCourse.attachedFile && clonedCourse.filename}
+                  </p>
+                </div>
+                <div className="flex flex-col ">
+                  <p className="text-sm font-medium inline-block">File type</p>
+                  <p className="inline-block ">
+                    {clonedCourse.attachedFile && clonedCourse.type}
+                  </p>
+                </div>
+                {/* Replace input file button */}
+                <div className="flex flex-col relative overflow-hidden cursor-pointer">
+                  <button
+                    onClick={() => replaceInputFile()}
+                    className="px-2 py-1 font-medium bg-stone-700 text-stone-50 hover:text-stone-200"
+                  >
+                    Replace
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-col ">
-                <p className="text-sm font-medium inline-block">File type</p>
-                <p className="inline-block ">
-                  {clonedCourse.attachedFile && clonedCourse.type}
-                </p>
-              </div>
-              {/* Replace input file button */}
-              <div className="flex flex-col relative overflow-hidden cursor-pointer">
-                <button
-                  onClick={() => replaceInputFile()}
-                  className="px-2 py-1 font-medium bg-stone-700 text-stone-50 hover:text-stone-200"
-                >
-                  Replace
-                </button>
-              </div>
-            </div>
           </div>
         )}
-
+        <div className="flex flex-col items-start  mb-1 mt-3">
+          <p className="text-sm font-medium inline-block">Extra Activities </p>
+          <div className="w-full">
+            <ClassExtraActivities
+              course={clonedCourse}
+              setCourses={setClonedCourse}
+              lessonIndex={courseIndex}
+            />
+          </div>
+        </div>
         {/* Display save and discard buttons when updating */}
         {updating && (
           <div className="w-full flex items-center justify-end my-3 space-x-2">
             {/* Save changes button */}
             <button
               onClick={() => handleSave()}
-              className="bg-stone-700 font-medium text-stone-50 px-2 py-1"
+              className={` font-medium text-stone-50 px-2 py-1 flex items-center transition-all ${hasEmptyOrNullValues(clonedCourse)? 'bg-stone-400' : 'linearGradient_ver1'}`}
             >
+              {
+                hasEmptyOrNullValues(clonedCourse)&&
+               <RiErrorWarningFill className="text-stone-50 mr-1" />
+              }
               Save
             </button>
             {/* Discard changes button */}
