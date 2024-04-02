@@ -1,23 +1,29 @@
-import { Navigate } from "react-router-dom";
+import React, { createContext, useState } from "react";
 import CreateEditHome from "./screens/CreateEditHome";
 import CreateEditObjectives from "./screens/CreateEditObjectives";
 import CreateEditProgramme from "./screens/create-edit-programme/CreateEditProgramme";
 import CreateEditPrice from "./screens/CreateEditPrice";
+const Context = createContext();
 
-
-export const checkScreen = (key, courseData, setCourseData) => {
-  switch (key) {
-    case undefined:
-      return false;
-    case "homePage":
-      return <CreateEditHome courseData={courseData} setCourseData={setCourseData} />;
-    case "objectives":
-      return <CreateEditObjectives courseData={courseData} setCourseData={setCourseData} />;
-    case "programme":
-      return <CreateEditProgramme courseData={courseData} setCourseData={setCourseData} />;
-    case "prices":
-      return <CreateEditPrice courseData={courseData} setCourseData={setCourseData} />;
-    default:
-      return false;
-  }
+const componentMapping = {
+  homePage: CreateEditHome,
+  objectives: CreateEditObjectives,
+  programme: CreateEditProgramme,
+  prices: CreateEditPrice
 };
+
+const Navigation = ({ screen, courseData, setCourseData }) => {
+  const Component = componentMapping[screen];
+
+  if (!Component) {
+    return null;
+  }
+
+  return (
+    <div >
+      <Component courseData={courseData} setCourseData={setCourseData} />
+    </div>
+  );
+};
+
+export default Navigation;
