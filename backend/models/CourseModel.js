@@ -5,6 +5,11 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  compleated: {
+    type: Boolean,
+    default: false,
+    required: true
+  },
   description: {
     type: String,
     required: true,
@@ -34,9 +39,40 @@ const courseSchema = new mongoose.Schema({
   },
   lessons: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'LessonModel',
-    },
+      title: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+        required: true,
+      },
+      attachedFile: {
+        type: String,
+      },
+      type: {
+        type: String,
+      },
+      filename: {
+        type: String,
+      },
+      extraActivities: [
+        {
+          type: {
+            type: String,
+            enum: ['quiz', 'openQuestion'],
+            required: true,
+          },
+          openQuestion: {
+            type: String, 
+          },
+          quiz: [{
+            text: String,
+            correct: Boolean,
+          }], 
+        },
+      ],
+    }
   ],
 });
 

@@ -15,7 +15,8 @@ const { connectToDatabases } = require('./db/connection');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use(
   cors({
@@ -25,6 +26,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(isAuth);
+
 
 // app.use('/api', notificationRoutes);
 
@@ -50,6 +52,13 @@ app.use('/course', courseRoutes);
 app.use("/test", (req, res) => {
   res.send("hello world!");
 })
+
+//highlight function developing --zelong
+app.use("/highlight", (req, res) => {
+  const selectedText = req.body.selectedText;
+  console.log(selectedText);
+});
+
 
 
 connectToDatabases()

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { MdAdd } from "react-icons/md";
 
@@ -7,23 +7,10 @@ import ClassEditor from "./components/ClassEditor.jsx";
 const CreateEditProgramme = ({courseData, setCourseData}) => {
   // State for search input and courses
   const [searchValues, setSearchValues] = useState('');
-  const [courses, setCourses] = useState([
-    {
-      id: 0,
-      title: "Class 01",
-      description: "Course Description 01",
-      filename: undefined,
-      type: undefined,
-      attachedFile: undefined,
-    },
-  ]);
-
   // Function to add a new class to the courses list
   const addNewClass = () => {
     const coursesList = courseData.lessons.slice();
-    const timeAsId = new Date().toISOString();
     coursesList.push({
-      id: timeAsId,
       title: 'Your class title',
       description: '',
       filename: undefined,
@@ -80,7 +67,7 @@ const CreateEditProgramme = ({courseData, setCourseData}) => {
         {filterByTitle(courseData.lessons, searchValues).map((item, i) => {
           return (
             <div key={item.title + i}>
-              {/* Class Editor Component */}
+                {/* Class Editor Component */}
               <ClassEditor
                 courseIndex={i}
                 course={item}

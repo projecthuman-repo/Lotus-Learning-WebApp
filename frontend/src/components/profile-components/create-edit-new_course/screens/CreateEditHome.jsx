@@ -6,8 +6,9 @@ import createNewCourseProxy from "../../../../BackendProxy/courseProxy/createNew
 import { useSelector } from "react-redux";
 
 const CreateEditHome = ({ courseData, setCourseData }) => {
-  const authUser = useSelector((state) => state.user);
 
+  // const { sharedVariable, setSharedVariable } = useContext(MyContext);
+  const authUser = useSelector((state) => state.user);
   const [courseTitle, setCourseTitle] = useState("");
   const [courseDesc, setCourseDesc] = useState("");
   const [courseImage, setCourseImage] = useState(null);
@@ -59,15 +60,6 @@ const CreateEditHome = ({ courseData, setCourseData }) => {
   };
 
   //save - create new course
-  const saveNewCourse = () => {
-    createNewCourseProxy({
-      title: courseTitle,
-      description: courseDesc,
-      categories: categories,
-      age: complexity,
-      creator: authUser,
-    });
-  };
 
   
 const updateCategories = (newCategoriesValue) => {
@@ -188,24 +180,6 @@ const updateCategories = (newCategoriesValue) => {
           <p className="text-xs font-ligth text-stone-400 mt-1">
             750 x 422 pixels
           </p>
-        </div>
-
-        {/* Save/Discard Buttons */}
-        <div className="mt-3">
-          <div className="flex items-center justify-end space-x-3">
-            <button
-              onClick={() => resetValues()}
-              className="border px-2 py-1 font-medium text-stone-600 hover:bg-slate-50"
-            >
-              Discard
-            </button>
-            <button
-              onClick={() => saveNewCourse()}
-              className="px-2 py-1 font-medium text-white linearGradient_ver1"
-            >
-              Save
-            </button>
-          </div>
         </div>
       </div>
     </div>

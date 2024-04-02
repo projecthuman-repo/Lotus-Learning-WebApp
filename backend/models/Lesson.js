@@ -13,6 +13,7 @@ const lessonSchema = new mongoose.Schema({
     type: String,
 
   },
+  attachedFile: mongoose.Schema.Types.Mixed,
   extraActivities: [
     {
       type: {
