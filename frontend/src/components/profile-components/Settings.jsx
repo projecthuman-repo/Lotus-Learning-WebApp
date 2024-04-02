@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { VscEdit } from "react-icons/vsc";
 import styles from "../../Styles";
+import { useDispatch, useSelector } from "react-redux";
+import { noPfpGenerator } from "../../components/navbar/GeneralNavbar"; // Importing the noPfpGenerator function
 
 const Settings = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const authUser = useSelector((state) => state.user);
 
   const [profilePicture, setProfilePicture] = useState("");
-  const [username, setUsername] = useState("Username");
+  const [username, setUsername] = useState(authUser.name);
   const [editingUserName, setEditingUserName] = useState(false);
 
   const handleImageChange = (event) => {
@@ -22,7 +26,7 @@ const Settings = () => {
           <div className="flex flex-col items-center  justify-center space-y-2">
             <div className="md:h-[150px] md:w-[150px] sm:h-[100px] sm:w-[100px] h-[75px] w-[75px] bg-black rounded-full flex items-center justify-center overflow-hidden">
               {profilePicture === "" ? (
-                <p className="text-white md:text-5xl text-2xl font-bold">PP</p>
+                <p className="text-white md:text-5xl text-2xl font-bold">{noPfpGenerator(authUser.name)}</p> // Using noPfpGenerator function to generate initials
               ) : (
                 <img
                   src={profilePicture}
@@ -58,8 +62,10 @@ const Settings = () => {
               )}
             </p>
             <p className="text-stone-600 md:text-base text-xs font-ligth ">
-              Username@gmail.com
+                      <p className="text-xs text-stone-500">{authUser.email}</p>
             </p>
+
+
           </div>
         </div>
       </div>

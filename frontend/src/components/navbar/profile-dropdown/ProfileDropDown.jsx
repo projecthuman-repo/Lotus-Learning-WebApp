@@ -50,7 +50,9 @@ const ProfileDropDown = () => {
         <p className="text-sm cursor-pointer px-2 hover:text-red-300">Notifications</p>
         <p className="text-sm cursor-pointer px-2 hover:text-red-300 border-b pb-2">My Courses</p>
         <p className="text-sm cursor-pointer px-2 hover:text-red-300">Help</p>
-        <p className="text-sm cursor-pointer px-2 text-red-500 hover:text-red-400">Logout</p>
+        <p onClick={() => navigate('/registration')}className="text-sm cursor-pointer px-2 text-red-500 hover:text-red-400">Logout</p>
+        
+       
         </div>
       </div>
     </div>

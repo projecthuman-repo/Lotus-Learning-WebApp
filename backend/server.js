@@ -27,6 +27,7 @@ app.use(
 app.use(cookieParser());
 app.use(isAuth);
 
+
 // app.use('/api', notificationRoutes);
 
 // app.use(
@@ -51,6 +52,13 @@ app.use('/course', courseRoutes);
 app.use("/test", (req, res) => {
   res.send("hello world!");
 })
+
+//highlight function developing --zelong
+app.use("/highlight", (req, res) => {
+  const selectedText = req.body.selectedText;
+  console.log(selectedText);
+});
+
 
 
 connectToDatabases()

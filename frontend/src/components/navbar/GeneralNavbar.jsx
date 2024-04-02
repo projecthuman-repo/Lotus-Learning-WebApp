@@ -145,4 +145,20 @@ const GeneralNavbar = () => {
   );
 };
 
+export const noPfpGenerator = (name) => {
+    const firstSplit =  name.split(' ');
+    if(firstSplit.length > 1){
+        const secondSplitA = firstSplit[0].split('')
+        const secondSplitB = firstSplit[1].split('')
+        return((secondSplitA[0]+secondSplitB[0]).toUpperCase())
+    }
+    else{
+        const secondSplit = name.split('') 
+        if(secondSplit.length <= 1){
+            return(secondSplit[0].toUpperCase())
+        }
+        return((secondSplit[0]+secondSplit[1]).toUpperCase())
+    }
+}
+
 export default GeneralNavbar;
