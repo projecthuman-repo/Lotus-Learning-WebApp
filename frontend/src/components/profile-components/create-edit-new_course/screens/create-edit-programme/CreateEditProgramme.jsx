@@ -5,7 +5,6 @@ import { MdAdd } from "react-icons/md";
 import ClassEditor from "./components/ClassEditor.jsx";
 
 const CreateEditProgramme = ({courseData, setCourseData}) => {
-const CreateEditProgramme = ({courseData, setCourseData}) => {
   // State for search input and courses
   const [searchValues, setSearchValues] = useState('');
   // Function to add a new class to the courses list
@@ -18,11 +17,6 @@ const CreateEditProgramme = ({courseData, setCourseData}) => {
       type: undefined,
       attachedFile: undefined,
     });
-    setCourseData(prevState => ({
-      ...prevState,
-      lessons: [...coursesList]
-    }))
-    // setCourses([...coursesList]);
     setCourseData(prevState => ({
       ...prevState,
       lessons: [...coursesList]
@@ -42,8 +36,6 @@ const CreateEditProgramme = ({courseData, setCourseData}) => {
     );
     return results;
   }
-
-
 
 
 
@@ -73,14 +65,12 @@ const CreateEditProgramme = ({courseData, setCourseData}) => {
       {/* Course List */}
       <div className="w-full min-h-[500px]  mt-4 border shadow-md">
         {filterByTitle(courseData.lessons, searchValues).map((item, i) => {
-        {filterByTitle(courseData.lessons, searchValues).map((item, i) => {
           return (
             <div key={item.title + i}>
                 {/* Class Editor Component */}
               <ClassEditor
                 courseIndex={i}
                 course={item}
-                setCourses={setCourseData}
                 setCourses={setCourseData}
               />
             </div>
