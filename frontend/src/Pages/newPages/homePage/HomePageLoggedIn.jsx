@@ -14,9 +14,10 @@ import Geography10CourseCard from "../../../components/course-cards/Geography10C
 import Geoscience12CourseCard from "../../../components/course-cards/Geoscience12CourseCard";
 import Astronomy9CourseCard from "../../../components/course-cards/Astronomy9CourseCard";
 import ComputerScience11CourseCard from "../../../components/course-cards/ComputerScience11CourseCard";
+import AddCourseButton from "../../../components/buttons/addCourseButton";
 
 
-const HomePage = () => {
+const HomePageLoggedIn = () => {
   return (
     <div className="h-full w-full ">
       <GeneralNavbar />
@@ -25,30 +26,48 @@ const HomePage = () => {
           <CarrouselHeader />
         </div>
         <div className="xl:w-[1350px] lg:w-[1000px] w-full">
+        <div className="flex justify-between items-center">
+            <p className="mt-3 font-semibold md:text-xl sm:text-md text-sm text-stone-700">
+                Continue your classes
+            </p>
+            <AddCourseButton />
+        </div>
+          <CarrouselShowCase>
+            <SwiperSlide className="flex items-start justify-center pb-5">
+              <Math11CourseCard/>
+            </SwiperSlide>
+            <SwiperSlide className="flex items-start justify-center pb-5">
+              <Geoscience12CourseCard/>
+            </SwiperSlide>
+            <SwiperSlide className="flex items-start justify-center pb-5">
+              <ComputerScience11CourseCard/>
+            </SwiperSlide>
+            <SwiperSlide className="flex items-start justify-center pb-5">
+              <ItemSlide />
+            </SwiperSlide>
+            <SwiperSlide className="flex items-start justify-center pb-5">
+              <English11CourseCard/>
+            </SwiperSlide>
+          </CarrouselShowCase>
 
         </div>
         <div className="xl:w-[1400px] lg:w-[1000px] w-full flex ">
-          <p className="pt-10 font-semibold md:text-xl sm:text-md text-sm  text-stone-700">Discover Our Course Offerings</p>
+          <p className="font-semibold md:text-xl sm:text-md text-sm  text-stone-700">Recommended for you</p>
         </div>
         <div className="max-w-[1400px] mx-auto py-2 flex items-center justify-center">
           
         <div className="grid md:gap-1 gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 ">
 
           {/* Added placeholder course cards for testing purposes */}
-          {/* <CarrouselShowCase>
-            <SwiperSlide>
-              <Astronomy9CourseCard/>
-              </SwiperSlide>
-          </CarrouselShowCase> */}
+          <ComputerScience11CourseCard/>
+          <Astronomy9CourseCard/>
+          <Geoscience12CourseCard/>
+          <Math11CourseCard/>
+          <English12CourseCard/>
+          <Math12CourseCard/>
+          <Geography10CourseCard/>
+          <English11CourseCard/>
 
-            <Astronomy9CourseCard/>
-            <ComputerScience11CourseCard/>
-            <Geoscience12CourseCard/>
-            <Math11CourseCard/>
-            <English12CourseCard/>
-            <Math12CourseCard/>
-            <Geography10CourseCard/>
-            <English11CourseCard/>
         </div>
       </div>
       </div>
@@ -57,4 +76,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomePageLoggedIn;
