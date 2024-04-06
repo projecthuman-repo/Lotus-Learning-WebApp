@@ -43,7 +43,10 @@ const SignUp = () => {
 
     try {
       const response = await axios.post('http://localhost:5000/user/create-user', {
+        firstName,
+        lastName,
         email,
+        accountType,
         username,
         password,
         confirm_password: confirmPassword
@@ -100,7 +103,7 @@ const SignUp = () => {
   }, [password, confirmPassword]);
 
   return (
-    <div className="space-y-3 w-[400px] no-select  md:p-0 p-2">
+    <div className="space-y-3 w-[400px]  no-select  md:p-0 p-2">
       <div>
         <p className="text-start font-bold text-3xl">Create Account</p>
         {/* <p className="text-start font-ligth text-sm">

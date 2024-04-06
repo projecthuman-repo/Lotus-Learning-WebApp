@@ -11,7 +11,7 @@ const Settings = () => {
   const authUser = useSelector((state) => state.user);
 
   const [profilePicture, setProfilePicture] = useState("");
-  const [username, setUsername] = useState(authUser.name);
+  const [username, setUsername] = useState(authUser.username);
   const [editingUserName, setEditingUserName] = useState(false);
 
   const handleImageChange = (event) => {
@@ -26,7 +26,7 @@ const Settings = () => {
           <div className="flex flex-col items-center  justify-center space-y-2">
             <div className="md:h-[150px] md:w-[150px] sm:h-[100px] sm:w-[100px] h-[75px] w-[75px] bg-black rounded-full flex items-center justify-center overflow-hidden">
               {profilePicture === "" ? (
-                <p className="text-white md:text-5xl text-2xl font-bold">{noPfpGenerator(authUser.name)}</p> // Using noPfpGenerator function to generate initials
+                <p className="text-white md:text-5xl text-2xl font-bold">{noPfpGenerator(authUser.username)}</p> // Using noPfpGenerator function to generate initials
               ) : (
                 <img
                   src={profilePicture}

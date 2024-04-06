@@ -18,6 +18,10 @@ router.post(
         }
 
         const user = new User({
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          accountType: newUser.accountType,
+          username: newUser.username,
           email: newUser.email,
           name: newUser.username,
           password: newUser.password,

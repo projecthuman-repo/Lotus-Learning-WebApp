@@ -15,9 +15,8 @@ const Registration = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("screen");
   useEffect(() => {
-
     if (!id || (id !== "login" && id !== "signup")) {
-      console.log('a')
+      console.log("a");
       navigate("/registration?screen=login");
     }
     if (id && id === "signup") {
@@ -28,27 +27,29 @@ const Registration = () => {
   }, [id]);
 
   return (
-    <div className="w-full">
+    <div className="w-full min-h-full flex-grow ">
       <LowProfileNavbar />
-      <div className="flex items-center justify-evenly h-[calc(100%-10rem)] w-full ">
+      <div className="flex items-center justify-evenly min-h-[90vh] w-full ">
         <div className="space-y-2 md:block hidden">
-        <div className="grid place-items-center">
-  <img src={LotusLogo} alt="Lotus Logo" style={{ width: "350px", height: "auto" }} /> 
-  <div className="text-center">
-    <p className="font-bold text-4xl">
-      <br></br>
-      Join <br /> Lotus Learning
-    </p>
-    <p>Let's give learning a different perspective!</p>
-  </div>
-</div>
-
+          <div className="grid place-items-center">
+            <img
+              src={LotusLogo}
+              alt="Lotus Logo"
+              style={{ width: "350px", height: "auto" }}
+            />
+            <div className="text-center">
+              <p className="font-bold text-4xl">
+                <br></br>
+                Join <br /> Lotus Learning
+              </p>
+              <p>Let's give learning a different perspective!</p>
+            </div>
+          </div>
         </div>
-        {screen === "login" &&
-        <Login />}
-        {screen === "signup" &&
-        <SignUp />}
+        {screen === "login" && <Login />}
+        {screen === "signup" && <SignUp />}
       </div>
+
       <GeneralFooter />
     </div>
   );

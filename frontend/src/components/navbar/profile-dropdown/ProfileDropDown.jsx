@@ -41,7 +41,7 @@ const ProfileDropDown = () => {
           {authUser.profilePic ? 
             <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?cs=srgb&dl=pexels-mohamed-abdelghaffar-771742.jpg&fm=jpg" className="h-full w-full object-cover"/>
             :
-            <p className="text-sm font-bold text-white">{noPfpGenerator(authUser.name)}</p>
+            <p className="text-sm font-bold text-white">{noPfpGenerator(authUser.username)}</p>
           }
         </div>
         <div>

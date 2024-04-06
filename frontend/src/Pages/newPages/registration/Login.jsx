@@ -70,7 +70,7 @@ const Login = () => {
   }, [errorMessage]);
 
   return (
-    <div className="space-y-3 w-[400px] no-select md:p-0 p-2">
+    <div className="space-y-3 w-[400px] no-select md:p-0 p-2  ">
       <div>
         <p className="text-start font-bold text-2xl">Login to your account</p>
         <p className="text-start font-light text-sm">
