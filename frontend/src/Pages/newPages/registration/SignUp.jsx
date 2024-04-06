@@ -16,7 +16,10 @@ const SignUp = () => {
 
   const [email, setEmail] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
+  const [accountType, setAccountType] = useState('student');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [samePassword, setSamePassword] = useState(false);
@@ -99,10 +102,10 @@ const SignUp = () => {
   return (
     <div className="space-y-3 w-[400px] no-select  md:p-0 p-2">
       <div>
-        <p className="text-start font-bold text-2xl">Create Account</p>
-        <p className="text-start font-ligth text-sm">
+        <p className="text-start font-bold text-3xl">Create Account</p>
+        {/* <p className="text-start font-ligth text-sm">
           Let's create your account!
-        </p>
+        </p> */}
       </div>
       <div className="flex flex-col">
         <div>
@@ -115,7 +118,31 @@ const SignUp = () => {
             </div>
           }
         </div>
-        <label htmlFor="email" className="font-bold cursor-pointer flex justify-between">
+        <label htmlFor="firstName" className="font-bold cursor-pointer pl-2 pt-2">
+          First Name
+        </label>
+        <input
+          id="firstName"
+          placeholder="First Name"
+          type="text"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          className={`${styles.simple_text_input}`}
+        />
+        <label htmlFor="lastName" className="font-bold cursor-pointer pl-2 pt-2">
+          Last Name
+        </label>
+        
+        <input
+          id="lastName"
+          placeholder="Last Name"
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          className={`${styles.simple_text_input}`}
+        />
+
+        <label htmlFor="email" className="font-bold cursor-pointer pl-2 pt-2 flex justify-between">
           <span>Email</span>
           <span>{invalidEmail && <CgDanger className="text-red-400" />}</span>
         </label>
@@ -129,7 +156,7 @@ const SignUp = () => {
         />
         {invalidEmail && <p className="text-red-500 text-sm">Email must be in a valid format</p>}
 
-        <label htmlFor="username" className="font-bold cursor-pointer">
+        <label htmlFor="username" className="font-bold cursor-pointer pl-2 pt-2">
           Username
         </label>
         <input
@@ -142,7 +169,38 @@ const SignUp = () => {
         />
         {usernameTaken && <p className="text-red-500 text-sm">Username is already taken</p>}
 
-        <label htmlFor="password" className="font-bold cursor-pointer">
+        <label className="font-bold cursor-pointer pl-2 pt-2">
+          Account Type
+        </label>
+        <div className="flex items-center">
+          <input
+            id="student"
+            name="accountType"
+            type="radio"
+            value="student"
+            checked={accountType === 'student'}
+            onChange={(e) => setAccountType(e.target.value)}
+            className="hidden"
+          />
+          <label htmlFor="student" className={`font-semibold text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all border hover:bg-stone-50 cursor-pointer mr-4 ${accountType === 'student' ? 'text-white linearGradient_ver1' : 'text-gray-400 font-normal'}`}>
+            Learner
+          </label>
+          <span className="mx-2 pr-4">or</span>
+          <input
+            id="instructor"
+            name="accountType"
+            type="radio"
+            value="instructor"
+            checked={accountType === 'instructor'}
+            onChange={(e) => setAccountType(e.target.value)}
+            className="hidden"
+          />
+          <label htmlFor="instructor" className={`font-semibold text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all border hover:bg-stone-50 cursor-pointer ${accountType === 'instructor' ? 'text-white linearGradient_ver1' : 'text-gray-400 font-normal'}`}>
+            Instructor
+          </label>
+        </div>
+
+        <label htmlFor="password" className="font-bold cursor-pointer pl-2 pt-2">
           Password
         </label>
         <div className={`w-full ${styles.simple_text_input} flex justify-between items-center`}>
@@ -163,7 +221,7 @@ const SignUp = () => {
         {/* Display password length error message */}
         {password.length > 0 && password.length < 8 && <p className="text-red-500 text-sm">Password must be at least 8 characters long</p>}
 
-        <label htmlFor="confirm-password" className="font-bold cursor-pointer flex justify-between">
+        <label htmlFor="confirm-password" className="font-bold cursor-pointer flex justify-between pl-2 pt-3">
           <span>Confirm Password</span>
           <span>{samePassword && <CgDanger className="text-red-400" />}</span>
         </label>
@@ -183,19 +241,19 @@ const SignUp = () => {
           )}
         </div>
         {samePassword && <p className="text-red-500 text-sm">Passwords don't match</p>}
-        <p className="text-start font-ligth text-sm">
-          Already have an account? <span onClick={navigateTo} className="text-blue-500 cursor-pointer font-bold mt-1">Login</span>
+        <p className="text-start font-ligth text-sm pt-2 pl-2">
+          Already have an account? <span onClick={navigateTo} className="text-pink-600 cursor-pointer font-bold mt-1">Login</span>
         </p>
       </div>
-      <button onClick={() => createAccount()} className="py-2 rounded-sm flex items-center justify-center font-semibold transition-all w-full text-white bg-blue-500 hover:bg-blue-400">
-{loading ? <SpinnerLoader /> : "Create account"}
-</button>
-<button className="py-2 rounded-sm flex items-center justify-center font-ligth transition-all w-full border text-stone-600 hover:bg-stone-50">
-<FaGoogle className="text-xl mx-2" />
-Sign with Google
-</button>
-</div>
-);
+      <button onClick={() => createAccount()} className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded-full w-full">
+        {loading ? <SpinnerLoader /> : "Create account"}
+      </button>
+      <button className="font-semibold text-stone-600 text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all w-full border hover:bg-stone-50">
+        <FaGoogle className="text-xl mx-2" />
+        Sign with Google
+      </button>
+    </div>
+  );
 };
 
 export default SignUp;

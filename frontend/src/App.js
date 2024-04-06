@@ -20,6 +20,7 @@ import CoursePage from "./Pages/newPages/coursePage/CoursePage";
 import Learning from "./Pages/newPages/learningPage/Learning";
 import NotFoundPage from "./Pages/newPages/notFoundPage/NotFoundPage";
 import CreateNewCourse from "./Pages/newPages/createCoursePage/CreateNewCourse";
+import HomePageLoggedIn from "./Pages/newPages/homePage/HomePageLoggedIn";
 import User from "./Pages/newPages/user/User";
 
 // Debug For Firebase Messaging
@@ -80,6 +81,7 @@ function App() {
           <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
           <Route path="/user/:screen?" element={<User/>}/>
           <Route path="/" element={<HomePage/>}/>
+          <Route path="/logintest" element={<HomePageLoggedIn/>}/>
           {/* NOT FOUND PAGE 404 */}
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>

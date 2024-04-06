@@ -24,7 +24,9 @@ const CreateNewCourse = () => {
       two: "",
       three: "",
     },
-  });
+  });  
+
+  //
 
   const sendNewCourse = async () => {
     if (!loading) {
