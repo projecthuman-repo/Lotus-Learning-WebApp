@@ -28,7 +28,7 @@ const Registration = () => {
   }, [id]);
 
   return (
-    <div className="h-full w-full">
+    <div className="w-full">
       <LowProfileNavbar />
       <div className="flex items-center justify-evenly h-[calc(100%-10rem)] w-full ">
         <div className="space-y-2 md:block hidden">

@@ -80,8 +80,8 @@ function App() {
           <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={<Profile/>}/>
           <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
           <Route path="/user/:screen?" element={<User/>}/>
-          <Route path="/" element={<HomePage/>}/>
           <Route path="/logintest" element={<HomePageLoggedIn/>}/>
+          <Route path="/" element={<HomePage/>}/>
           {/* NOT FOUND PAGE 404 */}
           <Route path="*" element={<NotFoundPage/>}/>
         </Routes>
