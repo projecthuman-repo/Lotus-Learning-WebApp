@@ -20,6 +20,7 @@ import CoursePage from "./Pages/newPages/coursePage/CoursePage";
 import Learning from "./Pages/newPages/learningPage/Learning";
 import NotFoundPage from "./Pages/newPages/notFoundPage/NotFoundPage";
 import CreateNewCourse from "./Pages/newPages/createCoursePage/CreateNewCourse";
+import User from "./Pages/newPages/user/User";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -77,6 +78,7 @@ function App() {
           <Route path="/learning/:courseName?" element={<Learning/>}/>
           <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={<Profile/>}/>
           <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
+          <Route path="/user/:screen?" element={<User/>}/>
           <Route path="/" element={<HomePage/>}/>
           {/* NOT FOUND PAGE 404 */}
           <Route path="*" element={<NotFoundPage/>}/>

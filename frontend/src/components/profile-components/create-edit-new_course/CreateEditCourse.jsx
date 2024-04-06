@@ -18,6 +18,9 @@ const CreateEditCourse = () => {
   const [openSideBar, setOpenSideBar] = useState(false);
   const [loading, setLoading] = useState(true);
   const [courseData, setCourseData] = useState(null);
+  const [clonedCourse, setClonedCourse] = useState(null)
+  const [updating, setUpdating] = useState(false)
+  const [sendingData,  setSendingData]  = useState(false)
 
   const switchScreen = (switchTo) => {
     navigate("/profile/course-editor/" + switchTo + "/" + courseid);
@@ -38,11 +41,25 @@ const CreateEditCourse = () => {
     };
   }, [isMenuFixed]);
 
+  useEffect(() => {
+    if(courseData === clonedCourse){
+      setUpdating(false)
+    }else{
+      if(checkForMissingValues(courseData.lessons)){
+        setUpdating(false)
+      }
+      else{
+        setUpdating(true)
+      }
+    }
+  },[courseData])
+
   const fetchCourseData = async (id) => {
     try {
       const coursedata = await getCourseData(id);
       setLoading(false);
       setCourseData(coursedata.data);
+      setClonedCourse(coursedata.data)
     } catch (e) {
       setLoading(false);
       console.log(e);
@@ -72,7 +89,16 @@ const CreateEditCourse = () => {
       navigate('/profile/courses')
   }
 
-  const saveChanges = () => { 
+  const saveChanges = async () => { 
+    if (sendingData) return 
+    setSendingData(true);
+    try {
+      await updateCourseDataProxy(courseData);
+      setSendingData(false);
+    } catch (error) {
+      console.error(error);
+      setSendingData(false);
+    }
     updateCourseDataProxy(courseData)
   }
 
@@ -193,9 +219,16 @@ const CreateEditCourse = () => {
                 Discard changes
               </button>
               <button
-              onClick={() => saveChanges()}
-              className="linearGradient_ver1  min-w-[80%] text-white font-semibold p-1 rounded-sm">
-                Save my changes
+              onClick={() => !sendingData && saveChanges()}
+              className={`min-w-[80%]  font-semibold p-1 rounded-sm flex items-center justify-center ${sendingData? 'border rounded-md text-stone-400' : updating ? 'linearGradient_ver1 text-white' : 'border rounded-md text-stone-400'}`}>
+                {sendingData?
+                <SpinnerLoader/>
+                :
+                updating?
+                "Save my changes"
+                :
+                "Waiting for changes"
+                }
               </button>
             </div>
           </div>

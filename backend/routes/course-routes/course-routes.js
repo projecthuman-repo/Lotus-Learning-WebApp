@@ -61,8 +61,15 @@ router.post('/update-course', async(req, res, next) => {
     // DeCompress Data
      const courseData = await decompressData(course.data)
     const updatedCourseResponse = await updateCourseData(courseData)
+    res.status(200).json({
+      success: true,
+      data: updatedCourseResponse
+    });
+
   } catch (error) {
-    return next(error.message);
+    return res.status(400).json({
+      success: false,
+  });
   }
 })
 
