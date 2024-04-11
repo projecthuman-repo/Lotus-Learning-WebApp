@@ -14,7 +14,6 @@ import { CgClose } from "react-icons/cg";
 import { noPfpGenerator } from "../../components/navbar/GeneralNavbar"; // Importing the noPfpGenerator function
 import { useDispatch, useSelector } from "react-redux";
 
-
 const LearningNavbar = () => {
   const [notificationsDropDown, setNotificationsDropDown] = useState(false);
   const [wishListDropDown, setWishListDropDown] = useState(false);
@@ -24,18 +23,14 @@ const LearningNavbar = () => {
 
   const navigate = useNavigate();
 
-
   return (
-    <div
-      className={` w-full h-[4rem] mb-[0.25rem] box-shadow bg-white  z-50`}
-    >
+    <div className={` w-full h-[4rem] mb-[0.25rem] box-shadow bg-white  z-50`}>
       <div
-        className={`absolute z-[1111110] ${
+        className={`absolute z-[111111] ${
           openSideMenu ? "left-0" : "-left-[100%]"
         } h-screen top-0 w-[400px] bg-white border-r transition-all`}
       >
         <div className="w-full h-[50px]  flex items-center justify-end px-4 ">
-
           <div
             onClick={() => setOpenSideMenu(false)}
             className="p-2 flex items-center justify-center hover:bg-stone-50 rounded-full cursor-pointer  "
@@ -44,11 +39,11 @@ const LearningNavbar = () => {
           </div>
         </div>
         <img
-            onClick={() => navigate("/")}
-            src={logo}
-            alt="logo"
-            className="h-full p-[.8rem] cursor-pointer md:hidden block "
-          />
+          onClick={() => navigate("/")}
+          src={logo}
+          alt="logo"
+          className="h-full p-[.8rem] cursor-pointer md:hidden block "
+        />
       </div>
 
       <div className="max-w-[1450px] mx-auto h-full flex justify-between items-center relative">
@@ -115,7 +110,9 @@ const LearningNavbar = () => {
             className="relative md:px-2 px-0"
           >
             <div className="h-[35px] w-[35px] bg-stone-800 rounded-full flex items-center justify-center cursor-pointer no-select ">
-              <p className="text-sm font-bold text-white">{noPfpGenerator(authUser.name)}</p>
+              <p className="text-sm font-bold text-white">
+                {noPfpGenerator(authUser.name)}
+              </p>
             </div>
             {profileDropDown && (
               <div className="absolute top-[100%] right-0 z-30">

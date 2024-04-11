@@ -67,7 +67,7 @@ const GeneralNavbar = () => {
         />
 
         <div
-          className={`${styles.simple_text_input} rounded-sm flex justify-between items-center w-[400px]`}
+          className={`${styles.simple_text_input} rounded-full flex justify-between items-center w-[440px]`}
         >
           <input
             placeholder="Search"
