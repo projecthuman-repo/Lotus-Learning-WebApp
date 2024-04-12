@@ -1,19 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
-import styles from "../../../Styles";
+import { CgDanger } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
-import { CgDanger } from "react-icons/cg";
-import { useEffect } from "react";
 import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slice/user/userSlice";
-
+import styles from "../../../Styles";
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -25,22 +22,20 @@ const SignUp = () => {
   const [samePassword, setSamePassword] = useState(false);
   const [missingData, setMissingData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [usernameTaken, setUsernameTaken] = useState(false); // State for username taken
+  const [usernameTaken, setUsernameTaken] = useState(false);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [confirmPasswordVisibility, setConfirmPasswordVisibility] = useState(false);
-
   const navigateTo = () => {
     navigate('/registration?screen=login');
   };
-
   const createAccount = async () => {
     setLoading(true);
-
+    setInvalidEmail(false); // Reset email error state
+    setUsernameTaken(false); // Reset username error state
     if (!validateFormData()) {
       setLoading(false);
       return;
     }
-
     try {
       const response = await axios.post('http://localhost:5000/user/create-user', {
         firstName,
@@ -49,70 +44,61 @@ const SignUp = () => {
         accountType,
         username,
         password,
-        confirm_password: confirmPassword
       });
-
       if (response.data.success) {
         const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
           ...response.data.user
         });
-
         if (saveOnCookies.status === 200) {
           await dispatch(setUser(saveOnCookies.data.data));
           navigate('/');
         }
+      } else {
+        // Handle errors related to email or username
+        if (response.data.message === 'The email is already in use') {
+          setInvalidEmail(true);
+        } else if (response.data.message === 'The username is already taken') {
+          setUsernameTaken(true);
+        }
       }
-
-      setLoading(false);
-      console.log('created:', response.data);
     } catch (error) {
-      setLoading(false);
       console.error('Error:', error);
+    } finally {
+      setLoading(false);
     }
   };
-
   const validateFormData = () => {
+    setMissingData(false);
+    setInvalidEmail(false);
+    setSamePassword(false);
     if (!email || !username || !password || !confirmPassword) {
       setMissingData(true);
       return false;
     }
-
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setInvalidEmail(true);
       return false;
-    } else {
-      setInvalidEmail(false);
     }
-
     if (password.length < 8) {
-      // Password must be at least 8 characters long
       return false;
     }
-
     if (password !== confirmPassword) {
-      // Passwords don't match
       setSamePassword(true);
       return false;
     }
-
     return true;
   };
-
   useEffect(() => {
     setSamePassword(false); // Reset samePassword state when password or confirmPassword changes
   }, [password, confirmPassword]);
-
   return (
-    <div className="space-y-3 w-[400px]  no-select  md:p-0 p-2">
+    <div className="space-y-3 w-[400px] no-select md:p-0 p-2">
       <div>
         <p className="text-start font-bold text-3xl">Create Account</p>
-        {/* <p className="text-start font-ligth text-sm">
-          Let's create your account!
-        </p> */}
       </div>
       <div className="flex flex-col">
         <div>
-          {missingData && 
+          {missingData &&
             <div className="flex items-center justify-between text-red-400">
               <p>
                 Please fill all the data
@@ -135,7 +121,6 @@ const SignUp = () => {
         <label htmlFor="lastName" className="font-bold cursor-pointer pl-2 pt-2">
           Last Name
         </label>
-        
         <input
           id="lastName"
           placeholder="Last Name"
@@ -144,7 +129,6 @@ const SignUp = () => {
           onChange={(e) => setLastName(e.target.value)}
           className={`${styles.simple_text_input}`}
         />
-
         <label htmlFor="email" className="font-bold cursor-pointer pl-2 pt-2 flex justify-between">
           <span>Email</span>
           <span>{invalidEmail && <CgDanger className="text-red-400" />}</span>
@@ -157,8 +141,8 @@ const SignUp = () => {
           onChange={(e) => setEmail(e.target.value)}
           className={`${styles.simple_text_input}`}
         />
-        {invalidEmail && <p className="text-red-500 text-sm">Email must be in a valid format</p>}
-
+        {/* {invalidEmail && <p className="text-red-500 text-sm">Email already exists, please login  </p>} */}
+        {invalidEmail && <p className="text-red-500 text-sm">Invalid Email type, or Email already being used   </p>}
         <label htmlFor="username" className="font-bold cursor-pointer pl-2 pt-2">
           Username
         </label>
@@ -170,8 +154,7 @@ const SignUp = () => {
           onChange={(e) => setUsername(e.target.value)}
           className={`${styles.simple_text_input}`}
         />
-        {usernameTaken && <p className="text-red-500 text-sm">Username is already taken</p>}
-
+        {usernameTaken && <p className="text-red-500 text-sm">Username is already taken, please try different username</p>}
         <label className="font-bold cursor-pointer pl-2 pt-2">
           Account Type
         </label>
@@ -202,7 +185,6 @@ const SignUp = () => {
             Instructor
           </label>
         </div>
-
         <label htmlFor="password" className="font-bold cursor-pointer pl-2 pt-2">
           Password
         </label>
@@ -221,9 +203,7 @@ const SignUp = () => {
             <MdOutlineVisibilityOff onClick={() => setPasswordVisibility(true)} className="mx-1 text-black cursor-pointer" />
           )}
         </div>
-        {/* Display password length error message */}
         {password.length > 0 && password.length < 8 && <p className="text-red-500 text-sm">Password must be at least 8 characters long</p>}
-
         <label htmlFor="confirm-password" className="font-bold cursor-pointer flex justify-between pl-2 pt-3">
           <span>Confirm Password</span>
           <span>{samePassword && <CgDanger className="text-red-400" />}</span>
@@ -244,7 +224,7 @@ const SignUp = () => {
           )}
         </div>
         {samePassword && <p className="text-red-500 text-sm">Passwords don't match</p>}
-        <p className="text-start font-ligth text-sm pt-2 pl-2">
+        <p className="text-start font-light text-sm pt-2 pl-2">
           Already have an account? <span onClick={navigateTo} className="text-pink-600 cursor-pointer font-bold mt-1">Login</span>
         </p>
       </div>
@@ -258,5 +238,4 @@ const SignUp = () => {
     </div>
   );
 };
-
 export default SignUp;
