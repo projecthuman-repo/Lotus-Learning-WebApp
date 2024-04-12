@@ -132,7 +132,7 @@ const CreateNewCourse = () => {
   };
 
   const handleExit = () => {
-    navigate('/profile/my-courses');
+    window.history.back();
   };
 
   return (

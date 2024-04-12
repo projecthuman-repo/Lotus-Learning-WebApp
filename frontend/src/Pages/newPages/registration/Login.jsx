@@ -33,12 +33,19 @@ const Login = () => {
       });
 
       const foundUser = response.data;
+
       if (foundUser.success) {
         const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
           ...foundUser.user
+        },{
+          withCredentials: true, // Include cookies in the request
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
 
         if (saveOnCookies.status === 200) {
+          console.log(saveOnCookies);
           await dispatch(setUser(saveOnCookies.data.data));
           setErrorMessage(null); // Clear error message on successful login
           navigate('/');

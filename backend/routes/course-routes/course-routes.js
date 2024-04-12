@@ -6,7 +6,21 @@ const router = express.Router();
 const zlib = require('zlib');
 const decompressData = require('../../helpers/decompressData.js');
 
+// GET ALL COURSES
+router.get('/get-courses', async (req, res, next) => {
+  try {
+    const courses = await Course.find({});
+    return res.status(200).json({
+      success: true,
+      data: courses
+    });
+  } catch (error) {
+    console.error("Error al buscar cursos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
 
+// GET ONE COURSE DATA
 router.get('/get-course-data', async(req, res, next) => {
   const courseId = req.query.id;
   try {
@@ -30,6 +44,7 @@ router.get('/get-course-data', async(req, res, next) => {
   }
 })
 
+// CREATE NEW COURSE
 router.post('/create-new-course', async(req, res, next) => {
   try{
     const newCourseObj = req.body
@@ -55,6 +70,7 @@ router.post('/create-new-course', async(req, res, next) => {
   }
 })
 
+// UPDATE EXISTING COURSE
 router.post('/update-course', async(req, res, next) => {
   try { 
     const course = req.body

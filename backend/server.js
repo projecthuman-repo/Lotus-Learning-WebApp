@@ -20,8 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
     credentials: true,
+    origin: 'http://localhost:3000',
   })
 );
 app.use(cookieParser());

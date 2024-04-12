@@ -86,7 +86,7 @@
 
 /* Hover to display children */
 .hover-children {
-    opacity: 0;
+    display: none;
     transition: opacity 0.1s ease;
     /* Transición de opacidad con duración de 0.3 segundos y función de aceleración suave */
 }
@@ -96,7 +96,7 @@
 }
 
 .hover-parent:hover .hover-children {
-    opacity: 1;
+    display: block;
 }
 
 

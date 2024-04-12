@@ -48,7 +48,7 @@ const GeneralNavbar = () => {
 
   return (
     <div
-      className={`w-full h-[4rem] mb-[0.25rem] box-shadow bg-white ${
+      className={`w-full h-[4rem]  box-shadow bg-white ${
         isFixed && "fixed top-0"
       } z-50`}
     >

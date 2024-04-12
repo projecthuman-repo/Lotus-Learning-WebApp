@@ -22,6 +22,12 @@ import NotFoundPage from "./Pages/newPages/notFoundPage/NotFoundPage";
 import CreateNewCourse from "./Pages/newPages/createCoursePage/CreateNewCourse";
 import HomePageLoggedIn from "./Pages/newPages/homePage/HomePageLoggedIn";
 import User from "./Pages/newPages/user/User";
+import AdminHomePage from "./Pages/newPages/adminPages/adminHomePage/AdminHomePage";
+import AdminManageStudents from "./Pages/newPages/adminPages/adminStudentsManage/AdminManageStudents";
+import AdminManageEducators from "./Pages/newPages/adminPages/adminEducatorsManage/AdminManageEducators";
+import AdminManageCourses from "./Pages/newPages/adminPages/adminCoursesManage/AdminManageCourses";
+import CreateEditCourse from "./components/profile-components/create-edit-new_course/CreateEditCourse";
+import ProtectedRoute from "./ProtectedRoute";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -39,6 +45,7 @@ function App() {
   //redux
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user);
+  const [auth, setAuth] = useState(false)
 
   const [loadingUser, setLoadingUser] = useState(true);
 
@@ -70,23 +77,53 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    if(authUser){
+      console.log(authUser)
+      setAuth(true)
+    }else{
+      setAuth(false);
+    }
+  },[authUser])
+
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/course" element={<CoursePage/>}/>
-          <Route path="/registration" element={<Registration/>}/>
-          <Route path="/learning/:courseName?" element={<Learning/>}/>
-          <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={<Profile/>}/>
-          <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
-          <Route path="/user/:screen?" element={<User/>}/>
-          <Route path="/logintest" element={<HomePageLoggedIn/>}/>
-          <Route path="/" element={<HomePage/>}/>
-          {/* NOT FOUND PAGE 404 */}
-          <Route path="*" element={<NotFoundPage/>}/>
-        </Routes>
+      {loadingUser ? 
+        <div>dfpospokfopfds</div>
+        :
+        <AuthProvider>
+          <Routes>
+            <Route path="/registration" element={<Registration/>}/>
+            <Route path="/course" element={<CoursePage/>}/>
+            <Route path="/learning/:courseName?" element={<Learning/>}/>
+            <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={<Profile/>}/>
+            <Route path="/user/:screen?" element={<User/>}/>
+            <Route path="/logintest" element={<HomePageLoggedIn/>}/>
+            {/* Admin Pages */}
+            <Route path="/admin/students" element={
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+                <AdminManageStudents/>
+              </ProtectedRoute>
+            }/>
+            <Route path="/admin/educators/:screen?" element={
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+                <AdminManageEducators/>
+              </ProtectedRoute>
+            }/>
+            <Route path="/admin/courses/:screen?" element={<AdminManageCourses/>}/>
+            <Route path="/admin" element={<AdminHomePage/>}/>
+            {/* Course Creation and editing */}
+            <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
+            <Route path="/course-editor/:secondscreen?/:courseid?" element={<CreateEditCourse />}/>
 
-      </AuthProvider>
+            <Route path="/" element={<HomePage/>}/>
+            {/* NOT FOUND PAGE 404 */}
+            <Route path="*" element={<NotFoundPage/>}/>
+          </Routes>
+        </AuthProvider>
+    }
+
+
     </BrowserRouter>
 
   );
