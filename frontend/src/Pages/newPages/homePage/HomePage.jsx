@@ -48,6 +48,28 @@ const HomePage = () => {
             <English12CourseCard/>
             <Math12CourseCard/>
             <Geography10CourseCard/>
+            <English11CourseCard/><Astronomy9CourseCard/>
+            <ComputerScience11CourseCard/>
+            <Geoscience12CourseCard/>
+            <Math11CourseCard/>
+            <English12CourseCard/>
+            <Math12CourseCard/>
+            <Geography10CourseCard/>
+            <English11CourseCard/>
+            <Astronomy9CourseCard/>
+            <ComputerScience11CourseCard/>
+            <Geoscience12CourseCard/>
+            <Math11CourseCard/>
+            <English12CourseCard/>
+            <Math12CourseCard/>
+            <Geography10CourseCard/>
+            <English11CourseCard/><Astronomy9CourseCard/>
+            <ComputerScience11CourseCard/>
+            <Geoscience12CourseCard/>
+            <Math11CourseCard/>
+            <English12CourseCard/>
+            <Math12CourseCard/>
+            <Geography10CourseCard/>
             <English11CourseCard/>
         </div>
       </div>

@@ -28,6 +28,7 @@ import AdminManageEducators from "./Pages/newPages/adminPages/adminEducatorsMana
 import AdminManageCourses from "./Pages/newPages/adminPages/adminCoursesManage/AdminManageCourses";
 import CreateEditCourse from "./components/profile-components/create-edit-new_course/CreateEditCourse";
 import ProtectedRoute from "./ProtectedRoute";
+import ForgotPassword from "./Pages/newPages/registration/ForgotPassword"
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -89,7 +90,7 @@ function App() {
   return (
     <BrowserRouter>
       {loadingUser ? 
-        <div>dfpospokfopfds</div>
+        <div>Loading Pages...</div>
         :
         <AuthProvider>
           <Routes>
@@ -99,6 +100,9 @@ function App() {
             <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={<Profile/>}/>
             <Route path="/user/:screen?" element={<User/>}/>
             <Route path="/logintest" element={<HomePageLoggedIn/>}/>
+            <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
+
+
             {/* Admin Pages */}
             <Route path="/admin/students" element={
               <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>

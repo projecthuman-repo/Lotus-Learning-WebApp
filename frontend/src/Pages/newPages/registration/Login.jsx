@@ -19,6 +19,10 @@ const Login = () => {
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+ 
+  const navigateForgotPassword = () => {
+    navigate('/ForgotPassword');
+  };
 
   const navigateTo = () => {
     navigate('/registration?screen=signup');
@@ -125,8 +129,8 @@ const Login = () => {
           )}
         </div>
         <p className="text-start font-light text-sm">
-          Don't have an account? <span onClick={navigateTo} className="text-blue-500 cursor-pointer font-bold mt-1">Sign up</span>
-        </p>
+          Don't have an account? <span onClick={navigateTo} className="text-blue-500 cursor-pointer font-bold mt-1">Sign up &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+          <span onClick={navigateForgotPassword} className="text-blue-500 cursor-pointer font-bold mt-1">Forgot Password &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>        </p>
       </div>
 
       <div className="">
