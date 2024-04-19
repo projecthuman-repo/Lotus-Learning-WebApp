@@ -116,7 +116,7 @@ const SignUp = () => {
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          className={`${styles.simple_text_input}`}
+          className={`${styles.simple_text_input} border-4`}
         />
         <label htmlFor="lastName" className="font-bold cursor-pointer pl-2 pt-2">
           Last Name
@@ -127,7 +127,7 @@ const SignUp = () => {
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          className={`${styles.simple_text_input}`}
+          className={`${styles.simple_text_input} border-4`}
         />
         <label htmlFor="email" className="font-bold cursor-pointer pl-2 pt-2 flex justify-between">
           <span>Email</span>
@@ -139,7 +139,7 @@ const SignUp = () => {
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={`${styles.simple_text_input}`}
+          className={`${styles.simple_text_input} border-4`}
         />
         {/* {invalidEmail && <p className="text-red-500 text-sm">Email already exists, please login  </p>} */}
         {invalidEmail && <p className="text-red-500 text-sm">Invalid Email type, or Email already being used   </p>}
@@ -152,7 +152,7 @@ const SignUp = () => {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className={`${styles.simple_text_input}`}
+          className={`${styles.simple_text_input} border-4`}
         />
         {usernameTaken && <p className="text-red-500 text-sm">Username is already taken, please try different username</p>}
         <label className="font-bold cursor-pointer pl-2 pt-2">
@@ -168,7 +168,7 @@ const SignUp = () => {
             onChange={(e) => setAccountType(e.target.value)}
             className="hidden"
           />
-          <label htmlFor="student" className={`font-semibold text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all border hover:bg-stone-50 cursor-pointer mr-4 ${accountType === 'student' ? 'text-white linearGradient_ver1' : 'text-gray-400 font-normal'}`}>
+          <label htmlFor="student" className={`font-semibold text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all border hover:bg-stone-50 cursor-pointer mr-4 border-4 ${accountType === 'student' ? 'text-white linearGradient_ver1' : 'text-gray-400 font-normal'}`}>
             Learner
           </label>
           <span className="mx-2 pr-4">or</span>
@@ -181,14 +181,14 @@ const SignUp = () => {
             onChange={(e) => setAccountType(e.target.value)}
             className="hidden"
           />
-          <label htmlFor="instructor" className={`font-semibold text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all border hover:bg-stone-50 cursor-pointer ${accountType === 'instructor' ? 'text-white linearGradient_ver1' : 'text-gray-400 font-normal'}`}>
+          <label htmlFor="instructor" className={`font-semibold text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all border hover:bg-stone-50 cursor-pointer border-4 ${accountType === 'instructor' ? 'text-white linearGradient_ver1' : 'text-gray-400 font-normal'}`}>
             Instructor
           </label>
         </div>
         <label htmlFor="password" className="font-bold cursor-pointer pl-2 pt-2">
           Password
         </label>
-        <div className={`w-full ${styles.simple_text_input} flex justify-between items-center`}>
+        <div className={`w-full ${styles.simple_text_input} flex justify-between items-center border-4`}>
           <input
             id="password"
             placeholder="Password"
@@ -208,7 +208,7 @@ const SignUp = () => {
           <span>Confirm Password</span>
           <span>{samePassword && <CgDanger className="text-red-400" />}</span>
         </label>
-        <div className={`w-full ${styles.simple_text_input} flex justify-between items-center`}>
+        <div className={`w-full ${styles.simple_text_input} flex justify-between items-center border-4`}>
           <input
             id="confirm-password"
             placeholder="Confirm Password"

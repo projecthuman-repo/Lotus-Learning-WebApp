@@ -103,7 +103,7 @@ const Login = () => {
           id="email"
           placeholder="Email"
           type="text"
-          className={`${styles.simple_text_input}`}
+          className={`${styles.simple_text_input} border-4`}
         />
       </div>
 
@@ -112,7 +112,7 @@ const Login = () => {
           Password
         </label>
         <div
-          className={`w-full ${styles.simple_text_input} flex justify-between items-center`}
+          className={`w-full ${styles.simple_text_input} flex justify-between items-center border-4`}
         >
           <input
             value={password}
@@ -145,7 +145,7 @@ const Login = () => {
         className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded-full w-full">
         {loading ? <SpinnerLoader/> : "Login"}
       </button>
-      <button className="py-2 rounded-sm flex items-center justify-center font-ligth transition-all w-full border text-stone-600 hover:bg-stone-50">
+      <button className="font-semibold text-stone-600 text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all w-full border hover:bg-stone-50">
         <FaGoogle className="text-xl mx-2"/>
         Login with Google 
       </button>
