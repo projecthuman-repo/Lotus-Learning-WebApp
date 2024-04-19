@@ -7,7 +7,7 @@ const ForgotPassword = () => {
   const navigate = useNavigate(); 
 
   const navigateTo = () => {
-    navigate('/registration?screen=login');
+    navigate('/registration?screen=signup');
   };
 
   return (
@@ -41,7 +41,7 @@ const ForgotPassword = () => {
          
           <div className="mt-2 text-center"> 
           <p className="text-start font-light text-sm pt-2 pl-2">
-          Already have an account? <span onClick={navigateTo} className="text-pink-600 cursor-pointer font-bold mt-1">Login</span>
+          Don't have an account? <span onClick={navigateTo} className="text-pink-600 cursor-pointer font-bold mt-1">Sign up</span>
         </p>
           </div>
         </div>
