@@ -129,8 +129,8 @@ const Login = () => {
           )}
         </div>
         <p className="text-start font-light text-sm">
-          Don't have an account? <span onClick={navigateTo} className="text-blue-500 cursor-pointer font-bold mt-1">Sign up &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
-          <span onClick={navigateForgotPassword} className="text-blue-500 cursor-pointer font-bold mt-1">Forgot Password &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>        </p>
+          Don't have an account? <span onClick={navigateTo} className="text-pink-600 cursor-pointer font-bold mt-1">Sign up &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>
+          <span onClick={navigateForgotPassword} className="text-pink-600 cursor-pointer font-bold mt-1">Forgot Password &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>        </p>
       </div>
 
       <div className="">
@@ -142,7 +142,7 @@ const Login = () => {
       </div>
       <button 
         onClick={sendLoginRequest}
-        className="py-2 rounded-sm flex items-center justify-center font-semibold transition-all w-full text-white bg-blue-500 hover:bg-blue-400">
+        className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded-full w-full">
         {loading ? <SpinnerLoader/> : "Login"}
       </button>
       <button className="py-2 rounded-sm flex items-center justify-center font-ligth transition-all w-full border text-stone-600 hover:bg-stone-50">
