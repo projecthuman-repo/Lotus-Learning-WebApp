@@ -58,4 +58,27 @@ router.post('/login-user', async(req, res, next) => {
         return next(error);
     }
 });
+
+router.post('/forgot-password', async(req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'Email does not exist'
+            });
+        }
+        // Code to handle password reset link 
+        return res.status(200).json({
+            success: true,
+            message: 'Password reset email sent.'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error'
+        });
+    }
+});
 module.exports = router;
