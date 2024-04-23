@@ -29,6 +29,7 @@ import AdminManageCourses from "./Pages/newPages/adminPages/adminCoursesManage/A
 import CreateEditCourse from "./components/profile-components/create-edit-new_course/CreateEditCourse";
 import ProtectedRoute from "./ProtectedRoute";
 import ForgotPassword from "./Pages/newPages/registration/ForgotPassword"
+import VerifyOTP from "./Pages/newPages/registration/verifyotp";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -101,6 +102,7 @@ function App() {
             <Route path="/user/:screen?" element={<User/>}/>
             <Route path="/logintest" element={<HomePageLoggedIn/>}/>
             <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
+            <Route path="/verifyotp" element={<VerifyOTP/>}/>
 
 
             {/* Admin Pages */}
