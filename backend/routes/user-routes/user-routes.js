@@ -1,3 +1,4 @@
+// user-routes.js
 const express = require('express');
 const User = require("../../models/User.js");
 const { logInUser } = require('../../controllers/user/user-login-logout.js');
@@ -50,6 +51,7 @@ router.post("/create-user", async(req, res, next) => {
         return next(error);
     }
 });
+
 router.post('/login-user', async(req, res, next) => {
     try {
         const loginUser = req.body;
@@ -70,7 +72,7 @@ router.post('/login-user', async(req, res, next) => {
     }
 });
 
-router.post('/forgot-password', async (req, res) => {
+router.post('/forgot-password', async(req, res) => {
     try {
         const { email } = req.body;
         const user = await User.findOne({ email: email });
@@ -109,15 +111,14 @@ router.post('/forgot-password', async (req, res) => {
             html: `
                 <div style="text-align: center;">
                     <h1>Lotus Learning OTP</h1>
-                    <img src="https://img2.embroiderydesigns.com/printart/xlarge/gifutto/pggif1521.webp" alt="Placeholder Image" style="width: 100px; height: 100px; display: block; margin: 0 auto;" />
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczNscF1hxSYKey8qkvjkohfOGh0VARUMSZLHp4bXTY1BrN2w5WXzgc1GgOCJIfy7E2clXSXFGfSP8skEWpHltEvczA8dr3gGOpgRsdSA1MbEw38-osUuCVC6Ikg63EVbv5-7YeBVXn57JtwwW9vkOTg=w462-h388-s-no-gm?authuser=0" alt="Placeholder Image" style="width: 170px; height: 150px; display: block; margin: 0 auto;" />
                     <p>Your OTP is: <strong>${otp}</strong>. It's valid for 5 minutes</p>
                 </div>
             `,
             text: `Your OTP for password reset is: ${otp}. This OTP is valid for 5 minutes.`
         };
-        
-        
-        transporter.sendMail(mailOptions, function (error, info) {
+
+        transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
                 console.log(error);
                 return res.status(500).json({
@@ -141,10 +142,10 @@ router.post('/forgot-password', async (req, res) => {
     }
 });
 
-router.post('/verify-otp', async (req, res) => {
+router.post('/verify-otp', async(req, res) => {
     try {
         const { otp } = req.body;
-        const user = await User.findOne({ "passwordResetOTP.otp": otp.toString() });
+        const user = await User.findOne({ "passwordResetOTP.otp": otp });
 
         // Check if OTP exists and is not expired
         if (!user || !user.passwordResetOTP || user.passwordResetOTP.otp !== otp || user.passwordResetOTP.expiresAt < new Date()) {
