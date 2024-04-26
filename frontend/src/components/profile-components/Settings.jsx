@@ -72,7 +72,6 @@ const Settings = () => {
                       <p className="text-xs text-stone-500">{authUser.email}</p>
             </p>
 
-
           </div>
         </div>
       </div>

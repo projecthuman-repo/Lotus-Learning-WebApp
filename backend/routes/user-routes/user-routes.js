@@ -43,6 +43,45 @@ router.post("/create-user", async(req, res, next) => {
             password: newUser.password,
         });
         await user.save();
+        
+        // Send welcome email to the user
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'noreply.bankwebsite@gmail.com', // Replace with your Gmail email
+                pass: 'lakmdvkwsbdtjukv' // Replace with your Gmail password
+            }
+        });
+        const mailOptions = {
+            from: 'noreply.bankwebsite@gmail.com',
+            to: newUser.email,
+            subject: 'Welcome to Lotus Learning',
+            html: `
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
+                    <div style="text-align: center;">
+                        <img src="https://lh3.googleusercontent.com/pw/AP1GczNscF1hxSYKey8qkvjkohfOGh0VARUMSZLHp4bXTY1BrN2w5WXzgc1GgOCJIfy7E2clXSXFGfSP8skEWpHltEvczA8dr3gGOpgRsdSA1MbEw38-osUuCVC6Ikg63EVbv5-7YeBVXn57JtwwW9vkOTg=w462-h388-s-no-gm?authuser=0" alt="Placeholder Image" style="width: 170px; height: 150px; border-radius: 50%; margin-bottom: 20px;" />  
+                        <h2 style="font-family: Arial, sans-serif; color: #333;">Hey ${newUser.firstName}, Welcome to Lotus Learning</h2>
+                    </div>
+                    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px;">
+                        <p style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">Lotus Learning is not just a website, it's an immersive gateway to boundless knowledge and engaging experiences. Picture a serene digital oasis where users embark on a journey of learning, exploration, and personal growth.</p>
+                        <p style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">At Lotus Learning, education meets entertainment seamlessly. Users can delve into a vast array of courses spanning diverse subjects, from the fundamentals of mathematics to the intricacies of astrophysics, all curated to cater to varying levels of expertise and interests. Whether you're a curious novice or a seasoned scholar, there's always something new to discover.</p>
+                        <p style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">But learning doesn't stop at traditional coursework. Lotus Learning invites users to engage in interactive games designed to stimulate the mind and foster creativity. Dive into thought-provoking puzzles, embark on virtual adventures, and challenge yourself in a dynamic gaming environment where fun and learning intertwine harmoniously.</p>
+                        <p style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">Welcome to Lotus Learning, where enlightenment meets enjoyment, and every click takes you one step closer to unlocking your full potential.</p>
+                    </div>
+                </div>
+            `,
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+                // Handle email sending error
+            } else {
+                console.log('Email sent:', info.response);
+                // Handle successful email sending
+            }
+        });
+
         return res.status(200).json({
             success: true,
             user: user,
@@ -174,3 +213,4 @@ router.post('/verify-otp', async(req, res) => {
 });
 
 module.exports = router;
+

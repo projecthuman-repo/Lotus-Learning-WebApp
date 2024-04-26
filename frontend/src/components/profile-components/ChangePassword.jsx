@@ -4,7 +4,7 @@ import GeneralNavbar from "../navbar/GeneralNavbar";
 import GeneralFooter from "../footer/GeneralFooter";
 import styles from "../../Styles"; // Import your styles
 
-const YourComponent = () => {
+const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -72,4 +72,4 @@ const YourComponent = () => {
   );
 };
 
-export default YourComponent;
+export default ChangePassword;
