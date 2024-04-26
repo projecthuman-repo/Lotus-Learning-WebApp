@@ -3,23 +3,26 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    email: { type: String, required: true, unique: true, },
-    password: { type: String, required: true },
-    username: { type: String, required: true },
-    accountType: { type: String, enum: ['student', 'instructor', 'admin'] },
-    stateProvince: {
-        type: String,
-        // required: true,
-    },
-    school: {
-        type: String,
-    },
-    enrolledCourses: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Enrollment',
-    }, ],
+  firstName: { type: String, required: true},
+  lastName: { type: String, required: false},
+  email: { type: String, required: true, unique: true,},
+  password: { type: String, required: true}, // abdullaziz51@gmail.com password -> try to google sign in -> 
+  username: { type: String, required: true},
+  accountType: { type: String, enum: ['student', 'instructor', 'admin']},
+  googleAuth: { type: Boolean, required: false},
+  googleAccessToken: {type: String, required: false},
+  stateProvince: {
+    type: String,
+    // required: true,
+  },
+  school: {
+    type: String,
+  },
+  enrolledCourses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Enrollment',
+    }],
     createdCourses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',

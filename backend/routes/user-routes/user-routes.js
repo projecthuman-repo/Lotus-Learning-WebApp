@@ -90,7 +90,6 @@ router.post("/create-user", async(req, res, next) => {
         return next(error);
     }
 });
-
 router.post('/login-user', async(req, res, next) => {
     try {
         const loginUser = req.body;
@@ -214,3 +213,36 @@ router.post('/verify-otp', async(req, res) => {
 
 module.exports = router;
 
+router.post('/google-login', async(req, res, next) => {
+    try {
+        // Add this user to DB, if not already exists, if he does, just log him in
+        const loginUser = req.body;
+        const foundUser = await logInUser(loginUser.email, loginUser.password);
+        console.log(foundUser.success);
+        if (foundUser.success) {
+            return res.status(200).json({
+                success: true,
+                user: foundUser.user
+            });
+        } else {
+            const user = new User({
+                firstName: loginUser.firstName,
+                lastName: loginUser.lastName || '',
+                accountType: loginUser.accountType,
+                username: loginUser.username,
+                email: loginUser.email,
+                password: loginUser.password,
+                googleAuth: 1
+            });
+            await user.save();
+            return res.status(200).json({
+                success: true,
+                user: user,
+            });
+        }
+    } catch(error) {
+        return next(error);
+    }
+});
+
+module.exports = router;
