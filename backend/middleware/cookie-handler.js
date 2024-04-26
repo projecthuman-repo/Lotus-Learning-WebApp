@@ -3,7 +3,6 @@ const router = express.Router();
 
 
 // SAVE NEW USER TO THE COOKIES
-
 router.post(
   '/save-user',
   (req, res) => {
@@ -24,21 +23,20 @@ router.post(
 );
 
 // GET USER FROM COOKIES
-
 router.get('/get-user-cookies', (req, res) => {
-    const userDataCookie = req.cookies.userDataAuth;
-    if (userDataCookie) {
-      try {
-        const userData = JSON.parse(userDataCookie);
-        res.json({ userData });
-      } catch (error) {
-        console.error('error geting the data', error);
-        res.status(500).json({ error: 'server side error' });
-      }
-    } else {
-      res.json(null);
+  const userDataCookie = req.cookies.userDataAuth;
+  if (userDataCookie) {
+    try {
+      const userData = JSON.parse(userDataCookie);
+      res.json({ userData });
+    } catch (error) {
+      console.error('error geting the data', error);
+      res.status(500).json({ error: 'server side error' });
     }
-  });
+  } else {
+    res.json(null);
+  }
+});
   
 // DELETE USER FROM COOKIES
 router.post(
