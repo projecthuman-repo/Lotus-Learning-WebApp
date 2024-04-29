@@ -42,7 +42,7 @@ const Login = () => {
 		firstName: userInfo.data.given_name,
 		lastName: userInfo.data.last_name || '',
 		email: userInfo.data.email,
-		password: credentialResponse.access_token,
+		accessToken: credentialResponse.access_token,
 		username: userInfo.data.email,
 		accountType: 'student',
 		enrolledCourses: [],
@@ -50,14 +50,12 @@ const Login = () => {
 		accomplishments: []
 	};
   
-	  // Check if user exists in the db
+	  // Log user in if account exists. If account does not exist, sign the user up automatically.
 	  const response = await axios.post('http://localhost:5000/user/google-login', {
 		...user
 	});
 
-	  console.log(response);
-
-	  // Set loggedin cookie with access token and email
+	  // Set loggedin cookie with user info
 	  if (response.data.success) {
 		const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
 			...user

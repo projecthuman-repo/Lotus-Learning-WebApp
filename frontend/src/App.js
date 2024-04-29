@@ -82,7 +82,6 @@ function App() {
 
   useEffect(() => {
     if(authUser){
-      console.log(authUser)
       setAuth(true)
     }else{
       setAuth(false);

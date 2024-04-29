@@ -1,7 +1,8 @@
 // user-routes.js
 const express = require('express');
 const User = require("../../models/User.js");
-const { logInUser } = require('../../controllers/user/user-login-logout.js');
+const GoogleUser = require("../../models/GoogleUser.js");
+const { logInUser, userExists, getUserId } = require('../../controllers/user/user-login-logout.js');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
@@ -94,7 +95,7 @@ router.post('/login-user', async(req, res, next) => {
     try {
         const loginUser = req.body;
         const foundUser = await logInUser(loginUser.email, loginUser.password);
-        if (foundUser.success) {
+        if (foundUser.success && foundUser.user.googleAuth == false) {
             return res.status(200).json({
                 success: true,
                 user: foundUser.user
@@ -106,6 +107,47 @@ router.post('/login-user', async(req, res, next) => {
             });
         }
     } catch (error) {
+        return next(error);
+    }
+});
+
+router.post('/google-login', async(req, res, next) => {
+    try {
+        // Add this user to DB, if not already exists, if he does, just log him in
+        const loginUser = req.body;
+        const foundUser = await userExists(loginUser.email);
+
+        if (foundUser && foundUser.success) {
+            return res.status(200).json({
+                success: true,
+                user: foundUser.user
+            });
+        } else {
+            const user = new User({
+                firstName: loginUser.firstName,
+                lastName: loginUser.lastName || '',
+                accountType: loginUser.accountType,
+                username: loginUser.username,
+                email: loginUser.email,
+                password: 'GOOGLE_LOGIN',
+                googleAuth: true
+            });
+            await user.save();
+            
+            const userId = await getUserId(loginUser.email);
+            
+            const googleUser = new GoogleUser({
+                userId: userId,
+                accessToken: loginUser.accessToken
+            });
+            await googleUser.save();
+            
+            return res.status(200).json({
+                success: true,
+                user: user,
+            });
+        }
+    } catch(error) {
         return next(error);
     }
 });
@@ -208,40 +250,6 @@ router.post('/verify-otp', async(req, res) => {
             success: false,
             message: 'Server error'
         });
-    }
-});
-
-module.exports = router;
-
-router.post('/google-login', async(req, res, next) => {
-    try {
-        // Add this user to DB, if not already exists, if he does, just log him in
-        const loginUser = req.body;
-        const foundUser = await logInUser(loginUser.email, loginUser.password);
-        console.log(foundUser.success);
-        if (foundUser.success) {
-            return res.status(200).json({
-                success: true,
-                user: foundUser.user
-            });
-        } else {
-            const user = new User({
-                firstName: loginUser.firstName,
-                lastName: loginUser.lastName || '',
-                accountType: loginUser.accountType,
-                username: loginUser.username,
-                email: loginUser.email,
-                password: loginUser.password,
-                googleAuth: 1
-            });
-            await user.save();
-            return res.status(200).json({
-                success: true,
-                user: user,
-            });
-        }
-    } catch(error) {
-        return next(error);
     }
 });
 

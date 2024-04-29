@@ -71,12 +71,6 @@ const VerifyOTP = () => {
         >
           {loading ? 'Verifying...' : 'Verify OTP'}
         </button>
-        
-        <div className="absolute bottom-0 left-0 right-0 mb-4 text-center"> {/* Positioned absolutely at the bottom */}
-          <p className="text-center font-light text-sm pt-2">
-            Don't have an account? <span onClick={navigateToSignUp} className="text-pink-600 cursor-pointer font-bold mt-1">Sign up</span>
-          </p>
-        </div>
       </div>
     </div>
     <GeneralFooter />

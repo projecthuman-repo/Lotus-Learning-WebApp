@@ -10,7 +10,6 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true},
   accountType: { type: String, enum: ['student', 'instructor', 'admin']},
   googleAuth: { type: Boolean, required: false},
-  googleAccessToken: {type: String, required: false},
   stateProvince: {
     type: String,
     // required: true,
@@ -19,22 +18,22 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   enrolledCourses: [
-    {
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Enrollment',
+  }, ],
+  createdCourses: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Enrollment',
-    }],
-    createdCourses: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
-    }, ],
-    accomplishments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Accomplishment',
-    }, ],
-    passwordResetOTP: {
-        otp: { type: String },
-        expiresAt: { type: Date }
-    }
+      ref: 'Course',
+  }, ],
+  accomplishments: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Accomplishment',
+  }, ],
+  passwordResetOTP: {
+      otp: { type: String },
+      expiresAt: { type: Date }
+  }
 });
 
 // Hash the password before saving
