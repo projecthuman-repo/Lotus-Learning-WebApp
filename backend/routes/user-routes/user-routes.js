@@ -95,7 +95,7 @@ router.post('/login-user', async(req, res, next) => {
     try {
         const loginUser = req.body;
         const foundUser = await logInUser(loginUser.email, loginUser.password);
-        if (foundUser.success && foundUser.user.googleAuth == false) {
+        if (foundUser.success && !foundUser.user.googleAuth) {
             return res.status(200).json({
                 success: true,
                 user: foundUser.user
@@ -247,6 +247,26 @@ router.post('/verify-otp', async(req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({
+            success: false,
+            message: 'Server error'
+        });
+    }
+});
+
+router.post('/change-password', async(req, res) => {
+    try {
+        const { email, newPassword } = req.body;
+        const user = await User.findOne({email: email});
+        user.password = newPassword;
+        user.save();
+
+        return res.status(200).json({
+            success: true,
+            user: user
+        });
+    } catch(err) {
+        console.error(err);
+        return res.status(500).json({
             success: false,
             message: 'Server error'
         });
