@@ -49,12 +49,12 @@ router.post("/create-user", async(req, res, next) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'noreply.bankwebsite@gmail.com', // Replace with your Gmail email
-                pass: 'lakmdvkwsbdtjukv' // Replace with your Gmail password
+                user: 'noreply@projecthumancity.com', // Replace with your Gmail email
+                pass: 'zszaqvzpbfvmnhhw' // Replace with your Gmail password
             }
         });
         const mailOptions = {
-            from: 'noreply.bankwebsite@gmail.com',
+            from: '"Lotus Learning" <noreply@projecthumancity.com>',
             to: newUser.email,
             subject: 'Welcome to Lotus Learning',
             html: `
@@ -179,13 +179,13 @@ router.post('/forgot-password', async(req, res) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'noreply.bankwebsite@gmail.com', // Replace with your Gmail email
-                pass: 'lakmdvkwsbdtjukv' // Replace with your Gmail password
+                user: 'noreply@projecthumancity.com', // Replace with your Gmail email
+                pass: 'zszaqvzpbfvmnhhw' // Replace with your Gmail password
             }
         });
 
         const mailOptions = {
-            from: 'noreply.bankwebsite@gmail.com',
+            from: '"Lotus Learning" <noreply@projecthumancity.com>',
             to: email,
             subject: 'Lotus Learning OTP',
             html: `
