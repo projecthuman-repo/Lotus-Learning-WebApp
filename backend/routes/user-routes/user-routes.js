@@ -1,4 +1,4 @@
-// user-routes.js //
+// user-routes.js
 const express = require('express');
 const User = require("../../models/User.js");
 const GoogleUser = require("../../models/GoogleUser.js");
