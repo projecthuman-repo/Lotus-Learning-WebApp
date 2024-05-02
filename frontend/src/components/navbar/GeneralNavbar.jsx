@@ -54,13 +54,13 @@ const GeneralNavbar = () => {
     >
       <div className="max-w-[1450px] mx-auto h-full flex justify-between items-center relative">
         <img
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
           src={logoText}
           alt="logo"
           className="h-full p-[.8rem] cursor-pointer md:block hidden"
         />
         <img
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
           src={logo}
           alt="logo"
           className="h-full p-[.8rem] cursor-pointer md:hidden block"

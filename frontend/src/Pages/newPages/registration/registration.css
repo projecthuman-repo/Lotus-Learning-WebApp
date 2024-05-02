@@ -1,0 +1,15 @@
+.slider-cointainer{
+ position: relative;
+}
+.slider{
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Trasla il div del 50% del suo stesso larghezza e altezza */
+}
+.slider-on{
+    left: 100%;
+}
+.slider-off{
+    left: 0%;
+
+}

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BiExit } from "react-icons/bi";
 import logo from "../../../Images/lotusletters.webp";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import StepOne from "./steps/StepOne";
 import StepTwo from "./steps/StepTwo";
 import StepThree from "./steps/StepThree";
@@ -10,8 +12,10 @@ import createNewCourseProxy from "../../../BackendProxy/courseProxy/createNewCou
 import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
 
 const CreateNewCourse = () => {
+  const authUser = useSelector((state) => state.user);
   const navigate = useNavigate();
   const { step } = useParams();
+  
 
   const [loading, setLoading] = useState(false)
   const [newCourseObj, setNewCourseObj] = useState({
@@ -24,6 +28,13 @@ const CreateNewCourse = () => {
       two: "",
       three: "",
     },
+    creator: {
+      username: authUser.username,
+      code: authUser.institution.code,
+      institutionName: authUser.institution.institutionName,
+      accountType: authUser.accountType,
+      email: authUser.email
+    }
   });  
 
   //

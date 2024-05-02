@@ -1,7 +1,11 @@
 import React from "react";
 import "./BlobComposition.css";
 
-function BlobComposition({ blobsData }) {
+function BlobComposition({ blobsData = [
+  { top: "10%", left: "-20%", size: "700px" },
+  { top: "-30%", left: "70%", size: "400px" },
+  { top: "40%", left: "50%", size: "300px" },
+] }) {
   return (
     <div className="blob-container">
         {blobsData.map((blob, index) => {

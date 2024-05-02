@@ -6,12 +6,14 @@ import { FaGoogle } from "react-icons/fa";
 import { CgDanger } from "react-icons/cg";
 import axios from "axios";
 import { setUser } from "../../../redux/slice/user/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
+import saveUserOnCookies from "../../../BackendProxy/cookiesProxy/saveUserCookies";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const authUser = useSelector((state) => state.user);
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [email, setEmail] = useState('');
@@ -24,6 +26,7 @@ const Login = () => {
     navigate('/registration?screen=signup');
   };
 
+
   const sendLoginRequest = async () => {
     setLoading(true);
     try {
@@ -35,26 +38,12 @@ const Login = () => {
       const foundUser = response.data;
 
       if (foundUser.success) {
-        const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
-          ...foundUser.user
-        },{
-          withCredentials: true, // Include cookies in the request
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const savedUser = await saveUserOnCookies({...foundUser.user})
+        await dispatch(setUser(savedUser));
+        navigate('/');
 
-        if (saveOnCookies.status === 200) {
-          console.log(saveOnCookies);
-          await dispatch(setUser(saveOnCookies.data.data));
-          setErrorMessage(null); // Clear error message on successful login
-          navigate('/');
-        }
-      } else {
-        setLoading(false);
-        console.log("Error message from server:", foundUser.error);
-        setErrorMessage("Incorrect email or password.");
       }
+
     } catch (error) {
       setLoading(false);
       if (error.response && error.response.status === 400) {
@@ -72,9 +61,7 @@ const Login = () => {
     }
   }, [email]);
 
-  useEffect(() => {
-    console.log("Error message:", errorMessage); // Debug statement
-  }, [errorMessage]);
+
 
   return (
     <div className="space-y-3 w-[400px] no-select md:p-0 p-2  ">

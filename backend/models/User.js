@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true},
-  lastName: { type: String, required: true},
+  firstName: { type: String},
+  lastName: { type: String},
   email: { type: String, required: true, unique: true,},
   password: { type: String, required: true},
   username: { type: String, required: true},
@@ -14,6 +14,18 @@ const userSchema = new mongoose.Schema({
   },
   school: {
     type: String,
+  },
+  institution:{
+    admin:{
+      type: Boolean,
+      default: false,
+    },
+    code: {
+      type: String,
+    },
+    institutionName: {
+      type: String,
+    }
   },
   enrolledCourses: [
     {

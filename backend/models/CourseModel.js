@@ -10,6 +10,11 @@ const courseSchema = new mongoose.Schema({
     default: false,
     required: true
   },
+  accepted: {
+    type: Boolean,
+    default: false,
+    required: true
+  },
   description: {
     type: String,
     required: true,
@@ -23,8 +28,23 @@ const courseSchema = new mongoose.Schema({
     required: true,
   },
   creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    username: {
+      type: String,
+      required: true,
+    },
+    code: {
+      type: String,
+      required: true,
+    },
+    institutionName: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    accountType: { type: String, enum: ['student', 'instructor', 'admin'], required: true},
   },
   objectives: {
     one: {

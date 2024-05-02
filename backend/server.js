@@ -48,6 +48,8 @@ const userRoutes = require('./routes/user-routes/user-routes');
 app.use('/user', userRoutes);
 const courseRoutes = require('./routes/course-routes/course-routes');
 app.use('/course', courseRoutes);
+const adminRoutes = require('./routes/admin-routes/admin-routes')
+app.use('/admin', adminRoutes);
 
 app.use("/test", (req, res) => {
   res.send("hello world!");

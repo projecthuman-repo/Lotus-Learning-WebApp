@@ -7,16 +7,29 @@ import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { FaSortAlphaUp } from "react-icons/fa";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 import { RiEdit2Fill } from "react-icons/ri";
-
+import { useSelector } from "react-redux";
 import OnHoverExtraHud from "../../../../components/OnHoverExtraHud";
+import getStudents from "../../../../BackendProxy/adminProxy/getStudents";
 
 const AdminManageStudents = () => {
+  const authUser = useSelector((state) => state.user);
 
   const { screen } = useParams();
-
+  const [loaded, setLoaded] = useState(false);
+  const [students, setStudents] = useState([]);
   useEffect(() => {
-
+    getAllStudents(authUser.institution.code)
   },[])
+
+  const getAllStudents = async (code) => {
+    try {
+      const res = await getStudents(code);
+      setStudents(res);
+      setLoaded(true);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div>
@@ -49,25 +62,17 @@ const AdminManageStudents = () => {
           <table className="table-auto w-full" >
             <thead className="">
               <tr>
-                <th>Name</th>
-                <th>Date</th>
+                <th>Username</th>
+                <th>Email</th>
                 <th className="text-end">Options</th>
               </tr>
             </thead>
             <tbody>
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
-              <StudentCard />
+              {students.map((item, i) =>{
+                return(
+                    <StudentCard student={item}/>
+                )
+              })}
             </tbody>
           </table>
         </div>
@@ -76,18 +81,18 @@ const AdminManageStudents = () => {
   );
 };
 
-const StudentCard = () => {
+const StudentCard = ({student}) => {
   return (
-    <tr className="text-sm border-5 border-transparent">
-      <td className="">Student Name</td>
-      <td>Feb 20 - 2020</td>
+    <tr key={student._id} className="text-sm border-5 border-transparent">
+      <td className="">{student.username}</td>
+      <td>{student.email}</td>
       <td className=" flex space-x-2 items-center justify-end">
-        <div className="p-2 hover:bg-stone-200 transition-all bg-stone-100 rounded-full cursor-pointer hover-parent">
-            <RiDeleteBin7Fill className="text-md text-stone-700 "/>
+        <div className="p-2 hover:bg-blue-200 transition-all bg-blue-100 rounded-full cursor-pointer hover-parent">
+            <RiDeleteBin7Fill className="text-md text-blue-700 "/>
             <OnHoverExtraHud name={'Delete'}/>
         </div>
-        <div className="p-2 hover:bg-stone-200 transition-all bg-stone-100 rounded-full cursor-pointer hover-parent">
-            <RiEdit2Fill  className="text-md text-stone-700 "/>
+        <div className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
+            <RiEdit2Fill  className="text-md text-red-600 "/>
             <OnHoverExtraHud name={'Edit'}/>
         </div>
 

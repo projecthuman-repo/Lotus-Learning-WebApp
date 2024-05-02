@@ -28,6 +28,7 @@ import AdminManageEducators from "./Pages/newPages/adminPages/adminEducatorsMana
 import AdminManageCourses from "./Pages/newPages/adminPages/adminCoursesManage/AdminManageCourses";
 import CreateEditCourse from "./components/profile-components/create-edit-new_course/CreateEditCourse";
 import ProtectedRoute from "./ProtectedRoute";
+import ProfileReRoutes from "./Pages/newPages/Profile/ProfileReRoutes";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -55,11 +56,10 @@ function App() {
     setLoadingUser(true);
     // finds user storaged into the cookies  as 'userDataAuth'
     const foundUser = await getLogedInCookies();
-    console.log('user found', foundUser);
     if (foundUser) {
       // saves the found user into the redux for auth
       return new Promise((resolve) => {
-        dispatch(setUser(foundUser.userData));
+        dispatch(setUser(foundUser.userData.user));
         resolve();
       });
     }
@@ -79,7 +79,6 @@ function App() {
 
   useEffect(() => {
     if(authUser){
-      console.log(authUser)
       setAuth(true)
     }else{
       setAuth(false);
@@ -96,7 +95,12 @@ function App() {
             <Route path="/registration" element={<Registration/>}/>
             <Route path="/course" element={<CoursePage/>}/>
             <Route path="/learning/:courseName?" element={<Learning/>}/>
-            <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={<Profile/>}/>
+
+            <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={
+              <ProtectedRoute  isAuthenticated={(authUser)}>
+                <Profile/>
+              </ProtectedRoute>
+            }/>
             <Route path="/user/:screen?" element={<User/>}/>
             <Route path="/logintest" element={<HomePageLoggedIn/>}/>
             {/* Admin Pages */}
@@ -110,13 +114,23 @@ function App() {
                 <AdminManageEducators/>
               </ProtectedRoute>
             }/>
-            <Route path="/admin/courses/:screen?" element={<AdminManageCourses/>}/>
+            <Route path="/admin/courses/:screen?" element={
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+                <AdminManageCourses/>
+              </ProtectedRoute>
+            
+            }/>
             <Route path="/admin" element={<AdminHomePage/>}/>
             {/* Course Creation and editing */}
             <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
             <Route path="/course-editor/:secondscreen?/:courseid?" element={<CreateEditCourse />}/>
 
-            <Route path="/" element={<HomePage/>}/>
+            <Route path="/" element={
+              <ProtectedRoute  isAuthenticated={(authUser)}>
+                <HomePage/>
+               </ProtectedRoute> 
+            }/>
+            <Route path="/home" element={<HomePage/>}/>
             {/* NOT FOUND PAGE 404 */}
             <Route path="*" element={<NotFoundPage/>}/>
           </Routes>

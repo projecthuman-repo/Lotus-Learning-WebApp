@@ -11,9 +11,11 @@ import { FaChessKnight } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import GeneralFooter from "../../../../components/footer/GeneralFooter";
 import OnHoverExtraHud from "../../../../components/OnHoverExtraHud";
+import { useSelector } from "react-redux";
 
 const AdminHomePage = () => {
   const navigate = useNavigate();
+  const authUser = useSelector((state) => state.user);
 
   return (
     <div className="relative h-full">
@@ -30,7 +32,8 @@ const AdminHomePage = () => {
           <div className="flex items-center space-x-2 ">
             <div className="rounded-full h-[160px] w-[160px] bg-stone-400"></div>
             <div>
-              <p className="text-2xl font-semibold">Institution Name</p>
+              <p className="text-2xl font-semibold">{authUser.username}</p>
+              <p className="text-sm font-base">{authUser.email}</p>
             </div>
           </div>
           <div className="p-2  rounded-full cursor-pointer parent-option hover-parent">

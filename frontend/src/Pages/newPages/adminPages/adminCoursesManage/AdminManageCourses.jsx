@@ -3,35 +3,51 @@ import { useNavigate, useParams } from "react-router-dom";
 import GeneralNavbar from "../../../../components/navbar/GeneralNavbar";
 import BlobComposition from "../../../../components/backgrounds/BlobComposition/BlobComposition";
 import { IoMdSearch } from "react-icons/io";
-import { FaSortAlphaDownAlt } from "react-icons/fa";
+import { FaRegEye, FaSortAlphaDownAlt } from "react-icons/fa";
 import { FaSortAlphaUp } from "react-icons/fa";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 import { RiEdit2Fill } from "react-icons/ri";
 import OnHoverExtraHud from "../../../../components/OnHoverExtraHud";
 import { IoIosAdd } from "react-icons/io";
-import getCourses from "../../../../BackendProxy/courseProxy/getCourses";
 import SpinnerLoader from "../../../../components/loaders/SpinnerLoader";
+import { MdClose, MdDone } from "react-icons/md";
+import getCoursesByProp from "../../../../BackendProxy/courseProxy/getCoursesByProp";
+import AcceptRejectPetition from "../../../../components/accept-reject-classpetition/AcceptRejectPetition";
+import { useSelector } from "react-redux";
 
 const AdminManageCourses = () => {
   const navigate = useNavigate();
+  const authUser = useSelector((state) => state.user);
 
   const [loaded, setLoaded] = useState(false);
+  const [loadedReq, setLoadedReq] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
 
-  const getAllCourses = async () => {
+
+  const getAllAcceptedCourses = async () => {
     try {
-      const res = await getCourses();
-      setCourses(res.data);
-      setLoaded(true);
+      const res = await getCoursesByProp("accepted", true, authUser.institution.code);
+      setCourses(res.res);
+      setLoaded(true)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const getAllPendingRequests = async () => {
+    try {
+      const res = await getCoursesByProp("accepted", false, authUser.institution.code);
+      setPendingRequests(res.res);
+      setLoadedReq(true)
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {console.log(courses)},[courses])
-
   useEffect(() => {
-    getAllCourses();
+    getAllAcceptedCourses();
+    getAllPendingRequests();
   }, []);
 
   return (
@@ -45,6 +61,59 @@ const AdminManageCourses = () => {
         ]}
       />
       <div className="m-auto max-w-[1200px] mt-3 min-h-[100vh]">
+        {pendingRequests.length > 0 && (
+          <>
+            <div className="bg-white rounded-full flex justify-between items-center py-2 px-4">
+              <div className="flex items-center space-x-2">
+                <p className="font-semibold text-lg">Pending Requests</p>
+                {pendingRequests.length > 0 && (
+                  <div className="flex items-center justify-center bg-red-400 rounded-full h-[20px] w-[20px]">
+                    <p className="font-medium text-white text-center text-sm">
+                      {pendingRequests.length}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center">
+                  <input
+                    placeholder="Search by name"
+                    className="text-sm focus:outline-none  focus:border-b-stone-400 border-b-transparent border-b-[1.5px]  pr-2 py-1 font-medium text-stone-600 "
+                  />
+                  <IoMdSearch />
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white py-2 px-4 my-3 rounded-lg">
+              <table className="table-auto w-full">
+                {loadedReq ? (
+                  <>
+                    <thead className="">
+                      <tr>
+                        <th>Name</th>
+                        <th>Complexity</th>
+                        <th>Applying to</th>
+                        <th className="text-end">Options</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pendingRequests.map((item, i) => {
+                        return <RequestCard item={item} />;
+                      })}
+                    </tbody>
+                  </>
+                ) : (
+                  <div className="py-2 flex items-center justify-center w-full">
+                    <SpinnerLoader />
+                  </div>
+                )}
+              </table>
+            </div>
+          </>
+        )}
+
         <div className="bg-white rounded-full flex justify-between items-center py-2 px-4">
           <p className="font-semibold text-lg">Courses List</p>
           <div className="flex items-center space-x-3">
@@ -82,16 +151,14 @@ const AdminManageCourses = () => {
                 </tr>
               </thead>
               <tbody>
-                {courses.map((course)=> {
-                  return(
-                      <CourseCard course={course}/>
-                  )
+                {courses.map((course) => {
+                  return <CourseCard course={course} />;
                 })}
               </tbody>
             </table>
           ) : (
             <div className="flex items-center justify-center">
-              <SpinnerLoader/>
+              <SpinnerLoader />
             </div>
           )}
         </div>
@@ -100,20 +167,18 @@ const AdminManageCourses = () => {
   );
 };
 
-const CourseCard = ({course}) => {
+const CourseCard = ({ course }) => {
   const navigate = useNavigate();
 
   return (
-    <tr key={course._id} className="text-sm border-5 border-transparent">
+    <tr key={course.username} className="text-sm border-5 border-transparent">
       <td className="">{course.title}</td>
-      <td>Hoge hoge</td>
+      <td>{course.creator.username}</td>
       <td>Feb 20 - 2020</td>
       <td>{course.age}</td>
       <td className=" flex space-x-2 items-center justify-end">
         <div
-          onClick={() =>
-            navigate(`/course-editor/homePage/${course._id}`)
-          }
+          onClick={() => navigate(`/course-editor/homePage/${course._id}`)}
           className="p-2 hover:bg-blue-200 transition-all bg-blue-100 rounded-full cursor-pointer hover-parent"
         >
           <RiEdit2Fill className="text-md text-blue-700 " />
@@ -127,4 +192,56 @@ const CourseCard = ({course}) => {
     </tr>
   );
 };
+
+const RequestCard = ({ item }) => {
+  const [doubleValidating, setDoubleValidating] = useState(false);
+  const [acceptPetition, setAcceptPetition] = useState(true);
+  const navigate = useNavigate();
+
+  const triggerValidation = (accept) => {
+    setAcceptPetition(accept);
+    setDoubleValidating(true);
+  };
+
+  return (
+    <tr key={item._id} className="text-sm border-5 border-transparent">
+      {doubleValidating && (
+        <AcceptRejectPetition
+          setOpen={setDoubleValidating}
+          open={doubleValidating}
+          accept={acceptPetition}
+          id={item._id}
+          course={item}
+        />
+      )}
+      <td className="">{item.creator.username}</td>
+      <td>{item.age}</td>
+      <td>{item.title}</td>
+      <td className=" flex space-x-2 items-center justify-end">
+        <div
+          onClick={() => navigate("/admin/educators/view?id=" + item._id)}
+          className="p-2 hover:bg-blue-200 transition-all bg-blue-100 rounded-full cursor-pointer hover-parent"
+        >
+          <FaRegEye className="text-md text-blue-700 " />
+          <OnHoverExtraHud name={"View Application"} />
+        </div>
+        <div
+          onClick={() => triggerValidation(true)}
+          className="p-2 hover:bg-green-200 transition-all bg-green-100 rounded-full cursor-pointer hover-parent"
+        >
+          <MdDone className="text-md text-green-700 " />
+          <OnHoverExtraHud name={"Accept "} />
+        </div>
+        <div
+          onClick={() => triggerValidation(false)}
+          className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent"
+        >
+          <MdClose className="text-md text-red-700 " />
+          <OnHoverExtraHud name={"Reject"} />
+        </div>
+      </td>
+    </tr>
+  );
+};
+
 export default AdminManageCourses;

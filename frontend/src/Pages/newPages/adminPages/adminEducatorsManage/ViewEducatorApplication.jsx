@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoMdOpen } from "react-icons/io";
@@ -8,22 +8,61 @@ import { LuClapperboard } from "react-icons/lu";
 import { MdOutlineBookmarkAdded } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
+import getCourseData from "../../../../BackendProxy/courseProxy/getCourseData";
+import AcceptRejectPetition from "../../../../components/accept-reject-classpetition/AcceptRejectPetition";
 
 const ViewEducatorApplication = () => {
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
   const navigate = useNavigate();
+  const [courseData, setCourseData] = useState()
+  const [loading, setLoading] = useState(true)
+  const [doubleValidating, setDoubleValidating] = useState(false)
+  const [acceptPetition, setAcceptPetition] = useState(true)
+  useEffect(() => {
+    getCourseInfo(id)
+  },[id])
+  const getCourseInfo = async (id) => {
+    try {
+      const data = await getCourseData(id) 
+      setCourseData(data.data);
+      setLoading(false)
+      return data.data
+    } catch (error) {
+      console.error('error fetching course data')
+    }
+  }
+
+  const triggerValidation = (accept) => {
+    setAcceptPetition(accept)
+    setDoubleValidating(true)
+  }
+
 
   return (
     <div className="m-auto max-w-[1200px] mt-3 min-h-[100vh]">
-      <div className="bg-white rounded-full flex justify-between items-center py-2 px-4">
+      {doubleValidating &&
+        <AcceptRejectPetition setOpen={setDoubleValidating} open={doubleValidating} accept={acceptPetition} id={id} course={courseData}/>
+      }
+      {loading? 
+      <div>dd</div>
+      :
+      <>
+            <div className="bg-white rounded-full flex justify-between items-center py-2 px-4">
         <div className="flex items-center space-x-2">
           <p className="font-semibold text-lg">Check Application</p>
         </div>
         <div className=" flex space-x-2 items-center justify-end">
-          <div className="p-2 hover:bg-green-200 transition-all bg-green-100 rounded-full cursor-pointer hover-parent">
+          <div
+          onClick={() => triggerValidation(true)}
+          className="p-2 hover:bg-green-200 transition-all bg-green-100 rounded-full cursor-pointer hover-parent">
             <MdDone className="text-md text-green-700 " />
             <OnHoverExtraHud name={"Accept "} />
           </div>
-          <div className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
+          <div 
+          onClick={() => triggerValidation(false)}
+          className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
             <MdClose className="text-md text-red-700 " />
             <OnHoverExtraHud name={"Reject"} />
           </div>
@@ -41,9 +80,9 @@ const ViewEducatorApplication = () => {
           </thead>
           <tbody>
             <tr className="">
-              <td className="">Hoge Hoge</td>
+              <td className="">{courseData && courseData.creator.username}</td>
               <td className="">February 20</td>
-              <td className="">hoge@gmail.com</td>
+              <td className="">{courseData && courseData.creator.email}</td>
               <td className="cursor-pointer hover:underline flex items-center ">
                 Open Resumme
                 <IoMdOpen className="ml-2" />
@@ -54,49 +93,46 @@ const ViewEducatorApplication = () => {
       </div>
       <div className="px-4 py-2 bg-white rounded-lg my-2">
         <div className="flex justify-between items-center">
-          <p className="font-semibold text-lg">Astronomy 9</p>
+          <p className="font-semibold text-lg">{courseData && courseData.title}</p>
           <div className="flex items-center space-x-1">
-            <div className="text-xs  linearGradient_ver1 px-2 py-1 rounded-full text-white">
-              Categorie
-            </div>
-            <div className="text-xs  linearGradient_ver1 px-2 py-1 rounded-full text-white">
-              Categorie
-            </div>
-            <div className="text-xs  linearGradient_ver1 px-2 py-1 rounded-full text-white">
-              Categorie
-            </div>
+            {courseData && courseData.categories.map((item, i) => {
+              return (
+                <div key={i} className="text-xs  linearGradient_ver1 px-2 py-1 rounded-full text-white">
+                {item}
+               </div>
+              )
+            })}
           </div>
         </div>
         <p className="text_linearGradient_ver1 font-medium text-sm">
-          Medium (11-13)
+          {courseData && courseData.age}
         </p>
         <p className="text-sm mt-1">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel, velit!
-          Maiores ad dolores enim inventore iste? Debitis provident dicta quis?
-          Nihil saepe reiciendis debitis placeat dolore dolorem ipsum,
-          architecto dolorum?
+          {courseData && courseData.description}
         </p>
       </div>
       <div className="px-4 py-2 bg-white rounded-lg my-2">
         <p className="font-semibold text-lg">Course Syllabus</p>
         <div className="mt-2 flex flex-col space-y-2">
-          <CourseUnit />
-          <CourseUnit />
-          <CourseUnit />
-          <CourseUnit />
-          <CourseUnit />
-          <CourseUnit />
+          {courseData && courseData.lessons.map((item, id) => {
+            return (
+              <CourseUnit  item={item} />
+            )
+          })}
         </div>
       </div>
+      </>
+      }
+
     </div>
   );
 };
 
-const CourseUnit = () => {
+const CourseUnit = ({item}) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="py-2 px-2 border rounded-lg flex flex-col ">
+    <div key={item._id} className="py-2 px-2 border rounded-lg flex flex-col ">
       <div
         onClick={() => setOpen(!open)}
         className="hover:bg-stone-50 rounded-full px-2 py-1 flex justify-between items-center w-full cursor-pointer "
@@ -106,7 +142,7 @@ const CourseUnit = () => {
                 <IoIosArrowDown className="mr-2"/>:
                 <IoIosArrowForward className="mr-2" />
             }
-          <div>Unit1</div>
+          <div>{item.title}</div>
         </div>
         <LuClapperboard />
       </div>
@@ -122,13 +158,10 @@ const CourseUnit = () => {
             </div>
             <div className="w-full ml-2">
               <p className=" text-sm text-justify">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat
-                neque aperiam tenetur rem dolorum corrupti consequuntur
-                praesentium ratione saepe! Quidem incidunt itaque labore unde?
-                Voluptates omnis modi vitae porro ipsum?
+                {item.description}
               </p>
               <div className="mt-2 w-full flex items-center">
-                <p className="text-sm">4 Extra Activities </p>
+                <p className="text-sm">{item.extraActivities.length} Extra Activities </p>
                 <MdOutlineBookmarkAdded className="ml-2"/>
               </div>
 

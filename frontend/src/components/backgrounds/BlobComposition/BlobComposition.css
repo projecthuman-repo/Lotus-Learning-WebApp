@@ -5,6 +5,8 @@
     z-index: -1;
     overflow: hidden;
     background-color: rgb(242, 242, 242);
+    top: 0;
+    left: 0;
 }
 
 .blob {

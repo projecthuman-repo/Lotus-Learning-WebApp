@@ -8,29 +8,30 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 import LowProfileNavbar from "../../../components/navbar/LowProfileNavbar";
 import LotusLogo from "../../../Images/LotusLogoColour.webp"; // Importing image
+import CreateAccAdmin from "./CreateAccAdmin";
+import CreateAcc from "./CreateAcc";
 
 const Registration = () => {
-  const navigate = useNavigate();
-  const [screen, setScreen] = useState("login");
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("screen");
+  const navigate = useNavigate();
+  const [screen, setScreen] = useState(id);
   useEffect(() => {
-    if (!id || (id !== "login" && id !== "signup")) {
-      console.log("a");
+    if (!id) {
       navigate("/registration?screen=login");
     }
-    if (id && id === "signup") {
-      setScreen("signup");
-    } else if (id && id === "login") {
-      setScreen("login");
+    else{
+      setScreen(id);
     }
   }, [id]);
+
+
 
   return (
     <div className="w-full min-h-full flex-grow ">
       <LowProfileNavbar />
       <div className="flex items-center justify-evenly min-h-[90vh] w-full ">
-        <div className="space-y-2 md:block hidden">
+        {/* <div className="space-y-2 md:block hidden">
           <div className="grid place-items-center">
             <img
               src={LotusLogo}
@@ -45,9 +46,11 @@ const Registration = () => {
               <p>Let's give learning a different perspective!</p>
             </div>
           </div>
-        </div>
+        </div> */}
         {screen === "login" && <Login />}
-        {screen === "signup" && <SignUp />}
+        {screen === "signup" && <CreateAcc />}
+        {screen === 'admin' && <CreateAccAdmin/>}
+
       </div>
 
       <GeneralFooter />

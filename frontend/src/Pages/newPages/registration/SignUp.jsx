@@ -8,15 +8,22 @@ import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slice/user/userSlice";
 import styles from "../../../Styles";
-const SignUp = () => {
+import { BsQuestionCircleFill } from "react-icons/bs";
+
+import saveUserOnCookies from "../../../BackendProxy/cookiesProxy/saveUserCookies";
+import OnHoverExtraHud from "../../../components/OnHoverExtraHud";
+const SignUp = ({type = 'student'}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [invitationCode, setInvitationCode] = useState('')
+  const [haveInvitationCode, setHaveInvitationCode] = useState(false)
+  const [invitatioCodeErr, setInvitatioCodeErr] = useState(false);
   const [email, setEmail] = useState('');
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
-  const [accountType, setAccountType] = useState('student');
+  const [accountType, setAccountType] = useState(type);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [samePassword, setSamePassword] = useState(false);
@@ -26,12 +33,14 @@ const SignUp = () => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [confirmPasswordVisibility, setConfirmPasswordVisibility] = useState(false);
   const navigateTo = () => {
-    navigate('/registration?screen=login');
+    navigate('/registration');
   };
   const createAccount = async () => {
+    if(loading) return;
     setLoading(true);
     setInvalidEmail(false); // Reset email error state
     setUsernameTaken(false); // Reset username error state
+    setInvitatioCodeErr(false);
     if (!validateFormData()) {
       setLoading(false);
       return;
@@ -42,23 +51,24 @@ const SignUp = () => {
         lastName,
         email,
         accountType,
+        code: invitationCode,
+        linkedCode: haveInvitationCode,
         username,
         password,
       });
       if (response.data.success) {
-        const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
-          ...response.data.user
-        });
-        if (saveOnCookies.status === 200) {
-          await dispatch(setUser(saveOnCookies.data.data));
+          const savedUser = await saveUserOnCookies({...response.data.user})
+          await dispatch(setUser(savedUser));
           navigate('/');
-        }
+  
       } else {
         // Handle errors related to email or username
         if (response.data.message === 'The email is already in use') {
           setInvalidEmail(true);
         } else if (response.data.message === 'The username is already taken') {
           setUsernameTaken(true);
+        }else if(response.data.message === 'Institution not found'){
+          setInvitatioCodeErr(true)
         }
       }
     } catch (error) {
@@ -91,8 +101,13 @@ const SignUp = () => {
   useEffect(() => {
     setSamePassword(false); // Reset samePassword state when password or confirmPassword changes
   }, [password, confirmPassword]);
+  useEffect(() => {
+    if(!haveInvitationCode){
+      setInvitationCode('')
+    }
+  },[haveInvitationCode])
   return (
-    <div className="space-y-3 w-[400px] no-select md:p-0 p-2">
+    <div className="space-y-3 w-[400px]  md:p-0 p-2">
       <div>
         <p className="text-start font-bold text-3xl">Create Account</p>
       </div>
@@ -155,7 +170,37 @@ const SignUp = () => {
           className={`${styles.simple_text_input}`}
         />
         {usernameTaken && <p className="text-red-500 text-sm">Username is already taken, please try different username</p>}
-        <label className="font-bold cursor-pointer pl-2 pt-2">
+        <label htmlFor="invcode" className="font-bold cursor-pointer pl-2 pt-2">
+          Are you linked to an institution? 
+        </label>
+          <div onClick={() => setHaveInvitationCode(!haveInvitationCode)} className={`cursor-pointer ml-3 slider-cointainer h-[20px] w-[35px]  relative rounded-full ${haveInvitationCode? 'linearGradient_ver1' : 'bg-stone-300'}`}>
+            <div className={`slider h-[25px] w-[25px] bg-white rounded-full  border ${haveInvitationCode? 'slider-on' : 'slider-off'} transition-all`}></div>
+          </div>
+        {haveInvitationCode && 
+          <>
+            <label htmlFor="invcode" className="font-bold cursor-pointer pl-2 pt-2">
+              Institution Code
+            </label>
+            <div className={`w-full ${styles.simple_text_input} flex justify-between items-center`}>
+              <input
+                id="invcode"
+                placeholder="#000000"
+                value={invitationCode}
+                onChange={(e) => setInvitationCode(e.target.value)}
+                className={`focus:outline-none w-full`}
+              />
+                <div className="hover-parent">
+                  <OnHoverExtraHud name={'Invitation Code?'}/>
+                  <BsQuestionCircleFill onClick={() => console.log('add a navigate to FAQ')} className="mx-1 text-black cursor-pointer" />
+                </div>
+            </div>
+            {invitatioCodeErr && <p className="text-red-500 text-sm">Institution code not found</p>}
+
+          </>
+        }
+
+
+        {/* <label className="font-bold cursor-pointer pl-2 pt-2">
           Account Type
         </label>
         <div className="flex items-center">
@@ -184,7 +229,7 @@ const SignUp = () => {
           <label htmlFor="instructor" className={`font-semibold text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all border hover:bg-stone-50 cursor-pointer ${accountType === 'instructor' ? 'text-white linearGradient_ver1' : 'text-gray-400 font-normal'}`}>
             Instructor
           </label>
-        </div>
+        </div> */}
         <label htmlFor="password" className="font-bold cursor-pointer pl-2 pt-2">
           Password
         </label>

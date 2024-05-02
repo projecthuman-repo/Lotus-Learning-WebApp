@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import deleteUserOnCookies from "../../../BackendProxy/cookiesProxy/deleteUserCookies";
 
 const ProfileDropDown = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user);
 
-  useEffect(() => {
-    
-  },[authUser]);
 
-  const logout = () => {
+
+  const logout = async() => {
     // Perform any logout actions here, such as clearing user data, etc.
     // Then, navigate to registration page and reload the page
+    deleteUserOnCookies()
     navigate('/registration');
     window.location.reload();
   };
@@ -51,7 +51,7 @@ const ProfileDropDown = () => {
       </div>
       <div className="">
         <div className="h-full w-full flex flex-col space-y-2 py-2 ">
-        <p onClick={() => navigate('/profile/courses')} className="text-sm cursor-pointer px-2 hover:text-red-300">Profile</p>
+        <p onClick={() => navigate('/user/courses')} className="text-sm cursor-pointer px-2 hover:text-red-300">Profile</p>
         <p className="text-sm cursor-pointer px-2 hover:text-red-300">Wish List</p>
         <p className="text-sm cursor-pointer px-2 hover:text-red-300">Notifications</p>
         <p className="text-sm cursor-pointer px-2 hover:text-red-300 border-b pb-2">My Courses</p>

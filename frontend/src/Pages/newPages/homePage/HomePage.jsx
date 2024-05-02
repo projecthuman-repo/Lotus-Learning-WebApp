@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GeneralNavbar from "../../../components/navbar/GeneralNavbar";
 import CarrouselHeader from "../../../components/headers/CarrouselHeader";
 import GeneralFooter from "../../../components/footer/GeneralFooter";
@@ -14,9 +14,30 @@ import Geography10CourseCard from "../../../components/course-cards/Geography10C
 import Geoscience12CourseCard from "../../../components/course-cards/Geoscience12CourseCard";
 import Astronomy9CourseCard from "../../../components/course-cards/Astronomy9CourseCard";
 import ComputerScience11CourseCard from "../../../components/course-cards/ComputerScience11CourseCard";
+import getCoursesByProp from "../../../BackendProxy/courseProxy/getCoursesByProp";
+import { useSelector } from "react-redux";
 
 
 const HomePage = () => {
+
+  const [loadedCourses, setLoadedCourses] = useState(false)
+  const [courses, setCourses] = useState([])
+  const authUser = useSelector((state) => state.user);
+
+  useEffect(() => {
+    getAllAcceptedCourses()
+  },[])
+
+  const getAllAcceptedCourses = async () => {
+    try {
+      const res = await getCoursesByProp("accepted", true, authUser.institution.code);
+      setCourses(res.res);
+      setLoadedCourses(true)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="h-full w-full ">
       <GeneralNavbar />
@@ -40,15 +61,13 @@ const HomePage = () => {
               <Astronomy9CourseCard/>
               </SwiperSlide>
           </CarrouselShowCase> */}
-
-            <Astronomy9CourseCard/>
-            <ComputerScience11CourseCard/>
-            <Geoscience12CourseCard/>
-            <Math11CourseCard/>
-            <English12CourseCard/>
-            <Math12CourseCard/>
-            <Geography10CourseCard/>
-            <English11CourseCard/>
+            {courses && courses.map((item, id) => {
+              return (
+                <div key={item._id}>
+                  <GeneralCourseCard item={item}/>
+                </div>
+              )
+            })}
         </div>
       </div>
       </div>

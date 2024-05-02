@@ -6,6 +6,15 @@ const router = express.Router();
 const zlib = require('zlib');
 const decompressData = require('../../helpers/decompressData.js');
 
+// On this file you can find all the routes for: 
+
+  // GET ALL COURSES
+  // GET ONE COURSE DATA BY ID
+  // CREATE NEW COURSE
+  // UPDATE EXISTING COURSE
+  // GET COURSES BY PROP
+  // DELETE COURSE BY ID
+
 // GET ALL COURSES
 router.get('/get-courses', async (req, res, next) => {
   try {
@@ -20,7 +29,7 @@ router.get('/get-courses', async (req, res, next) => {
   }
 });
 
-// GET ONE COURSE DATA
+// GET ONE COURSE DATA BY ID
 router.get('/get-course-data', async(req, res, next) => {
   const courseId = req.query.id;
   try {
@@ -47,7 +56,14 @@ router.get('/get-course-data', async(req, res, next) => {
 // CREATE NEW COURSE
 router.post('/create-new-course', async(req, res, next) => {
   try{
-    const newCourseObj = req.body
+    let newCourseObj = req.body
+    if(newCourseObj.creator.accountType === 'admin'){
+      newCourseObj = {...newCourseObj, accepted: true}
+    }
+    else{
+      newCourseObj = {...newCourseObj, accepted: false}
+
+    }
     const newCourse = await createNewCourse(newCourseObj);
 
     console.log(newCourseObj)
@@ -88,6 +104,52 @@ router.post('/update-course', async(req, res, next) => {
   });
   }
 })
+
+// GET COURSES BY PROP
+router.post('/get-courses-by-prop', async(req, res, next) => {
+  try {
+    const { prop, value, code } = req.body;
+    let courses = []
+    if(code){
+      courses = await Course.find({
+        $and: [{ "creator.code": code }, {[prop]: value }],
+      });
+    }else{
+      courses = await Course.find({[prop]: value });
+    }
+
+    if(courses){
+      return res.status(200).json({
+        res: [...courses],
+        success: true,
+      });
+    }else{
+      return res.status(200).json({
+        res: [],
+        success: true,
+      });
+    }
+
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+    });
+  }
+})
+
+// DELETE COURSE BY ID
+router.post('/delete-course-by-id', async(req, res, next) => {
+  try {
+
+
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+    });
+  }
+})
+
+
 
 module.exports = router;
 
