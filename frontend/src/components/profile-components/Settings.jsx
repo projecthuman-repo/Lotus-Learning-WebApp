@@ -19,6 +19,10 @@ const Settings = () => {
     setProfilePicture(URL.createObjectURL(selectedImage));
   };
 
+  const navigateTo = () => {
+    navigate('/profile/profile-settings/ChangePassword');
+  };
+
   return (
     <div className="min-h-[80vh]">
       <div className="flex items-center mx-auto mt-2  max-w-[1400px] ">
@@ -46,6 +50,9 @@ const Settings = () => {
                 className="absolute left-0 top-0 h-full opacity-0 cursor-pointer"
               />
             </button>
+            <button className="font-semibold linearGradient_ver1 text-white p-2 text-xs rounded-full relative" onClick={navigateTo}>
+              Change Password
+            </button>
           </div>
           <div className="flex flex-col">
             <p className="text-stone-700 font-semibold md:text-2xl text-xl flex items-center ">
@@ -64,7 +71,6 @@ const Settings = () => {
             <p className="text-stone-600 md:text-base text-xs font-ligth ">
                       <p className="text-xs text-stone-500">{authUser.email}</p>
             </p>
-
 
           </div>
         </div>

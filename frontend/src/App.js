@@ -28,6 +28,9 @@ import AdminManageEducators from "./Pages/newPages/adminPages/adminEducatorsMana
 import AdminManageCourses from "./Pages/newPages/adminPages/adminCoursesManage/AdminManageCourses";
 import CreateEditCourse from "./components/profile-components/create-edit-new_course/CreateEditCourse";
 import ProtectedRoute from "./ProtectedRoute";
+import ForgotPassword from "./Pages/newPages/registration/ForgotPassword";
+import VerifyOTP from "./Pages/newPages/registration/verifyotp";
+import ChangePassword from "./components/profile-components/ChangePassword";
 import ProfileReRoutes from "./Pages/newPages/Profile/ProfileReRoutes";
 
 // Debug For Firebase Messaging
@@ -88,7 +91,7 @@ function App() {
   return (
     <BrowserRouter>
       {loadingUser ? 
-        <div>dfpospokfopfds</div>
+        <div>Loading Pages...</div>
         :
         <AuthProvider>
           <Routes>
@@ -103,6 +106,11 @@ function App() {
             }/>
             <Route path="/user/:screen?" element={<User/>}/>
             <Route path="/logintest" element={<HomePageLoggedIn/>}/>
+            <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
+            <Route path="/verifyotp" element={<VerifyOTP/>}/>
+            <Route path="/profile/profile-settings/changepassword" element={<ChangePassword/>}/>
+
+
             {/* Admin Pages */}
             <Route path="/admin/students" element={
               <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>

@@ -7,6 +7,8 @@ import axios from "axios";
 import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slice/user/userSlice";
+import { useGoogleLogin } from "@react-oauth/google";
+
 import styles from "../../../Styles";
 import { BsQuestionCircleFill } from "react-icons/bs";
 
@@ -77,29 +79,83 @@ const SignUp = ({type = 'student'}) => {
       setLoading(false);
     }
   };
+
+  const googleSignUp = useGoogleLogin({
+	onSuccess: async (credentialResponse) => {
+	  console.log(credentialResponse);
+  
+	  // Get user info
+	  const userInfo = await axios.post(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${credentialResponse.access_token}`);
+	  console.log(userInfo);
+
+	const user = {
+		firstName: userInfo.data.given_name,
+		lastName: userInfo.data.last_name || '',
+		email: userInfo.data.email,
+		password: credentialResponse.access_token,
+		username: userInfo.data.email,
+		accountType: 'student',
+		googleAuth: 1,
+		enrolledCourses: [],
+		createdCourses: [],
+		accomplishments: []
+	};
+  
+	  // Check if user exists in the db
+	  const response = await axios.post('http://localhost:5000/user/google-login', {
+		...user
+	  });
+
+	  console.log(response);
+
+	  // Set loggedin cookie with access token and email
+	  if (response.data.success) {
+		const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
+			...user
+		},{
+			withCredentials: true, // Include cookies in the request
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		console.log(saveOnCookies);
+		
+		if (saveOnCookies.status === 200) {
+			await dispatch(setUser(saveOnCookies.data.data));
+			navigate('/');
+		}
+	  }
+	},
+	onError: (credentialResponse) => {
+	  console.log(credentialResponse);
+	}
+});
+
   const validateFormData = () => {
-    setMissingData(false);
-    setInvalidEmail(false);
-    setSamePassword(false);
-    if (!email || !username || !password || !confirmPassword) {
-      setMissingData(true);
-      return false;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setInvalidEmail(true);
-      return false;
-    }
-    if (password.length < 8) {
-      return false;
-    }
-    if (password !== confirmPassword) {
-      setSamePassword(true);
-      return false;
-    }
-    return true;
+	setMissingData(false);
+	setInvalidEmail(false);
+	setSamePassword(false);
+	if (!email || !username || !password || !confirmPassword) {
+	  setMissingData(true);
+	  return false;
+	}
+	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+	  setInvalidEmail(true);
+	  return false;
+	}
+	if (password.length < 8) {
+	  return false;
+	}
+	if (password !== confirmPassword) {
+	  setSamePassword(true);
+	  return false;
+	}
+	return true;
   };
+
   useEffect(() => {
-    setSamePassword(false); // Reset samePassword state when password or confirmPassword changes
+	setSamePassword(false); // Reset samePassword state when password or confirmPassword changes
   }, [password, confirmPassword]);
   useEffect(() => {
     if(!haveInvitationCode){

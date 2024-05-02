@@ -24,6 +24,7 @@ const GeneralNavbar = () => {
 
   useEffect(() => {
     if (authUser) {
+      console.log(authUser);
       setIsLogedIn(true);
     } else {
       setIsLogedIn(false);
@@ -110,7 +111,7 @@ const GeneralNavbar = () => {
               <div className="h-[35px] w-[35px] bg-stone-800 rounded-full flex items-center justify-center cursor-pointer no-select ">
                 {authUser.profilePic ? (
                   <img
-                    src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?cs=srgb&dl=pexels-mohamed-abdelghaffar-771742.jpg&fm=jpg"
+                    src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?cs=srgb&dl=pexels-mohamed-abdelghaffar-771742.jpg&fm=jpg" alt="profile pic"
                     className="h-full w-full object-cover"
                   />
                 ) : (

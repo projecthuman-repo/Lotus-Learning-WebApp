@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { setUser } from "../../../redux/slice/user/userSlice";
 import deleteUserOnCookies from "../../../BackendProxy/cookiesProxy/deleteUserCookies";
 
 const ProfileDropDown = () => {
@@ -39,7 +41,7 @@ const ProfileDropDown = () => {
       <div onClick={() => navigate('/profile/courses')} className="p-2 border-b flex items-center space-x-2 cursor-pointer hover:bg-stone-50">
         <div className="h-[35px] w-[35px] bg-stone-800 rounded-full flex items-center justify-center cursor-pointer no-select overflow-hidden">
           {authUser.profilePic ? 
-            <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?cs=srgb&dl=pexels-mohamed-abdelghaffar-771742.jpg&fm=jpg" className="h-full w-full object-cover"/>
+            <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?cs=srgb&dl=pexels-mohamed-abdelghaffar-771742.jpg&fm=jpg" alt="profile pic" className="h-full w-full object-cover"/>
             :
             <p className="text-sm font-bold text-white">{noPfpGenerator(authUser.username)}</p>
           }
