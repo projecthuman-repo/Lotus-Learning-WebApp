@@ -32,6 +32,7 @@ const VerifyOTP = () => {
 
       if (response.status === 200) {
         alert(response.data.message);
+        window.sessionStorage.setItem('user', JSON.stringify(response.data.user));
         navigate('/profile/profile-settings/ChangePassword');
       }
     } catch (error) {

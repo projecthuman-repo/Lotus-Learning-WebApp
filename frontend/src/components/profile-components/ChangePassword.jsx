@@ -25,6 +25,19 @@ const ChangePassword = () => {
     } else {
       setIsLoggedIn(false);
     }
+
+    if(isLoggedIn) {
+      setEmail(authUser.email);
+    } else {
+      //Handle OTP Verification part here
+      const user = JSON.parse(window.sessionStorage.getItem('user'));
+      if(!isLoggedIn && user.user && user.otp) {
+        setEmail(user.user.email);
+        window.sessionStorage.clear();
+      } else {
+        navigate("/ForgotPassword");
+      }
+    }
   }, [authUser]);
 
   const handleSave = async () => {
@@ -35,13 +48,6 @@ const ChangePassword = () => {
       return;
     } else {
       setErrorMessage('');
-    }
-
-    if(isLoggedIn) {
-      setEmail(authUser.email);
-    } else {
-      //Handle OTP Verification part here
-      
     }
 
     const response = await axios.post('http://localhost:5000/user/change-password', {
