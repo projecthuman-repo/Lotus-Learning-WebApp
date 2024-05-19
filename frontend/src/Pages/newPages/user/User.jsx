@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import logoText from "../../../Images/lotusletters.webp";
 import { IoMdBookmarks, IoMdSearch } from "react-icons/io";
@@ -15,18 +15,27 @@ import { RiDeleteBin7Fill, RiEdit2Fill } from "react-icons/ri";
 import OnHoverExtraHud from "../../../components/OnHoverExtraHud";
 import TeacherProfile from "../Profile/teacher-profile/TeacherProfile";
 import NotificationsProfile from "../Profile/NotificationsProfile";
+import SettingsProfile from "../Profile/SettingsProfile";
+import { MdAdminPanelSettings } from "react-icons/md";
+import StudentProfile from "../Profile/student-profile/StudentProfile";
 
 const User = () => {
   const { screen } = useParams();
   const navigate = useNavigate();
   const authUser = useSelector((state) => state.user);
+  const [educator, setEducator] = useState(false);
 
   useEffect(() => {
     if (!screen) {
       navigate("/user/courses");
     }
-  }, [screen]);
 
+    if(authUser.accountType === "admin" || authUser.accountType === "instructor"){
+      setEducator(true)
+    }
+
+  }, [screen]);
+  // accountType
   const checkScreen = (screen, option) => {
     return screen === option;
   };
@@ -34,13 +43,19 @@ const User = () => {
   const screenContentCheck = (key) => {
     switch (key) {
       case "courses":
-        return <TeacherProfile/>
+        if(educator){
+          return <TeacherProfile />;
+        }else{
+          return <StudentProfile/>
+        } 
       case "notifications":
-        return <NotificationsProfile/>
+        return <NotificationsProfile />;
+      case "settings":
+        return <SettingsProfile />;
       default:
-        return <div>ddd</div>
+        return <div>ddd</div>;
     }
-  }
+  };
 
   const logout = async () => {
     // Perform any logout actions here, such as clearing user data, etc.
@@ -80,19 +95,34 @@ const User = () => {
             </div>
           </div>
           <div className="w-full flex flex-col space-y-3 no-select">
+            {(authUser.accountType === "admin") &&
+            (
+              <button
+                onClick={() => navigate("/admin")}
+                className={`my-2 flex  items-center text-white rounded-sm font-medium  text-center border-l-2  text-sm py-2 linearGradient_ver1   transition-all pl-3 hover:pl-5 hover:border-l-4`}
+              >
+                <MdAdminPanelSettings className="mr-2" />
+                Admin Institution
+              </button>
+            )}
+
             <button
-              onClick={() => navigate('/user/courses')}
-              className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900  ${
+              onClick={() => navigate("/user/courses")}
+              className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2  hover:bg-stone-50 hover:text-stone-900  ${
                 checkScreen(screen, "courses")
                   ? "pl-5 bg-stone-50 text-stone-900"
                   : "pl-3 hover:pl-5 hover:border-l-4"
               } transition-all`}
             >
               <IoMdBookmarks className="mr-2" />
-              Courses
+              {educator?
+               "Created Courses"
+               :
+               "My Courses"
+              }
             </button>
             <button
-              onClick={() => navigate('/home')}
+              onClick={() => navigate("/home")}
               className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900  ${
                 checkScreen(screen, "explore")
                   ? "pl-5 bg-stone-50 text-stone-900"
@@ -103,7 +133,7 @@ const User = () => {
               Explore
             </button>
             <button
-              onClick={() => navigate('/user/notifications')}
+              onClick={() => navigate("/user/notifications")}
               className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900  ${
                 checkScreen(screen, "notifications")
                   ? "pl-5 bg-stone-50 text-stone-900"
@@ -114,7 +144,7 @@ const User = () => {
               Notifications
             </button>
             <button
-              onClick={() => navigate('/user/settings')}
+              onClick={() => navigate("/user/settings")}
               className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900  ${
                 checkScreen(screen, "settings")
                   ? "pl-5 bg-stone-50 text-stone-900"
@@ -152,14 +182,10 @@ const User = () => {
         />
         <div className="w-[100%] mx-auto mt-3 px-3">
           {screenContentCheck(screen)}
-  
-
         </div>
       </div>
     </div>
   );
 };
-
-
 
 export default User;

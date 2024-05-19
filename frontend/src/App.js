@@ -32,6 +32,7 @@ import ForgotPassword from "./Pages/newPages/registration/ForgotPassword";
 import VerifyOTP from "./Pages/newPages/registration/verifyotp";
 import ChangePassword from "./components/profile-components/ChangePassword";
 import ProfileReRoutes from "./Pages/newPages/Profile/ProfileReRoutes";
+import TestPlayGround from "./TestPlayGround";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -95,6 +96,7 @@ function App() {
         :
         <AuthProvider>
           <Routes>
+            <Route path="/test" element={<TestPlayGround/>}/>
             <Route path="/registration" element={<Registration/>}/>
             <Route path="/course" element={<CoursePage/>}/>
             <Route path="/learning/:courseName?" element={<Learning/>}/>
@@ -128,7 +130,11 @@ function App() {
               </ProtectedRoute>
             
             }/>
-            <Route path="/admin" element={<AdminHomePage/>}/>
+            <Route path="/admin" element={
+              <ProtectedRoute isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+                <AdminHomePage/>
+              </ProtectedRoute>
+            }/>
             {/* Course Creation and editing */}
             <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
             <Route path="/course-editor/:secondscreen?/:courseid?" element={<CreateEditCourse />}/>

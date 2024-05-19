@@ -142,7 +142,7 @@ const Login = () => {
 		  id="email"
 		  placeholder="Email"
 		  type="text"
-		  className={`${styles.simple_text_input} border-4`}
+		  className={`${styles.simple_text_input} border-2`}
 		/>
 	  </div>
 
@@ -151,7 +151,7 @@ const Login = () => {
 		  Password
 		</label>
 		<div
-		  className={`w-full ${styles.simple_text_input} flex justify-between items-center border-4`}
+		  className={`w-full ${styles.simple_text_input} flex justify-between items-center border-2`}
 		>
 		  <input
 			value={password}

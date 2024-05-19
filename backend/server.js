@@ -50,6 +50,8 @@ const courseRoutes = require('./routes/course-routes/course-routes');
 app.use('/course', courseRoutes);
 const adminRoutes = require('./routes/admin-routes/admin-routes')
 app.use('/admin', adminRoutes);
+const aiRoutes = require('./routes/ai-routes/ai-routes')
+app.use('/ai', aiRoutes);
 
 app.use("/test", (req, res) => {
   res.send("hello world!");

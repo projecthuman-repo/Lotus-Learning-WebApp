@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./adminHomeStyles.css";
-import GeneralNavbar from "../../../../components/navbar/GeneralNavbar";
+import GeneralNavbar, { noPfpGenerator } from "../../../../components/navbar/GeneralNavbar";
 import BlobComposition from "../../../../components/backgrounds/BlobComposition/BlobComposition";
 import { FaUserGraduate } from "react-icons/fa";
 import { FaChalkboardTeacher } from "react-icons/fa";
@@ -17,6 +17,7 @@ const AdminHomePage = () => {
   const navigate = useNavigate();
   const authUser = useSelector((state) => state.user);
 
+  
   return (
     <div className="relative h-full">
       <GeneralNavbar />
@@ -30,7 +31,9 @@ const AdminHomePage = () => {
       <div className="m-auto max-w-[1200px] mt-3 min-h-[100vh]">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2 ">
-            <div className="rounded-full h-[160px] w-[160px] bg-stone-400"></div>
+            <div className="rounded-full h-[160px] w-[160px]  flex items-center justify-center text-4xl font-bold bg-black text-white">
+              {noPfpGenerator(authUser.username)}
+            </div>
             <div>
               <p className="text-2xl font-semibold">{authUser.username}</p>
               <p className="text-sm font-base">{authUser.email}</p>
