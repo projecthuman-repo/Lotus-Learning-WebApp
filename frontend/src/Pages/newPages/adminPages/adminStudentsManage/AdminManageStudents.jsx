@@ -10,6 +10,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import OnHoverExtraHud from "../../../../components/OnHoverExtraHud";
 import getStudents from "../../../../BackendProxy/adminProxy/getStudents";
+import styles from "../../../../Styles";
 
 const AdminManageStudents = () => {
   const authUser = useSelector((state) => state.user);
@@ -17,6 +18,8 @@ const AdminManageStudents = () => {
   const { screen } = useParams();
   const [loaded, setLoaded] = useState(false);
   const [students, setStudents] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     getAllStudents(authUser.institution.code)
   },[])
@@ -58,7 +61,14 @@ const AdminManageStudents = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white py-2 px-4 mt-3 rounded-lg">
+        <div className="my-2 flex items-center justify-end">
+          <button 
+          onClick={() => {navigate('/admin/invite/students')}}
+          className={`text-white font-medium px-3 py-1 rounded-full linearGradient_ver1 text-sm hover:scale-[1.05] transition-all`}>
+            + Invite students
+          </button>
+        </div>
+        <div className="bg-white py-2 px-4 mt-1 rounded-lg">
           <table className="table-auto w-full" >
             <thead className="">
               <tr>
@@ -68,9 +78,12 @@ const AdminManageStudents = () => {
               </tr>
             </thead>
             <tbody>
-              {students.map((item, i) =>{
+              {students.map((item) =>{
                 return(
+                  <tr key={item._id} className="text-sm border-5 border-transparent">
                     <StudentCard student={item}/>
+                  </tr>
+
                 )
               })}
             </tbody>
@@ -83,7 +96,7 @@ const AdminManageStudents = () => {
 
 const StudentCard = ({student}) => {
   return (
-    <tr key={student._id} className="text-sm border-5 border-transparent">
+    <>
       <td className="">{student.username}</td>
       <td>{student.email}</td>
       <td className=" flex space-x-2 items-center justify-end">
@@ -97,7 +110,7 @@ const StudentCard = ({student}) => {
         </div>
 
       </td>
-    </tr>
+    </>
   );
 };
 

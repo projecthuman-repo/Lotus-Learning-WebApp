@@ -81,6 +81,13 @@ const AdminManageEducators = () => {
               </div>
             </div>
           </div>
+          <div className="my-2 flex items-center justify-end">
+          <button 
+          onClick={() => {navigate('/admin/invite/educators')}}
+          className={`text-white font-medium px-3 py-1 rounded-full linearGradient_ver1 text-sm hover:scale-[1.05] transition-all`}>
+            + Invite Educators
+          </button>
+        </div>
           <div className="bg-white py-2 px-4 mt-3 rounded-lg">
             <table className="table-auto w-full">
               <thead className="">
