@@ -3,11 +3,13 @@ const router = express.Router();
 const axios = require("axios");
 const fs = require('fs');
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
-const PDFDocument = require('pdfkit');
 const FormData = require('form-data');
 
 const BASEAPI_URL = "http://34.130.17.89:8080/api";
+
+
+// Configure multer for file upload
+const upload = multer({ storage: multer.memoryStorage() });
 
 const getToken = async () => {
   try {
@@ -21,30 +23,70 @@ const getToken = async () => {
   }
 };
 
-router.post("/extract-text", upload.single("file"), async (req, res, next) => {
+router.get("/get-api-token", async(req, res, next) => {
   try {
-    const file = req.file;
-    const formData = new FormData();
-    formData.append('file', fs.createReadStream(file.path), {filename: 'document.pdf'});
-    console.log(formData);
-    const token = await getToken();
-    const extractText = await axios.post(
-      BASEAPI_URL + "/document/extract-text",
-      {
-        "document": formData,
-      },
-      {
-        headers: {
-          token: token,
-        }
-      }
-    );
-
-    console.log(extractText);
+    const tokenreq = await axios.post(BASEAPI_URL + "/auth/gettoken", {
+      password: "test",
+      username: "test",
+    });
+    return res.status(200).json({
+      token: tokenreq.data.token,
+      success: true,
+    })
+    
   } catch (error) {
-    console.log(error);
-    console.log("f");
+    throw new Error("error getting token", error);
   }
+})
+router.post("/extract-text", upload.single('pdf'), async (req, res, next) => {
+  try {
+    // Step 1: Get the token
+    const token  = await getToken()
+
+    if (!token) {
+        res.status(500).send('Failed to get token');
+        return;
+    }
+
+    // Step 2: Read the file
+    const file = req.file;
+    if (!file) {
+        res.status(400).send('No file uploaded');
+        return;
+    }
+
+    // Step 3: Upload the file with authorization header and file as form-data
+    const formData = new FormData();
+    formData.append('document', file.buffer, {
+        filename: file.originalname,
+        contentType: file.mimetype
+    });
+
+    const headers = {
+        ...formData.getHeaders(),
+        'token': token // Use 'token' as the key
+    };
+
+    const response = await axios.post(BASEAPI_URL + "/document/extract-text", formData, {
+      headers: headers,
+  });
+
+  if (response.status !== 200) {
+      throw new Error(`File upload failed with status ${response.status}`);
+  }
+  // Step 4: Return the response from the server
+
+  return res.status(200).json({
+    data: response.data,
+    success: true,
+  })
+
+    // const result = await response.text();
+    // res.send(result);
+} catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Internal server error');
+}
 });
 
 module.exports = router;
