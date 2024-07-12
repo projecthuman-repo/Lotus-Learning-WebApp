@@ -1,7 +1,6 @@
-// user-routes.js
 const express = require('express');
 const User = require("../../models/User.js");
-const InvitationCode   = require("../../models/InvitationCodeModel.js");
+const InvitationCode = require("../../models/InvitationCodeModel.js");
 const GoogleUser = require("../../models/GoogleUser.js");
 const { logInUser, userExists, getUserId } = require('../../controllers/user/user-login-logout.js');
 const router = express.Router();
@@ -16,10 +15,11 @@ function generateOTP() {
     return otp;
 }
 
-router.post("/create-user", async(req, res, next) => {
-
-    const createUser = async(newuser) => {
+// User CRUD operations
+router.post("/create-user", async (req, res, next) => {
+    const createUser = async (newuser) => {
         const user = new User(newuser);
+        console.log(user)
         await user.save();
         return res.status(200).json({
             success: true,
@@ -44,35 +44,35 @@ router.post("/create-user", async(req, res, next) => {
                 message: 'The username is already taken',
             });
         }
-        if(newUser.accountType === 'admin'){
-        const user = new User({
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            accountType: newUser.accountType,
-            username: newUser.username,
-            email: newUser.email,
-            password: newUser.password,
-            institution: {
-                admin: true,
-                code: newUser.code,
-                institutionName: newUser.username
-            }
-        });
-        await user.save();
-        
-        // Send welcome email to the user
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'noreply@projecthumancity.com', // Replace with your Gmail email
-                pass: 'zszaqvzpbfvmnhhw' // Replace with your Gmail password
-            }
-        });
-        const mailOptions = {
-            from: '"Lotus Learning" <noreply@projecthumancity.com>',
-            to: newUser.email,
-            subject: 'Welcome to Lotus Learning',
-            html: `
+        if (newUser.accountType === 'admin') {
+            const user = new User({
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                accountType: newUser.accountType,
+                username: newUser.username,
+                email: newUser.email,
+                password: newUser.password,
+                institution: {
+                    admin: true,
+                    code: newUser.code,
+                    institutionName: newUser.username
+                }
+            });
+            await user.save();
+
+            // Send welcome email to the user
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'noreply@projecthumancity.com', // Replace with your Gmail email
+                    pass: 'zszaqvzpbfvmnhhw' // Replace with your Gmail password
+                }
+            });
+            const mailOptions = {
+                from: '"Lotus Learning" <noreply@projecthumancity.com>',
+                to: newUser.email,
+                subject: 'Welcome to Lotus Learning',
+                html: `
                 <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
                     <div style="text-align: center;">
                         <img src="https://lh3.googleusercontent.com/pw/AP1GczNscF1hxSYKey8qkvjkohfOGh0VARUMSZLHp4bXTY1BrN2w5WXzgc1GgOCJIfy7E2clXSXFGfSP8skEWpHltEvczA8dr3gGOpgRsdSA1MbEw38-osUuCVC6Ikg63EVbv5-7YeBVXn57JtwwW9vkOTg=w462-h388-s-no-gm?authuser=0" alt="Placeholder Image" style="width: 170px; height: 150px; border-radius: 50%; margin-bottom: 20px;" />  
@@ -86,26 +86,26 @@ router.post("/create-user", async(req, res, next) => {
                     </div>
                 </div>
             `,
-        };
-        
-        transporter.sendMail(mailOptions, function(error, info) {
-            if (error) {
-                console.log(error);
-                // Handle email sending error
-            } else {
-                console.log('Email sent:', info.response);
-                // Handle successful email sending
-            }
-        });
+            };
 
-        return res.status(200).json({
-            success: true,
-            user: user,
-        });
-        }else if(newUser.accountType !== 'admin'){ 
-            if(newUser.linkedCode){
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                    // Handle email sending error
+                } else {
+                    console.log('Email sent:', info.response);
+                    // Handle successful email sending
+                }
+            });
+
+            return res.status(200).json({
+                success: true,
+                user: user,
+            });
+        } else if (newUser.accountType !== 'admin') {
+            if (newUser.linkedCode) {
                 const foundInstitution = await User.findOne({ 'institution.code': newUser.code });
-                if (!foundInstitution){
+                if (!foundInstitution) {
                     return res.status(200).json({
                         success: false,
                         message: 'Institution not found',
@@ -125,7 +125,7 @@ router.post("/create-user", async(req, res, next) => {
                     }
                 }
                 createUser(user)
-            }else{
+            } else {
                 const user = {
                     firstName: newUser.firstName,
                     lastName: newUser.lastName,
@@ -144,7 +144,93 @@ router.post("/create-user", async(req, res, next) => {
         return next(error);
     }
 });
-router.post('/login-user', async(req, res, next) => {
+
+router.get('/get-user/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found',
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            user: user,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+        });
+    }
+});
+
+router.get('/latest-user', async (req, res, next) => {
+    try {
+        const latestUser = await User.findOne().sort({ _id: -1 });
+        console.log(latestUser)
+        if (!latestUser) {
+            return res.status(404).json({ success: false, message: 'No users found' });
+        }
+        res.status(200).json({ success: true, user: latestUser });
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.put('/update-otp/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const { otp } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found',
+            });
+        }
+
+        user.passwordResetOTP = {
+            otp: otp,
+            expiresAt: new Date(Date.now() + 5 * 60 * 1000), // Set expiration time to 5 minutes from now
+        };
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'OTP updated successfully',
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+        });
+    }
+});
+
+router.delete('/delete-user/:id', async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+        res.status(200).json({ success: true, message: 'User deleted successfully' });
+    } catch (error) {
+        next(error);
+    }
+});
+
+// Authentication and Authorization
+router.post('/login-user', async (req, res, next) => {
     try {
         const loginUser = req.body;
         const foundUser = await logInUser(loginUser.email, loginUser.password);
@@ -163,40 +249,18 @@ router.post('/login-user', async(req, res, next) => {
         return next(error);
     }
 });
-router.get(
-    '/logout-user',
-    (req, res) => {
-      try {
+
+router.get('/logout-user', (req, res) => {
+    try {
         res.clearCookie('userDataAuth', { httpOnly: true, sameSite: 'None', secure: true });
         res.status(200).json({ res: 'Success', message: 'User cookie deleted successfully' });
-      } catch (err) {
+    } catch (err) {
         console.log('Server-side error', err);
         res.status(500).json({ err: 'Server-side error' });
-      }
     }
-  );
-  
-router.post('/check-invitation-code', async(req, res, next) => {
-    const code = req.body.code;
-    try {
-        const invitationCode = await InvitationCode.findOne({ code: code });
+});
 
-        if (!invitationCode) {
-            return res.status(404).json({ message: 'code not found' });
-        }
-        else{
-            return res.status(200).json({
-                success: true,
-            });
-        }
-
-    } catch (error) {
-        return next(error);
-    }
-})
-
-
-router.post('/google-login', async(req, res, next) => {
+router.post('/google-login', async (req, res, next) => {
     try {
         // Add this user to DB, if not already exists, if he does, just log him in
         const loginUser = req.body;
@@ -218,26 +282,26 @@ router.post('/google-login', async(req, res, next) => {
                 googleAuth: true
             });
             await user.save();
-            
+
             const userId = await getUserId(loginUser.email);
-            
+
             const googleUser = new GoogleUser({
                 userId: userId,
                 accessToken: loginUser.accessToken
             });
             await googleUser.save();
-            
+
             return res.status(200).json({
                 success: true,
                 user: user,
             });
         }
-    } catch(error) {
+    } catch (error) {
         return next(error);
     }
 });
 
-router.post('/forgot-password', async(req, res) => {
+router.post('/forgot-password', async (req, res) => {
     try {
         const { email } = req.body;
         const user = await User.findOne({ email: email });
@@ -283,7 +347,7 @@ router.post('/forgot-password', async(req, res) => {
             text: `Your OTP for password reset is: ${otp}. This OTP is valid for 5 minutes.`
         };
 
-        transporter.sendMail(mailOptions, function(error, info) {
+        transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
                 return res.status(500).json({
@@ -307,7 +371,7 @@ router.post('/forgot-password', async(req, res) => {
     }
 });
 
-router.post('/verify-otp', async(req, res) => {
+router.post('/verify-otp', async (req, res) => {
     try {
         const { otp } = req.body;
         const user = await User.findOne({ "passwordResetOTP.otp": otp });
@@ -327,7 +391,7 @@ router.post('/verify-otp', async(req, res) => {
         return res.status(200).json({
             success: true,
             message: 'OTP verified successfully',
-            user: {user: user, otp: otp}
+            user: { user: user, otp: otp }
         });
 
     } catch (error) {
@@ -339,10 +403,11 @@ router.post('/verify-otp', async(req, res) => {
     }
 });
 
-router.post('/change-password', async(req, res) => {
+router.post('/change-password', async (req, res) => {
     try {
         const { email, newPassword } = req.body;
-        const user = await User.findOne({email: email});
+        console.log("New password:" + newPassword);
+        const user = await User.findOne({ email: email });
         user.password = newPassword;
         user.save();
 
@@ -350,7 +415,7 @@ router.post('/change-password', async(req, res) => {
             success: true,
             user: user
         });
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         return res.status(500).json({
             success: false,
@@ -359,5 +424,45 @@ router.post('/change-password', async(req, res) => {
     }
 });
 
-module.exports = router;
+router.post('/check-invitation-code', async (req, res, next) => {
+    const code = req.body.code;
+    try {
+        const invitationCode = await InvitationCode.findOne({ code: code });
 
+        if (!invitationCode) {
+            return res.status(404).json({ message: 'code not found' });
+        } else {
+            return res.status(200).json({
+                success: true,
+            });
+        }
+
+    } catch (error) {
+        return next(error);
+    }
+});
+
+router.get('/get-otp/:email', async (req, res) => {
+    try {
+        const email = req.params.email;
+        const user = await User.findOne({ email });
+        if (user) {
+            res.status(200).json({
+                success: true,
+                user: user.passwordResetOTP.otp
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: 'User or OTP not found',
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+        });
+    }
+});
+
+module.exports = router;

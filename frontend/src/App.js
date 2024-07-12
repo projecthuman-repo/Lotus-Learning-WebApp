@@ -34,7 +34,6 @@ import ChangePassword from "./components/profile-components/ChangePassword";
 import ProfileReRoutes from "./Pages/newPages/Profile/ProfileReRoutes";
 import TestPlayGround from "./TestPlayGround";
 import AdminInvitationPage from "./Pages/newPages/adminPages/adminInvitationPage/AdminInvitationPage";
-import CourseEditPage from "./Pages/Course/CourseEditPage/CourseEditPage";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -125,7 +124,7 @@ function App() {
               <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
                 <AdminManageEducators/>
               </ProtectedRoute>
-            }/> 
+            }/>
             <Route path="/admin/courses/:screen?" element={
               <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
                 <AdminManageCourses/>
@@ -148,8 +147,6 @@ function App() {
             {/* Course Creation and editing */}
             <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
             <Route path="/course-editor/:secondscreen?/:courseid?" element={<CreateEditCourse />}/>
-            <Route path="/course-program/:courseid?" element={<CourseEditPage/>}/>
-
 
             <Route path="/" element={
               <ProtectedRoute  isAuthenticated={(authUser)}>

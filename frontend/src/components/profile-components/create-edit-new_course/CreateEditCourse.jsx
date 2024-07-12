@@ -8,7 +8,6 @@ import SpinnerLoader from "../../loaders/SpinnerLoader";
 import { RiErrorWarningFill } from "react-icons/ri";
 import OnHoverExtraHud from "../../OnHoverExtraHud";
 import updateCourseDataProxy from "../../../BackendProxy/courseProxy/updateCourseData";
-import GeneralNavbar from "../../navbar/GeneralNavbar";
 
 const CreateEditCourse = () => {
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ const CreateEditCourse = () => {
   const [sendingData,  setSendingData]  = useState(false)
 
   const switchScreen = (switchTo) => {
-    navigate("/course-editor/" + switchTo + "/" + courseid);
+    navigate("/profile/course-editor/" + switchTo + "/" + courseid);
   };
 
   useEffect(() => {
@@ -70,7 +69,7 @@ const CreateEditCourse = () => {
 
   useEffect(() => {
     if (!secondscreen) {
-      navigate("/course-editor/homePage");
+      navigate("/profile/course-editor/homePage");
     }
     fetchCourseData(courseid);
   }, []);
@@ -105,8 +104,7 @@ const CreateEditCourse = () => {
 
 
   return (
-    <div className="h-[101vh]">
-      <GeneralNavbar/>
+    <div className="">
       {/* Sidebar */}
       <div className="flex items-start justify-between mx-auto lg:px-20 px-0">
         <div

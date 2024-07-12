@@ -3,9 +3,8 @@ import { IoIosSearch } from "react-icons/io";
 import { MdAdd } from "react-icons/md";
 
 import ClassEditor from "./components/ClassEditor.jsx";
-import ClassManager from "./components/ClassManager.jsx";
 
-const CreateEditProgramme = ({courseData, setClassData}) => {
+const CreateEditProgramme = ({courseData, setCourseData}) => {
   // State for search input and courses
   const [searchValues, setSearchValues] = useState('');
   // Function to add a new class to the courses list
@@ -18,7 +17,7 @@ const CreateEditProgramme = ({courseData, setClassData}) => {
       type: undefined,
       attachedFile: undefined,
     });
-    setClassData(prevState => ({
+    setCourseData(prevState => ({
       ...prevState,
       lessons: [...coursesList]
     }))
@@ -55,11 +54,11 @@ const CreateEditProgramme = ({courseData, setClassData}) => {
           <input
             value={searchValues}
             onChange={(e) => setSearchValues(e.target.value)}
-            placeholder="look for a class"
-            className="pl-3 pr-9 py-1  border rounded-full focus:outline-none w-full text-sm"
+            placeholder="look for a course"
+            className="pl-3 pr-9 py-1  border rounded-full focus:outline-none w-full"
           />
 
-          <IoIosSearch className="bg-white text-stone-600 text-lg absolute  top-1/2 transform -translate-x-1/2 -translate-y-1/2 left-[90%]" />
+          <IoIosSearch className="bg-white text-stone-600 text-2xl absolute  top-1/2 transform -translate-x-1/2 -translate-y-1/2 left-[90%]" />
         </div>
       </div>
 
@@ -72,9 +71,8 @@ const CreateEditProgramme = ({courseData, setClassData}) => {
               <ClassEditor
                 courseIndex={i}
                 course={item}
-                setCourses={setClassData}
+                setCourses={setCourseData}
               />
-              <ClassManager classData={item}/>
             </div>
           );
         })}
