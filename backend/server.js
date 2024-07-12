@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 const config = require('./utils/config');
+const { makeApiRequest } = require('./apiRequest');
+
 
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
@@ -61,6 +63,16 @@ app.use("/test", (req, res) => {
 app.use("/highlight", (req, res) => {
   const selectedText = req.body.selectedText;
   console.log(selectedText);
+});
+
+// Add this route to use the Google Cloud API with refreshed token
+app.get('/api/data', async (req, res) => {
+  try {
+    const data = await makeApiRequest();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch data' });
+  }
 });
 
 
