@@ -11,9 +11,9 @@ const { makeApiRequest } = require('./apiRequest');
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
 const isAuth = require('./middleware/is-auth');
-// const notificationRoutes = require('./routes/notification');
+const notificationRoutes = require('./routes/notification');
 const { connectToDatabases } = require('./db/connection');
-// const processNotifications = require('./notification-microservice/worker-service');
+const processNotifications = require('./notification-microservice/worker-service');
 
 const app = express();
 
@@ -30,16 +30,16 @@ app.use(cookieParser());
 app.use(isAuth);
 
 
-// app.use('/api', notificationRoutes);
+app.use('/api', notificationRoutes);
 
-// app.use(
-//   '/graphql',
-//   graphqlHTTP({
-//     schema: graphqlSchema,
-//     rootValue: graphqlResolvers,
-//     graphiql: true,
-//   })
-// );
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: graphqlResolvers,
+    graphiql: true,
+  })
+);
 
 //COOKIES
 const cookeHandler = require('./middleware/cookie-handler');
@@ -81,7 +81,7 @@ connectToDatabases()
   .then(() => {
     app.listen(config.PORT);
     console.log(`Server running port ${config.PORT}`);
-    // processNotifications();
+    processNotifications();
   })
   .catch((err) => {
     console.error(err);

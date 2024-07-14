@@ -23,7 +23,7 @@ const {
 
 async function refreshAccessToken() {
     try {
-        const response = await axios.post('https://oauth2.googleapis.com/token', null, {
+        const response = await axios.post('http://localhost:5000/callback', null, {
             params: {
                 client_id: CLIENT_ID,
                 client_secret: CLIENT_SECRET,

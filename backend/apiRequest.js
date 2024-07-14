@@ -15,7 +15,7 @@ const { getAccessToken } = require('./tokenManagement');
 async function makeApiRequest() {
     try {
         const accessToken = await getAccessToken();
-        const response = await axios.get('https://your-api-endpoint', {
+        const response = await axios.get('http://localhost:5000/callback', {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
