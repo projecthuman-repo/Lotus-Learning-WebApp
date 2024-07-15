@@ -1,4 +1,4 @@
-// user-routes.js
+// user-routes.js //
 require('dotenv').config(); // This loads the environment variables from .env file into process.env
 const express = require('express');
 const User = require("../../models/User.js");
