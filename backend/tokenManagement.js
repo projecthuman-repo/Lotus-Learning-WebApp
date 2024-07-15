@@ -63,4 +63,4 @@ async function getAccessToken() {
     return process.env.ACCESS_TOKEN;
 }
 
-module.exports = { getAccessToken };
+module.exports = { getAccessToken, refreshAccessToken };
