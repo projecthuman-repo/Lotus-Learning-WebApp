@@ -24,6 +24,7 @@ const User = () => {
   const navigate = useNavigate();
   const authUser = useSelector((state) => state.user);
   const [educator, setEducator] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true); // State for sidebar visibility
 
   useEffect(() => {
     if (!screen) {
@@ -36,6 +37,12 @@ const User = () => {
 
   }, [screen]);
   // accountType
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+
   const checkScreen = (screen, option) => {
     return screen === option;
   };
@@ -65,8 +72,14 @@ const User = () => {
     window.location.reload();
   };
   return (
-    <div className="h-full w-full flex">
-      <div className="w-[350px] h-full border-r flex flex-col items-start justify-between p-4 bg-stone-700">
+    <div className="h-full w-full flex"> 
+     { /* <div className="w-[350px] h-full border-r flex flex-col items-start justify-between p-4 bg-stone-700"> */ }
+      
+     <div
+        className={`sidebar bg-stone-700 w-[350px] h-full border-r flex flex-col items-start justify-between p-4 transform ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 transition-transform duration-300 ease-in-out`}
+      >
         <div className="w-full ">
           <div
             onClick={() => navigate("/home")}
@@ -170,9 +183,8 @@ const User = () => {
           </button>
         </div>
       </div>
-
       {/* RIGHT SIDE */}
-      <div className="w-full h-[100vh]  relative">
+      <div className=" w-full h-[100vh] ft-0 relative ">
         <BlobComposition
           blobsData={[
             { top: "10%", left: "10%", size: "500px" },
@@ -180,10 +192,20 @@ const User = () => {
             { top: "-30%", left: "70%", size: "400px" },
           ]}
         />
-        <div className="w-[100%] mx-auto mt-3 px-3">
+      
+        <div className="w-[100%] ml-0 px-3   ">
           {screenContentCheck(screen)}
         </div>
-      </div>
+        <button
+        onClick={toggleSidebar}
+        className={`fixed md:hidden top-0 left-0 z-50 bg-gray-800 text-white p-2 rounded-md focus:outline-none`}
+      >
+        {sidebarOpen ? "close" : "open"} 
+      </button>
+      </div> 
+       
+
+      
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { IoMdSearch } from "react-icons/io";
 const StudentProfile = () => {
   return (
     <>
-      <div className="bg-white rounded-full flex justify-between items-center py-2 px-4 mb-3">
+      <div className="bg-white rounded-full flex justify-between items-center py-2 px-4 mb-3  w-full h-full  ">
           <p className="font-semibold text-lg">Your Courses</p>
           <div className="flex items-center space-x-3">
             <div className="cursor-pointer hover:bg-stone-100 p-2 rounded-full transition-all">
