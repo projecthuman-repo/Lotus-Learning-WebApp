@@ -45,21 +45,6 @@ router.get('/search-courses', async (req, res, next) => {
   }
 });
 
-// SEARCH COURSES
-
-router.get('/search-courses', async (req, res, next) => {
-  const { title } = req.query;
-  try {
-    const courses = await Course.find({ title: new RegExp(title, 'i') }); // Case insensitive search
-    return res.status(200).json({
-      success: true,
-      data: courses
-    });
-  } catch (error) {
-    console.error("Error al buscar cursos:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
-});
 
 // GET ONE COURSE DATA BY ID
 router.get('/get-course-data', async(req, res, next) => {
