@@ -24,8 +24,8 @@ router.get('/get-courses', async (req, res, next) => {
       data: courses
     });
   } catch (error) {
-    console.error("Error al buscar cursos:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    console.error("error getting courses ", error);
+    res.status(500).json({ error: "internal server error" });
   }
 });
 
@@ -40,8 +40,8 @@ router.get('/search-courses', async (req, res, next) => {
       data: courses
     });
   } catch (error) {
-    console.error("Error al buscar cursos:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    console.error("error in searching courses", error);
+    res.status(500).json({ error: "internal server error" });
   }
 });
 
@@ -164,7 +164,6 @@ router.post('/delete-course-by-id', async(req, res, next) => {
     });
   }
 })
-
 
 
 module.exports = router;
