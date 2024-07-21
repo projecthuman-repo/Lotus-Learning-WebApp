@@ -146,7 +146,7 @@ const Crossword = ({ gameData }) => {
       (item) => item.Definition === hint
     );
   }
-  const generateGrid = (matrix) => {
+  const GenerateGrid = ({matrix}) => {
     const newMatrix = [];
     const toLinkVertical = [];
 
@@ -321,7 +321,7 @@ const Crossword = ({ gameData }) => {
     <div className="">
       <div>
         <div className="max-h-[60vh] overflow-y-auto ">
-          {generateGrid(gridCrossWord)}
+          <GenerateGrid matrix={gridCrossWord}/>
         </div>
       </div>
     </div>
