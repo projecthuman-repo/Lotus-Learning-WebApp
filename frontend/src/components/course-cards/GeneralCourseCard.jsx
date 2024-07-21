@@ -14,7 +14,7 @@ const GeneralCourseCard = ({item = {
   console.log(item)
 
   return (
-    <div onClick={() => navigate('/course?id='+item._id)} className="m-1 bg-stone-50 cursor-pointer xl:w-[350px] lg:w-[320px] md:w-[270px]  xl:h-[250px] lg:h-[250px] md:h-[200px] sm:h-[250px] sm:w-[50vw] w-[90vw] h-[80vw]  hover:bg-white rounded-md transition-all hover:scale-[1.01] ">
+    <div onClick={() => navigate('/course/learn?id='+item._id)} className="m-1 bg-stone-50 cursor-pointer xl:w-[350px] lg:w-[320px] md:w-[270px]  xl:h-[250px] lg:h-[250px] md:h-[200px] sm:h-[250px] sm:w-[50vw] w-[90vw] h-[80vw]  hover:bg-white rounded-md transition-all hover:scale-[1.01] ">
       <div className="w-full h-[calc(100%-6rem)] sm:h-[calc(100%-4rem)] flex items-center justify-center p-2 ">
         <img
           className="h-full w-full object-cover rounded-sm"

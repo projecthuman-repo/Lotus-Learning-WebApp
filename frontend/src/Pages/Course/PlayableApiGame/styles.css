@@ -1,0 +1,49 @@
+.anim-cell-crossword{
+    animation: crossword-cell-anim 2s ease 0s 1 normal forwards;
+}
+.amin-compleated-crossword{
+	animation: compleated-anime-keyframes .5s ease 0s 1 normal forwards;
+
+}
+
+@keyframes crossword-cell-anim {
+	0%,
+	100% {
+		transform: rotate(0deg);
+		transform-origin: 100% 50%;
+	}
+
+	10% {
+		transform: rotate(2deg);
+	}
+
+	20%,
+	40%,
+	60% {
+		transform: rotate(-4deg);
+	}
+
+	30%,
+	50%,
+	70% {
+		transform: rotate(4deg);
+	}
+
+	80% {
+		transform: rotate(-2deg);
+	}
+
+	90% {
+		transform: rotate(2deg);
+	}
+}
+
+@keyframes compleated-anime-keyframes {
+	0% {
+		transform: scaleY(0.4);
+	}
+
+	100% {
+		transform: scaleY(1);
+	}
+}

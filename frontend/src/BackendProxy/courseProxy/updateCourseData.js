@@ -10,6 +10,7 @@ const updateCourseDataProxy = async(course) => {
       const response = await axios.post(`${BASE_URL}/update-course`, {data: compressedCourse});
       // console.log(a);
       console.log(response)
+      return response
     } catch (error) {
       throw new Error(error.response.data.message || 'Error creating new course');
     }

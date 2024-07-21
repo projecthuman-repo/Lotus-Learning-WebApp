@@ -9,11 +9,18 @@ import BarLoader from "../../../../components/loaders/BarLoader";
 import { BsFillFileTextFill } from "react-icons/bs";
 import formatText from "../../../../helpers/transform-api-text/transformApiText";
 import PdfDisplayer from "../../../../components/display-pdf/PdfDisplayer";
+import GameApiSelector from "./gamesApiCreator/GameApiSelector";
+import { MainLessonContext } from "../CourseEditPage";
 
-const MainLessonContent = ({lesson, lessons, updateLessons, index}) => {
+const MainLessonContent = () => {
+  const {index,updateLessons ,lessons, lesson } = MainLessonContext();
   const [phase, setPhase] = useState(1);
   const [fileOption, setFileOption] = useState(null);
   const [fileResponse, setFileResponse] = useState(null)
+
+  useEffect(() => {
+    setPhase(1)
+  },[index])
 
   const phaseRenderer = (phase) => {
     switch (phase) {
@@ -24,7 +31,7 @@ const MainLessonContent = ({lesson, lessons, updateLessons, index}) => {
       case 3:
         return   <Phase3 setPhase={setPhase} option={lesson.lessonContent.type} fileResponse={lesson.lessonContent.base_content}/>
       default:
-        return <div>Nigga</div>;
+        return <div>none</div>;
     }
   };
   const updateLessonPropertyAtIndex = ( property, value) => {
@@ -66,14 +73,7 @@ const MainLessonContent = ({lesson, lessons, updateLessons, index}) => {
           <FiEdit2 className="mx-2 text-stone-400" />
         </div>
         <div className="flex space-x-3">
-          <button className="flex items-center px-2 linearGradient_ver1 rounded-full hover:scale-[1.01] transition-all">
-            <span className="text-white text-sm ">Save</span>
-            <BsCheck className="ml-1 text-white" />
-          </button>
-          <button className="flex items-center px-2 bg-stone-50 rounded-full hover:scale-[1.01] transition-all">
-            <span className="text-sm font-semibold">Discard</span>
-            <IoClose className="ml-1" />
-          </button>
+
         </div>
       </div>
       {checkContent(lesson)? 
@@ -229,8 +229,9 @@ const Phase3 = ({ setPhase, option, fileResponse }) => {
   <PdfDisplayer text={fileResponse.text}/>
   </div> 
   :
-  <>
-  </>
+  <div className="border-b">
+    <GameApiSelector/>
+  </div>
   }</>;
 };
 

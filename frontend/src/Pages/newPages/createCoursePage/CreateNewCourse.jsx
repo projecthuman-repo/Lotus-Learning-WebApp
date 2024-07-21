@@ -44,7 +44,7 @@ const CreateNewCourse = () => {
       setLoading(true);
       try {
         const response = await createNewCourseProxy(newCourseObj);
-        navigate('/profile/course-editor/homePage/' + response.data.savedData._id);
+        navigate('/course-editor/homePage/' + response.data.savedData._id);
       } catch (error) {
         console.error("Error creating course", error);
       } finally {

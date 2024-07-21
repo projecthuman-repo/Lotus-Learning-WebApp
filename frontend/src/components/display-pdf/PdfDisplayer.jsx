@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import formatText from "../../helpers/transform-api-text/transformApiText";
 import { AiOutlineFullscreen, AiOutlineFullscreenExit } from "react-icons/ai";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import "./styles.css";
 const PdfDisplayer = ({ text }) => {
   const [page, setPage] = useState(1);
+
+
+  useEffect(() => {
+    setPage(1);
+  },[text])
+
 
   const sanitizeHtml = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
@@ -58,8 +64,16 @@ const PdfDisplayer = ({ text }) => {
   };
   const transformedText = divideTextIntoPages(text);
 
+  const checkWidthBar = (current, full) => {
+    return  (current * 100)/full
+  }
+
   return (
     <div>
+      <div className="w-full h-[0.15rem] bg-stone-200">
+        <div style={{width: checkWidthBar(page, transformedText.length-1)+'%' }} className={`h-full linearGradient_ver1 transform-all`}></div>
+      </div>
+
       <div className="flex items-center justify-center space-x-2 w-full px-3 my-2">
         <button
           className="p-2 bg-stone-100 rounded-lg hover:scale-[1.05] transform-all"
@@ -83,9 +97,10 @@ const PdfDisplayer = ({ text }) => {
           <MdKeyboardArrowRight />
         </button>
       </div>
-      <div className="h-[600px]  pt-2 overflow-y-auto flex items-center justify-center">
-        <div className="w-[80%]">
-          <p className="text-justify" id="output">
+      <div className="h-[600px]   pt-2 overflow-y-auto flex items-center justify-center">
+
+        <div className="w-[70%] h-full">
+          <p className="text-justify  " id="output">
             {transformedText[page]}
           </p>
         </div>

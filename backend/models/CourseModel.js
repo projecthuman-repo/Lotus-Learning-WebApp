@@ -62,40 +62,55 @@ const courseSchema = new mongoose.Schema({
       title: {
         type: String,
         required: true,
+        default: 'Lesson Title' 
       },
       description: {
         type: String,
         required: true,
       },
-      attachedFile: {
-        type: String,
-      },
-      type: {
+      mainContent: {
         type: String,
       },
       filename: {
         type: String,
       },
+      lessonContent: {
+        type: mongoose.Schema.Types.Mixed
+      },
+      type: {
+        type: String,
+      },
+      attachedFile: mongoose.Schema.Types.Mixed,
       extraActivities: [
         {
           type: {
             type: String,
-            enum: ['quiz', 'openQuestion'],
+            enum: ["quiz", "openQuestion"],
             required: true,
           },
           openQuestion: {
-            type: String, 
+            type: String,
           },
-          quiz: [{
-            text: String,
-            correct: Boolean,
-          }], 
+          quiz: [
+            {
+              text: String,
+              correct: Boolean,
+            },
+          ],
         },
       ],
     }
   ],
 });
-
+courseSchema.pre('save', function (next) {
+  if (this.lessons.length === 0) {
+    this.lessons.push({
+      title: 'Lesson Title',
+      description: 'Default Description',
+    });
+  }
+  next();
+});
 
 const Course = mongoose.model('courses', courseSchema);
 

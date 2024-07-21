@@ -33,27 +33,44 @@ const extractText  = async (formData) => {
 }
 };
 
-const extractTextLocal = async(token) => {
+// Generate CrossWord
+// /get-crossword
+const generateCrossword = async (material_id) => {
   try {
-    const extractText = await axios.post(
-      BASEAPI_URL + "/document/extract-text",
-      {
-        "document": '',
-      },
-      {
-        headers: {
-          token: token,
-        }
-      }
-    );
+    const res = await axios.post(`${BASE_URL}/get-crossword`,{materialId: material_id})
+    return res.data.data
   } catch (error) {
-    throw new Error("error sending/reciving file");
+    throw new Error("error /get-crossword");
   }
-
-
-  console.log(extractText);
 }
 
 
+// get fill in blanks
+const generateFillInBlanks = async (material_id) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/get-fill-in-blanks`,{materialId: material_id})
+    return res.data.data
+  } catch (error) {
+    throw new Error("error /get-fill-in-blanks");
+  }
+}
 
-export { extractText,extractTextLocal,getApiToken };
+const generateMCQS = async (material_id) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/get-mcqs`,{materialId: material_id})
+    return res.data.data
+  } catch (error) {
+    throw new Error("error /get-mcqs");
+  }
+}
+
+const generateWordDef = async (material_id) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/get-word-def`,{materialId: material_id})
+    return res.data.data
+  } catch (error) {
+    throw new Error("error /get-word-def");
+  }
+} 
+
+export { extractText,generateCrossword, generateFillInBlanks ,getApiToken , generateMCQS, generateWordDef };

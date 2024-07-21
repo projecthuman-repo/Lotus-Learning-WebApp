@@ -11,7 +11,7 @@ import ProfileDropDown from "./profile-dropdown/ProfileDropDown";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-const GeneralNavbar = () => {
+const GeneralNavbar = ({fixed = true}) => {
   const [notificationsDropDown, setNotificationsDropDown] = useState(false);
   const [wishListDropDown, setWishListDropDown] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
@@ -50,7 +50,7 @@ const GeneralNavbar = () => {
   return (
     <div
       className={`w-full h-[4rem]  box-shadow bg-white ${
-        isFixed && "fixed top-0"
+        isFixed && fixed && "fixed top-0"
       } z-50`}
     >
       <div className="max-w-[1450px] mx-auto h-full flex justify-between items-center relative">

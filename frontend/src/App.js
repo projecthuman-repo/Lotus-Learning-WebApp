@@ -35,6 +35,7 @@ import ProfileReRoutes from "./Pages/newPages/Profile/ProfileReRoutes";
 import TestPlayGround from "./TestPlayGround";
 import AdminInvitationPage from "./Pages/newPages/adminPages/adminInvitationPage/AdminInvitationPage";
 import CourseEditPage from "./Pages/Course/CourseEditPage/CourseEditPage";
+import LearningCoursePage from "./Pages/newPages/coursePage/LearningPageCourse/LearningCoursePage";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -101,6 +102,7 @@ function App() {
             <Route path="/test" element={<TestPlayGround/>}/>
             <Route path="/registration" element={<Registration/>}/>
             <Route path="/course" element={<CoursePage/>}/>
+            <Route path="/course/learn" element={<LearningCoursePage/>}/>
             <Route path="/learning/:courseName?" element={<Learning/>}/>
 
             <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={

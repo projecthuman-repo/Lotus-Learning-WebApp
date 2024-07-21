@@ -1,0 +1,61 @@
+.child{
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+.parent:hover .child{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.crossword-container {
+    display: flex;
+    padding: 16px;
+  }
+  
+  .crossword-grid {
+    display: grid;
+    grid-template-columns: repeat(20, 32px); /* Ajusta el tamaño de las celdas */
+    grid-gap: 4px;
+  }
+  
+  .crossword-cell {
+    width: 32px; /* Ajusta el tamaño de las celdas */
+    height: 32px; /* Ajusta el tamaño de las celdas */
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  .hints {
+    margin-left: 16px;
+  }
+  
+  .hints h2 {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .hints p {
+    margin: 4px 0;
+  }
+  
+  .hints strong {
+    margin-right: 8px;
+  }
+
+.cell{
+  width: 45px;
+  height: 45px;
+}
+.cell-undefined {
+  border-radius: 3rem;
+}
+.overflow-left {
+  overflow: hidden;
+  overflow-x: hidden;
+  direction: rtl;
+}
+
+.overflow-left > * {
+  direction: ltr;
+}

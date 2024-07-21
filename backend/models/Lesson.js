@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const lessonSchema = new mongoose.Schema({
   title: {
@@ -11,27 +11,37 @@ const lessonSchema = new mongoose.Schema({
   },
   mainContent: {
     type: String,
-
+  },
+  filename: {
+    type: String,
+  },
+  lessonContent: {
+    type: mongoose.Schema.Types.Mixed
+  },
+  type: {
+    type: String,
   },
   attachedFile: mongoose.Schema.Types.Mixed,
   extraActivities: [
     {
       type: {
         type: String,
-        enum: ['quiz', 'openQuestion'],
+        enum: ["quiz", "openQuestion"],
         required: true,
       },
       openQuestion: {
-        type: String, 
+        type: String,
       },
-      quiz: [{
-        text: String,
-        correct: Boolean,
-      }], 
+      quiz: [
+        {
+          text: String,
+          correct: Boolean,
+        },
+      ],
     },
   ],
 });
 
-const Lesson = mongoose.model('Lesson', lessonSchema);
+const Lesson = mongoose.model("Lesson", lessonSchema);
 
 module.exports = Lesson;

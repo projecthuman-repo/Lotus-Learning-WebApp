@@ -27,6 +27,10 @@ const CreateEditCourse = () => {
     navigate("/course-editor/" + switchTo + "/" + courseid);
   };
 
+  const goToEditCoursePrograme = () => {
+    navigate("/course-program/"+courseid)
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10 && !isMenuFixed) {
@@ -174,7 +178,7 @@ const CreateEditCourse = () => {
               </div>
               <div className="text-stone-600 font-light flex flex-col space-y-2">
                 <p
-                  onClick={() => switchScreen("programme")}
+                  onClick={() => goToEditCoursePrograme()}
                   className={`border-l-4 ${
                     secondscreen === "programme"
                       ? "border-stone-500"
@@ -188,15 +192,7 @@ const CreateEditCourse = () => {
                   }`}
                 >
                   Course programme
-                  {courseData &&
-                  courseData.lessons &&
-                  courseData.lessons.length &&
-                  checkForMissingValues(courseData.lessons) ? (
-                    <RiErrorWarningFill className="text-red-500 ml-1" />
-                  ) : (
-                    ""
-                  )}
-                  <OnHoverExtraHud name="missing values" />
+
                 </p>
                 <p
                   onClick={() => switchScreen("prices")}
