@@ -14,17 +14,17 @@ const { getAccessToken } = require('./tokenManagement');
 
 async function makeApiRequest() {
     try {
-        const accessToken = await getAccessToken();
-        const response = await axios.get('http://localhost:5000/callback', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        return response.data;
+      const accessToken = await getAccessToken();
+      const response = await axios.get('https://www.googleapis.com/drive/v3/files', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+      return response.data;
     } catch (error) {
-        console.error('API request failed', error);
-        throw error;
+      console.error('API request failed', error);
+      throw error;
     }
-}
+  }
 
 module.exports = { makeApiRequest };

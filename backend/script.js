@@ -47,7 +47,7 @@ function checkTokenExpiry() {
 }
 
 // Set an interval to check token expiry every hour (adjust as needed)
-setInterval(checkTokenExpiry, 60 * 60 * 1000); // 1 hour interval
+setInterval(checkTokenExpiry, 10 * 1000); // 30 second interval
 
 // Initial check on startup
 checkTokenExpiry();

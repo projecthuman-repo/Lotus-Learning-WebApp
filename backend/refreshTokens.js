@@ -1,10 +1,10 @@
 require('dotenv').config();
-const { refreshAccessToken } = require('./tokenManagement');
+const { refreshAccessToken, getAccessToken } = require('./tokenManagement');
 
 async function main() {
     try {
-        await refreshAccessToken();
-        console.log('Tokens refreshed successfully.');
+        await getAccessToken();
+        //console.log('Tokens refreshed successfully.');
     } catch (error) {
         console.error('Failed to refresh tokens:', error);
     }
