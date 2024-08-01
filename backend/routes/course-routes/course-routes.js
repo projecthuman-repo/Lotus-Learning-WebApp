@@ -5,6 +5,8 @@ const { updateCourseData } = require('../../controllers/course/update-course-con
 const router = express.Router();
 const zlib = require('zlib');
 const decompressData = require('../../helpers/decompressData.js');
+const Enrollment = require('../../models/Enrollment.js');
+const { log } = require('console');
 
 // On this file you can find all the routes for: 
 
@@ -136,6 +138,54 @@ router.post('/get-courses-by-prop', async(req, res, next) => {
     });
   }
 })
+
+//get enrolled courses
+
+
+
+
+router.post('/get-enrolled-courses', async (req, res, next) => {
+  try {
+    
+
+    const  UserID  = req.body.userId;
+    // Find all enrollments for the user
+    const enrollments = await Enrollment.find({ UserID });
+    const firstEnrollment = enrollments[0];
+   
+    const courseId = firstEnrollment.CourseID;
+
+    // Get all course IDs from the enrollments
+    const courseIds = enrollments.map(enrollment => enrollment.CourseID);
+
+    const courses = await Course.find({ _id: { $in: courseIds } });
+   
+
+    const enrolledCourses = enrollments.map(enrollment => {
+      const course = courses.find(course => course._id == enrollment.CourseID);
+      
+      return {
+        enrollment,
+        course: course ? { title: course.title, creatorName: course.creator.username } : null
+      };
+      
+
+    })
+    return res.status(200).json({
+      res: enrolledCourses,
+      success: true,
+    });
+    
+
+
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({
+      success: false,
+    });
+  }
+});
+
 
 // DELETE COURSE BY ID
 router.post('/delete-course-by-id', async(req, res, next) => {
