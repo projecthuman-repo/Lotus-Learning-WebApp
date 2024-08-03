@@ -26,6 +26,7 @@ import AdminHomePage from "./Pages/newPages/adminPages/adminHomePage/AdminHomePa
 import AdminManageStudents from "./Pages/newPages/adminPages/adminStudentsManage/AdminManageStudents";
 import AdminManageEducators from "./Pages/newPages/adminPages/adminEducatorsManage/AdminManageEducators";
 import AdminManageCourses from "./Pages/newPages/adminPages/adminCoursesManage/AdminManageCourses";
+import NewPage from "./Pages/newPages/newPage/newPage"; //my change here
 import CreateEditCourse from "./components/profile-components/create-edit-new_course/CreateEditCourse";
 import ProtectedRoute from "./ProtectedRoute";
 import ForgotPassword from "./Pages/newPages/registration/ForgotPassword";
@@ -104,6 +105,8 @@ function App() {
             <Route path="/course" element={<CoursePage/>}/>
             <Route path="/course/learn" element={<LearningCoursePage/>}/>
             <Route path="/learning/:courseName?" element={<Learning/>}/>
+
+            <Route path="/course-search" element={<NewPage/>}/>  {/*  my change   */}
 
             <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={
               <ProtectedRoute  isAuthenticated={(authUser)}>
