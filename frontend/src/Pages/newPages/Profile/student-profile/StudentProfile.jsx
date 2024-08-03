@@ -41,6 +41,7 @@ const StudentProfile = () => {
               className="text-sm focus:outline-none focus:border-b-stone-400 border-b-transparent border-b-[1.5px] pr-2 py-1 font-medium text-stone-600"
             />
             <IoMdSearch />
+
           </div>
         </div>
       </div>
