@@ -5,7 +5,7 @@ const fs = require("fs");
 const multer = require("multer");
 const FormData = require("form-data");
 
-const BASEAPI_URL = "http://34.130.17.89:8080/api";
+const BASEAPI_URL = "http://34.130.79.237:8080/api";
 
 // Configure multer for file upload
 const upload = multer({ storage: multer.memoryStorage() });

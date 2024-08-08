@@ -1,6 +1,7 @@
 import React from 'react'
 import CrosswordPlayable from '../../../Course/PlayableApiGame/CrosswordPlayable'
 import FillInBlanksPlayable from '../../../Course/PlayableApiGame/FillInBlanksPlayable';
+import MultipleChoicePlayable from '../../../Course/PlayableApiGame/MultipleChoicePlayable';
 const LearningMainContent = ({selectedLesson, gameData}) => {
 
 
@@ -13,6 +14,7 @@ const LearningMainContent = ({selectedLesson, gameData}) => {
         case 'fillinblanks':
           return <FillInBlanksPlayable gameData={selectedLesson.lessonContent.linked_game.gameRes}/>
         case 'multiplechoice':
+          return <MultipleChoicePlayable gameData={selectedLesson.lessonContent.linked_game.gameRes}/>
           // return mcqsIcon
         case 'worddefinition':
           // return wordDefIcon
