@@ -24,10 +24,27 @@ router.get('/get-courses', async (req, res, next) => {
       data: courses
     });
   } catch (error) {
-    console.error("Error al buscar cursos:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    console.error("error getting courses ", error);
+    res.status(500).json({ error: "internal server error" });
   }
 });
+
+// SEARCH COURSES
+
+router.get('/search-courses', async (req, res, next) => {
+  const { title } = req.query;
+  try {
+    const courses = await Course.find({ title: new RegExp(title, 'i') }); // Case insensitive search
+    return res.status(200).json({
+      success: true,
+      data: courses
+    });
+  } catch (error) {
+    console.error("error in searching courses", error);
+    res.status(500).json({ error: "internal server error" });
+  }
+});
+
 
 // GET ONE COURSE DATA BY ID
 router.get('/get-course-data', async(req, res, next) => {
@@ -148,7 +165,6 @@ router.post('/delete-course-by-id', async(req, res, next) => {
     });
   }
 })
-
 
 
 module.exports = router;
