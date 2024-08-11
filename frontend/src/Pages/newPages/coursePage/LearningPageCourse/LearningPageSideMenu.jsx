@@ -5,6 +5,7 @@ import fillInBlanksIcon from '../../../../Images/game-icons/generate-fill-in-the
 import mcqsIcon from '../../../../Images/game-icons/generate-mcqs.webp'
 import wordDefIcon from '../../../../Images/game-icons/generate-word-definition-pairs.webp'
 import wordsearchIcon from '../../../../Images/game-icons/wordsearch.webp'
+import textIcon from '../../../../Images/game-icons/text_icon.webp'
 import { FaFileAlt } from "react-icons/fa";
 import { useLocation, useSearchParams } from 'react-router-dom';
 
@@ -51,6 +52,8 @@ const LessonItemList = ({lesson, selectedLessonId, setSelectedLesson}) => {
         return wordDefIcon
       case 'wordsearch':
         return wordsearchIcon
+      default: 
+        return textIcon; 
 
     }
   }
@@ -63,7 +66,7 @@ const LessonItemList = ({lesson, selectedLessonId, setSelectedLesson}) => {
     </div>
     <div className="bg-stone-300 w-[40px] h-[40px] flex items-center justify-center p-1 rounded-full">
 
-      <img src={changeIcon(lesson.lessonContent.linked_game.type)} alt="" srcset="" />
+      <img src={lesson.lessonContent.linked_game ? changeIcon(lesson.lessonContent.linked_game.type) : textIcon} alt="" srcset="" />
     </div>
   </div>
   )

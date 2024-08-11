@@ -25,6 +25,13 @@ const MultipleChoicePlayable = ({ gameData }) => {
   //     checkResults()
 
   //   }
+
+  const restart = () =>{
+    setAnswers([])
+    setQuestionOn(0)
+    setFinished(false)
+  }
+
   useEffect(() => {
     console.log(answers);
     console.log(gameData.game.mcqs.length - 1);
@@ -78,9 +85,15 @@ const MultipleChoicePlayable = ({ gameData }) => {
     return false;
   }
 
-  const checkResults = () => {
-    // console.log(gameData.game.mcqs);
-    console.log(answers);
+  const checkResults = (list) => {
+    let count = 0;
+    list.map((item, i) =>{
+      if(item.correct){
+        count = count + 1;
+      }
+    })
+    return count;
+
   };
 
   return (
@@ -100,9 +113,9 @@ const MultipleChoicePlayable = ({ gameData }) => {
             <p className="font-semibold text-2xl animate-expand-vertically">
               COMPLEATED!
             </p>
-            <p>4/6</p>
+            <p>{checkResults(answers)}/{gameData.game && gameData.game.mcqs.length}</p>
             <div className="flex mt-4 space-x-3">
-              <button className="p-2 flex items-center justify-center bg-zinc-300 rounded-full hover:bg-zinc-200 transition-all">
+              <button onClick={() => restart()} className="p-2 flex items-center justify-center bg-zinc-300 rounded-full hover:bg-zinc-200 transition-all">
                 <MdOutlineRestartAlt />
               </button>
               <button className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center ">
@@ -178,10 +191,7 @@ const QuestionView = ({ item, addNewAnswer, setQuestionOn, current, game }) => {
     <div className="w-full h-full flex flex-col justify-between items-center">
       <div className="flex items-center justify-center h-full flex-col">
         <p className="font-semibold text-3xl text-zinc-700">{item.Question}</p>
-        <p className="bg-black textwhite px-3 py-1 rounded-full text-white font-semibold text-xs">
-          Answer
-          <span className="mx-1">{item.Answer}</span>
-        </p>
+
 
       </div>
       <div className="w-full grid grid-cols-2 gap-2 p-2">
@@ -189,7 +199,8 @@ const QuestionView = ({ item, addNewAnswer, setQuestionOn, current, game }) => {
         <div
           onClick={() => saveAnswer({
             answered: "A",
-            question: current
+            question: current,
+            correct: item.Answer === "A"
           })}
           className="bg-blue-500 w-full h-[100px] border-b-4 border-blue-600 flex items-center justify-center p-3 rounded-lg text-white font-semibold text-lg hover:scale-[1.02] transition-all cursor-pointer"
         >
@@ -198,7 +209,8 @@ const QuestionView = ({ item, addNewAnswer, setQuestionOn, current, game }) => {
         <div
           onClick={() => saveAnswer({
             answered: "B",
-            question: current
+            question: current,
+            correct: item.Answer === "B"
           })}
           className="bg-yellow-500 w-full border-b-4 border-yellow-600 h-[100px] flex items-center justify-center p-3 rounded-lg text-white font-semibold text-lg hover:scale-[1.02] transition-all cursor-pointer"
         >
@@ -207,7 +219,8 @@ const QuestionView = ({ item, addNewAnswer, setQuestionOn, current, game }) => {
         <div
           onClick={() => saveAnswer({
             answered: "C",
-            question: current
+            question: current,
+            correct: item.Answer === "C"
           })}
           className="bg-red-500 w-full border-b-4 border-red-600 h-[100px] flex items-center justify-center p-3 rounded-lg text-white font-semibold text-lg hover:scale-[1.02] transition-all cursor-pointer"
         >
@@ -216,7 +229,8 @@ const QuestionView = ({ item, addNewAnswer, setQuestionOn, current, game }) => {
         <div
           onClick={() =>saveAnswer({
             answered: "D",
-            question: current
+            question: current,
+            correct: item.Answer === "D"
           })}
           className="bg-green-500 w-full border-b-4 border-green-600 h-[100px] flex items-center justify-center p-3 rounded-lg text-white font-semibold text-lg hover:scale-[1.02] transition-all cursor-pointer"
         >
