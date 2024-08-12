@@ -7,9 +7,10 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 //redux 
 import { Provider } from 'react-redux'
-import { store } from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './redux/store';
 import { GoogleOAuthProvider } from "@react-oauth/google";
-
+import SpinnerLoader from './components/loaders/SpinnerLoader';
 
 // const client = new ApolloClient({
 //   uri: 'http://localhost:5000/graphql', // Your backend GraphQL endpoint
@@ -19,10 +20,12 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <ApolloProvider client={client}>
-    <Provider store={store}>
-      <GoogleOAuthProvider clientId="689689573550-agn1nvas4qbvpf4ijj9mqf9dfad91a7d.apps.googleusercontent.com">
+  <Provider store={store}>
+    <PersistGate loading={<SpinnerLoader />} persistor={persistor}>
+      <GoogleOAuthProvider clientId="129610006350-hv6hhjvj0vbn2j04mvaaln1gg5drt5qv.apps.googleusercontent.com">
         <App />
       </GoogleOAuthProvider>
+      </PersistGate>
     </Provider>
   // </ApolloProvider>
   // ReactDOM.render(

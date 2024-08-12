@@ -1,25 +1,34 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const { encrypt, decrypt } = require('../utils/cryptoUtil');
 
 const googleUserSchema = new mongoose.Schema({
-	userId: {type: String, required: true, unique: true},
-	accessToken: {type: String, required: true, unique: true}
+  userId: { type: String, required: true, unique: true },
+  accessToken: { type: String, required: true },
+  refreshToken: { type: String, required: true },
+  accessTokenExpiry: { type: Date, required: true },
+  email: { type: String, required: true, unique: true },
 });
 
-// Hash the accesstoken before saving
-googleUserSchema.pre('save', async function(next) {
-    try {
-        if (!this.isModified('accessToken')) {
-            return next();
-        }
-
-        const hashedAccessToken = await bcrypt.hash(this.accessToken, 10);
-        this.accessToken = hashedAccessToken;
-        next();
-    } catch (error) {
-        return next(error);
-    }
+// Encrypt tokens before saving
+googleUserSchema.pre('save', function (next) {
+  if (this.isModified('accessToken')) {
+    this.accessToken = encrypt(this.accessToken);
+  }
+  if (this.isModified('refreshToken')) {
+    this.refreshToken = encrypt(this.refreshToken);
+  }
+  next();
 });
+
+// Decrypt tokens after retrieving
+googleUserSchema.methods.getAccessToken = function () {
+  return decrypt(this.accessToken);
+};
+
+googleUserSchema.methods.getRefreshToken = function () {
+  return decrypt(this.refreshToken);
+};
+
 const GoogleUser = mongoose.model('GoogleUser', googleUserSchema);
 
 module.exports = GoogleUser;

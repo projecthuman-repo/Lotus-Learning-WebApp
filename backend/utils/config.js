@@ -18,6 +18,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+const REDIRECT_URI = process.env.REDIRECT_URI;
 
 // Push notifications
 const FIREBASE_ADMIN_SECRET_KEY_PATH =
@@ -42,6 +43,7 @@ module.exports = {
   CLIENT_SECRET,
   REFRESH_TOKEN,
   ACCESS_TOKEN,
+  REDIRECT_URI,
   // Push notifications
   FIREBASE_ADMIN_SECRET_KEY_PATH,
   FCM_DEVICE_TOKEN,

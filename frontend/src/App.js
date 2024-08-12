@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { AuthProvider } from "./context/auth-context";
@@ -35,6 +35,10 @@ import ProfileReRoutes from "./Pages/newPages/Profile/ProfileReRoutes";
 import TestPlayGround from "./TestPlayGround";
 import AdminInvitationPage from "./Pages/newPages/adminPages/adminInvitationPage/AdminInvitationPage";
 import CourseEditPage from "./Pages/Course/CourseEditPage/CourseEditPage";
+import VerifyEmail from "./Pages/newPages/registration/verifyEmail";
+import VerificationSent from "./Pages/newPages/registration/verificationSent";
+import TwoFASetup from './Pages/newPages/registration/TwoFASetup';
+import TwoFAVerification from './Pages/newPages/registration/TwoFAVerification';
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -48,50 +52,42 @@ if ("serviceWorker" in navigator) {
     });
 }
 
-function App() {
+
   //redux
-  const dispatch = useDispatch();
-  const authUser = useSelector((state) => state.user);
-  const [auth, setAuth] = useState(false)
-
-  const [loadingUser, setLoadingUser] = useState(true);
-
-  // login authentification
-
-  const setAuthUser = async () => {
-    setLoadingUser(true);
-    // finds user storaged into the cookies  as 'userDataAuth'
-    const foundUser = await getLogedInCookies();
-    if (foundUser) {
-      // saves the found user into the redux for auth
-      return new Promise((resolve) => {
-        dispatch(setUser(foundUser.userData.user));
-        resolve();
-      });
-    }
-    return Promise.resolve();
-  };
-
-  useEffect(() => {
-    setAuthUser()
-      .then(() => {
+  function App() {
+    const dispatch = useDispatch();
+    const authUser = useSelector((state) => state.user);
+    const [loadingUser, setLoadingUser] = useState(true);
+  
+    const setAuthUser = async () => {
+      setLoadingUser(true);
+      try {
+        const foundUser = await getLogedInCookies();
+        if (foundUser) {
+          if(foundUser.userData.user)
+          {
+          //userdata means it works with goog users but userdata.user it works with reg users
+          dispatch(setUser(foundUser.userData.user)); 
+          }else
+          {
+            dispatch(setUser(foundUser.userData)); 
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching logged in user from cookies:", error);
+      } finally {
         setLoadingUser(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setLoadingUser(false);
-      });
-  }, []);
-
-  useEffect(() => {
-    if(authUser){
-      setAuth(true)
-    }else{
-      setAuth(false);
-    }
-  },[authUser])
+      }
+    };
+  
+    useEffect(() => {
+      setAuthUser();
+    }, [dispatch]);
+  
+   
 
   return (
+    
     <BrowserRouter>
       {loadingUser ? 
         <div>Loading Pages...</div>
@@ -110,10 +106,14 @@ function App() {
             }/>
             <Route path="/user/:screen?" element={<User/>}/>
             <Route path="/logintest" element={<HomePageLoggedIn/>}/>
+         
             <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
             <Route path="/verifyotp" element={<VerifyOTP/>}/>
             <Route path="/profile/profile-settings/changepassword" element={<ChangePassword/>}/>
-
+            <Route path="/verify/:token" element={<VerifyEmail />} />
+            <Route path="/verification-sent" element={<VerificationSent />} />
+            <Route path="/setup-2fa" element={<TwoFASetup />} />
+            <Route path="/verify-2fa" element={<TwoFAVerification />} />
 
             {/* Admin Pages */}
             <Route path="/admin/students" element={
@@ -162,9 +162,9 @@ function App() {
           </Routes>
         </AuthProvider>
     }
-
-
     </BrowserRouter>
+
+
 
   );
 }

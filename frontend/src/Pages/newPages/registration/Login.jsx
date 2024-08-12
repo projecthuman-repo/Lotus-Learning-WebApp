@@ -11,6 +11,8 @@ import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
 import saveUserOnCookies from "../../../BackendProxy/cookiesProxy/saveUserCookies";
 import { useGoogleLogin } from "@react-oauth/google";
 
+
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,81 +34,119 @@ const Login = () => {
 	navigate('/registration?screen=signup');
   };
 
+  
   const googleSignIn = useGoogleLogin({
+	flow: 'auth-code',
 	onSuccess: async (credentialResponse) => {
-	  console.log(credentialResponse);
+	  try {
+		const code = credentialResponse.code;
+		console.log('Authorization Code:', code);
   
-	  // Get user info
-	  const userInfo = await axios.post(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${credentialResponse.access_token}`);
-	  console.log(userInfo);
-
-	  const user = {
-		firstName: userInfo.data.given_name,
-		lastName: userInfo.data.last_name || '',
-		email: userInfo.data.email,
-		accessToken: credentialResponse.access_token,
-		username: userInfo.data.email,
-		accountType: 'student',
-		enrolledCourses: [],
-		createdCourses: [],
-		accomplishments: []
-	};
+		// Send the authorization code to your backend
+		const responseT = await axios.post('http://localhost:5000/google/auth', { code });
+		console.log('Token Response:', responseT.data);
   
-	  // Log user in if account exists. If account does not exist, sign the user up automatically.
-	  const response = await axios.post('http://localhost:5000/user/google-login', {
-		...user
-	});
-
-	  // Set loggedin cookie with user info
-	  if (response.data.success) {
+		// Extract access token
+		const access_token = responseT.data.tokens.accessToken;
+		const refresh_token = responseT.data.tokens.refreshToken;
+		const expires_in = responseT.data.tokens.expiresIn;
+		console.log('Access Token:', access_token);
+		console.log('Refresh Token:', refresh_token);
+  
+		// Get user info using access token
+		const userInfo = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`);
+		console.log('User Info:', userInfo.data);
+  
+		const user = {
+		  firstName: userInfo.data.given_name,
+		  lastName: userInfo.data.family_name || '',
+		  email: userInfo.data.email,
+		  accessToken: access_token,
+		  refreshToken : refresh_token,
+		  expiresIn : expires_in,
+		  username: userInfo.data.email,
+		  accountType: 'student',
+		  is2FAEnabled: false, 
+		  is2FASetupDone: false, 
+		  enrolledCourses: [],
+		  createdCourses: [],
+		  accomplishments: [],
+		};
+  
+		// Log user in if account exists. If account does not exist, sign the user up automatically.
+		const response = await axios.post('http://localhost:5000/user/google-login', user);
+		console.log('Login Response:', response.data);
+      
+		if (response.data.success) {
+		//	const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
+		//		...user
 		const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
-			...user
-		},{
-			withCredentials: true, // Include cookies in the request
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-
-		console.log(saveOnCookies);
-		
-		if (saveOnCookies.status === 200) {
+				...response.data.user
+			},{
+				withCredentials: true, // Include cookies in the request
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+	
+			console.log(saveOnCookies);
+  
+		  if (saveOnCookies.status === 200) {
 			await dispatch(setUser(saveOnCookies.data.data));
-			navigate('/');
+	//		navigate('/');
+	console.log(saveOnCookies.data.data)
+	if (!saveOnCookies.data.data.is2FAEnabled && !saveOnCookies.data.data.is2FASetupDone) {
+		navigate('/setup-2fa');
+	  } else {
+		navigate('/verify-2fa');
+	  }
+		  }
 		}
+	  } catch (error) {
+		console.error('Error during Google Sign-In:', error);
 	  }
 	},
 	onError: (credentialResponse) => {
-	  console.log(credentialResponse);
-	}
-});
-
+	  console.log('Sign-In Error:', credentialResponse);
+	},
+  });
+  
   const sendLoginRequest = async () => {
-	setLoading(true);
-	try {
-	  const response = await axios.post('http://localhost:5000/user/login-user', {
-		email,
-		password,
-	  });
+    setLoading(true);
+    try {
+        const response = await axios.post('http://localhost:5000/user/login-user', {
+            email,
+            password,
+        });
 
-	  const foundUser = response.data;
+        const foundUser = response.data;
 
-      if (foundUser.success) {
-        const savedUser = await saveUserOnCookies({...foundUser.user})
-        await dispatch(setUser(savedUser));
-        navigate('/');
-
-      }
-
+        if (foundUser.success) {
+            const savedUser = await saveUserOnCookies({ ...foundUser.user });
+            await dispatch(setUser(savedUser));
+			if (!foundUser.user.is2FAEnabled && !foundUser.user.is2FASetupDone) {
+				navigate('/setup-2fa');
+			  } else {
+				navigate('/verify-2fa');
+			  }
+        } else {
+         
+            if (foundUser.error === 'Your account has not been verified. Please check your email for the verification link.') {
+                setErrorMessage('Your account has not been verified. Please check your email for the verification link.');
+            } else {
+                setErrorMessage('Incorrect email or password.');
+            }
+            setLoading(false);
+        }
     } catch (error) {
-      setLoading(false);
-      if (error.response && error.response.status === 400) {
-        setErrorMessage("Incorrect email or password.");
-      } else {
-        console.error('Error:', error);
-      }
+        setLoading(false);
+        if (error.response && error.response.status === 400) {
+            setErrorMessage(error.response.data.error || 'Incorrect email or password.');
+        } else {
+            console.error('Error:', error);
+        }
     }
-  };
+};
 
   useEffect(() => {
 	if (email.length > 0) {

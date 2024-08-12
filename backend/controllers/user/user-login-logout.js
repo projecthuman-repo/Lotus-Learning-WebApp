@@ -15,13 +15,15 @@ const logInUser = async(email, password) => {
         else{
             return {
                 success: false,
-                msg: "Wrong Credentials"
+               // msg: "Wrong Credentials"
+                msg:"Incorrect email or password"
             }
         }
     }else{
         return {
             success: false,
-            msg: "User not found"
+            //msg: "User not found"
+            msg:"Incorrect email or password"
         }
     }
 }

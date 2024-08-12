@@ -59,9 +59,10 @@ const SignUp = ({type = 'student'}) => {
         password,
       });
       if (response.data.success) {
-          const savedUser = await saveUserOnCookies({...response.data.user})
-          await dispatch(setUser(savedUser));
-          navigate('/');
+         // const savedUser = await saveUserOnCookies({...response.data.user})
+          //await dispatch(setUser(savedUser));
+        //  navigate('/');
+        navigate('/verification-sent',{ state:{ email }} );
   
       } else {
         // Handle errors related to email or username
@@ -80,57 +81,82 @@ const SignUp = ({type = 'student'}) => {
     }
   };
 
-  const googleSignUp = useGoogleLogin({
-	onSuccess: async (credentialResponse) => {
-	  console.log(credentialResponse);
-  
-	  // Get user info
-	  const userInfo = await axios.post(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${credentialResponse.access_token}`);
-	  console.log(userInfo);
-
-	const user = {
-		firstName: userInfo.data.given_name,
-		lastName: userInfo.data.last_name || '',
-		email: userInfo.data.email,
-		password: credentialResponse.access_token,
-		username: userInfo.data.email,
-		accountType: 'student',
-		googleAuth: 1,
-		enrolledCourses: [],
-		createdCourses: [],
-		accomplishments: []
-	};
-  
-	  // Check if user exists in the db
-	  const response = await axios.post('http://localhost:5000/user/google-login', {
-		...user
-	  });
-
-	  console.log(response);
-
-	  // Set loggedin cookie with access token and email
-	  if (response.data.success) {
-		const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
-			...user
-		},{
-			withCredentials: true, // Include cookies in the request
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-
-		console.log(saveOnCookies);
-		
-		if (saveOnCookies.status === 200) {
-			await dispatch(setUser(saveOnCookies.data.data));
-			navigate('/');
-		}
-	  }
-	},
-	onError: (credentialResponse) => {
-	  console.log(credentialResponse);
-	}
-});
+  const googleSignIn = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: async (credentialResponse) => {
+      try {
+      const code = credentialResponse.code;
+      console.log('Authorization Code:', code);
+    
+   
+      const responseT = await axios.post('http://localhost:5000/google/auth', { code });
+      console.log('Token Response:', responseT.data);
+    
+      // Extract access token
+      const access_token = responseT.data.tokens.accessToken;
+      const refresh_token = responseT.data.tokens.refreshToken;
+      const expires_in = responseT.data.tokens.expiresIn;
+      console.log('Access Token:', access_token);
+      console.log('Refresh Token:', refresh_token);
+    
+      // Get user info using access token
+      const userInfo = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`);
+      console.log('User Info:', userInfo.data);
+    
+      const user = {
+        firstName: userInfo.data.given_name,
+        lastName: userInfo.data.family_name || '',
+        email: userInfo.data.email,
+        accessToken: access_token,
+        refreshToken : refresh_token,
+        expiresIn : expires_in,
+        username: userInfo.data.email,
+        accountType: 'student',
+        is2FAEnabled: false, 
+        is2FASetupDone: false, 
+        enrolledCourses: [],
+        createdCourses: [],
+        accomplishments: [],
+      };
+    
+      // Log user in if account exists. If account does not exist, sign the user up automatically.
+      const response = await axios.post('http://localhost:5000/user/google-login', user);
+      console.log('Login Response:', response.data);
+        
+      if (response.data.success) {
+      //	const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
+      //		...user
+      const saveOnCookies = await axios.post('http://localhost:5000/cookies/save-user', {
+          ...response.data.user
+        },{
+          withCredentials: true, // Include cookies in the request
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+    
+        console.log(saveOnCookies);
+    
+        if (saveOnCookies.status === 200) {
+        await dispatch(setUser(saveOnCookies.data.data));
+    //		navigate('/');
+    console.log(saveOnCookies.data.data)
+    if (!saveOnCookies.data.data.is2FAEnabled && !saveOnCookies.data.data.is2FASetupDone) {
+      navigate('/setup-2fa');
+      } else {
+      navigate('/verify-2fa');
+      }
+        }
+      }
+      } catch (error) {
+      console.error('Error during Google Sign-In:', error);
+      }
+    },
+    onError: (credentialResponse) => {
+      console.log('Sign-In Error:', credentialResponse);
+    },
+    });
+    
 
   const validateFormData = () => {
 	setMissingData(false);
@@ -140,10 +166,12 @@ const SignUp = ({type = 'student'}) => {
 	  setMissingData(true);
 	  return false;
 	}
+  
 	if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
 	  setInvalidEmail(true);
 	  return false;
 	}
+    
 	if (password.length < 8) {
 	  return false;
 	}
@@ -332,7 +360,7 @@ const SignUp = ({type = 'student'}) => {
       <button onClick={() => createAccount()} className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded-full w-full">
         {loading ? <SpinnerLoader /> : "Create account"}
       </button>
-      <button className="font-semibold text-stone-600 text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all w-full border hover:bg-stone-50">
+      <button onClick={googleSignIn} className="font-semibold text-stone-600 text-sm px-3 py-2 rounded-full flex items-center justify-center transition-all w-full border hover:bg-stone-50">
         <FaGoogle className="text-xl mx-2" />
         Sign with Google
       </button>

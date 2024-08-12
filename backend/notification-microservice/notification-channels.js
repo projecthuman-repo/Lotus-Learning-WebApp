@@ -2,6 +2,9 @@ const nodemailer = require('nodemailer'); // For sending emails
 const twilio = require('twilio'); // For sending SMS notifications
 const admin = require('firebase-admin'); // For sending push notifications
 const config = require('../utils/config');
+const GoogleUser = require('../models/GoogleUser');
+const User = require('../models/User');
+const getTransporter = require('../oauth2Transporter');
 
 // Initialize Firebase Admin SDK with your project credentials
 admin.initializeApp({
@@ -10,6 +13,7 @@ admin.initializeApp({
   ),
 });
 
+/*
 // Nodemailer OAuth2: https://nodemailer.com/smtp/oauth2/
 const emailTransporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -25,6 +29,8 @@ const emailTransporter = nodemailer.createTransport({
     accessToken: config.ACCESS_TOKEN,
   },
 });
+*/
+
 
 // Twilio Messaging Services: https://www.twilio.com/docs/messaging/services
 const twilioClient = twilio(
@@ -32,14 +38,24 @@ const twilioClient = twilio(
   config.TWILIO_AUTH_TOKEN
 );
 
+
+
 // Function to send emails
 async function sendEmail(notification) {
   const { userId, payload } = notification;
-  // TODO: Retrieve a user's email from database using userId
+
+  // Retrieve user from the database
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  const emailTransporter =  await getTransporter();
 
   await emailTransporter.sendMail({
     from: config.EMAIL_SENDER,
-    to: config.EMAIL_RECIPIENT,
+    to: user.email,
     subject: payload.title,
     text: payload.body,
   });

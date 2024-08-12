@@ -42,8 +42,8 @@ const HomePage = () => {
     <div className="h-full w-full ">
       <GeneralNavbar />
       <div className="w-full mx-auto  pb-2 flex items-center flex-col">
-        <div className="xl:w-[1350px] lg:w-[1000px] w-full">
-          <CarrouselHeader />
+        <div className="xl:w-[1350px] lg:w-[1px] w-full">
+          <CarrouselHeader />000
         </div>
         <div className="xl:w-[1350px] lg:w-[1000px] w-full">
 

@@ -170,7 +170,8 @@ const PhaseTwo = () => {
         if (response.data.success) {
           const savedUser = await saveUserOnCookies({...response.data.user})
           await dispatch(setUser(savedUser));
-          navigate('/');
+          navigate('/verification-sent',{ state:{ email }} );
+        //  navigate('/');
   
       } else {
           // Handle errors related to email or username

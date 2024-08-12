@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true},
   accountType: { type: String, enum: ['student', 'instructor', 'admin']},
   googleAuth: { type: Boolean, required: false},
+  isVerified:{type:Boolean, default:false},
+  phoneNumber: { type: String, required: false }, 
+  verificationCode: { type: Number, required: false },
+  is2FAEnabled: { type: Boolean, default: false }, // Add 2FA enabled flag
+  is2FASetupDone: { type: Boolean, default: false }, // Add 2FA setup flag
+  createdAt: { type: Date, default: Date.now }, //for periodic cleanup
   stateProvince: {
     type: String,
     // required: true,

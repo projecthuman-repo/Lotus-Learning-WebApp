@@ -10,6 +10,12 @@ const axios = require('axios');
 const qs = require('qs');
 const path = require('path');
 const fs = require('fs');
+const cleanupInactiveAccounts = require('./cleanup');
+
+
+const {
+  OAuth2Client,
+} = require('google-auth-library');
 
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
@@ -25,6 +31,12 @@ const {
   CLIENT_SECRET,
   REDIRECT_URI
 } = process.env;
+
+const oAuth2Client = new OAuth2Client(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  'postmessage',
+);
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
@@ -74,16 +86,59 @@ app.use("/highlight", (req, res) => {
   console.log(selectedText);
 });
 
+
 app.get('/auth', (req, res) => {
-  const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=https://www.googleapis.com/auth/drive&access_type=offline`;
+  const authUrl = `https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=https://mail.google.com/&access_type=offline`;
   console.log('clientID:' + CLIENT_ID)
   res.redirect(authUrl);
 });
 
+app.post('/google/auth', async (req, res, next) => {
+  const { code } = req.body;
+  console.log('Authorization code received from frontend:', code);
+
+  try {
+    // Exchange authorization code for access and refresh tokens
+    const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', qs.stringify({
+      code,
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+      redirect_uri:  'postmessage',
+      grant_type: 'authorization_code',
+    }), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+   // console.log('Token response received:', tokenResponse.data);
+    const { access_token, refresh_token, expires_in } = tokenResponse.data;
+
+    res.status(200).json({
+      success: true,
+      tokens: {
+        accessToken: access_token,
+        refreshToken: refresh_token,
+        expiresIn: expires_in,
+      },
+    });
+  } catch (error) {
+    console.error('Error during token exchange:', error.message);
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+    }
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: error.message,
+    });
+  }
+});
 
 app.get('/callback', async (req, res) => {
   const code = req.query.code;
-
+  console.log("CODE:"+ code);
   try {
     const response = await axios.post('https://oauth2.googleapis.com/token', qs.stringify({
       code,
@@ -129,7 +184,9 @@ app.get('/callback', async (req, res) => {
   }
 });
 
+
 // Add this route to use the Google Cloud API with refreshed token
+
 app.get('/api/data', async (req, res) => {
   try {
     const data = await makeApiRequest();
@@ -139,11 +196,18 @@ app.get('/api/data', async (req, res) => {
   }
 });
 
+
+
 connectToDatabases()
   .then(() => {
     app.listen(config.PORT);
     console.log(`Server running port ${config.PORT}`);
     processNotifications();
+/*
+    cron.schedule('0 0 * * *', async () => {
+      console.log('Cleaning up database of unverified accounts...');
+      await cleanupInactiveAccounts();
+    });*/
   })
   .catch((err) => {
     console.error(err);
