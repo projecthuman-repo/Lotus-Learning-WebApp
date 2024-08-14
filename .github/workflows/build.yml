@@ -3,8 +3,7 @@ name: Build Application
 on:
   push:
     branches:
-      - main
-      - master
+      - "*"
   pull_request:
     branches:
       - main
@@ -15,23 +14,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
-      
-    - name: Check Backend
-      run: |
-        cd backend
-        npm install
-        npm run test
-        cd ../
-    
-    - name: Check Frontend
-      run: |
-        cd frontend 
-        npm install
-        npm run build
-        cd ../
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Check Backend
+        run: |
+          cd backend
+          npm install
+          npm run test
+          cd ../
+
+      - name: Check Frontend
+        run: |
+          cd frontend 
+          npm install
+          npm run build
+          cd ../
