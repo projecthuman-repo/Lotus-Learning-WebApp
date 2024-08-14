@@ -12,10 +12,10 @@ on:
 
 jobs:
   builds:
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -24,19 +24,14 @@ jobs:
       
     - name: Check Backend
       run: |
-      cd backend
-      npm install
-      npm run test
-      cd ../
+        cd backend
+        npm install
+        npm run test
+        cd ../
     
     - name: Check Frontend
       run: |
-      cd frontend 
-      npm install
-      npm run build
-      cd ../
-
-
-      
-
-      
+        cd frontend 
+        npm install
+        npm run build
+        cd ../
