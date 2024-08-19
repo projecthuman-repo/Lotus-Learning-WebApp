@@ -1,11 +1,13 @@
 // user-routes.js
 const express = require('express');
 const User = require("../../models/User.js");
+const Course = require("../../models/CourseModel.js");
 const InvitationCode   = require("../../models/InvitationCodeModel.js");
 const GoogleUser = require("../../models/GoogleUser.js");
 const { logInUser, userExists, getUserId } = require('../../controllers/user/user-login-logout.js');
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 
 function generateOTP() {
     const digits = '0123456789';
@@ -338,6 +340,203 @@ router.post('/verify-otp', async(req, res) => {
         });
     }
 });
+
+//email updation
+router.post('/update-email', async (req, res, next) => {
+    try {
+        console.log("Request body:", req.body);
+
+        const { _id, email } = req.body;
+
+        const userBeforeUpdate = await User.findById(_id);
+
+        if (!userBeforeUpdate) {
+            return res.status(404).json({ success: false, error: 'User not found' });
+        }
+
+        const oldEmail = userBeforeUpdate.email;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            _id,
+            { email: email },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, error: 'User not found after update' });
+        }
+
+        const coursesToUpdate = await Course.find({ "creator.email": oldEmail });
+        if (!coursesToUpdate) {
+            return res.status(404).json({ success: false, error: 'course to update not found' });
+        }
+        
+
+        const updatedCourses = await Course.updateMany(
+            { "creator.email": oldEmail }, 
+            { $set: { "creator.email": email } } 
+        );
+
+        res.status(200).json({
+            success: true,
+            data: {
+                user: updatedUser,
+                updatedCoursesCount: updatedCourses.modifiedCount, 
+            },
+        });
+    } catch (error) {
+        console.log("Error caught in update-email route:", error);
+
+        return res.status(400).json({
+            success: false,
+            error: error.message,
+        });
+    }
+});
+
+//updating username
+
+router.post('/update-username', async (req, res, next) => {
+    try {
+        console.log("Request body:", req.body);
+
+        const { _id, username } = req.body;
+
+        const userBeforeUpdate = await User.findById(_id);
+
+        if (!userBeforeUpdate) {
+            return res.status(404).json({ success: false, error: 'User not found' });
+        }
+
+        const oldUsername = userBeforeUpdate.username;
+        const updatedUser = await User.findByIdAndUpdate(
+            _id,
+            { username: username },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, error: 'User not found after update' });
+        }
+
+        const coursesToUpdate = await Course.find({ "creator.username": oldUsername});
+        if (!coursesToUpdate) {
+            return res.status(404).json({ success: false, error: 'course to update not found' });
+        }
+        
+
+        const updatedCourses = await Course.updateMany(
+            { "creator.username": oldUsername }, 
+            { $set: { "creator.username": username } } 
+        );
+
+        res.status(200).json({
+            success: true,
+            data: {
+                user: updatedUser,
+            },
+        });
+    } catch (error) {
+        console.log("Error caught in update-username route:", error);
+
+        return res.status(400).json({
+            success: false,
+            error: error.message,
+        });
+    }
+});
+
+//updating institution code
+
+router.post('/update-institution-code', async (req, res, next) => {
+    try {
+        console.log("Request body:", req.body);
+
+        const { _id, code } = req.body;
+
+        const userBeforeUpdate = await User.findById(_id);
+
+        if (!userBeforeUpdate) {
+            return res.status(404).json({ success: false, error: 'User not found' });
+        }
+
+        const oldCode = userBeforeUpdate.institution.code;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            _id,
+            { "institution.code": code },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, error: 'User not found after update' });
+        }
+
+        const updatedCourses = await Course.updateMany(
+            { "creator.code": oldCode },
+            { $set: { "creator.code": code } }
+        );
+
+        res.status(200).json({
+            success: true,
+            data: {
+                user: updatedUser,
+                updatedCoursesCount: updatedCourses.modifiedCount,
+            },
+        });
+    } catch (error) {
+        console.log("Error caught in update-institution-code route:", error);
+
+        return res.status(400).json({
+            success: false,
+            error: error.message,
+        });
+    }
+});
+
+//update password for settingsprofile
+router.post('/update-password', async (req, res, next) => {
+    try {
+        console.log("Request body:", req.body);
+
+        const { _id, password } = req.body;
+
+        const user = await User.findById(_id);
+
+        if (!user) {
+            return res.status(404).json({ success: false, error: 'User not found' });
+        }
+
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const updatedUser = await User.findByIdAndUpdate(
+            _id,
+            { password: hashedPassword },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, error: 'User not found after update' });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: {
+                user: updatedUser,
+            },
+        });
+    } catch (error) {
+        console.log("Error caught in update-password route:", error);
+
+        return res.status(400).json({
+            success: false,
+            error: error.message,
+        });
+    }
+});
+  
+  
 
 router.post('/change-password', async(req, res) => {
     try {
