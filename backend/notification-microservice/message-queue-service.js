@@ -1,7 +1,7 @@
 const amqp = require('amqplib');
 
 const queueName = 'notificationsQueue'; // It will be used in RabbitMQ for storing messages
-const connectionString = process.env.RABBITMQ_URL || 'amqp://localhost';
+const connectionString = process.env.RABBITMQ_URL || 'amqp://52.14.4.146';
 
 // Connect to the message queue and create a channel
 async function connectToQueue() {

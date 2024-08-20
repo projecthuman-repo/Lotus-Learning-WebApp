@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: 'http://52.14.4.146:3000',
   })
 );
 app.use(cookieParser());

@@ -50,7 +50,7 @@ const ChangePassword = () => {
       setErrorMessage('');
     }
 
-    const response = await axios.post('http://localhost:5000/user/change-password', {
+    const response = await axios.post('http://52.14.4.146:5000/user/change-password', {
       newPassword: newPassword,
       email: email
 	  });

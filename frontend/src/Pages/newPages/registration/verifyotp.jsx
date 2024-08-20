@@ -26,7 +26,7 @@ const VerifyOTP = () => {
     setLoading(true);
     try {
       console.log('Sending request with OTP:', otp);
-      const response = await axios.post('http://localhost:5000/user/verify-otp', { otp: otp.toString() });
+      const response = await axios.post('http://52.14.4.146:5000/user/verify-otp', { otp: otp.toString() });
       console.log('Response:', response.data);
       setLoading(false);
 
