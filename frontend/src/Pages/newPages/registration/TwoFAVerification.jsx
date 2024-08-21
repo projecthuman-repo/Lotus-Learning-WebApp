@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import LowProfileNavbar from "../../../components/navbar/LowProfileNavbar";
 import GeneralFooter from "../../../components/footer/GeneralFooter";
 
 const TwoFAVerification = () => {
   const user = useSelector((state) => state.user);
+  const is2FAEnabled = false; 
   const [code, setCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false); // New state for button click
@@ -19,6 +20,7 @@ const TwoFAVerification = () => {
   };
 
   const handleVerifyCode = async () => {
+
     setIsVerifying(true);
     setError('');
     try {
@@ -31,9 +33,10 @@ const TwoFAVerification = () => {
       setIsVerifying(false);
     }
   };
-
+console.dir("user:", user);
   useEffect(() => {
     const sendVerificationCode = async () => {
+      if (!user.is2FASetupDone) return;
       setIsLoading(true);
       setError('');
       try {

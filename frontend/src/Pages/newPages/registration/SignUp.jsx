@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../../redux/slice/user/userSlice";
 import { useGoogleLogin } from "@react-oauth/google";
 
@@ -17,6 +17,12 @@ import OnHoverExtraHud from "../../../components/OnHoverExtraHud";
 const SignUp = ({type = 'student'}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
+  const [is2FAEnabled, setIs2FAEnabled] = useState(() => {
+    return JSON.parse(localStorage.getItem("bypass2FA")) || false;
+  });
+ 
+
   const [invitationCode, setInvitationCode] = useState('')
   const [haveInvitationCode, setHaveInvitationCode] = useState(false)
   const [invitatioCodeErr, setInvitatioCodeErr] = useState(false);
@@ -112,7 +118,6 @@ const SignUp = ({type = 'student'}) => {
         expiresIn : expires_in,
         username: userInfo.data.email,
         accountType: 'student',
-        is2FAEnabled: false, 
         is2FASetupDone: false, 
         enrolledCourses: [],
         createdCourses: [],
@@ -141,12 +146,14 @@ const SignUp = ({type = 'student'}) => {
         await dispatch(setUser(saveOnCookies.data.data));
     //		navigate('/');
     console.log(saveOnCookies.data.data)
-    if (!saveOnCookies.data.data.is2FAEnabled && !saveOnCookies.data.data.is2FASetupDone) {
+  	if ( !saveOnCookies.data.data.is2FASetupDone && is2FAEnabled) {
       navigate('/setup-2fa');
-      } else {
+      } else if( is2FAEnabled) {
       navigate('/verify-2fa');
+      }else{
+      navigate('/');
       }
-        }
+      }
       }
       } catch (error) {
       console.error('Error during Google Sign-In:', error);

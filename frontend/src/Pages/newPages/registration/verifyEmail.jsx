@@ -10,7 +10,6 @@ import saveUserOnCookies from "../../../BackendProxy/cookiesProxy/saveUserCookie
 
 const VerifyEmail = () => {
   const [verificationStatus, setVerificationStatus] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
@@ -40,9 +39,15 @@ const VerifyEmail = () => {
           }, 3000);
         } else {
           setVerificationStatus(response.data.message || 'Email verification failed.');
+          setTimeout(() => {
+            navigate('/registration?screen=login');
+          }, 3000);
         }
       } catch (error) {
         setVerificationStatus(error.response?.data?.message || 'Something went wrong, please try again.');
+        setTimeout(() => {
+          navigate('/registration?screen=login');
+        }, 3000);
       }
     };
 
@@ -53,22 +58,6 @@ const VerifyEmail = () => {
       setVerificationStatus('Invalid verification link.');
     }
   }, [token, navigate, dispatch]);
-
-  const handleResendVerification = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.post('http://localhost:5000/user/resend-verification', { email });
-      if (response.data.success) {
-        setMessage('Verification email resent. Please check your email.');
-      } else {
-        setMessage(response.data.message || 'Failed to resend verification email.');
-      }
-    } catch (error) {
-      setMessage('Failed to resend verification email.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -81,15 +70,6 @@ const VerifyEmail = () => {
             <p className="mt-4 text-lg">{verificationStatus}</p>
           ) : (
             <p className="mt-4 text-lg">Verifying your email...</p>
-          )}
-          {email && (
-            <button
-              onClick={handleResendVerification}
-              className="mt-4 font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded-full"
-              disabled={loading}
-            >
-              {loading ? 'Resending...' : 'Resend Verification Email'}
-            </button>
           )}
           {message && <p className="mt-4 text-sm">{message}</p>}
         </div>

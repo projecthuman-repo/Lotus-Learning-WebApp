@@ -9,11 +9,11 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true}, // abdullaziz51@gmail.com password -> try to google sign in -> 
   username: { type: String, required: true},
   accountType: { type: String, enum: ['student', 'instructor', 'admin']},
-  googleAuth: { type: Boolean, required: false},
+  googleAuth: { type: Boolean, default: false},
   isVerified:{type:Boolean, default:false},
   phoneNumber: { type: String, required: false }, 
   verificationCode: { type: Number, required: false },
-  is2FAEnabled: { type: Boolean, default: false }, // Add 2FA enabled flag
+ // is2FAEnabled: { type: Boolean, default: false }, // Add 2FA enabled flag
   is2FASetupDone: { type: Boolean, default: false }, // Add 2FA setup flag
   createdAt: { type: Date, default: Date.now }, //for periodic cleanup
   stateProvince: {

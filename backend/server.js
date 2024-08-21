@@ -20,6 +20,7 @@ const {
 const graphqlSchema = require('./graphql/schema/schema');
 const graphqlResolvers = require('./graphql/resolvers/resolvers');
 const isAuth = require('./middleware/is-auth');
+const cron = require('node-cron');
 const notificationRoutes = require('./routes/notification');
 const { connectToDatabases } = require('./db/connection');
 const processNotifications = require('./notification-microservice/worker-service');
@@ -203,6 +204,7 @@ connectToDatabases()
     app.listen(config.PORT);
     console.log(`Server running port ${config.PORT}`);
     processNotifications();
+
 /*
     cron.schedule('0 0 * * *', async () => {
       console.log('Cleaning up database of unverified accounts...');

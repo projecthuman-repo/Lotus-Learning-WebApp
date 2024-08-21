@@ -21,10 +21,20 @@ const {
     GMAIL_USER,
     GMAIL_PASS
   } = process.env;
+
 console.log(TWILIO_ACCOUNT_SID);
 console.log(TWILIO_AUTH_TOKEN);
 console.log(TWILIO_PHONE_NUMBER);
-  const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
+const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: GMAIL_USER, // Replace with your Gmail email
+        pass: GMAIL_PASS // Replace with your Gmail password
+    }
+});
 
 function generateOTP() {
     const digits = '0123456789';
@@ -81,14 +91,7 @@ router.post("/create-user", async(req, res, next) => {
         await user.save();
 
         // Send welcome email to the user
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: GMAIL_USER, // Replace with your Gmail email
-                pass: GMAIL_PASS // Replace with your Gmail password
-            }
-        });
-
+      
         const token = jwt.sign({
             email : newUser.email
         }, JWT_SECRET, { expiresIn: '10m' });
@@ -214,14 +217,6 @@ router.post("/create-user", async(req, res, next) => {
                     }
                 }
 
-                const transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        user: GMAIL_USER, // Replace with your Gmail email
-                        pass: GMAIL_PASS // Replace with your Gmail password
-                    }
-                });
-        
                 const token = jwt.sign({
                     email: newUser.email
                 }, JWT_SECRET, { expiresIn: '10m' });
@@ -271,14 +266,7 @@ router.post("/create-user", async(req, res, next) => {
                     }
                 };
 
-                const transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                        user: GMAIL_USER, // Replace with your Gmail email
-                        pass: GMAIL_PASS // Replace with your Gmail password
-                    }
-                });
-        
+           
                 const token = jwt.sign({
                     email: newUser.email
                 }, JWT_SECRET, { expiresIn: '10m' });
@@ -418,7 +406,6 @@ router.post('/google-login', async (req, res, next) => {
           password: 'GOOGLE_LOGIN', // Placeholder
           googleAuth: true,
           isVerified:true,
-          is2FAEnabled: false, // Add 2FA enabled flag
           is2FASetupDone:false, // Add 2FA setup flag
         });
         await user.save();
@@ -450,7 +437,7 @@ router.post('/forgot-password', async(req, res) => {
     try {
         const { email } = req.body;
         const user = await User.findOne({ email: email });
-        if (!user) {
+        if (!user || user.googleAuth) {
             return res.status(404).json({
                 success: false,
                 message: 'Email does not exist'
@@ -469,15 +456,7 @@ router.post('/forgot-password', async(req, res) => {
         await user.save();
         console.log('User after saving:', user); // Log the user object after saving
 
-        // Code to handle password reset email
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: GMAIL_USER, // Replace with your Gmail email
-                pass: GMAIL_PASS // Replace with your Gmail password
-            }
-        });
-
+       
         const mailOptions = {
             from: '"Lotus Learning" <noreply@projecthumancity.com>',
             to: email,
@@ -608,14 +587,6 @@ router.post('/resend-verification', async (req, res) => {
 
         const token = jwt.sign({ email: user.email }, JWT_SECRET, { expiresIn: '10m' });
 
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: GMAIL_USER,
-                pass: GMAIL_PASS
-            }
-        });
-
         const mailOptions = {
             from: '"Lotus Learning" <noreply@projecthumancity.com>',
             to: user.email,
@@ -624,13 +595,12 @@ router.post('/resend-verification', async (req, res) => {
             html: `
             <div style="text-align: center;">
                 <h1>Lotus Learning Verification</h1>
-                <h2>Please verify your email by clicking the link below:</h2>
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczNscF1hxSYKey8qkvjkohfOGh0VARUMSZLHp4bXTY1BrN2w5WXzgc1GgOCJIfy7E2clXSXFGfSP8skEWpHltEvczA8dr3gGOpgRsdSA1MbEw38-osUuCVC6Ikg63EVbv5-7YeBVXn57JtwwW9vkOTg=w462-h388-s-no-gm?authuser=0" alt="Placeholder Image" style="width: 170px; height: 150px; display: block; margin: 0 auto;" />
-                <p>http://localhost:3000/verify/${token}</strong>. </p> </br>
+                <h3>Please verify your email by clicking the link below:</h3>
+                   <img src="https://lh3.googleusercontent.com/pw/AP1GczNscF1hxSYKey8qkvjkohfOGh0VARUMSZLHp4bXTY1BrN2w5WXzgc1GgOCJIfy7E2clXSXFGfSP8skEWpHltEvczA8dr3gGOpgRsdSA1MbEw38-osUuCVC6Ikg63EVbv5-7YeBVXn57JtwwW9vkOTg=w462-h388-s-no-gm?authuser=0" alt="Placeholder Image" style="width: 170px; height: 150px; display: block; margin: 0 auto;" />
+                <p>http://localhost:3000/verify/${token}</strong>. </p> 
                 <p> It's valid for 10 minutes.</p>
             </div>
-        `,
-        text: `Your verification link:http://localhost:3000/verify/${token}. This link is valid for 10 minutes.`
+        `
     };
      
 
@@ -659,7 +629,7 @@ router.post('/send-verification-code', async (req, res) => {
         { phoneNumber, verificationCode },
         { new: true }
       );
-  
+
       await client.messages.create({
         body: `Your verification code is ${verificationCode}`,
         from: TWILIO_PHONE_NUMBER,
@@ -680,7 +650,6 @@ router.post('/send-verification-code', async (req, res) => {
       const user = await User.findOne({ email });
   
       if (user && user.verificationCode === parseInt(code)) {
-        user.is2FAEnabled = true; 
         user.is2FASetupDone = true;
         user.verificationCode = null; 
         await user.save();

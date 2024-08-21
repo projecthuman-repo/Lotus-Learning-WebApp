@@ -67,7 +67,7 @@ if ("serviceWorker" in navigator) {
           if(foundUser.userData.user)
           {
           //userdata means it works with goog users but userdata.user it works with reg users
-          dispatch(setUser(foundUser.userData.user)); 
+          dispatch(setUser(foundUser.userData)); 
           }else
           {
             dispatch(setUser(foundUser.userData)); 
@@ -82,8 +82,20 @@ if ("serviceWorker" in navigator) {
   
     useEffect(() => {
       setAuthUser();
-    }, [dispatch]);
-  
+    const channel = new BroadcastChannel('redirectChannel');
+
+    // Listen for messages
+    channel.onmessage = (event) => {
+      if (event.data === 'redirectToLogin') {
+        // Redirect all tabs to the login page
+        window.location.href = '/registration?screen=login';
+      }
+    };
+    // Cleanup when component unmounts
+    return () => {
+      channel.close();
+    };
+  }, [dispatch]);
    
 
   return (
@@ -112,8 +124,9 @@ if ("serviceWorker" in navigator) {
             <Route path="/profile/profile-settings/changepassword" element={<ChangePassword/>}/>
             <Route path="/verify/:token" element={<VerifyEmail />} />
             <Route path="/verification-sent" element={<VerificationSent />} />
-            <Route path="/setup-2fa" element={<TwoFASetup />} />
-            <Route path="/verify-2fa" element={<TwoFAVerification />} />
+            <Route path="/setup-2fa" element={<TwoFASetup />}/>
+            <Route path="/verify-2fa" element={<TwoFAVerification />}/>
+
 
             {/* Admin Pages */}
             <Route path="/admin/students" element={

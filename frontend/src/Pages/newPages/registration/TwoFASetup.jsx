@@ -1,5 +1,3 @@
-// src/components/TwoFASetup.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +27,18 @@ const TwoFASetup = () => {
     return `+1${number}`;
   };
 
+  const checkPhoneNumberUnique = async (formattedPhoneNumber) => {
+    try {
+      const response = await axios.post('http://localhost:5000/user/check-phone-number', {
+        phoneNumber: formattedPhoneNumber,
+      });
+      return response.data.message === 'Phone number is available';
+    } catch (error) {
+      setPhoneError('Failed to verify phone number uniqueness. Please try again.');
+      return false;
+    }
+  };
+
   const handleEnable2FA = async () => {
     if (!validatePhoneNumber(phoneNumber)) {
       setPhoneError('Invalid phone number. Please enter a valid 10-digit phone number with no spaces.');
@@ -39,6 +49,15 @@ const TwoFASetup = () => {
 
     setIsLoading(true);
     setError('');
+    setPhoneError('');
+
+    const isPhoneNumberUnique = await checkPhoneNumberUnique(formattedPhoneNumber);
+    if (!isPhoneNumberUnique) {
+      setPhoneError('This phone number is already associated with another account.');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       await axios.post('http://localhost:5000/user/send-verification-code', {
         email: user.email, 
@@ -68,7 +87,7 @@ const TwoFASetup = () => {
         {phoneError && <p className="text-red-500 mt-2">{phoneError}</p>}
         <button
           onClick={handleEnable2FA}
-          className="mt-4 font-semibold text-white bg-blue-500 hover:bg-blue-600 text-sm px-3 py-2 rounded-full"
+          className="mt-4 font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded-full" 
           disabled={isLoading}
         >
           {isLoading ? 'Sending...' : 'Enable 2FA'}
