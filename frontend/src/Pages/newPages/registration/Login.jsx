@@ -81,6 +81,32 @@ const Login = () => {
 	}
 });
 
+async function UpdateFetchTotalReputationApi(targetEmail) {
+	try {
+		// Encode the email properly
+		const encodedEmail = encodeURIComponent(targetEmail);
+		const response = await fetch(`http://localhost:8080/api/crossplatform/totalscore/${encodedEmail}`);
+		
+		if (!response.ok) {
+			const error = await response.json();
+			throw new Error(`Network response was not ok: ${response.statusText}, Error: ${error.message}`);
+		}
+
+		const data = await response.json();
+		console.log("API response:", data);
+
+		if (data?.data?.score) {
+			console.log(`The Total Score for ${targetEmail} is: ${data.data.score}`);
+		} else {
+			console.error('Missing score for the user in all apps will be set to zero:', data);
+			console.log('Reputation score for the user in crossplatform database is: ', data.data.score);
+		}
+	} catch (error) {
+		console.error('Fetch operation error:', error);
+	}
+}
+
+
   const sendLoginRequest = async () => {
 	setLoading(true);
 	try {
@@ -95,7 +121,7 @@ const Login = () => {
         const savedUser = await saveUserOnCookies({...foundUser.user})
         await dispatch(setUser(savedUser));
         navigate('/');
-
+		UpdateFetchTotalReputationApi(email);
       }
 
     } catch (error) {
