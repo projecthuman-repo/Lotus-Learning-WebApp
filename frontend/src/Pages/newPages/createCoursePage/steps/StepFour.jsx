@@ -19,6 +19,32 @@ const updateAge = (newCategoriesValue) => {
     }));
   };
 
+  async function createReputation(email, score) {
+    try {
+        const response = await fetch('http://localhost:8080/api/lotuslearning/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, score }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Network response was not ok: ${response.statusText}, Error: ${errorData.message}`);
+        }
+
+        const data = await response.json();
+        console.log('Reputation created successfully:', data);
+
+        // Handle the response data as needed
+        return data;
+    } catch (error) {
+        console.error('Error creating reputation:', error);
+        throw error;
+    }
+}
+
   async function getObjectIdViaEmailFromApi(targetEmail) {
     try {
         const response = await fetch('http://localhost:8080/api/lotuslearning', {
@@ -35,7 +61,8 @@ const updateAge = (newCategoriesValue) => {
                 return user._id;
             } else {
                 console.log(`The email ${targetEmail} was not found in the list.`);
-                return null;
+                createReputation(targetEmail, 0);
+                return user._id;
             }
         } else {
             console.error('Unexpected response format:', data);
@@ -48,7 +75,7 @@ const updateAge = (newCategoriesValue) => {
   }
 
   async function uploadCourseReputationApi() {
-    const targetEmail = 'abc@123.ca';
+    const targetEmail = 'vishtest@gmail.com';
     const userId = await getObjectIdViaEmailFromApi(targetEmail);
 
     if (userId) {
