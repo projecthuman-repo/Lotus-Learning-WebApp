@@ -19,6 +19,68 @@ const updateAge = (newCategoriesValue) => {
     }));
   };
 
+  async function getObjectIdViaEmailFromApi(targetEmail) {
+    try {
+        const response = await fetch('http://localhost:8080/api/lotuslearning', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+  
+        const data = await response.json();
+  
+        if (Array.isArray(data)) {
+            const user = data.find(user => user.email === targetEmail);
+            if (user) {
+                console.log(`The email ${targetEmail} was found. User ID: ${user._id}`);
+                return user._id;
+            } else {
+                console.log(`The email ${targetEmail} was not found in the list.`);
+                return null;
+            }
+        } else {
+            console.error('Unexpected response format:', data);
+            return null;
+        }
+    } catch (error) {
+        console.error('Fetch operation error:', error);
+        return null;
+    }
+  }
+
+  async function uploadCourseReputationApi() {
+    const targetEmail = 'abc@123.ca';
+    const userId = await getObjectIdViaEmailFromApi(targetEmail);
+
+    if (userId) {
+        fetch(`http://localhost:8080/api/lotuslearning/upload-course/${userId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(`Network response was not ok: ${response.statusText}, Error: ${err.message}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("API response:", data);
+
+            // Accessing the score and _id from the nested data property
+            if (data?.data?._id === userId && data.data.score) {
+                console.log(`The Reputation is: ${data.data.score}`);
+            } else {
+                console.error('Unexpected response format or missing score:', data);
+            }
+        })
+        .catch(error => console.error('Fetch operation error:', error));
+    } else {
+        console.error('User ID not found, cannot upload course');
+    }
+}
+
+
 return (
     <>
       <div className="h-[calc(90vh-65px)] w-full  flex items-center justify-center">
@@ -41,7 +103,10 @@ return (
         </button>
         <p className="font-semibold text-sm">{step}/4</p>
         <button
-          onClick={() => sendNewCourse()}
+          onClick={() => {
+            sendNewCourse();
+            uploadCourseReputationApi();
+          }}
           className={`px-2 py-1  font-semibold  linearGradient_ver1 text-white`}
         >
           Finish
