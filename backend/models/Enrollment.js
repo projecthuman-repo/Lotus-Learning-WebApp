@@ -22,6 +22,14 @@ const enrollmentSchema = new mongoose.Schema(
         ref: 'Lesson',
       },
     ],
+    CourseID: {
+      type: String,
+      required: false, // Set to true if it must be provided
+    },
+    UserID: {
+      type: String,
+      required: false, // Set to true if it must be provided
+    },
   },
   { timestamps: true } //createdAt + updatedAt
 );
