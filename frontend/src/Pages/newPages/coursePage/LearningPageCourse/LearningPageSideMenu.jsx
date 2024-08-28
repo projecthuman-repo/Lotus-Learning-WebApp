@@ -41,6 +41,10 @@ const LessonItemList = ({lesson, selectedLessonId, setSelectedLesson}) => {
 
 
   const changeIcon = (item) => {
+    if(item === undefined){
+      return textIcon
+    }
+
     switch(item){
       case 'crossword':
         return crosswordIcon 
@@ -61,8 +65,8 @@ const LessonItemList = ({lesson, selectedLessonId, setSelectedLesson}) => {
   return (
   <div onClick={() => setSelectedLesson(lesson)} className={`${(selectedLessonId === lesson._id)? "bg-stone-200 " : " bg-[#fff] hover:bg-stone-100" } w-full h-[75px]  border-b flex items-center justify-between px-2 cursor-pointer   transition-all`}>
     <div>
-      <p className="font-semibold">{lesson.title}</p>
-      <p className="text-xs">{lesson.lessonContent.type}</p>
+      <p className="font-semibold">{lesson.title? lesson.title : ""}</p>
+      <p className="text-xs">{lesson.lessonContent? lesson.lessonContent.type : ""}</p>
     </div>
     <div className="bg-stone-300 w-[40px] h-[40px] flex items-center justify-center p-1 rounded-full">
 

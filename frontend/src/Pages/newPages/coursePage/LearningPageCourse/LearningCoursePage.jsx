@@ -36,7 +36,7 @@ const LearningCoursePage = () => {
         {loaded ? (
           <div className="h-full flex w-full justify-between">
             <LearningPageSideMenu  courseLessons={courseData.lessons} selectedLesson={selectedLesson} setSelectedLesson={setSelectedLesson}/>
-            <LearningMainContent selectedLesson={selectedLesson} gameData={courseData.lessons[0].lessonContent.linked_game.gameRes}/>
+            <LearningMainContent selectedLesson={selectedLesson} />
           </div>
         ) : (
           <div className="h-full w-full flex items-center justify-center">

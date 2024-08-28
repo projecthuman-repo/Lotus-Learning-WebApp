@@ -4,11 +4,14 @@ import FillInBlanksPlayable from '../../../Course/PlayableApiGame/FillInBlanksPl
 import MultipleChoicePlayable from '../../../Course/PlayableApiGame/MultipleChoicePlayable';
 import WordDefinitionPlayable from '../../../Course/PlayableApiGame/WordDefinitionPlayable';
 import PdfDisplayer from '../../../../components/display-pdf/PdfDisplayer';
-const LearningMainContent = ({selectedLesson, gameData}) => {
+const LearningMainContent = ({selectedLesson}) => {
 
 
   console.log(selectedLesson);
   const switchContent = (item) => {
+    if(item === undefined) {
+      return ''
+    }
     if(item === 'game'){
       switch(selectedLesson.lessonContent.linked_game.type) {
         case 'crossword':
@@ -30,6 +33,10 @@ const LearningMainContent = ({selectedLesson, gameData}) => {
   }
 
   const checkName = (item) => {
+    
+    if(item === undefined) {
+      return ''
+    }
     if(item.type === "game"){
       switch(item.linked_game.type){
         case 'crossword':
@@ -54,7 +61,7 @@ const LearningMainContent = ({selectedLesson, gameData}) => {
     <div className='w-full'>
 
         <div className='py-2 w-full flex items-center justify-center  flex-col'>
-            <p className='px-2 font-semibold w-full text-start'>{checkName(selectedLesson.lessonContent)}</p>
+            <p className='px-2 font-semibold w-full text-start'>{selectedLesson.lessonContent.linked_game?  checkName(selectedLesson.lessonContent): ''}</p>
             {switchContent(selectedLesson.lessonContent.type)}
         </div>
         <div className='flex flex-col p-2'>
