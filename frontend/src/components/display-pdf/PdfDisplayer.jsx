@@ -69,7 +69,7 @@ const PdfDisplayer = ({ text }) => {
   }
 
   return (
-    <div>
+    <div >
       <div className="w-full h-[0.15rem] bg-stone-200">
         <div style={{width: checkWidthBar(page, transformedText.length-1)+'%' }} className={`h-full linearGradient_ver1 transform-all`}></div>
       </div>
@@ -78,7 +78,7 @@ const PdfDisplayer = ({ text }) => {
         <button
           className="p-2 bg-stone-100 rounded-lg hover:scale-[1.05] transform-all"
           onClick={() => handlePageChange("prev")}
-        >
+        > 
           <MdKeyboardArrowLeft />
         </button>
         <form onSubmit={handlePageChangeForm}>
@@ -97,7 +97,7 @@ const PdfDisplayer = ({ text }) => {
           <MdKeyboardArrowRight />
         </button>
       </div>
-      <div className="h-[600px]   pt-2 overflow-y-auto flex items-center justify-center">
+      <div className="h-[450px]   pt-2 overflow-y-auto flex items-center justify-center">
 
         <div className="w-[70%] h-full">
           <p className="text-justify  " id="output">
