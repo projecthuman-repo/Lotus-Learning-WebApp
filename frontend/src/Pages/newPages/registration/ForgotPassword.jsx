@@ -7,6 +7,7 @@ import axios from 'axios';
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState(''); // Added password state
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -19,9 +20,19 @@ const ForgotPassword = () => {
     setErrorMessage(''); // Reset the error message with new input
   };
 
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setErrorMessage(''); // Reset the error message with new input
+  };
+
   const handleSubmit = async () => {
     if (!email) {
       setErrorMessage('Please enter your email address');
+      return;
+    }
+
+    if (password.length < 8) { // Password length validation
+      setErrorMessage('Password must be at least 8 characters long');
       return;
     }
 
@@ -59,6 +70,13 @@ const ForgotPassword = () => {
             className="shadow appearance-none border rounded-full w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your email address"
           />
+          <input
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            className="shadow appearance-none border rounded-full w-full py-2 px-4 mt-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Enter your new password"
+          />
           {errorMessage && <p className="text-red-500 text-sm mt-2">{errorMessage}</p>}
           <button
             onClick={handleSubmit}
@@ -77,7 +95,7 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
-     <br></br>
+      <br></br>
       <GeneralFooter />
     </div>
   );

@@ -11,6 +11,8 @@ const qs = require('qs');
 const path = require('path');
 const fs = require('fs');
 const cleanupInactiveAccounts = require('./cleanup');
+const router = express.Router();
+
 
 
 const {
@@ -62,6 +64,20 @@ app.use(
     graphiql: true,
   })
 );
+
+// Fetch all student emails
+router.get('/get-students', async (req, res) => {
+  try {
+    const users = await User.find({ accountType: 'student' }).select('email');
+    if (users) {
+      return res.status(200).json({ success: true, data: users });
+    } else {
+      return res.status(404).json({ success: false, error: 'No students found' });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 //COOKIES
 const cookeHandler = require('./middleware/cookie-handler');

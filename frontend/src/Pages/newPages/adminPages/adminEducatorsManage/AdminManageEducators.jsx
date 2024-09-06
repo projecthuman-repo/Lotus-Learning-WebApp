@@ -25,7 +25,8 @@ const AdminManageEducators = () => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    getAllTeachers(authUser.institution.code)
+    getAllTeachers()
+    // (authUser.institution.code)
   },[])
 
   const getAllTeachers = async (code) => {

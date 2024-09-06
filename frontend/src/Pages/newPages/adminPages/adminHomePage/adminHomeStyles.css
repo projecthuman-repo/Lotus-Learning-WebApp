@@ -1,59 +1,68 @@
-.icon-child{
-    padding: 2.2rem;
+.icon-child {
+    padding: 2.2rem; /* Ensure padding is consistent */
     transition: all 0.1s ease;
 }
-.card-parent:hover .icon-child{
-    padding: 3rem;
+
+.card-parent:hover .icon-child {
+    padding: 3rem; /* Increase padding on hover */
 }
-.option{
+
+.option {
     transition: all 0.1s ease;
     color: white;
 }
-.parent-option:hover .option{
-    color: black;
 
+.parent-option:hover .option {
+    color: black;
 }
+
 .parent-option {
     transition: all 0.1s ease;
     background-color: rgb(35, 35, 35);
 }
+
 .parent-option:hover {
     background-color: rgb(247, 247, 247);
 }
 
-
-.bottom-card{
+.bottom-card {
     background-color: white;
     transition: all 0.2s ease;
     color: rgb(87, 83, 78);
 }
 
-.parent-yellow{
-    background-color: rgb(236, 193, 0)
+.parent-yellow {
+    background-color: rgb(236, 193, 0);
 }
 
-.parent-yellow:hover .yellow{
+.parent-yellow:hover .yellow {
     background-color: rgb(218, 178, 0);
     color: white;
 }
-.parent-green{
+
+.parent-green {
     background-color: rgb(29, 177, 0);
 }
-.parent-green:hover .green{
+
+.parent-green:hover .green {
     background-color: rgb(26, 153, 0);
     color: white;
 }
-.parent-red{
+
+.parent-red {
     background-color: rgb(177, 0, 0);
 }
-.parent-red:hover .red{
+
+.parent-red:hover .red {
     background-color: rgb(153, 0, 0);
     color: white;
 }
-.parent-blue{
+
+.parent-blue {
     background-color: rgb(0, 27, 177);
 }
-.parent-blue:hover .blue{
+
+.parent-blue:hover .blue {
     background-color: rgb(0, 27, 153);
     color: white;
 }

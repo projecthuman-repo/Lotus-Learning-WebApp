@@ -39,6 +39,9 @@ import VerifyEmail from "./Pages/newPages/registration/verifyEmail";
 import VerificationSent from "./Pages/newPages/registration/verificationSent";
 import TwoFASetup from './Pages/newPages/registration/TwoFASetup';
 import TwoFAVerification from './Pages/newPages/registration/TwoFAVerification';
+// import AdminNotificationBox from './Pages/newPages/adminPages/notification/AdminNotificationBox';
+import AdminNotification from './Pages/newPages/adminPages/notification/AdminNotification';
+
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -128,6 +131,7 @@ if ("serviceWorker" in navigator) {
             <Route path="/verify-2fa" element={<TwoFAVerification />}/>
 
 
+
             {/* Admin Pages */}
             <Route path="/admin/students" element={
               <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
@@ -137,6 +141,12 @@ if ("serviceWorker" in navigator) {
             <Route path="/admin/educators/:screen?" element={
               <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
                 <AdminManageEducators/>
+              </ProtectedRoute>
+            }/> 
+
+              <Route path="/admin/AdminNotification" element={
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+                <AdminNotification/>
               </ProtectedRoute>
             }/> 
             <Route path="/admin/courses/:screen?" element={

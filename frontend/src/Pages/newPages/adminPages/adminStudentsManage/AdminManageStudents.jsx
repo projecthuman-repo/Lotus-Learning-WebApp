@@ -21,7 +21,8 @@ const AdminManageStudents = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllStudents(authUser.institution.code)
+    getAllStudents()
+    // (authUser.institution.code)
   },[])
 
   const getAllStudents = async (code) => {
