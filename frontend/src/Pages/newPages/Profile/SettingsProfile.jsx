@@ -10,7 +10,6 @@ import updateInstitutionCodeProxy from "../../../BackendProxy/userProxy/updateIn
 import updatePasswordProxy from "../../../BackendProxy/userProxy/updatePasswordProxy";
 import saveUserCookies from "../../../BackendProxy/cookiesProxy/saveUserCookies";
 import { getLogedInCookies } from "../../../cookie-handler/cookieHandler";
-//import Cookies from 'js-cookie';
 import { updateUser } from "../../../redux/slice/user/userSlice";
 
 const SettingsProfile = () => {
@@ -20,15 +19,24 @@ const SettingsProfile = () => {
   const [selectedInput, setSelectedInput] = useState(null);
 
   useEffect(() => {
-   
-    
-      setUser(authUser);
-      
-    
-
+    setUser(authUser);
   }, [authUser]);
 
-  const checkSelectedInput = (value) => {return selectedInput === value;}
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter" && selectedInput) {
+        handleSave();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedInput, user]); 
+
+  const checkSelectedInput = (value) => selectedInput === value;
 
   const handleEmailChange = (e) => setUser({ ...user, email: e.target.value });
   const handleUsernameChange = (e) => setUser({ ...user, username: e.target.value });
@@ -104,7 +112,6 @@ const SettingsProfile = () => {
     console.log("Current authUser:", authUser);
     console.log("Current user state:", user);
   }, [authUser, user]);
-
 
   return (
     <>
@@ -242,32 +249,32 @@ const SettingsProfile = () => {
                   onClick={() => setSelectedInput("password")}
                   className="flex items-center justify-end space-x-2 cursor-pointer"
                 >
-                  <p className="text-sm">password</p>
+                  <p className="text-sm">**********</p>
                   <div className="hover:bg-stone-200 p-2 rounded-full transition-all hover-parent">
                     <OnHoverExtraHud name="edit" />
                     <FiChevronRight className="text-stone-500" />
                   </div>
                 </div>
-              )}               
+              )}
               </td>
             </tr>
             <tr>
               <td>
                 <label
-                  htmlFor="code"
+                  htmlFor="institutionCode"
                   className="font-medium cursor-pointer flex justify-between"
                 >
                   <span>Institution Code</span>
                 </label>
               </td>
               <td className="text-end">
-              {checkSelectedInput("institutionCode") ? (
+                {checkSelectedInput("institutionCode") ? (
                   <div className="flex items-center justify-end space-x-2">
                     <input
-                      
+                      value={user.institutionCode}
                       onChange={handleInstitutionCodeChange}
-                      id="code"
-                      placeholder="Code"
+                      id="institutionCode"
+                      placeholder="Institution Code"
                       type="text"
                       className={`${styles.simple_text_input} border`}
                     />
@@ -281,7 +288,7 @@ const SettingsProfile = () => {
                     onClick={() => setSelectedInput("institutionCode")}
                     className="flex items-center justify-end space-x-2 cursor-pointer"
                   >
-                    <p className="text-sm"></p>
+                    <p className="text-sm">{user.institutionCode}</p>
                     <div className="hover:bg-stone-200 p-2 rounded-full transition-all hover-parent">
                       <OnHoverExtraHud name="edit" />
                       <FiChevronRight className="text-stone-500" />
