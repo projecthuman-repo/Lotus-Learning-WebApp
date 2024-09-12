@@ -39,7 +39,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className="h-full w-full ">
+    <div className="h-full w-full max-w-screen overflow-x-hidden">
       <GeneralNavbar />
       <div className="w-full mx-auto  pb-2 flex items-center flex-col">
         <div className="xl:w-[1350px] lg:w-[1000px] w-full">
@@ -48,8 +48,10 @@ const HomePage = () => {
         <div className="xl:w-[1350px] lg:w-[1000px] w-full">
 
         </div>
-        <div className="xl:w-[1400px] lg:w-[1000px] w-full flex ">
-          <p className="pt-10 font-semibold md:text-xl sm:text-md text-sm  text-stone-700">Discover Our Course Offerings</p>
+     
+        <div className="xl:max-w-[1400px] lg:max-w-[1000px] w-full flex">
+        <p className="pt-2 font-semibold md:text-xl sm:text-md text-sm  text-stone-700">Discover Our Course Offerings</p>
+        
         </div>
         <div className="max-w-[1400px] mx-auto py-2 flex items-center justify-center">
           

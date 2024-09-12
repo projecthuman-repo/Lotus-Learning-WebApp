@@ -88,7 +88,7 @@ const FillInBlanksPlayable = ({ gameData }) => {
          compleated&&
           <div className="absolute h-full w-full bg-[#0005] z-30 rounded-lg flex flex-col items-center justify-center amin-compleated-crossword">
             <FaCheckCircle className="text-3xl text-white" />
-            <p className="mt-1 font-bold text-white">COMPLEATED!</p>
+            <p className="mt-1 font-bold text-white">COMPLETED!</p>
           </div>
         }
         <div className="bg-white p-3 rounded-lg">

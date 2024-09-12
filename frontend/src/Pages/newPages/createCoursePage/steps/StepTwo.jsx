@@ -56,7 +56,7 @@ return (
       </div>
       <div className="fixed bottom-0 w-full h-[65px] border-t flex justify-between px-4 items-center">
       <button onClick={() => goPrevPage()}className={`px-2 py-1  font-semibold text-stone-500 linearGradient_ver1 text-white rounded-sm`}>
-          go Back
+          Back
         </button>
         <p className="font-semibold text-sm"  >{step}/4</p>
         <button onClick={() => goNextPage()}className={`px-2 py-1  font-semibold text-stone-500 ${done? 'linearGradient_ver1 text-white rounded-sm' : 'border'}`}>
