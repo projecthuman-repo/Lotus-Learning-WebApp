@@ -36,7 +36,7 @@ router.get('/get-courses', async (req, res, next) => {
 router.get('/search-courses', async (req, res, next) => {
   const { title } = req.query;
   try {
-    const courses = await Course.find({ title: new RegExp(title, 'i') }); // Case insensitive search
+    const courses = await Course.find({ title: new RegExp(title, 'i') }); 
     return res.status(200).json({
       success: true,
       data: courses

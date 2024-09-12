@@ -23,7 +23,13 @@ const LearningCoursePage = () => {
     try {
       const res = await getCourseData(id);
       setCourseData(res.data);
-      setSelectedLesson(res.data.lessons[0])
+
+      if ( res.data.lessons[0].lessonContent) {
+        setSelectedLesson(res.data.lessons[0]);
+      } else {
+        setSelectedLesson(null); 
+      }
+
       console.log(res.data);
       setLoaded(true);
     } catch (error) {
@@ -35,17 +41,29 @@ const LearningCoursePage = () => {
       <>
         {loaded ? (
           <div className="h-full flex w-full justify-between">
-            <LearningPageSideMenu  courseLessons={courseData.lessons} selectedLesson={selectedLesson} setSelectedLesson={setSelectedLesson}/>
-            <LearningMainContent selectedLesson={selectedLesson} />
+            {selectedLesson ? (
+              <>
+                <LearningPageSideMenu 
+                  courseLessons={courseData.lessons} 
+                  selectedLesson={selectedLesson} 
+                  setSelectedLesson={setSelectedLesson}
+                />
+                <LearningMainContent selectedLesson={selectedLesson} />
+              </>
+            ) : (
+              <div className="flex items-center justify-center w-full h-full">
+                <p>The Content for this lesson hasnt been added yet.</p>
+              </div>
+            )}
           </div>
         ) : (
           <div className="h-full w-full flex items-center justify-center">
             <BarLoader/>
-          </div>
+          </div>        
         )}
       </>
     </div>
   );
-};
+}  
 
 export default LearningCoursePage;
