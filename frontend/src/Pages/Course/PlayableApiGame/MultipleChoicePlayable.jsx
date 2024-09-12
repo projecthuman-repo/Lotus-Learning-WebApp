@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineRestartAlt } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 const MultipleChoicePlayable = ({ gameData }) => {
+  const navigate = useNavigate(); 
   const [questionOn, setQuestionOn] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [finished, setFinished] = useState(false);
@@ -111,14 +113,14 @@ const MultipleChoicePlayable = ({ gameData }) => {
         {finished ? (
           <div className=" h-full w-full  flex items-center justify-center flex-col">
             <p className="font-semibold text-2xl animate-expand-vertically">
-              COMPLEATED!
+              COMPLETED!
             </p>
             <p>{checkResults(answers)}/{gameData.game && gameData.game.mcqs.length}</p>
             <div className="flex mt-4 space-x-3">
               <button onClick={() => restart()} className="p-2 flex items-center justify-center bg-zinc-300 rounded-full hover:bg-zinc-200 transition-all">
                 <MdOutlineRestartAlt />
               </button>
-              <button className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center ">
+              <button onClick={() => navigate("/")} className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center ">
                 <span className="mr-2">Continue</span>
                 <FaChevronRight />
               </button>

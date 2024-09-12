@@ -143,7 +143,7 @@ const CreateNewCourse = () => {
   };
 
   const handleExit = () => {
-    window.history.back();
+   navigate('/')
   };
 
   return (

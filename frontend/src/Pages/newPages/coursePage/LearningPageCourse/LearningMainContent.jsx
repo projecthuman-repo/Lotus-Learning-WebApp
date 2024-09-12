@@ -67,16 +67,19 @@ const LearningMainContent = ({ selectedLesson }) => {
 
   return (
     <div className='w-full'>
-      <div className='py-2 w-full flex items-center justify-center flex-col'>
-        <p className='px-2 font-semibold w-full text-start'>
-          {selectedLesson.lessonContent.linked_game ? checkName(selectedLesson.lessonContent) : ''}
-        </p>
-        {switchContent(selectedLesson.lessonContent.type)}
-      </div>
-      <div className='flex flex-col p-2'>
-        <p className='text-lg font-semibold'>Title</p>
-        <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, a. Optio eos deseruntvero adipisci, quam aliquid? Quod, quae eligendi nihil fuga nulla impedit? Culpa, sit vel.Eius, tempora sunt.</p>
-      </div>
+
+        {/* Move the title section to the top */}
+        <div className='flex flex-col p-2'>
+            <p className='text-lg font-semibold'>Title</p>
+            <p className='text-sm'>English text</p>
+        </div>
+  
+        {/* Rest of the content */}
+        <div className='py-2 w-full flex items-center justify-center flex-col'>
+            <p className='px-2 font-semibold w-full text-start'>{selectedLesson.lessonContent.linked_game ? checkName(selectedLesson.lessonContent) : ''}</p>
+            {switchContent(selectedLesson.lessonContent.type)}
+        </div>
+
     </div>
   );
 

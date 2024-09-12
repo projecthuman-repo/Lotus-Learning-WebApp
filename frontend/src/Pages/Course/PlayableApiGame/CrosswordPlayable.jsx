@@ -177,10 +177,11 @@ const Crossword = ({
 
   let lastId = 0;
   const generateUniqueId = () => {
-    const timestamp = Date.now().toString(36); // Convertir la marca de tiempo a base 36
-    const id = (lastId++).toString(36); // Incrementar el contador y convertir a base 36
+    const timestamp = Date.now().toString(36); // Convert timestamp to base 36
+    const id = (lastId++).toString(36); // Increment counter and convert to base 36
     return `${timestamp}-${id}`;
   };
+
   function getHintInfo(number) {
     const referenceObject = gameData.game.crossword.hints;
     const horizontalEntry = referenceObject.horizontal.find(
@@ -197,11 +198,13 @@ const Crossword = ({
     }
     return { type: "unknown", hint: "Number not found in referenceObject" };
   }
+
   function getAnswer(hint) {
     return gameData.basegame.word_definitions.find(
       (item) => item.Definition === hint
     );
   }
+
   const generateGrid = (matrix) => {
     const newMatrix = [];
     const toLinkVertical = [];
@@ -267,107 +270,104 @@ const Crossword = ({
         }
       }
     });
+
     const columnsToKeep = newMatrix[0]
       .map((_, colIndex) => colIndex)
       .filter((colIndex) =>
         newMatrix.some((row) => row[colIndex] !== "" && row[colIndex] !== " ")
       );
 
-    const updateItemById = (ref, newValue) => {
-      const updatedMatrix = filteredMatrix.map((row) =>
-        row.map((cell) =>
-          cell.ref === ref ? { ...cell, current: newValue } : cell
-        )
-      );
-      setFilteredMatrix(updatedMatrix);
-    };
-
-    useEffect(() => {
-      setFilteredMatrix(
-        newMatrix.map((row) => columnsToKeep.map((colIndex) => row[colIndex]))
-      );
-    }, []);
-
-    return (
-      <div className="relative ">
-        {
-         compleated&&
-          <div className="absolute h-full w-full bg-[#0005] z-30 rounded-lg flex flex-col items-center justify-center amin-compleated-crossword">
-            <FaCheckCircle className="text-3xl text-white" />
-            <p className="mt-1 font-bold text-white">COMPLEATED!</p>
-          </div>
-        }
-        <table className="table-auto border-collapse  border-gray-400 bg-zinc-300 rounded-lg crossword-table">
-          <tbody>
-            {filteredMatrix &&
-              filteredMatrix.map((row, rowIndex) => {
-                if (row.every((cell) => cell === "")) {
-                  return null;
-                }
-                return (
-                  <tr key={rowIndex} className=" border-gray-400">
-                    {row.map((cell, cellIndex) => {
-                      if (cell !== "") {
-                        return (
-                          <td
-                            key={cellIndex}
-                            className=" cell-undefined border-gray-400  cell  cursor-pointer "
-                          >
-                            <div className="relative w-full h-full p-[0.13rem]">
-                              <input
-                                type="text"
-                                maxLength="1"
-                                className={`${
-                                  cell.correct
-                                    ? "bg-green-300 text-white anim-cell-crossword"
-                                    : "bg-zinc-100 text-black "
-                                } font-bold border-b-2 border-zinc-400 text-xl h-full w-full focus:outline-none rounded-lg  text-center focus:scale-[1.08] transition-all`}
-                                value={cell.current ? cell.current : ""}
-                                onChange={(e) => {
-                                  updateItemById(
-                                    cell.ref,
-                                    e.target.value.toUpperCase()
-                                  );
-                                  if (e.target.value.length === 1) {
-                                    const nextInput =
-                                      e.target.nextElementSibling;
-                                    if (
-                                      nextInput &&
-                                      nextInput.tagName === "INPUT"
-                                    ) {
-                                      nextInput.focus();
-                                    }
-                                  }
-                                }}
-                              />
-                              <p className="absolute text-xs font-semibold text-stone-500 top-1 left-1">
-                                {cell.hint_number}
-                              </p>
-                            </div>
-                          </td>
-                        );
-                      } else {
-                        return (
-                          <td key={cellIndex} className="  cell p-[0.13rem]">
-                            <div className="h-full bg-zinc-300  border-2 w-full rounded-lg"></div>
-                          </td>
-                        );
-                      }
-                    })}
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-      </div>
-    );
+    return newMatrix.map((row) => columnsToKeep.map((colIndex) => row[colIndex]));
   };
+
+  const updateItemById = (ref, newValue) => {
+    const updatedMatrix = filteredMatrix.map((row) =>
+      row.map((cell) =>
+        cell.ref === ref ? { ...cell, current: newValue } : cell
+      )
+    );
+    setFilteredMatrix(updatedMatrix);
+  };
+
+  useEffect(() => {
+    const newMatrix = generateGrid(gridCrossWord);
+    setFilteredMatrix(newMatrix);
+  }, [gridCrossWord]);
 
   return (
     <div className="">
       <div>
         <div className="max-h-[60vh] overflow-y-auto ">
-          {generateGrid(gridCrossWord)}
+          <div className="relative ">
+            {compleated && (
+              <div className="absolute h-full w-full bg-[#0005] z-30 rounded-lg flex flex-col items-center justify-center amin-compleated-crossword">
+                <FaCheckCircle className="text-3xl text-white" />
+                <p className="mt-1 font-bold text-white">COMPLETED!</p>
+              </div>
+            )}
+            <table className="table-auto border-collapse  border-gray-400 bg-zinc-300 rounded-lg crossword-table">
+              <tbody>
+                {filteredMatrix &&
+                  filteredMatrix.map((row, rowIndex) => {
+                    if (row.every((cell) => cell === "")) {
+                      return null;
+                    }
+                    return (
+                      <tr key={rowIndex} className=" border-gray-400">
+                        {row.map((cell, cellIndex) => {
+                          if (cell !== "") {
+                            return (
+                              <td
+                                key={cellIndex}
+                                className=" cell-undefined border-gray-400  cell  cursor-pointer "
+                              >
+                                <div className="relative w-full h-full p-[0.13rem]">
+                                  <input
+                                    type="text"
+                                    maxLength="1"
+                                    className={`${
+                                      cell.correct
+                                        ? "bg-green-300 text-white anim-cell-crossword"
+                                        : "bg-zinc-100 text-black "
+                                    } font-bold border-b-2 border-zinc-400 text-xl h-full w-full focus:outline-none rounded-lg  text-center focus:scale-[1.08] transition-all`}
+                                    value={cell.current ? cell.current : ""}
+                                    onChange={(e) => {
+                                      updateItemById(
+                                        cell.ref,
+                                        e.target.value.toUpperCase()
+                                      );
+                                      if (e.target.value.length === 1) {
+                                        const nextInput =
+                                          e.target.nextElementSibling;
+                                        if (
+                                          nextInput &&
+                                          nextInput.tagName === "INPUT"
+                                        ) {
+                                          nextInput.focus();
+                                        }
+                                      }
+                                    }}
+                                  />
+                                  <p className="absolute text-xs font-semibold text-stone-500 top-1 left-1">
+                                    {cell.hint_number}
+                                  </p>
+                                </div>
+                              </td>
+                            );
+                          } else {
+                            return (
+                              <td key={cellIndex} className="  cell p-[0.13rem]">
+                                <div className="h-full bg-zinc-300  border-2 w-full rounded-lg"></div>
+                              </td>
+                            );
+                          }
+                        })}
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

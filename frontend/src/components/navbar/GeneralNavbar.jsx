@@ -158,7 +158,7 @@ const GeneralNavbar = ({ fixed = true }) => {
               onMouseOut={() => setNotificationsDropDown(false)}
               className="relative md:block hidden"
             >
-              <CiBellOn className="text-2xl cursor-pointer " />
+              <CiBellOn className="text-2xl cursor-pointer" />
               {notificationsDropDown && (
                 <div className="absolute top-[100%] right-0 z-30">
                   <NotificationsDropDown />
@@ -168,9 +168,9 @@ const GeneralNavbar = ({ fixed = true }) => {
             <div
               onMouseOver={() => setProfileDropDown(true)}
               onMouseOut={() => setProfileDropDown(false)}
-              className="relative md:px-2 px-0"
+              className="relative md:px-2"
             >
-              <div className="h-[35px] w-[35px] bg-stone-800 rounded-full flex items-center justify-center cursor-pointer no-select ">
+              <div className="h-[35px] w-[35px] bg-stone-800 rounded-full flex items-center justify-center cursor-pointer no-select">
                 {authUser.profilePic ? (
                   <img
                     src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?cs=srgb&dl=pexels-mohamed-abdelghaffar-771742.jpg&fm=jpg" alt="profile pic"
@@ -191,20 +191,21 @@ const GeneralNavbar = ({ fixed = true }) => {
           </div>
         ) : (
           <div>
-            <div style={{ display: 'flex' }}>
-              <button
-                onClick={() => navigate("/registration?screen=signup")}
-                className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded mr-2"
-              >
-                Create an account
-              </button>
-              <button
-                onClick={() => navigate("/registration?screen=login")}
-                className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded"
-              >
-                Sign In
-              </button>
-            </div>
+           <div style={{ display: 'flex' , marginRight: '16px'}}>
+  <button
+    onClick={() => navigate("/registration?screen=signup")}
+    className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded mr-2"
+  >
+    Create an account
+  </button>
+  <button
+    onClick={() => navigate("/registration?screen=login")}
+    className="font-semibold text-white linearGradient_ver1 text-sm px-3 py- rounded"
+  >
+    Sign In
+  </button>
+</div>
+
           </div>
         )}
       </div>

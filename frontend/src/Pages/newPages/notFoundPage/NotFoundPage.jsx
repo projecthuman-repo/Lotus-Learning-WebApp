@@ -18,7 +18,7 @@ const NotFoundPage = () => {
           </p>
           <p className="text-base">Sorry, we lost you there</p>
           <button onClick={() => navigate('/')} className="bg-black text-white px-2 py-1 rounded-lg mt-2">
-            Go back
+            Back
           </button>
         </div>
       </div>

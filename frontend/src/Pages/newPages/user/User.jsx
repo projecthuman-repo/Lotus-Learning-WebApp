@@ -134,17 +134,7 @@ const User = () => {
                "My Courses"
               }
             </button>
-            <button
-              onClick={() => navigate("/home")}
-              className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900  ${
-                checkScreen(screen, "explore")
-                  ? "pl-5 bg-stone-50 text-stone-900"
-                  : "pl-3 hover:pl-5 hover:border-l-4"
-              } transition-all`}
-            >
-              <IoSearchSharp className="mr-2" />
-              Explore
-            </button>
+        
             <button
               onClick={() => navigate("/user/notifications")}
               className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900  ${

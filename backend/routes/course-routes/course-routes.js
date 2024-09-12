@@ -207,15 +207,42 @@ router.post('/get-enrolled-courses', async (req, res, next) => {
 // DELETE COURSE BY ID
 router.post('/delete-course-by-id', async(req, res, next) => {
   try {
+    const { courseId } = req.body;
 
+   
+    if (!courseId) {
+      return res.status(400).json({
+        success: false,
+        message: "Course ID is required",
+      });
+    }
+
+    
+    const deletedCourse = await Course.findByIdAndDelete(courseId);
+
+
+    if (!deletedCourse) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+   
+    return res.status(200).json({
+      success: true,
+      message: "Course deleted successfully",
+      data: deletedCourse
+    });
 
   } catch (error) {
-    return res.status(400).json({
+    console.error("Error deleting course:", error);
+    return res.status(500).json({
       success: false,
+      message: "Internal server error",
     });
   }
-})
-
+});
 
 module.exports = router;
 
