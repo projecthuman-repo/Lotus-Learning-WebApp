@@ -8,79 +8,75 @@ import updateEmailProxy from "../../../BackendProxy/userProxy/updateEmailProxy";
 import updateUsernameProxy from "../../../BackendProxy/userProxy/updateUsernameProxy";
 import updateInstitutionCodeProxy from "../../../BackendProxy/userProxy/updateInstitutionCodeProxy";
 import updatePasswordProxy from "../../../BackendProxy/userProxy/updatePasswordProxy";
+import saveUserCookies from "../../../BackendProxy/cookiesProxy/saveUserCookies";
+import { getLogedInCookies } from "../../../cookie-handler/cookieHandler";
+import { updateUser } from "../../../redux/slice/user/userSlice";
 
 const SettingsProfile = () => {
-  const authUser = useSelector((state) => state.user); 
+  const authUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log("authuser is " + JSON.stringify(authUser));
-  const [user, setUser] = useState(authUser); 
+  const [user, setUser] = useState(authUser);
   const [selectedInput, setSelectedInput] = useState(null);
-  
+
   useEffect(() => {
     setUser(authUser);
   }, [authUser]);
 
-  const checkSelectedInput = (value) => {
-    return selectedInput === value;
-  };
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter" && selectedInput) {
+        handleSave();
+      }
+    };
 
-  const handleEmailChange = (e) => {
-    setUser({ ...user, email: e.target.value });
-  };
+    window.addEventListener("keydown", handleKeyDown);
 
-  const handleUsernameChange = (e) => {
-    setUser({ ...user, username: e.target.value });
-  };
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedInput, user]); 
 
-  const handlePasswordChange = (e) => {
-    setUser({ ...user, password: e.target.value });
-  };
+  const checkSelectedInput = (value) => selectedInput === value;
 
-  const handleInstitutionCodeChange = (e) => {
-    setUser({ ...user, institutionCode: e.target.value });
-  };
+  const handleEmailChange = (e) => setUser({ ...user, email: e.target.value });
+  const handleUsernameChange = (e) => setUser({ ...user, username: e.target.value });
+  const handlePasswordChange = (e) => setUser({ ...user, password: e.target.value });
+  const handleInstitutionCodeChange = (e) => setUser({ ...user, institutionCode: e.target.value });
 
   const handleUsernameUpdate = async () => {
     try {
-        await updateUsernameProxy(user._id, user.username); 
-        console.log("Username updated to:", user.username);
+      await updateUsernameProxy(user._id, user.username);
+      console.log("Username updated in DB to:", user.username);
 
-        
-        dispatch(updateAuthUser({ ...authUser, username: user.username }));
-
-        setSelectedInput(null);
+      dispatch(updateUser({ username: user.username }));
+      saveUserCookies({ ...authUser, username: user.username }); 
+      setSelectedInput(null);
     } catch (error) {
-        console.error("Failed to update username:", error);
+      console.error("Failed to update username:", error);
     }
-};
-
-const handleInstitutionCodeUpdate = async () => {
-    try {
-        await updateInstitutionCodeProxy(user._id, user.institutionCode); 
-        console.log("Institution Code updated to:", user.institutionCode);
-
-       
-        dispatch(updateAuthUser({ ...authUser, institutionCode: user.institutionCode }));
-
-        setSelectedInput(null);
-    } catch (error) {
-        console.error("Failed to update institution code:", error);
-    }
-};
-
-  const updateAuthUser = (newUserData) => {
-    return {
-      type: 'UPDATE_AUTH_USER',
-      payload: newUserData
-    };
   };
+
+  const handleInstitutionCodeUpdate = async () => {
+    try {
+      await updateInstitutionCodeProxy(user._id, user.institutionCode);
+      console.log("Institution Code updated in DB to:", user.institutionCode);
+
+      dispatch(updateUser({ institutionCode: user.institutionCode }));
+      saveUserCookies({ ...authUser, institutionCode: user.institutionCode }); 
+
+      setSelectedInput(null);
+    } catch (error) {
+      console.error("Failed to update institution code:", error);
+    }
+  };
+
   const handleEmailUpdate = async () => {
     try {
-      await updateEmailProxy(user._id, user.email); 
-      console.log("Email updated to:", user.email);
-      authUser.email=user.email;
+      await updateEmailProxy(user._id, user.email);
+      console.log("Email updated in DB to:", user.email);
 
-      dispatch(updateAuthUser(user.email));
+      dispatch(updateUser({ email: user.email }));
+      saveUserCookies({ ...authUser, email: user.email }); 
 
       setSelectedInput(null);
     } catch (error) {
@@ -90,15 +86,14 @@ const handleInstitutionCodeUpdate = async () => {
 
   const handlePasswordUpdate = async () => {
     try {
-        await updatePasswordProxy(user._id, user.password); 
-        console.log("Password updated successfully");
+      await updatePasswordProxy(user._id, user.password);
+      console.log("Password updated successfully");
 
-
-        setSelectedInput(null);
+      setSelectedInput(null);
     } catch (error) {
-        console.error("Failed to update password:", error);
+      console.error("Failed to update password:", error);
     }
-};
+  };
 
   const handleSave = async () => {
     try {
@@ -112,6 +107,11 @@ const handleInstitutionCodeUpdate = async () => {
       console.error("Failed to update user data:", error);
     }
   };
+
+  useEffect(() => {
+    console.log("Current authUser:", authUser);
+    console.log("Current user state:", user);
+  }, [authUser, user]);
 
   return (
     <>
@@ -249,32 +249,32 @@ const handleInstitutionCodeUpdate = async () => {
                   onClick={() => setSelectedInput("password")}
                   className="flex items-center justify-end space-x-2 cursor-pointer"
                 >
-                  <p className="text-sm">password</p>
+                  <p className="text-sm">**********</p>
                   <div className="hover:bg-stone-200 p-2 rounded-full transition-all hover-parent">
                     <OnHoverExtraHud name="edit" />
                     <FiChevronRight className="text-stone-500" />
                   </div>
                 </div>
-              )}               
+              )}
               </td>
             </tr>
             <tr>
               <td>
                 <label
-                  htmlFor="code"
+                  htmlFor="institutionCode"
                   className="font-medium cursor-pointer flex justify-between"
                 >
                   <span>Institution Code</span>
                 </label>
               </td>
               <td className="text-end">
-              {checkSelectedInput("institutionCode") ? (
+                {checkSelectedInput("institutionCode") ? (
                   <div className="flex items-center justify-end space-x-2">
                     <input
-                      
+                      value={user.institutionCode}
                       onChange={handleInstitutionCodeChange}
-                      id="code"
-                      placeholder="Code"
+                      id="institutionCode"
+                      placeholder="Institution Code"
                       type="text"
                       className={`${styles.simple_text_input} border`}
                     />
@@ -288,7 +288,7 @@ const handleInstitutionCodeUpdate = async () => {
                     onClick={() => setSelectedInput("institutionCode")}
                     className="flex items-center justify-end space-x-2 cursor-pointer"
                   >
-                    <p className="text-sm"></p>
+                    <p className="text-sm">{user.institutionCode}</p>
                     <div className="hover:bg-stone-200 p-2 rounded-full transition-all hover-parent">
                       <OnHoverExtraHud name="edit" />
                       <FiChevronRight className="text-stone-500" />

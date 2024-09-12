@@ -1,12 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { userSlice } from "./slice/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import userReducer from "./slice/user/userSlice";
 
 export const store = configureStore({
   reducer: {
-    user: userSlice.reducer,
+    user: userReducer,
   },
 });
 
-export const useAppDispatch = () => useDispatch();
-export const useAppSelector = useSelector;
