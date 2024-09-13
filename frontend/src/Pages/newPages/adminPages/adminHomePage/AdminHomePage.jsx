@@ -67,11 +67,7 @@ const AdminHomePage = () => {
           <div onClick={() => navigate("/admin/courses/")}>
             <OptionCard name="Manage Courses" icon={<FaBook />} color="red" />
           </div>
-          <OptionCard
-            name="Manage Games"
-            icon={<FaChessKnight />}
-            color="blue"
-          />
+         
         </div>
       </div>
       <GeneralFooter />

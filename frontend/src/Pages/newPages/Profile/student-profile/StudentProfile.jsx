@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GeneralCourseCard from "../../../../components/course-cards/GeneralCourseCard";
 import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
-import getEnrolledCourses from "../../../../BackendProxy/courseProxy/getEnrolledCourses";
-import { useEffect, useState } from "react";
+import getCoursesByProp from "../../../../BackendProxy/courseProxy/getCoursesByProp";
 import { useSelector } from "react-redux";
 
 const StudentProfile = () => {
@@ -11,6 +10,7 @@ const StudentProfile = () => {
 
   const [loaded, setLoaded] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetchEnrolledCourses();
@@ -18,12 +18,14 @@ const StudentProfile = () => {
 
   const fetchEnrolledCourses = async () => {
     try {
-      const res = await getEnrolledCourses(authUser._id);
-      console.log("the id of current user is "+ authUser._id )
-      setEnrolledCourses(res.res);
+      const res = await getCoursesByProp("accepted", true, authUser.institution.code);
+      console.log("The ID of the current user is " + authUser._id);
+      console.log("Fetched Courses: ", res); 
+      setEnrolledCourses(res.res); 
       setLoaded(true);
     } catch (error) {
       console.error(error);
+      setErrorMessage("Failed to load courses");
     }
   };
 
@@ -41,33 +43,42 @@ const StudentProfile = () => {
               className="text-sm focus:outline-none focus:border-b-stone-400 border-b-transparent border-b-[1.5px] pr-2 py-1 font-medium text-stone-600"
             />
             <IoMdSearch />
-
           </div>
         </div>
       </div>
-  
-      <div className="max-h-[90vh] overflow-y-auto flex flex-wrap items-start">
-        {loaded && enrolledCourses.length > 0 && enrolledCourses.map((item2, i) => (
-          <div key={i}>
-            
-            <GeneralCourseCard 
-              item={{ 
-                _id: item2.course._id, // Using the actual course ID
-                title: item2.course.title, 
-                creator: { username: item2.course.creatorName } 
-              }} 
-            />
-          </div>
-        ))}
-        <GeneralCourseCard/>
-        <GeneralCourseCard/>
-        <GeneralCourseCard/>
-        <GeneralCourseCard/>
-        <GeneralCourseCard/>
 
+      <div className="max-h-[90vh] overflow-y-auto flex flex-wrap items-start">
+      {loaded ? (
+          enrolledCourses.length > 0 ? (
+            enrolledCourses.map((course, i) => (
+              <div key={i}>
+                {course ? ( 
+                  <GeneralCourseCard 
+                    item={{
+                      _id: course._id, 
+                      title: course.title, 
+                      creator: { username: course.creator.institutionName } // Accessing creatorName directly from course
+                    }}
+                  />
+                ) : (
+                  <p className="text-red-500">Course data missing</p>
+                )}
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500">You are not enrolled in any courses.</p>
+          )
+        ) : (
+          errorMessage ? (
+            <p className="text-center text-red-500">{errorMessage}</p>
+          ) : (
+            <p className="text-center text-gray-500">Loading your courses...</p>
+          )
+        )}
       </div>
     </>
   );
- 
 };
-export default StudentProfile; 
+
+
+export default StudentProfile;

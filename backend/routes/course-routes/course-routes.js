@@ -161,44 +161,43 @@ router.post('/get-courses-by-prop', async(req, res, next) => {
 
 
 
-router.post('/get-enrolled-courses', async (req, res, next) => {
+router.get('/get-enrolled-courses', async (req, res, next) => {
   try {
-    
+    const userId = req.query.userId;  // Use query parameters for GET requests
 
-    const  UserID  = req.body.userId;
     // Find all enrollments for the user
-    const enrollments = await Enrollment.find({ UserID });
-    const firstEnrollment = enrollments[0];
-   
-    const courseId = firstEnrollment.CourseID;
+    const enrollments = await Enrollment.find({ UserID: userId });
+    if (enrollments.length === 0) {
+      return res.status(200).json({
+        res: [],
+        success: true,
+      });
+    }
 
     // Get all course IDs from the enrollments
     const courseIds = enrollments.map(enrollment => enrollment.CourseID);
 
+    // Fetch the corresponding courses
     const courses = await Course.find({ _id: { $in: courseIds } });
-   
 
+    // Map the enrollments to the corresponding course data
     const enrolledCourses = enrollments.map(enrollment => {
-      const course = courses.find(course => course._id == enrollment.CourseID);
-      
+      const course = courses.find(course => course._id.toString() === enrollment.CourseID.toString());
       return {
         enrollment,
         course: course ? { title: course.title, creatorName: course.creator.username } : null
       };
-      
+    });
 
-    })
     return res.status(200).json({
       res: enrolledCourses,
       success: true,
     });
-    
-
-
   } catch (error) {
     console.error(error);
-    return res.status(400).json({
+    return res.status(500).json({
       success: false,
+      message: 'An error occurred while fetching enrolled courses',
     });
   }
 });

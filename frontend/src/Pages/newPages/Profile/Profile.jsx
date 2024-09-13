@@ -95,16 +95,7 @@ const Profile = () => {
               >
                 <p className="font-semibold text-sm md:text-base">Courses</p>
               </div>
-              <div
-                onClick={() => navigate("/profile/my-courses")}
-                className={`border-b-2  cursor-pointer px-2 ${
-                  checkScreen("my-courses")
-                    ? "border-red-300 text_linearGradient_ver1"
-                    : "border-stone-400 text-stone-400"
-                }`}
-              >
-                <p className="font-semibold text-sm md:text-base">My Courses</p>
-              </div>
+            
               <div
                 onClick={() => navigate("/profile/games")}
                 className={`border-b-2  cursor-pointer px-2 ${

@@ -101,7 +101,8 @@ const courseSchema = new mongoose.Schema({
       ],
     }
   ],
-});
+},{ timestamps: true });
+
 courseSchema.pre('save', function (next) {
   if (this.lessons.length === 0) {
     this.lessons.push({

@@ -14,6 +14,7 @@ import { MdClose, MdDone } from "react-icons/md";
 import getCoursesByProp from "../../../../BackendProxy/courseProxy/getCoursesByProp";
 import AcceptRejectPetition from "../../../../components/accept-reject-classpetition/AcceptRejectPetition";
 import { useSelector } from "react-redux";
+import deleteCourseById from "../../../../BackendProxy/courseProxy/deleteCourse";
 
 const AdminManageCourses = () => {
   const navigate = useNavigate();
@@ -42,6 +43,26 @@ const AdminManageCourses = () => {
       setLoadedReq(true)
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const formatCreatedAt = (createdAt) => {
+    const date = new Date(createdAt);
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options).replace(',', ' -');
+  };
+
+  const handleDelete = async (courseId) => {
+    try {
+      const response = await deleteCourseById(courseId);
+      if (response.success) {
+        setCourses(courses.filter((course) => course._id !== courseId));
+        console.log('Course deleted successfully');
+      } else {
+        console.error('Failed to delete course');
+      }
+    } catch (error) {
+      console.error('Error deleting course:', error);
     }
   };
 
@@ -152,7 +173,7 @@ const AdminManageCourses = () => {
               </thead>
               <tbody>
                 {courses.map((course) => {
-                  return <CourseCard course={course} />;
+                  return <CourseCard course={course} formatCreatedAt={formatCreatedAt} handleDelete={handleDelete}/>;
                 })}
               </tbody>
             </table>
@@ -167,14 +188,14 @@ const AdminManageCourses = () => {
   );
 };
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, formatCreatedAt, handleDelete }) => {
   const navigate = useNavigate();
 
   return (
     <tr key={course.username} className="text-sm border-5 border-transparent">
       <td className="">{course.title}</td>
       <td>{course.creator.username}</td>
-      <td>Feb 20 - 2020</td>
+      <td>{formatCreatedAt(course.createdAt)}</td>
       <td>{course.age}</td>
       <td className=" flex space-x-2 items-center justify-end">
         <div
@@ -184,7 +205,8 @@ const CourseCard = ({ course }) => {
           <RiEdit2Fill className="text-md text-blue-700 " />
           <OnHoverExtraHud name={"Edit"} />
         </div>
-        <div className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
+        <div onClick={()=>handleDelete(course._id)}
+        className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
           <RiDeleteBin7Fill className="text-md text-red-600 " />
           <OnHoverExtraHud name={"Delete"} />
         </div>
