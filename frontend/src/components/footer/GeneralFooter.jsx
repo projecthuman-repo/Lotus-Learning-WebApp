@@ -13,24 +13,14 @@ const GeneralFooter = () => {
           <p className="text-white font-semibold text-lg">Lotus Learning</p>
         </div>
         <div className="space-x-5 flex justify-between">
-          <div className="space-y-1">
-            <p className="cursor-pointer text-end">About us</p>
-            <p className="cursor-pointer text-end">Contact us</p>
-            <p className="cursor-pointer text-end">Terms</p>
-            <p className="cursor-pointer text-end">FAQ</p>
-          </div>
+          
           <div className="space-y-1">
             <p className="cursor-pointer text-end">About us</p>
             <p className="cursor-pointer text-end">Contact us</p>
             <p className="cursor-pointer text-end">FAQ</p>
             <p className="cursor-pointer text-end">Terms</p>
           </div>
-          <div className="space-y-1">
-            <p className="cursor-pointer text-end">About us</p>
-            <p className="cursor-pointer text-end">Contact us</p>
-            <p className="cursor-pointer text-end">FAQ</p>
-            <p className="cursor-pointer text-end">Terms</p>
-          </div>
+         
           <img src={Icon} alt="icon" className="h-[30px]" />
 
         </div>
