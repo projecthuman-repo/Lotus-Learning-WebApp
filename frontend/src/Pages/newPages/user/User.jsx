@@ -119,44 +119,42 @@ const User = () => {
               </button>
             )}
 
-            <button
-              onClick={() => navigate("/user/courses")}
-              className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2  hover:bg-stone-50 hover:text-stone-900  ${
-                checkScreen(screen, "courses")
-                  ? "pl-5 bg-stone-50 text-stone-900"
-                  : "pl-3 hover:pl-5 hover:border-l-4"
-              } transition-all`}
-            >
-              <IoMdBookmarks className="mr-2" />
-              {educator?
-               "Created Courses"
-               :
-               "My Courses"
-              }
-            </button>
-        
-            <button
-              onClick={() => navigate("/user/notifications")}
-              className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900  ${
-                checkScreen(screen, "notifications")
-                  ? "pl-5 bg-stone-50 text-stone-900"
-                  : "pl-3 hover:pl-5 hover:border-l-4"
-              } transition-all`}
-            >
-              <IoMdNotifications className="mr-2" />
-              Notifications
-            </button>
-            <button
-              onClick={() => navigate("/user/settings")}
-              className={`my-2 flex items-center text-stone-400 font-medium  text-left  py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900  ${
-                checkScreen(screen, "settings")
-                  ? "pl-5 bg-stone-50 text-stone-900"
-                  : "pl-3 hover:pl-5 hover:border-l-4"
-              } transition-all`}
-            >
-              <IoIosSettings className="mr-2" />
-              Settings
-            </button>
+<button
+  onClick={() => navigate("/user/courses")}
+  className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900 ${
+    checkScreen(screen, "courses")
+      ? "pl-5 bg-stone-50 text-stone-900"
+      : "pl-3 hover:pl-5 hover:border-l-4"
+  } transition-all`}
+>
+  <IoMdBookmarks className="mr-2" />
+  {educator ? "Created Courses" : "My Courses"}
+</button>
+
+<button
+  onClick={() => navigate("/user/notifications")}
+  className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900 ${
+    checkScreen(screen, "notifications")
+      ? "pl-5 bg-stone-50 text-stone-900"
+      : "pl-3 hover:pl-5 hover:border-l-4"
+  } transition-all`}
+>
+  <IoMdNotifications className="mr-2" />
+  Notifications
+</button>
+
+<button
+  onClick={() => navigate("/user/settings")}
+  className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900 ${
+    checkScreen(screen, "settings")
+      ? "pl-5 bg-stone-50 text-stone-900"
+      : "pl-3 hover:pl-5 hover:border-l-4"
+  } transition-all`}
+>
+  <IoIosSettings className="mr-2" />
+  Settings
+</button>
+
           </div>
         </div>
         <div className="w-full flex items-end justify-between">

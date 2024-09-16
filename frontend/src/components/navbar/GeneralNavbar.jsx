@@ -10,7 +10,7 @@ import WishListDropDown from "./wishList-dropdown/WishListDropDown";
 import ProfileDropDown from "./profile-dropdown/ProfileDropDown";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { searchCourses } from "../../BackendProxy/courseProxy/searchCourses";
+import getCoursesByProp from "../../BackendProxy/courseProxy/getCoursesByProp";
 
 const GeneralNavbar = ({ fixed = true }) => {
   const [notificationsDropDown, setNotificationsDropDown] = useState(false);
@@ -27,13 +27,12 @@ const GeneralNavbar = ({ fixed = true }) => {
   const authUser = useSelector((state) => state.user);
 
   const handleSearch = async () => {
-    if (isLogedIn && query.trim() !== "") { 
+    if (isLogedIn && query.trim() !== "" && authUser) { 
       try {
-        const data = await searchCourses(query);
-        const filteredResults = data.data.filter(course => 
+        const res = await getCoursesByProp("accepted", true, authUser.institution.code);
+        const filteredResults = res.res.filter(course => 
           course.title.toLowerCase().startsWith(query.toLowerCase())
         );
-    
         setResults(filteredResults);
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -49,7 +48,6 @@ const GeneralNavbar = ({ fixed = true }) => {
 
   useEffect(() => {
     if (authUser) {
-      console.log(authUser);
       setIsLogedIn(true);
     } else {
       setIsLogedIn(false);
@@ -191,21 +189,20 @@ const GeneralNavbar = ({ fixed = true }) => {
           </div>
         ) : (
           <div>
-           <div style={{ display: 'flex' , marginRight: '16px'}}>
-  <button
-    onClick={() => navigate("/registration?screen=signup")}
-    className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded mr-2"
-  >
-    Create an account
-  </button>
-  <button
-    onClick={() => navigate("/registration?screen=login")}
-    className="font-semibold text-white linearGradient_ver1 text-sm px-3 py- rounded"
-  >
-    Sign In
-  </button>
-</div>
-
+            <div style={{ display: 'flex', marginRight: '16px' }}>
+              <button
+                onClick={() => navigate("/registration?screen=signup")}
+                className="font-semibold text-white linearGradient_ver1 text-sm px-3 py-2 rounded mr-2"
+              >
+                Create an account
+              </button>
+              <button
+                onClick={() => navigate("/registration?screen=login")}
+                className="font-semibold text-white linearGradient_ver1 text-sm px-3 py- rounded"
+              >
+                Sign In
+              </button>
+            </div>
           </div>
         )}
       </div>
