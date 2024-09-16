@@ -8,7 +8,7 @@ import GenericNotification from "../../../../components/fullscreen-notifications
 import { IoAlert } from "react-icons/io5";
 import SpinnerLoader from "../../../../components/loaders/SpinnerLoader";
 import { useNavigate, useParams } from "react-router-dom";
- 
+
 const LessonsList = ({
   setBaseCourseData,
   baseCourseData,
@@ -18,18 +18,18 @@ const LessonsList = ({
   lessons,
   updateLessons,
   setSelectedLesson,
-}) => { 
+}) => {
   const { courseid } = useParams();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const returnToCourseMenu = () => {
-    navigate('/course-editor/homePage/' + courseid)
-  }
+    navigate("/course-editor/homePage/" + courseid);
+  };
 
   const [loading, setLoading] = useState(false);
   const [openNotificationMessage, setOpenNotificationMessage] = useState(false);
-  // updateCourseDataProxy
+
   const newObjetTemp = {
     attachedFile: "",
     description: " ",
@@ -64,7 +64,7 @@ const LessonsList = ({
       try {
         console.log("a");
         const res = await updateCourseDataProxy(courseData);
-        setBaseCourseData(courseData)
+        setBaseCourseData(courseData);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -91,6 +91,7 @@ const LessonsList = ({
 
     return true;
   }
+
   return (
     <div className="w-[450px] cursor-default no-select">
       {openNotificationMessage && (
@@ -100,9 +101,34 @@ const LessonsList = ({
           mainMessage={"You have some uncompleted courses"}
         />
       )}
-      <div className="px-2 w-full border-r">
-        <p className="font-ligth text-sm py-1 text-stone-400">Editing mode</p>
+      
+      {/* Moved the return button here */}
+      <div className="w-full h-[2rem] border-r flex items-center justify-between px-2">
+        <div
+          onClick={() => returnToCourseMenu()}
+          className="flex items-center hover-parent cursor-pointer bg-stone-100 px-2 text-lg hover:scale-[1.08] transition-all rounded-full"
+        >
+          <IoReturnDownBackSharp />
+          <p className="text-xs ml-2 font-semibold">return</p>
+        </div>
+        
       </div>
+
+      {/* Editing mode comes after return */}
+      <div className="w-full h-[2rem] border-r flex items-center justify-between px-2">
+      <div className="px-2 w-half border-r">
+        <p className="font-light text-sm py-1 text-stone-400">Editing mode</p>
+      </div>
+      <div
+          onClick={() => handleAddNewLesson()}
+          className=" cursor-pointer font-semibold px-3 rounded-full py-1 text-white linearGradient_ver1 flex items-center  hover:scale-[1.02] transition-all "
+        >
+          <p className="text-sm">Add Lesson</p>
+          <IoAdd className="ml-2" />
+        </div>
+      </div>
+      
+
       {changed && (
         <div className="pl-2 flex space-x-2">
           {loading ? (
@@ -110,7 +136,7 @@ const LessonsList = ({
           ) : (
             <>
               <button className="flex items-center px-2 linearGradient_ver1 rounded-full hover:scale-[1.01] transition-all">
-                <button onClick={() => handleSave()} className="text-white  ">
+                <button onClick={() => handleSave()} className="text-white">
                   Save
                 </button>
                 <BsCheck className="ml-1 text-white" />
@@ -123,20 +149,8 @@ const LessonsList = ({
           )}
         </div>
       )}
-      <div className="w-full h-[2rem] border-r flex items-center justify-between px-2">
-        <div
-          onClick={() => handleAddNewLesson()}
-          className=" cursor-pointer font-semibold px-3 rounded-full py-1 text-white linearGradient_ver1 flex items-center  hover:scale-[1.02] transition-all "
-        >
-          <p className="text-sm">Add Lesson</p>
-          <IoAdd className="ml-2" />
-        </div>
-        <div onClick={() => returnToCourseMenu()} className="flex items-center hover-parent cursor-pointer bg-stone-100 px-2 text-lg hover:scale-[1.08] transition-all rounded-full">
-          <IoReturnDownBackSharp />
-          <p className="text-xs ml-2 font-semibold">return</p>
-        </div>
-      </div>
-      <div className="w-full h-[calc(100vh-4rem)] overflow-y-auto border-r  relative no-select border-t">
+
+      <div className="w-full h-[calc(100vh-4rem)] overflow-y-auto border-r relative no-select border-t">
         {lessons.map((item, i) => {
           return (
             <div key={item._id}>
@@ -177,8 +191,6 @@ const LessonItem = ({
   };
 
   const validateLesson = (item) => {
-
-
     if (!item.lessonContent || item.lessonContent.type === "") {
       return false;
     }
@@ -188,9 +200,8 @@ const LessonItem = ({
         return false;
       }
       const { linked_game } = item.lessonContent;
-      if(!linked_game.gameRes){
+      if (!linked_game.gameRes) {
         return false;
-
       }
       if (!linked_game.type || !linked_game.gameRes.game.game_id) {
         return false;
@@ -200,7 +211,7 @@ const LessonItem = ({
   };
 
   return (
-    <div className="w-full h-[4rem] mb-[0.1rem] flex items-center justify-between px-3 border-b  cursor-pointer hover:bg-stone-50 transition-all">
+    <div className="w-full h-[4rem] mb-[0.1rem] flex items-center justify-between px-3 border-b cursor-pointer hover:bg-stone-50 transition-all">
       <div
         onClick={() => setSelectedLesson(i)}
         className="h-full flex items-center w-full"
@@ -214,10 +225,7 @@ const LessonItem = ({
           </div>
         )}
       </div>
-      <div
-        onClick={handleRemove}
-        className="hover:bg-stone-200 rounded-full p-1"
-      >
+      <div onClick={handleRemove} className="hover:bg-stone-200 rounded-full p-1">
         <IoClose />
       </div>
     </div>
