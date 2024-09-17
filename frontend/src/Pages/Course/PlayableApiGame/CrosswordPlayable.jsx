@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BarLoader from "../../../components/loaders/BarLoader";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaBars } from "react-icons/fa"; // Import FaBars for the hamburger icon
 
 import "./styles.css";
 const CrosswordPlayable = ({ gameData }) => {
@@ -10,6 +10,8 @@ const CrosswordPlayable = ({ gameData }) => {
   const [answersHintsObj, setAnswersHintsObj] = useState(null);
   const [filteredMatrix, setFilteredMatrix] = useState(null);
   const [compleated, setCompleated] = useState(false);
+  const [isEnlarged, setIsEnlarged] = useState(false); // Add this state
+
 
   useEffect(() => {
     if (gameData) {
@@ -34,7 +36,6 @@ const CrosswordPlayable = ({ gameData }) => {
     return arr.map((innerArr) => {
       return innerArr.map((item) => {
         if (typeof item === "object" && item !== null) {
-          // Convierte 'current' y 'answer' a minúsculas para hacer la comparación
           if (item.current.toLowerCase() === item.answer.toLowerCase()) {
             return { ...item, correct: true };
           } else {
@@ -102,15 +103,23 @@ const CrosswordPlayable = ({ gameData }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col h-full">
       {!true ? (
         <div className="h-[250px] bg-stone-50 flex items-center justify-center">
           <BarLoader />
         </div>
       ) : (
-        <div>
-          <div className="flex ">
-            <div className="max-h-[60vh] flex items-center justify-center overflow-y-auto">
+        <div className="flex flex-col h-full">
+          {/* Hamburger Menu */}
+          {/* <button
+            className="hamburger-menu"
+            onClick={() => setIsEnlarged(!isEnlarged)}
+          >
+            <FaBars className="text-xl" />
+          </button> */}
+  
+          <div className={`flex flex-grow ${isEnlarged ? "enlarged" : ""}`}>
+            <div className={`game-container ${isEnlarged ? "game-enlarged" : ""}`}>
               <Crossword
                 compleated={compleated}
                 gameData={gameData}
@@ -118,49 +127,47 @@ const CrosswordPlayable = ({ gameData }) => {
                 filteredMatrix={filteredMatrix}
               />
             </div>
-
-            <div className="w-[600px] ml-2">
-              <div className="flex items-center justify-end">
-                <button
-                  className="linearGradient_ver1 px-3 py-1 rounded-full font-semibold text-white hover:scale-[1.03] transition-all"
-                  onClick={() => checkAnswers()}
-                >
-                  Check Answers
-                </button>
-              </div>
-              <p className="font-semibold text_linearGradient_ver1">Vertical</p>
-              <div className="bg-zinc-50  p-2 rounded-lg">
-                {answersHintsObj &&
-                  answersHintsObj.vertical.map((item, i) => {
-                    return (
+  
+            {/* Only show cues if not enlarged */}
+            {!isEnlarged && (
+              <div className="w-[600px] ml-2">
+                <div className="flex items-center justify-end">
+                  <button
+                    className="linearGradient_ver1 px-3 py-1 rounded-full font-semibold text-white hover:scale-[1.03] transition-all"
+                    onClick={() => checkAnswers()}
+                  >
+                    Check Answers
+                  </button>
+                </div>
+  
+                <p className="font-semibold text_linearGradient_ver1">Vertical</p>
+                <div className="bg-zinc-50 p-2 rounded-lg">
+                  {answersHintsObj &&
+                    answersHintsObj.vertical.map((item, i) => (
                       <div key={i + "" + item.number}>
                         <span className="mr-1 font-semibold text-xs">
                           {item.number}.
                         </span>
                         <span className="text-sm">{item.hint}</span>
                       </div>
-                    );
-                  })}
-              </div>
-
-              <p className="font-semibold text_linearGradient_ver1 ">
-                Horizontal
-              </p>
-
-              <div className="bg-zinc-50 p-2 rounded-lg">
-                {answersHintsObj &&
-                  answersHintsObj.horizontal.map((item, i) => {
-                    return (
+                    ))}
+                </div>
+  
+                <p className="font-semibold text_linearGradient_ver1">Horizontal</p>
+  
+                <div className="bg-zinc-50 p-2 rounded-lg">
+                  {answersHintsObj &&
+                    answersHintsObj.horizontal.map((item, i) => (
                       <div key={i + "" + item.number}>
-                        <span className="mr-1 font-semibold text-xs ">
+                        <span className="mr-1 font-semibold text-xs">
                           {item.number}.
                         </span>
                         <span className="text-sm">{item.hint}</span>
                       </div>
-                    );
-                  })}
+                    ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}
@@ -177,8 +184,8 @@ const Crossword = ({
 
   let lastId = 0;
   const generateUniqueId = () => {
-    const timestamp = Date.now().toString(36); // Convert timestamp to base 36
-    const id = (lastId++).toString(36); // Increment counter and convert to base 36
+    const timestamp = Date.now().toString(36); 
+    const id = (lastId++).toString(36); 
     return `${timestamp}-${id}`;
   };
 
@@ -252,13 +259,11 @@ const Crossword = ({
       newMatrix.push(row);
     }
 
-    // Handle vertical linking
     toLinkVertical.forEach((link) => {
       for (let k = 1; k < link.word.length; k++) {
         const newRow = link.row + k;
         const newCol = link.col;
 
-        // Check bounds
         if (newRow < matrix.length && newCol < matrix[0].length) {
           if (matrix[newRow][newCol] === " ") {
             newMatrix[newRow][newCol] = {
@@ -375,3 +380,11 @@ const Crossword = ({
 };
 
 export default CrosswordPlayable;
+
+
+
+
+
+
+
+

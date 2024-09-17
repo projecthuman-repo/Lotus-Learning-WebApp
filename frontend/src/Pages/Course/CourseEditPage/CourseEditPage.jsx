@@ -62,7 +62,7 @@ const CourseEditPage = () => {
     <div className='h-screen'>
         {
             loading?
-            <div>sdaa</div>:
+            <div>Page Loading...</div>:
             <div className='h-full w-full flex justify-between '>
             <LessonsList setBaseCourseData={setBaseCourseData} baseCourseData={baseCourseData} lesson={courseData.lessons[selectedLesson]} changed={changed} courseData={courseData} lessons={courseData.lessons} updateLessons={updateLessons} setSelectedLesson={setSelectedLesson}/>
             <MainContentContext.Provider value={{ index: selectedLesson, updateLessons, lessons: courseData.lessons, lesson: courseData.lessons[selectedLesson]}} className='w-full '>

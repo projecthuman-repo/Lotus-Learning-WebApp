@@ -69,9 +69,9 @@ const LearningMainContent = ({ selectedLesson }) => {
     <div className='w-full'>
 
         {/* Move the title section to the top */}
-        <div className='flex flex-col p-2'>
-            <p className='text-lg font-semibold'>Title</p>
-            <p className='text-sm'>English text</p>
+        <div className="flex justify-center">
+        <p className='text-lg font-semibold'>Title</p>
+        {/* <p className='text-sm'>English text</p> */}
         </div>
   
         {/* Rest of the content */}
