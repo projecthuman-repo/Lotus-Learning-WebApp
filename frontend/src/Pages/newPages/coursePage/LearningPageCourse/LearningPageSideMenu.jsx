@@ -24,6 +24,7 @@ const LearningPageSideMenu = ({ courseLessons, selectedLesson, setSelectedLesson
         <div onClick={() => navigate('/home')} className="flex items-center cursor-pointer">
           <img className="w-[50%]" src={lotusLogo} alt="Lotus Logo" />
         </div>
+
         <div onClick={toggleMenu} className="text-2xl cursor-pointer">
           {isMenuVisible ? <FaTimes /> : <FaBars />}
         </div>

@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import logoText from "../../../Images/lotusletters.webp";
-
 import { IoMdBookmarks, IoMdNotifications } from "react-icons/io";
 import { IoIosSettings } from "react-icons/io";
 import { FaPowerOff } from "react-icons/fa";
 import { MdAccountTree, MdAdminPanelSettings } from "react-icons/md";
-
 import { noPfpGenerator } from "../../../components/navbar/GeneralNavbar";
 import deleteUserOnCookies from "../../../BackendProxy/cookiesProxy/deleteUserCookies";
 import BlobComposition from "../../../components/backgrounds/BlobComposition/BlobComposition";
@@ -63,12 +61,10 @@ const User = () => {
   return (
     <div className="h-full w-full flex">
       <div
-
         className={`bg-stone-700 w-[350px] h-full border-r flex flex-col items-start justify-between p-4 transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 transition-transform duration-300 ease-in-out`}
       >
-
         <div className="w-full">
           <div
             onClick={() => navigate("/home")}
@@ -80,9 +76,7 @@ const User = () => {
             {authUser.profilePic ? (
               <img
                 className="rounded-full h-[70px] w-[70px] no-select"
-
                 src={authUser.profilePic}
-
                 alt="Profile"
               />
             ) : (
@@ -100,12 +94,10 @@ const User = () => {
             </div>
           </div>
 
-
           <div className="w-full flex flex-col space-y-3 no-select mt-8">
             <button
               onClick={() => navigate("/user/courses")}
               className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-600 hover:text-stone-200 ${
-
                 checkScreen(screen, "courses")
                   ? "pl-5 bg-stone-600 text-stone-200"
                   : "pl-3 hover:pl-5 hover:border-l-4"
@@ -114,11 +106,9 @@ const User = () => {
               <IoMdBookmarks className="mr-2" />
               {educator ? "Created Courses" : "My Courses"}
             </button>
-
             <button
               onClick={() => navigate("/user/notifications")}
               className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-600 hover:text-stone-200 ${
-
                 checkScreen(screen, "notifications")
                   ? "pl-5 bg-stone-600 text-stone-200"
                   : "pl-3 hover:pl-5 hover:border-l-4"
@@ -129,9 +119,7 @@ const User = () => {
             </button>
             <button
               onClick={() => navigate("/user/settings")}
-
               className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-600 hover:text-stone-200 ${
-
                 checkScreen(screen, "settings")
                   ? "pl-5 bg-stone-600 text-stone-200"
                   : "pl-3 hover:pl-5 hover:border-l-4"
@@ -143,7 +131,6 @@ const User = () => {
 
           </div>
         </div>
-
         <div className="w-full flex flex-col space-y-3 no-select">
             {(authUser.accountType === "admin") &&
              (
@@ -163,7 +150,6 @@ const User = () => {
             <button
               onClick={logout}
               className="font-semibold flex items-center text-stone-400 hover:text-stone-200 transition-all"
-
             >
               <FaPowerOff className="mr-2" />
               Logout
@@ -171,7 +157,7 @@ const User = () => {
           </div>
         </div>
       </div>
-
+      
       {/* RIGHT SIDE */}
       <div className="w-full h-[100vh] ft-0 relative">
         <BlobComposition
@@ -181,7 +167,6 @@ const User = () => {
             { top: "-30%", left: "70%", size: "400px" },
           ]}
         />
-
         <div className="w-[100%] ml-0 px-3">
           {screenContentCheck(screen)}
         </div>
@@ -190,7 +175,6 @@ const User = () => {
           className="fixed md:hidden top-0 left-0 z-50 bg-gray-800 text-white p-2 rounded-md focus:outline-none"
         >
           {sidebarOpen ? "Close" : "Open"}
-
         </button>
       </div>
     </div>
