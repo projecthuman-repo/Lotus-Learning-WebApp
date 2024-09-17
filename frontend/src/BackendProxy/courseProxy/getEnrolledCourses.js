@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = " http://52.14.4.146:5000/course";
+const BASE_URL = " https://52.14.4.146:5000/course";
 
 const getEnrolledCourses = async (userId) => {
   try {

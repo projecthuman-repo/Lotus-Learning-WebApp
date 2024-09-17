@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = ' http://52.14.4.146:5000/user';
+const BASE_URL = ' https://52.14.4.146:5000/user';
 
 const updateEmailProxy = async(_id, email) => {
     try {

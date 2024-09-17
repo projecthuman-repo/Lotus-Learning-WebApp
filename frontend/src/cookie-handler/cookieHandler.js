@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const url = ' http://52.14.4.146:5000/cookies'
+const url = ' https://52.14.4.146:5000/cookies'
 
 
 export const getLogedInCookies = async () => {
