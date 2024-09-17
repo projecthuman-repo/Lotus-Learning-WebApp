@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import logoText from "../../../Images/lotusletters.webp";
-import { IoMdBookmarks, IoMdNotifications, IoIosSettings } from "react-icons/io";
+
+import { IoMdBookmarks, IoMdNotifications } from "react-icons/io";
+import { IoIosSettings } from "react-icons/io";
 import { FaPowerOff } from "react-icons/fa";
 import { MdAccountTree, MdAdminPanelSettings } from "react-icons/md";
-import { useSelector } from "react-redux";
+
 import { noPfpGenerator } from "../../../components/navbar/GeneralNavbar";
 import deleteUserOnCookies from "../../../BackendProxy/cookiesProxy/deleteUserCookies";
 import BlobComposition from "../../../components/backgrounds/BlobComposition/BlobComposition";
@@ -18,7 +21,7 @@ const User = () => {
   const navigate = useNavigate();
   const authUser = useSelector((state) => state.user);
   const [educator, setEducator] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true); // State for sidebar visibility
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     if (!screen) {
@@ -47,12 +50,11 @@ const User = () => {
       case "settings":
         return <SettingsProfile />;
       default:
-        return <div>ddd</div>;
+        return <div>Default Content</div>;
     }
   };
 
   const logout = async () => {
-    // Perform any logout actions here, such as clearing user data, etc.
     deleteUserOnCookies();
     navigate("/registration");
     window.location.reload();
@@ -61,11 +63,12 @@ const User = () => {
   return (
     <div className="h-full w-full flex">
       <div
-        className={`sidebar bg-stone-700 w-[350px] h-full border-r flex flex-col justify-between p-4 transform ${
+
+        className={`bg-stone-700 w-[350px] h-full border-r flex flex-col items-start justify-between p-4 transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 transition-transform duration-300 ease-in-out`}
       >
-        {/* Top Section: Profile and Menu Buttons */}
+
         <div className="w-full">
           <div
             onClick={() => navigate("/home")}
@@ -77,7 +80,9 @@ const User = () => {
             {authUser.profilePic ? (
               <img
                 className="rounded-full h-[70px] w-[70px] no-select"
-                src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
+
+                src={authUser.profilePic}
+
                 alt="Profile"
               />
             ) : (
@@ -94,12 +99,15 @@ const User = () => {
               <p className="text-xs text-stone-50 w-full">{authUser.email}</p>
             </div>
           </div>
-          <div className="w-full flex flex-col space-y-3 no-select">
+
+
+          <div className="w-full flex flex-col space-y-3 no-select mt-8">
             <button
               onClick={() => navigate("/user/courses")}
-              className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900 ${
+              className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-600 hover:text-stone-200 ${
+
                 checkScreen(screen, "courses")
-                  ? "pl-5 bg-stone-50 text-stone-900"
+                  ? "pl-5 bg-stone-600 text-stone-200"
                   : "pl-3 hover:pl-5 hover:border-l-4"
               } transition-all`}
             >
@@ -109,9 +117,10 @@ const User = () => {
 
             <button
               onClick={() => navigate("/user/notifications")}
-              className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900 ${
+              className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-600 hover:text-stone-200 ${
+
                 checkScreen(screen, "notifications")
-                  ? "pl-5 bg-stone-50 text-stone-900"
+                  ? "pl-5 bg-stone-600 text-stone-200"
                   : "pl-3 hover:pl-5 hover:border-l-4"
               } transition-all`}
             >
@@ -120,38 +129,41 @@ const User = () => {
             </button>
             <button
               onClick={() => navigate("/user/settings")}
-              className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-50 hover:text-stone-900 ${
+
+              className={`my-2 flex items-center text-stone-400 font-medium text-left py-1 border-l-2 hover:bg-stone-600 hover:text-stone-200 ${
+
                 checkScreen(screen, "settings")
-                  ? "pl-5 bg-stone-50 text-stone-900"
+                  ? "pl-5 bg-stone-600 text-stone-200"
                   : "pl-3 hover:pl-5 hover:border-l-4"
               } transition-all`}
             >
               <IoIosSettings className="mr-2" />
               Settings
             </button>
+
           </div>
         </div>
 
-        {/* Bottom Section: Admin and Logout */}
-        <div className="w-full flex flex-col items-start">
-          {/* Admin Institution Button */}
-          {authUser.accountType === "admin" && (
-            <button
-              onClick={() => navigate("/admin")}
-              className={`my-2 flex items-center text-white rounded-sm font-medium text-center border-l-2 text-sm py-2 linearGradient_ver1 transition-all pl-3 hover:pl-5 hover:border-l-4 w-full`}
-            >
-              <MdAdminPanelSettings className="mr-2" />
-              Admin Institution
-            </button>
-          )}
-          <div className="w-full flex items-end justify-between mt-2">
+        <div className="w-full flex flex-col space-y-3 no-select">
+            {(authUser.accountType === "admin") &&
+             (
+               <button
+                 onClick={() => navigate("/admin")}
+                 className={`my-2 flex  items-center text-white rounded-sm font-medium  text-center border-l-2  text-sm py-2 linearGradient_ver1   transition-all pl-3 hover:pl-5 hover:border-l-4`}
+               >
+                 <MdAdminPanelSettings className="mr-2" />
+                 Admin Institution 
+               </button>
+             )}
+          <div className="w-full flex items-center justify-between">
             <p className="text-xs text-stone-300 cursor-default flex items-center">
               <MdAccountTree className="mr-1" />
-              <p>{authUser.accountType}</p>
+              <span>{authUser.accountType}</span>
             </p>
             <button
               onClick={logout}
-              className="font-semibold flex items-center text-stone-600 hover:text-stone-300 transition-all"
+              className="font-semibold flex items-center text-stone-400 hover:text-stone-200 transition-all"
+
             >
               <FaPowerOff className="mr-2" />
               Logout
@@ -170,12 +182,15 @@ const User = () => {
           ]}
         />
 
-        <div className="w-[100%] ml-0 px-3">{screenContentCheck(screen)}</div>
+        <div className="w-[100%] ml-0 px-3">
+          {screenContentCheck(screen)}
+        </div>
         <button
           onClick={toggleSidebar}
-          className={`fixed md:hidden top-0 left-0 z-50 bg-gray-800 text-white p-2 rounded-md focus:outline-none`}
+          className="fixed md:hidden top-0 left-0 z-50 bg-gray-800 text-white p-2 rounded-md focus:outline-none"
         >
-          {sidebarOpen ? "close" : "open"}
+          {sidebarOpen ? "Close" : "Open"}
+
         </button>
       </div>
     </div>

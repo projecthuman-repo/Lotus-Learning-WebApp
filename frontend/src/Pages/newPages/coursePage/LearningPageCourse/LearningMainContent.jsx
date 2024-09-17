@@ -65,6 +65,7 @@ const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastL
   };
 
   return (
+
     <div className='w-full mt-12'> {/* Add margin-top of 8 (2rem) */}
       <div className='flex flex-col p-2'>
         <p className='text-lg font-semibold'>Title</p>
@@ -75,6 +76,7 @@ const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastL
       <div className='py-2 w-full flex items-center justify-center flex-col'>
         {switchContent(selectedLesson.lessonContent.type)}
       </div>
+
     </div>
   );
 };

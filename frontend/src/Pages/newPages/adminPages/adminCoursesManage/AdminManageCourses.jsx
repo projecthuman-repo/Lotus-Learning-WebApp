@@ -23,24 +23,26 @@ const AdminManageCourses = () => {
   const [loaded, setLoaded] = useState(false);
   const [loadedReq, setLoadedReq] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]); 
   const [pendingRequests, setPendingRequests] = useState([]);
-
+  const [searchInput, setSearchInput] = useState(""); 
 
   const getAllAcceptedCourses = async () => {
     try {
       const res = await getCoursesByProp("accepted", true, authUser.institution.code);
       setCourses(res.res);
-      setLoaded(true)
+      setFilteredCourses(res.res); 
+      setLoaded(true);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const getAllPendingRequests = async () => {
     try {
       const res = await getCoursesByProp("accepted", false, authUser.institution.code);
       setPendingRequests(res.res);
-      setLoadedReq(true)
+      setLoadedReq(true);
     } catch (error) {
       console.error(error);
     }
@@ -71,6 +73,16 @@ const AdminManageCourses = () => {
     getAllPendingRequests();
   }, []);
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchInput(value);
+  
+    const filtered = courses.filter((course) =>
+      course.title.toLowerCase().startsWith(value)
+    );
+    setFilteredCourses(filtered);
+  };
+
   return (
     <div>
       <GeneralNavbar />
@@ -83,68 +95,26 @@ const AdminManageCourses = () => {
       />
       <div className="m-auto max-w-[1200px] mt-3 min-h-[100vh]">
         {pendingRequests.length > 0 && (
-          <>
-            <div className="bg-white rounded-full flex justify-between items-center py-2 px-4">
-              <div className="flex items-center space-x-2">
-                <p className="font-semibold text-lg">Pending Requests</p>
-                {pendingRequests.length > 0 && (
-                  <div className="flex items-center justify-center bg-red-400 rounded-full h-[20px] w-[20px]">
-                    <p className="font-medium text-white text-center text-sm">
-                      {pendingRequests.length}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <div className="flex items-center">
-                  <input
-                    placeholder="Search by name"
-                    className="text-sm focus:outline-none  focus:border-b-stone-400 border-b-transparent border-b-[1.5px]  pr-2 py-1 font-medium text-stone-600 "
-                  />
-                  <IoMdSearch />
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white py-2 px-4 my-3 rounded-lg">
-              <table className="table-auto w-full">
-                {loadedReq ? (
-                  <>
-                    <thead className="">
-                      <tr>
-                        <th>Name</th>
-                        <th>Complexity</th>
-                        <th>Applying to</th>
-                        <th className="text-end">Options</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {pendingRequests.map((item, i) => {
-                        return <RequestCard item={item} />;
-                      })}
-                    </tbody>
-                  </>
-                ) : (
-                  <div className="py-2 flex items-center justify-center w-full">
-                    <SpinnerLoader />
-                  </div>
-                )}
-              </table>
-            </div>
-          </>
+          <div className="flex items-center justify-center bg-red-400 rounded-full h-[20px] w-[20px]">
+          <p className="font-medium text-white text-center text-sm">
+            {pendingRequests.length}
+          </p>
+        </div>
         )}
 
+        
         <div className="bg-white rounded-full flex justify-between items-center py-2 px-4">
           <p className="font-semibold text-lg">Courses List</p>
           <div className="flex items-center space-x-3">
-            <div className="cursor-pointer hover:bg-stone-100 p-2 rounded-full transition-all">
+           {/* <div className="cursor-pointer hover:bg-stone-100 p-2 rounded-full transition-all">
               <FaSortAlphaDownAlt className="text-stone-800" />
-            </div>
+            </div>*/}
             <div className="flex items-center">
               <input
                 placeholder="Search by name"
-                className="text-sm focus:outline-none  focus:border-b-stone-400 border-b-transparent border-b-[1.5px]  pr-2 py-1 font-medium text-stone-600 "
+                className="text-sm focus:outline-none focus:border-b-stone-400 border-b-transparent border-b-[1.5px] pr-2 py-1 font-medium text-stone-600"
+                value={searchInput}
+                onChange={handleSearchChange}
               />
               <IoMdSearch />
             </div>
@@ -172,8 +142,10 @@ const AdminManageCourses = () => {
                 </tr>
               </thead>
               <tbody>
+
                 {courses.map((course) => {
                   return <CourseCard course={course} formatCreatedAt={formatCreatedAt} handleDelete={handleDelete}/>;
+
                 })}
               </tbody>
             </table>
@@ -192,28 +164,32 @@ const CourseCard = ({ course, formatCreatedAt, handleDelete }) => {
   const navigate = useNavigate();
 
   return (
-    <tr key={course.username} className="text-sm border-5 border-transparent">
-      <td className="">{course.title}</td>
+    <tr key={course._id} className="text-sm border-5 border-transparent">
+      <td>{course.title}</td>
       <td>{course.creator.username}</td>
       <td>{formatCreatedAt(course.createdAt)}</td>
       <td>{course.age}</td>
-      <td className=" flex space-x-2 items-center justify-end">
+      <td className="flex space-x-2 items-center justify-end">
         <div
           onClick={() => navigate(`/course-editor/homePage/${course._id}`)}
           className="p-2 hover:bg-blue-200 transition-all bg-blue-100 rounded-full cursor-pointer hover-parent"
         >
-          <RiEdit2Fill className="text-md text-blue-700 " />
+          <RiEdit2Fill className="text-md text-blue-700" />
           <OnHoverExtraHud name={"Edit"} />
         </div>
+
         <div onClick={()=>handleDelete(course._id)}
         className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
           <RiDeleteBin7Fill className="text-md text-red-600 " />
+
           <OnHoverExtraHud name={"Delete"} />
         </div>
       </td>
     </tr>
   );
 };
+
+
 
 const RequestCard = ({ item }) => {
   const [doubleValidating, setDoubleValidating] = useState(false);

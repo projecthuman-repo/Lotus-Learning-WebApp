@@ -6,6 +6,7 @@
 
 }
 
+
 @keyframes crossword-cell-anim {
 	0%,
 	100% {
@@ -47,3 +48,111 @@
 		transform: scaleY(1);
 	}
 }
+
+
+.game-container {
+	transition: transform 0.3s ease;
+  }
+  
+  .cues-container {
+	transition: width 0.3s ease;
+	overflow-y: auto;
+	max-height: 100vh;
+  }
+  
+  .cues-content {
+	padding-right: 16px;
+  }
+  
+  @media (min-width: 1024px) {
+	.game-container.w-full {
+	  width: 100% !important;
+	  height: 70vh !important;
+	}
+  
+	.cues-container.w-full {
+	  height: 30vh !important;
+	}
+  }
+  
+  @media (max-width: 1023px) {
+	.game-container, .cues-container {
+	  width: 100% !important;
+	}
+  }
+
+  .game-container {
+	transition: transform 0.3s ease;
+	flex: 1; 
+	overflow: hidden; 
+	display: flex; 
+	align-items: center; 
+	justify-content: center; 
+  }
+  
+  .crossword-table {
+	table-layout: fixed; 
+	width: 100%; 
+	height: 100%; 
+	border-collapse: collapse; 
+  }
+  
+  .cell {
+	width: 100%; 
+	height: 100%; 
+  }
+  
+  input {
+	width: 100%; 
+	height: 100%; 
+	box-sizing: border-box; 
+  }
+  
+  .hints-container {
+	overflow-y: auto; 
+	max-height: 100vh; 
+	padding: 1rem; 
+  }
+  
+  .enlarged .hints-container {
+	max-height: 50vh; 
+  }
+  
+  .hamburger-menu {
+	position: fixed; 
+	top: 1rem;
+	right: 1rem;
+	z-index: 1000; 
+  }
+  
+  @media (min-width: 1024px) {
+	.game-container.w-full {
+	  width: 100% !important;
+	  height: 70vh !important;
+	}
+  
+	.cues-container.w-full {
+	  height: 30vh !important;
+	}
+  }
+  
+  @media (max-width: 1023px) {
+	.game-container, .cues-container {
+	  width: 100% !important;
+	}
+  }
+
+.fixed-actions {
+	position: fixed; 
+	top: 1rem;
+	right: 1rem;
+	z-index: 1000; 
+	background: rgba(255, 255, 255, 0.8); 
+	padding: 1rem;
+	border-radius: 0.5rem;
+  }
+  
+  .enlarged .fixed-actions {
+	top: 1rem;
+	right: 1rem;
+  }

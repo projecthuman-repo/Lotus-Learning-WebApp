@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import BarLoader from "../../../components/loaders/BarLoader";
+
 import { FaCheckCircle } from "react-icons/fa";
+
 import "./styles.css";
 
 const CrosswordPlayable = ({ gameData,  onNextLesson, 
@@ -8,6 +10,8 @@ const CrosswordPlayable = ({ gameData,  onNextLesson,
   const [answersHintsObj, setAnswersHintsObj] = useState(null);
   const [filteredMatrix, setFilteredMatrix] = useState(null);
   const [compleated, setCompleated] = useState(false);
+  const [isEnlarged, setIsEnlarged] = useState(false); // Add this state
+
 
   useEffect(() => {
     if (gameData) {
@@ -34,6 +38,7 @@ const CrosswordPlayable = ({ gameData,  onNextLesson,
     }
   };
   function checkAndUpdate(arr) {
+
     const words = extractWords(arr); // Group cells by word (horizontal and vertical)
   
     words.forEach((wordObj) => {
@@ -52,6 +57,7 @@ const CrosswordPlayable = ({ gameData,  onNextLesson,
       cells.forEach((cell, index) => {
         // Compare each letter in the word to the correct answer letter
         cell.correct = cell.current && cell.current.toLowerCase() === answer[index].toLowerCase();
+
       });
     });
   
@@ -152,6 +158,7 @@ const CrosswordPlayable = ({ gameData,  onNextLesson,
   };
 
   return (
+
     <div>
       <div>
         <div className="flex">
@@ -207,6 +214,7 @@ const CrosswordPlayable = ({ gameData,  onNextLesson,
                   );
                 })}
             </div>
+   
           </div>
         </div>
       </div>
@@ -219,8 +227,8 @@ const Crossword = ({ gameData, setFilteredMatrix, filteredMatrix, compleated, on
 
   let lastId = 0;
   const generateUniqueId = () => {
-    const timestamp = Date.now().toString(36); // Convert timestamp to base 36
-    const id = (lastId++).toString(36); // Increment counter and convert to base 36
+    const timestamp = Date.now().toString(36); 
+    const id = (lastId++).toString(36); 
     return `${timestamp}-${id}`;
   };
 
@@ -289,7 +297,6 @@ const Crossword = ({ gameData, setFilteredMatrix, filteredMatrix, compleated, on
       newMatrix.push(row);
     }
 
-    // Handle vertical linking
     toLinkVertical.forEach((link) => {
       for (let k = 1; k < link.word.length; k++) {
         const newRow = link.row + k;
@@ -399,3 +406,11 @@ const Crossword = ({ gameData, setFilteredMatrix, filteredMatrix, compleated, on
 };
 
 export default CrosswordPlayable;
+
+
+
+
+
+
+
+

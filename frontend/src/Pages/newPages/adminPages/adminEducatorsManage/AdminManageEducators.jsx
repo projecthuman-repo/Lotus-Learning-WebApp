@@ -16,17 +16,19 @@ import { useSelector } from "react-redux";
 import OnHoverExtraHud from "../../../../components/OnHoverExtraHud";
 import EditEducator from "./EditEducator";
 import getTeachers from "../../../../BackendProxy/adminProxy/getTeachers";
+
 const AdminManageEducators = () => {
   const authUser = useSelector((state) => state.user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { screen } = useParams();
 
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   useEffect(() => {
-    getAllTeachers(authUser.institution.code)
-  },[])
+    getAllTeachers(authUser.institution.code);
+  }, []);
 
   const getAllTeachers = async (code) => {
     try {
@@ -36,19 +38,24 @@ const AdminManageEducators = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const checkScreen = (screen) => {
-    switch (screen){
-        case 'view':
-            return <ViewEducatorApplication/>
-        case 'edit':
-            return <EditEducator/>
-        default:
-            navigate('/admin/educators')
-            return
+    switch (screen) {
+      case "view":
+        return <ViewEducatorApplication />;
+      case "edit":
+        return <EditEducator />;
+      default:
+        navigate("/admin/educators");
+        return;
     }
   };
+
+  const filteredUsers = users.filter((user) =>
+    user.username.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
+  
 
   return (
     <div>
@@ -64,30 +71,33 @@ const AdminManageEducators = () => {
         checkScreen(screen)
       ) : (
         <div className="m-auto max-w-[1200px] mt-3 min-h-[100vh]">
-
-
           <div className="bg-white rounded-full flex justify-between items-center py-2 px-4">
             <p className="font-semibold text-lg">Existing Educators</p>
             <div className="flex items-center space-x-3">
-              <div className="cursor-pointer hover:bg-stone-100 p-2 rounded-full transition-all">
+             {/*  <div className="cursor-pointer hover:bg-stone-100 p-2 rounded-full transition-all">
                 <FaSortAlphaDownAlt className="text-stone-800" />
-              </div>
+              </div> */}
               <div className="flex items-center">
                 <input
                   placeholder="Search by name"
-                  className="text-sm focus:outline-none  focus:border-b-stone-400 border-b-transparent border-b-[1.5px]  pr-2 py-1 font-medium text-stone-600 "
+                  className="text-sm focus:outline-none focus:border-b-stone-400 border-b-transparent border-b-[1.5px] pr-2 py-1 font-medium text-stone-600"
+                  value={searchTerm} 
+                  onChange={(e) => setSearchTerm(e.target.value)} 
                 />
                 <IoMdSearch />
               </div>
             </div>
           </div>
           <div className="my-2 flex items-center justify-end">
-          <button 
-          onClick={() => {navigate('/admin/invite/educators')}}
-          className={`text-white font-medium px-3 py-1 rounded-full linearGradient_ver1 text-sm hover:scale-[1.05] transition-all`}>
-            + Invite Educators
-          </button>
-        </div>
+            <button
+              onClick={() => {
+                navigate("/admin/invite/educators");
+              }}
+              className={`text-white font-medium px-3 py-1 rounded-full linearGradient_ver1 text-sm hover:scale-[1.05] transition-all`}
+            >
+              + Invite Educators
+            </button>
+          </div>
           <div className="bg-white py-2 px-4 mt-3 rounded-lg">
             <table className="table-auto w-full">
               <thead className="">
@@ -98,11 +108,9 @@ const AdminManageEducators = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user, i) => {
-                  return(
-                    <TeacherCard user={user}/>
-                  )
-                })}
+                {filteredUsers.map((user) => (
+                  <TeacherCard key={user._id} user={user} />
+                ))}
               </tbody>
             </table>
           </div>
@@ -112,22 +120,24 @@ const AdminManageEducators = () => {
   );
 };
 
-const TeacherCard = ({user}) => {
-
-  const navigate = useNavigate()
+const TeacherCard = ({ user }) => {
+  const navigate = useNavigate();
 
   return (
     <tr key={user._id} className="text-sm border-5 border-transparent">
       <td className="">{user.username}</td>
       <td>{user.email}</td>
 
-      <td className=" flex space-x-2 items-center justify-end">
+      <td className="flex space-x-2 items-center justify-end">
         <div className="p-2 hover:bg-blue-200 transition-all bg-blue-100 rounded-full cursor-pointer hover-parent">
           <RiDeleteBin7Fill className="text-md text-blue-700 " />
           <OnHoverExtraHud name={"Delete"} />
         </div>
-        <div onClick={() => navigate('/admin/educators/edit?id=aaaa')} className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
-          <RiEdit2Fill className="text-md text-red-600 "/>
+        <div
+          onClick={() => navigate("/admin/educators/edit?id=aaaa")}
+          className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent"
+        >
+          <RiEdit2Fill className="text-md text-red-600 " />
           <OnHoverExtraHud name={"Edit"} />
         </div>
       </td>

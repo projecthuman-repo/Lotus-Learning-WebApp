@@ -40,8 +40,8 @@ const HomePage = () => {
 
   return (
     <div className="h-full w-full max-w-screen overflow-x-hidden">
-      <GeneralNavbar />
-      <div className="w-full mx-auto  pb-2 flex items-center flex-col">
+       <GeneralNavbar courses={courses} />
+<div className="w-full mx-auto  pb-2 flex items-center flex-col">
         <div className="xl:w-[1350px] lg:w-[1000px] w-full">
           <CarrouselHeader />
         </div>
