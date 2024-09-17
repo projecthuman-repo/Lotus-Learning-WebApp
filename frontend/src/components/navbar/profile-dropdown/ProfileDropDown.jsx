@@ -17,7 +17,7 @@ const ProfileDropDown = () => {
     // Then, navigate to registration page and reload the page
     deleteUserOnCookies()
     navigate('/registration');
-    window.location.reload();
+    //window.location.reload();
   };
 
   const noPfpGenerator = (name) => {
