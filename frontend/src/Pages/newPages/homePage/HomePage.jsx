@@ -50,7 +50,7 @@ const HomePage = () => {
         </div>
      
         <div className="xl:max-w-[1400px] lg:max-w-[1000px] w-full flex">
-        <p className="pt-2 font-semibold md:text-xl sm:text-md text-sm  text-stone-700">Discover Our Course Offerings</p>
+        <p className="pt-2 font-semibold md:text-xl sm:text-md text-sm text-stone-700 pl-3">Discover Our Course Offerings</p>
         
         </div>
         <div className="max-w-[1400px] mx-auto py-2 flex items-center justify-center">

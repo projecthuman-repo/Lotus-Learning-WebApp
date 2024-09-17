@@ -5,34 +5,57 @@ import MultipleChoicePlayable from '../../../Course/PlayableApiGame/MultipleChoi
 import WordDefinitionPlayable from '../../../Course/PlayableApiGame/WordDefinitionPlayable';
 import PdfDisplayer from '../../../../components/display-pdf/PdfDisplayer';
 
-const LearningMainContent = ({ selectedLesson }) => {
-  
+const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastLesson }) => {
+  if (!courseData || !selectedLesson) {
+    return <div>Loading content...</div>; // Fallback if courseData or selectedLesson is not yet available
+  }
+
   const lessonContent = selectedLesson?.lessonContent;
 
   const switchContent = (item) => {
-    if (item === undefined) {
-      return '';
-    }
+    if (!item) return '';
+
     if (item === 'game') {
       switch (selectedLesson.lessonContent.linked_game.type) {
         case 'crossword':
           return (
-            <CrosswordPlayable gameData={selectedLesson.lessonContent.linked_game.gameRes} />
+          
+            <CrosswordPlayable 
+              key={selectedLesson._id} 
+              gameData={selectedLesson.lessonContent.linked_game.gameRes}
+              onNextLesson={onNextLesson}  
+              isLastLesson={isLastLesson}
+              
+            />
+   
           );
         case 'fillinblanks':
           return (
-            <FillInBlanksPlayable gameData={selectedLesson.lessonContent.linked_game.gameRes} />
+            <FillInBlanksPlayable 
+              key={selectedLesson._id} 
+              gameData={selectedLesson.lessonContent.linked_game.gameRes}
+              onNextLesson={onNextLesson}  
+              isLastLesson={isLastLesson}
+            />
           );
         case 'multiplechoice':
           return (
-            <MultipleChoicePlayable gameData={selectedLesson.lessonContent.linked_game.gameRes} />
+            <MultipleChoicePlayable 
+              key={selectedLesson._id} 
+              gameData={selectedLesson.lessonContent.linked_game.gameRes}
+              onNextLesson={onNextLesson}  
+              isLastLesson={isLastLesson}
+            />
           );
         case 'worddefinition':
           return (
-            <WordDefinitionPlayable gameData={selectedLesson.lessonContent.linked_game.gameRes} />
+            <WordDefinitionPlayable 
+              key={selectedLesson._id} 
+              gameData={selectedLesson.lessonContent.linked_game.gameRes}
+              onNextLesson={onNextLesson}  
+              isLastLesson={isLastLesson}
+            />
           );
-        case 'wordsearch':
-          return 'Word Search'; 
         default:
           return 'Unsupported game type';
       }
@@ -41,51 +64,19 @@ const LearningMainContent = ({ selectedLesson }) => {
     }
   };
 
-  const checkName = (item) => {
-    if (item === undefined) {
-      return '';
-    }
-    if (item.type === 'game') {
-      switch (item.linked_game.type) {
-        case 'crossword':
-          return 'Crossword';
-        case 'fillinblanks':
-          return 'Fill in blanks';
-        case 'multiplechoice':
-          return 'Multiple Choice';
-        case 'worddefinition':
-          return 'Word Definition';
-        case 'wordsearch':
-          return 'Word Search';
-        default:
-          return 'Unknown Game';
-      }
-    } else if (item.type === 'text') {
-      return 'Text Content';
-    }
-  };
-
   return (
-    <div className='w-full'>
-
-        {/* Move the title section to the top */}
-        <div className='flex flex-col p-2'>
-            <p className='text-lg font-semibold'>Title</p>
-            <p className='text-sm'>English text</p>
-        </div>
-  
-        {/* Rest of the content */}
-        <div className='py-2 w-full flex items-center justify-center flex-col'>
-            <p className='px-2 font-semibold w-full text-start'>{selectedLesson.lessonContent.linked_game ? checkName(selectedLesson.lessonContent) : ''}</p>
-            {switchContent(selectedLesson.lessonContent.type)}
-        </div>
-
+    <div className='w-full mt-12'> {/* Add margin-top of 8 (2rem) */}
+      <div className='flex flex-col p-2'>
+        <p className='text-lg font-semibold'>Title</p>
+        <p className='text-sm'>{courseData?.title || 'Untitled Course'}</p>
+        <p className='text-lg font-semibold'>Description</p>
+        <p className='text-sm'>{courseData?.description || 'No description available'}</p>
+      </div>
+      <div className='py-2 w-full flex items-center justify-center flex-col'>
+        {switchContent(selectedLesson.lessonContent.type)}
+      </div>
     </div>
   );
-
 };
 
 export default LearningMainContent;
-
-
-

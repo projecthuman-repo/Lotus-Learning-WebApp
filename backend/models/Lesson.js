@@ -15,6 +15,11 @@ const lessonSchema = new mongoose.Schema({
   filename: {
     type: String,
   },
+
+  isCompleted:
+  {type:Boolean,
+    default:false
+  },
   lessonContent: {
     type: mongoose.Schema.Types.Mixed
   },

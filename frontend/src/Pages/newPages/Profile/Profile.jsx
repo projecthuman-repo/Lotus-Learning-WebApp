@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GeneralNavbar, { noPfpGenerator } from "../../../components/navbar/GeneralNavbar"; // Importing noPfpGenerator
+import GeneralNavbar, { noPfpGenerator } from "../../../components/navbar/GeneralNavbar";
 import { IoIosSettings } from "react-icons/io";
 import Courses from "../../../components/profile-components/Courses";
 import GeneralFooter from "../../../components/footer/GeneralFooter";
@@ -9,19 +9,40 @@ import Games from "../../../components/profile-components/Games";
 import Settings from "../../../components/profile-components/Settings";
 import CreateEditCourse from "../../../components/profile-components/create-edit-new_course/CreateEditCourse";
 import { useDispatch, useSelector } from "react-redux";
+import getCoursesByProp from "../../../BackendProxy/courseProxy/getCoursesByProp"; // Import the getCoursesByProp function
 
 const Profile = () => {
   const { screen } = useParams();
   const navigate = useNavigate();
 
   const [displayScreen, setDisplayScreen] = useState("");
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user);
+
+  useEffect(() => {
+    fetchEnrolledCourses();
+  }, []);
+
+  const fetchEnrolledCourses = async () => {
+    try {
+      const res = await getCoursesByProp("accepted", true, authUser.institution.code);
+      console.log("The ID of the current user is " + authUser._id);
+      console.log("Fetched Courses: ", res); 
+      setEnrolledCourses(res.res); 
+      setLoaded(true);
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Failed to load courses");
+    }
+  };
 
   const changeScreen = (value) => {
     switch (value) {
       case "courses":
-        return <Courses />;
+        return <Courses courses={enrolledCourses} />; 
       case "my-courses":
         return <MyCourses />;
       case "games":
@@ -29,16 +50,11 @@ const Profile = () => {
       case "profile-settings":
         return <Settings />;
       default:
-        return <Courses />;
+        return <Courses courses={enrolledCourses} />;
     }
   };
 
-  const checkScreen = (value) => {
-    if (value === screen) {
-      return true;
-    }
-    return false;
-  };
+  const checkScreen = (value) => value === screen;
 
   useEffect(() => {
     if (!screen) {
@@ -51,7 +67,7 @@ const Profile = () => {
     } else {
       document.body.scrollTop = 0;
     }
-  }, [screen]);
+  }, [screen, navigate]);
 
   return (
     <div className="h-full w-full">
@@ -77,7 +93,7 @@ const Profile = () => {
                     className="mx-2 cursor-pointer"
                   />
                 </p>
-                <p className="text-stone-600 md:text-base text-xs font-ligth ">
+                <p className="text-stone-600 md:text-base text-xs font-light ">
                   {authUser.email}
                 </p>
               </div>
@@ -95,7 +111,7 @@ const Profile = () => {
               >
                 <p className="font-semibold text-sm md:text-base">Courses</p>
               </div>
-            
+            {/*
               <div
                 onClick={() => navigate("/profile/games")}
                 className={`border-b-2  cursor-pointer px-2 ${
@@ -105,7 +121,7 @@ const Profile = () => {
                 }`}
               >
                 <p className="font-semibold text-sm md:text-base">Games</p>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="max-w-[1400px] flex items-center mx-auto pt-2">

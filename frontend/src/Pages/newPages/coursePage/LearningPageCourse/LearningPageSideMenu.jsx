@@ -17,12 +17,10 @@ const LearningPageSideMenu = ({courseLessons, selectedLesson, setSelectedLesson}
 
   const navigate = useNavigate()
 
-
   return (
-
     <div className="w-[450px] border-r h-full">
-      <div onClick={() => {navigate('/home')}} className=" w-full  flex items-center justify-center py-3 cursor-pointer">
-        <img className="w-[50%]" src={lotusLogo}/>
+      <div onClick={() => {navigate('/home')}} className="w-full flex items-center justify-center py-3 cursor-pointer">
+        <img className="w-[50%]" src={lotusLogo} alt="Logo"/>
       </div>
       <div className="w-full h-[90%] bg-stone-400 relative overflow-y-auto border-t">
         {courseLessons.map((item, i) => {
@@ -37,43 +35,76 @@ const LearningPageSideMenu = ({courseLessons, selectedLesson, setSelectedLesson}
   );
 };
 
-const LessonItemList = ({lesson, selectedLessonId, setSelectedLesson}) => {
-
+const LessonItemList = ({ lesson, selectedLessonId, setSelectedLesson }) => {
 
   const changeIcon = (item) => {
-    if(item === undefined){
-      return textIcon
+    if (item === undefined) {
+      return textIcon;
     }
 
-    switch(item){
+    switch (item) {
       case 'crossword':
-        return crosswordIcon 
+        return crosswordIcon;
       case 'fillinblanks':
-        return fillInBlanksIcon
+        return fillInBlanksIcon;
       case 'multiplechoice':
-        return mcqsIcon
+        return mcqsIcon;
       case 'worddefinition':
-        return wordDefIcon
+        return wordDefIcon;
       case 'wordsearch':
-        return wordsearchIcon
-      default: 
-        return textIcon; 
-
+        return wordsearchIcon;
+      default:
+        return textIcon;
     }
-  }
+  };
+
+  // Function to get the user-friendly name of the game type
+  const getGameTypeName = (item) => {
+    if (!item) return ""; 
+
+    switch (item) {
+      case 'crossword':
+        return 'Crossword';
+      case 'fillinblanks':
+        return 'Fill in the Blanks';
+      case 'multiplechoice':
+        return 'Multiple Choice';
+      case 'worddefinition':
+        return 'Word Definition';
+      case 'wordsearch':
+        return 'Word Search';
+      default:
+        return 'Text'; 
+    }
+  };
 
   return (
-  <div onClick={() => setSelectedLesson(lesson)} className={`${(selectedLessonId === lesson._id)? "bg-stone-200 " : " bg-[#fff] hover:bg-stone-100" } w-full h-[75px]  border-b flex items-center justify-between px-2 cursor-pointer   transition-all`}>
-    <div>
-      <p className="font-semibold">{lesson.title? lesson.title : ""}</p>
-      <p className="text-xs">{lesson.lessonContent? lesson.lessonContent.type : ""}</p>
+    <div 
+      onClick={() => setSelectedLesson(lesson)} 
+      className={`${(selectedLessonId === lesson._id) ? "bg-stone-200 " : ""} 
+                  ${(lesson.isCompleted ? "bg-green-100" : "bg-[#fff] hover:bg-stone-100")}  // Apply green background if completed
+                  w-full h-[75px] border-b flex items-center justify-between px-2 cursor-pointer transition-all`}
+    >
+      <div className="flex flex-col">
+        <p className="font-semibold">{lesson.title ? lesson.title : ""}</p>
+        <p className="text-xs">
+          {lesson.lessonContent?.linked_game 
+            ? getGameTypeName(lesson.lessonContent.linked_game.type) 
+            : "Text"}
+        </p>
+      </div>
+      <div className="flex items-center">
+        {/* Completion indicator (checkmark or icon) */}
+        {lesson.isCompleted && (
+          <span className="text-green-500 mr-2">✔️</span> 
+        )}
+        <div className="bg-stone-300 w-[40px] h-[40px] flex items-center justify-center p-1 rounded-full">
+          <img src={lesson.lessonContent?.linked_game ? changeIcon(lesson.lessonContent.linked_game.type) : textIcon} alt="Lesson Icon" />
+        </div>
+      </div>
     </div>
-    <div className="bg-stone-300 w-[40px] h-[40px] flex items-center justify-center p-1 rounded-full">
-
-      <img src={lesson.lessonContent.linked_game ? changeIcon(lesson.lessonContent.linked_game.type) : textIcon} alt="" srcset="" />
-    </div>
-  </div>
-  )
+  );
 };
+
 
 export default LearningPageSideMenu;

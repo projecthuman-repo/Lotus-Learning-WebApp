@@ -37,9 +37,9 @@ const ProfileDropDown = () => {
     <>
      
         <div className="w-[300px] border rounded-sm bg-white">
-        {isStudent && ( // Only show the dropdown if the user is a student
+       
           <div
-            onClick={() => navigate('/profile/courses')}
+            onClick={isStudent ? () => navigate('/profile/courses') : undefined}
             className="p-2 border-b flex items-center space-x-2 cursor-pointer hover:bg-stone-50"
           >
             <div className="h-[35px] w-[35px] bg-stone-800 rounded-full flex items-center justify-center cursor-pointer no-select overflow-hidden">
@@ -59,7 +59,7 @@ const ProfileDropDown = () => {
               <p className="text-sm text-stone-800">{authUser.name}</p>
               <p className="text-xs text-stone-500">{authUser.email}</p>
             </div>
-          </div>)}
+          </div>
           <div className="">
             <div className="h-full w-full flex flex-col space-y-2 py-2 ">
               <p

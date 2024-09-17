@@ -37,6 +37,8 @@ import TestPlayGround from "./TestPlayGround";
 import AdminInvitationPage from "./Pages/newPages/adminPages/adminInvitationPage/AdminInvitationPage";
 import CourseEditPage from "./Pages/Course/CourseEditPage/CourseEditPage";
 import LearningCoursePage from "./Pages/newPages/coursePage/LearningPageCourse/LearningCoursePage";
+import CourseCompletion from "./Pages/newPages/coursePage/LearningPageCourse/CourseCompletion";
+import CoursePreface from "./Pages/newPages/coursePage/LearningPageCourse/CoursePreface";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -62,18 +64,24 @@ function App() {
 
   const setAuthUser = async () => {
     setLoadingUser(true);
-    // finds user storaged into the cookies  as 'userDataAuth'
-    const foundUser = await getLogedInCookies();
-    if (foundUser) {
-      // saves the found user into the redux for auth
-      return new Promise((resolve) => {
-        dispatch(setUser(foundUser.userData.user));
-        resolve();
-      });
+    try {
+      const foundUser = await getLogedInCookies();
+      if (foundUser) {
+        if(foundUser.userData.user)
+        {
+        //userdata means it works with goog users but userdata.user it works with reg users
+        dispatch(setUser(foundUser.userData.user)); 
+        }else
+        {
+          dispatch(setUser(foundUser.userData)); 
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching logged in user from cookies:", error);
+    } finally {
+      setLoadingUser(false);
     }
-    return Promise.resolve();
   };
-
   useEffect(() => {
     setAuthUser()
       .then(() => {
@@ -105,7 +113,8 @@ function App() {
             <Route path="/course" element={<CoursePage/>}/>
             <Route path="/course/learn" element={<LearningCoursePage/>}/>
             <Route path="/learning/:courseName?" element={<Learning/>}/>
-
+            <Route path="/course-complete" element={<CourseCompletion/>}/>
+            <Route path="/course-preface" element={<CoursePreface/>}/>
             <Route path="/course-search" element={<NewPage/>}/>  {/*  my change   */}
 
             <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={

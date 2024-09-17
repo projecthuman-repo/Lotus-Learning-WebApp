@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import './styles.css'
+import './styles.css';
 import { FaCheckCircle } from "react-icons/fa";
-const FillInBlanksPlayable = ({ gameData }) => {
-  const [compleated, setCompleated] = useState(false)
+
+const FillInBlanksPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
+  const [completed, setCompleted] = useState(false);
+  const [failed, setFailed] = useState(false); // State to track if user fails
   const [answersObj, setAnswersObj] = useState(() => {
     const data = gameData.game.fill_in_the_blanks.map((element) => {
       return { ...element, current: "" };
     });
     return data;
   });
+
   const updateAnswerCurrent = (index, newValue) => {
     setAnswersObj((prevAnswers) => {
       return prevAnswers.map((answer, i) => {
@@ -21,35 +24,36 @@ const FillInBlanksPlayable = ({ gameData }) => {
   };
 
   const checkValues = () => {
-    setAnswersObj(prevAnswers => 
-        prevAnswers.map((element) => {
-            if (element.current.toUpperCase() === element.Answer.toUpperCase()) {
-                return { ...element, correct: true };
-            } else {
-                return { ...element, correct: false };
-            }
-        })
-    );
-};
-
-
-  const checkCompleated = () => {
-    answersObj.map((element) => {
-        console.log(element.correct);
-        if(!element.correct){
-            return false
-        }
-    })
-    return true
-  }
+    let correctCount = 0;
+    const updatedAnswers = answersObj.map((element) => {
+      if (element.current.toUpperCase() === element.Answer.toUpperCase()) {
+        correctCount++;
+        return { ...element, correct: true };
+      } else {
+        return { ...element, correct: false };
+      }
+    });
+    
+    setAnswersObj(updatedAnswers);
+    return correctCount;
+  };
 
   const handleCompletionCheck = () => {
-    checkValues()
-    if(checkCompleated()){
-        console.log('1');
-        setCompleated(true)
+    const correctCount = checkValues();
+    const percentage = (correctCount / answersObj.length) * 100;
+    
+    if (percentage >= 80) {
+      // Delaying the completion state update after answers are checked
+      setTimeout(() => {
+        setCompleted(true);
+        setFailed(false); // Reset failure state
+      }, 100); // Small delay to ensure state updates are applied
+    } else {
+      setFailed(true); 
+      setCompleted(false);
     }
-  }
+  };
+
   useEffect(() => {
     console.log(answersObj);
   }, [answersObj]);
@@ -61,71 +65,64 @@ const FillInBlanksPlayable = ({ gameData }) => {
         Answer: item.Answer,
         QuestionParts: [
           parts[0].trim(),
-          "", // Reemplazar los `__` con una cadena vacía
+          "", // Replacing the `__` with an empty string for input placeholder
           parts[1]?.trim() || "",
         ],
       };
     });
   };
+
   return (
-    <div className="w-full">
-      {/* <div className="p-2 flex space-x-2 bg-zinc-100 items-center">
-        <p className="text-xs font-bold text-zinc-600">Answers</p>
-        {gameData.game.fill_in_the_blanks.map((item, i) => {
-          return (
-            <p
-              className="px-3 py-[0.09em] text-xs font-semibold bg-black text-white rounded-full "
-              key={item.Answer + "" + i}
-            >
-              <span className="mr-1">{i + 1}.</span>
-              {item.Answer}
-            </p>
-          );
-        })}
-      </div> */}
-      <div className="h-[500px] w-full flex items-center justify-center flex-col bg-zinc-100 relative">
-      {
-         compleated&&
-          <div className="absolute h-full w-full bg-[#0005] z-30 rounded-lg flex flex-col items-center justify-center amin-compleated-crossword">
-            <FaCheckCircle className="text-3xl text-white" />
-            <p className="mt-1 font-bold text-white">COMPLETED!</p>
-          </div>
-        }
-        <div className="bg-white p-3 rounded-lg">
-          {separateQuestionParts(gameData.game.fill_in_the_blanks).map(
-            (item, ind) => {
-              return (
-                <div
-                  className="flex my-2 p-2 items-center justify-start"
-                  key={item.Answer + "" + ind}
-                >
-                  <p className="mr-2 font-semibold">{ind + 1}.</p>
-                  {item.QuestionParts.map((part, i) => {
-                    console.log(item)
-                    return (
-                      <div key={part[i] + " " + i} className="">
-                        {part === "" ? (
-                          <input
-                          onChange={(e) => updateAnswerCurrent(ind, e.target.value)}
-                            value={item.current}
-                            placeholder=". . ."
-                            className={`${answersObj[ind].correct? 'bg-green-100' : 'bg-zinc-50  '}
-                                font-semibold  mx-2 focus:scale-[1.03] cursor-pointer focus:outline-none border-b-2 px-2 py-1 rounded-lg text-center`}
-                          />
-                        ) : (
-                          <p className=" text-zinc-700">{part}</p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            }
-          )}
+    <div className="w-full relative">
+      {completed && (
+        <div className="absolute h-full w-full bg-[#0005] z-30 rounded-lg flex flex-col items-center justify-center amin-compleated-crossword">
+          <FaCheckCircle className="text-3xl text-white" />
+          <p className="mt-1 font-bold text-white">COMPLETED!</p>
+          <button
+            onClick={onNextLesson}
+            className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center mt-4"
+          >
+            {isLastLesson ? "Complete Course" : "Next"}
+          </button>
         </div>
-          <div className="mt-2  ">
-                <button onClick={handleCompletionCheck} className="linearGradient_ver1 px-3 rounded-full  text-white hover:scale-[1.03] transition-all">Check</button>
+      )}
+
+      {!completed && failed && (
+        <div className="text-red-500 font-semibold mb-2">
+          <p>Not enough correct answers. You need at least 80% correct to pass. Please try again!</p>
+        </div>
+      )}
+
+      <div className="bg-white p-3 rounded-lg">
+        {separateQuestionParts(gameData.game.fill_in_the_blanks).map((item, ind) => (
+          <div className="flex my-2 p-2 items-center justify-start" key={item.Answer + "" + ind}>
+            <p className="mr-2 font-semibold">{ind + 1}.</p>
+            {item.QuestionParts.map((part, i) => (
+              <div key={part + "_" + i} className="">
+                {part === "" ? (
+                  <input
+                    onChange={(e) => updateAnswerCurrent(ind, e.target.value)}
+                    value={answersObj[ind].current}
+                    placeholder=". . ."
+                    className={`${answersObj[ind].correct ? 'bg-green-100' : 'bg-zinc-50'}
+                        font-semibold mx-2 focus:scale-[1.03] cursor-pointer focus:outline-none border-b-2 px-2 py-1 rounded-lg text-center`}
+                  />
+                ) : (
+                  <p className="text-zinc-700">{part}</p>
+                )}
+              </div>
+            ))}
           </div>
+        ))}
+      </div>
+
+      <div className="mt-2 pl-5">
+        <button
+          onClick={handleCompletionCheck}
+           className='linearGradient_ver1 px-3 py-1 rounded-full font-semibold text-white hover:scale-[1.03] transition-all'
+        >
+          Check Answers
+        </button>
       </div>
     </div>
   );

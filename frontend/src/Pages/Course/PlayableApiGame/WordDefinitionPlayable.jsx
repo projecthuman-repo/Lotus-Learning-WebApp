@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 
-const WordDefinitionPlayable = ({ gameData }) => {
-  console.log( gameData);
-  
-  const [finished, setFinished] = useState(false)
-  const [compleated, setCompleated] = useState(false)
+const WordDefinitionPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
+  const [finished, setFinished] = useState(false);
+  const [compleated, setCompleated] = useState(false);
+  const [message, setMessage] = useState(''); // State to display the message for correct answers
   const [answersObj, setAnswersObj] = useState(() => {
     const half = Math.ceil(gameData.game.word_definitions.length / 2);
     const data = gameData.game.word_definitions.slice(0, half).map((element) => {
       return { ...element, current: "" };
     });
-  
+
     return data;
   });
 
@@ -27,36 +26,42 @@ const WordDefinitionPlayable = ({ gameData }) => {
   };
 
   const checkValues = () => {
-    setAnswersObj(prevAnswers => 
-        prevAnswers.map((element) => {
-            if (element.current.toUpperCase() === element.Word.toUpperCase()) {
-                return { ...element, correct: true };
-            } else {
-                return { ...element, correct: false };
-            }
-        })
+    setAnswersObj(prevAnswers =>
+      prevAnswers.map((element) => {
+        if (element.current.toUpperCase() === element.Word.toUpperCase()) {
+          return { ...element, correct: true };
+        } else {
+          return { ...element, correct: false };
+        }
+      })
     );
-    setCompleated(checkCompleated())
+    const totalCorrect = calculateCorrectAnswers();
+    const percentageCorrect = (totalCorrect / answersObj.length) * 100;
 
-};
-const checkCompleated = () => {
-  return answersObj.every((element) => {
-    return element.current.toUpperCase() === element.Word.toUpperCase();
-  });
-};
-useEffect(() => {
-  
-  setFinished(checkCompletition());
-  console.log(answersObj);
-  
+    if (percentageCorrect >= 80) {
+      setCompleated(true);
+      setMessage('Great job! You answered 80% or more correctly.');
+    } else {
+      setMessage('Not enough correct answers, needs to be 80% or more try again.');
+    }
+  };
 
-}, [answersObj]);
+  const calculateCorrectAnswers = () => {
+    return answersObj.reduce((total, element) => {
+      if (element.current.toUpperCase() === element.Word.toUpperCase()) {
+        return total + 1;
+      }
+      return total;
+    }, 0);
+  };
 
-const checkCompletition = () => {
+  useEffect(() => {
+    setFinished(checkCompletition());
+  }, [answersObj]);
 
-  return answersObj.every((item) => item.current.length > 0);
-
-};
+  const checkCompletition = () => {
+    return answersObj.every((item) => item.current.length > 0);
+  };
 
   const traverseGameObj = () => {
     return answersObj.map((wordDefinition, index) => (
@@ -66,22 +71,26 @@ const checkCompletition = () => {
 
   return (
     <div className='h-[500px] w-full bg-zinc-50 flex items-center justify-center relative'>
-            {
-         compleated&&
-          <div className="absolute h-full w-full bg-[#0005] z-30 rounded-lg flex flex-col items-center justify-center amin-compleated-crossword">
-            <FaCheckCircle className="text-3xl text-white" />
-            <p className="mt-1 font-bold text-white">COMPLETED!</p>
-          </div>
-        }
+      {compleated && (
+        <div className="absolute h-full w-full bg-[#0005] z-30 rounded-lg flex flex-col items-center justify-center amin-compleated-crossword">
+          <FaCheckCircle className="text-3xl text-white" />
+          <p className="mt-1 font-bold text-white">COMPLETED!</p>
+          <button onClick={onNextLesson} className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center">
+            <span className="mr-2">{isLastLesson ? "Complete Course" : "Next"}</span>
+          </button>
+        </div>
+      )}
       <div className='bg-white p-3 rounded-lg'>
         {traverseGameObj()}
-        {
         <div className='flex items-center justify-center '>
-          {finished && <button onClick={() => checkValues()} className='linearGradient_ver1 px-3 py-1 rounded-full font-semibold text-white hover:scale-[1.03] transition-all'>Check</button>}
+          {finished && (
+            <button onClick={checkValues} className='linearGradient_ver1 px-3 py-1 rounded-full font-semibold text-white hover:scale-[1.03] transition-all'>
+              Check
+            </button>
+          )}
         </div>
-      }
+        {message && <p className={`mt-2 font-semibold ${compleated ? 'text-green-500' : 'text-red-500'}`}>{message}</p>}
       </div>
-
     </div>
   );
 };
@@ -92,9 +101,11 @@ const GameObj = ({ wordDefinition, indx, updateAnswerCurrent }) => {
       <p className='text-zinc-600 text-center'> {wordDefinition.Definition}</p>
       <div>
         <div className='flex  mt-1 flex-col'>
-          <input onChange={(e) => updateAnswerCurrent(indx, e.target.value)} className={`${wordDefinition.correct? "border-b-green-100 border-b-2 bg-green-50" : "border-b-2 bg-zinc-50 "} my-2 text-center  rounded-lg focus:outline-none py-1 transition-all focus:bg-zinc-100`} placeholder='. . .'/>
-          {/* {wordDefinition.Word} */}
-          {/* <p className='bg-zinc-500 text-white rounded-full px-3  mx-2 font-semibold'></p> */}
+          <input
+            onChange={(e) => updateAnswerCurrent(indx, e.target.value)}
+            className={`${wordDefinition.correct ? 'border-b-green-100 border-b-2 bg-green-50' : 'border-b-2 bg-zinc-50'} my-2 text-center rounded-lg focus:outline-none py-1 transition-all focus:bg-zinc-100`}
+            placeholder='. . .'
+          />
         </div>
       </div>
     </div>

@@ -10,6 +10,8 @@ const StudentProfile = () => {
 
   const [loaded, setLoaded] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]); 
+  const [searchInput, setSearchInput] = useState(""); 
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -22,11 +24,23 @@ const StudentProfile = () => {
       console.log("The ID of the current user is " + authUser._id);
       console.log("Fetched Courses: ", res); 
       setEnrolledCourses(res.res); 
+      setFilteredCourses(res.res); 
       setLoaded(true);
     } catch (error) {
       console.error(error);
       setErrorMessage("Failed to load courses");
     }
+  };
+
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchInput(value);
+
+    const filtered = enrolledCourses.filter((course) =>
+      course.title.toLowerCase().includes(value)
+    );
+    setFilteredCourses(filtered); 
   };
 
   return (
@@ -41,6 +55,8 @@ const StudentProfile = () => {
             <input
               placeholder="Search by name"
               className="text-sm focus:outline-none focus:border-b-stone-400 border-b-transparent border-b-[1.5px] pr-2 py-1 font-medium text-stone-600"
+              value={searchInput} // Bind the search input value
+              onChange={handleSearchChange} // Trigger filtering on input change
             />
             <IoMdSearch />
           </div>
@@ -48,11 +64,11 @@ const StudentProfile = () => {
       </div>
 
       <div className="max-h-[90vh] overflow-y-auto flex flex-wrap items-start">
-      {loaded ? (
-          enrolledCourses.length > 0 ? (
-            enrolledCourses.map((course, i) => (
+        {loaded ? (
+          filteredCourses.length > 0 ? (
+            filteredCourses.map((course, i) => (
               <div key={i}>
-                {course ? ( 
+                {course ? (
                   <GeneralCourseCard 
                     item={{
                       _id: course._id, 
@@ -66,7 +82,7 @@ const StudentProfile = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500">You are not enrolled in any courses.</p>
+            <p className="text-center text-gray-500">No courses match your search.</p>
           )
         ) : (
           errorMessage ? (
@@ -79,6 +95,5 @@ const StudentProfile = () => {
     </>
   );
 };
-
 
 export default StudentProfile;

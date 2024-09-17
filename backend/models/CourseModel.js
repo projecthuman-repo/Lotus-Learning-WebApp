@@ -5,6 +5,10 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  courseStarted:{
+    type:Boolean,
+    default:false,
+  },
   compleated: {
     type: Boolean,
     default: false,
@@ -81,6 +85,10 @@ const courseSchema = new mongoose.Schema({
         type: String,
       },
       attachedFile: mongoose.Schema.Types.Mixed,
+      isCompleted: { 
+        type: Boolean,
+        default: false,
+      },
       extraActivities: [
         {
           type: {
@@ -112,6 +120,14 @@ courseSchema.pre('save', function (next) {
   }
   next();
 });
+
+courseSchema.methods.calculateProgress = function () {
+  const totalLessons = this.lessons.length;
+  const completedLessons = this.lessons.filter(lesson => lesson.isCompleted).length;
+  
+  if (totalLessons === 0) return 0;
+  return (completedLessons / totalLessons) * 100; // Returns progress as a percentage
+};
 
 const Course = mongoose.model('courses', courseSchema);
 

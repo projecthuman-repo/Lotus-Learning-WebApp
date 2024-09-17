@@ -2,17 +2,30 @@ const Course = require("../../models/CourseModel.js");
 
 const updateCourseData = async (course) => {
     try {
-        // Buscar el curso por su ID
-        const foundCourse = await Course.findById(course._id);
-        if (!foundCourse) {
-            return; 
+        // Update the course using findByIdAndUpdate to avoid VersionError
+        const updatedCourse = await Course.findByIdAndUpdate(
+            course._id,
+            course, // Update data
+            { new: true, runValidators: true } // Return the updated document
+        );
+
+        if (!updatedCourse) {
+            return {
+                success: false,
+                message: "Course not found",
+            };
         }
-        foundCourse.set(course);
-        const updatedCourse = await foundCourse.save();
-        return updatedCourse;
+
+        return {
+            success: true,
+            data: updatedCourse,
+            message: "Course updated successfully",
+        };
+
     } catch (err) {
-        console.error("Error al actualizar el curso:", err);
-        throw new Error("Error en updateCourseData()");
+        // Handle any other errors
+        console.error("Error updating course:", err);
+        throw new Error("Error in updateCourseData()");
     }
 };
 
