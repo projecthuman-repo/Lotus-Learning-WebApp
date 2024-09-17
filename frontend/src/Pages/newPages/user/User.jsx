@@ -93,6 +93,7 @@ const User = () => {
               <p className="text-xs text-stone-50 w-full">{authUser.email}</p>
             </div>
           </div>
+
           <div className="w-full flex flex-col space-y-3 no-select mt-8">
             <button
               onClick={() => navigate("/user/courses")}
@@ -127,6 +128,7 @@ const User = () => {
               <IoIosSettings className="mr-2" />
               Settings
             </button>
+
           </div>
         </div>
         <div className="w-full flex flex-col space-y-3 no-select">
