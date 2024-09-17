@@ -130,31 +130,29 @@ const AdminManageCourses = () => {
           </button>
         </div>
         <div className="bg-white py-2 px-4 mt-3 rounded-lg">
-          {loaded ? (
-            <table className="table-auto w-full">
-              <thead className="">
-                <tr>
-                  <th>Course Name</th>
-                  <th>Created by</th>
-                  <th>Created at</th>
-                  <th>Complexity</th>
-                  <th className="text-end">Options</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {courses.map((course) => {
-                  return <CourseCard course={course} formatCreatedAt={formatCreatedAt} handleDelete={handleDelete}/>;
-
-                })}
-              </tbody>
-            </table>
-          ) : (
-            <div className="flex items-center justify-center">
-              <SpinnerLoader />
-            </div>
-          )}
-        </div>
+  {loaded ? (
+    <table className="table-auto w-full">
+      <thead className="">
+        <tr>
+          <th>Course Name</th>
+          <th>Created by</th>
+          <th>Created at</th>
+          <th>Complexity</th>
+          <th className="text-end">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredCourses.map((course) => {
+          return <CourseCard course={course} formatCreatedAt={formatCreatedAt} handleDelete={handleDelete} />;
+        })}
+      </tbody>
+    </table>
+  ) : (
+    <div className="flex items-center justify-center">
+      <SpinnerLoader />
+    </div>
+  )}
+</div>
       </div>
     </div>
   );
