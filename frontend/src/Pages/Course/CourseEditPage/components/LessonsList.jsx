@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { IoReturnDownBackSharp, IoAdd } from "react-icons/io5";
-import { IoClose } from "react-icons/io5";
+import { IoAlert,IoReturnDownBackSharp, IoAdd, IoClose } from "react-icons/io5";
 import { BsCheck } from "react-icons/bs";
 import updateCourseDataProxy from "../../../../BackendProxy/courseProxy/updateCourseData";
 import GenericNotification from "../../../../components/fullscreen-notifications/GenericNotification";
-import { IoAlert } from "react-icons/io5";
 import SpinnerLoader from "../../../../components/loaders/SpinnerLoader";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -27,8 +25,7 @@ const LessonsList = ({
   const navigate = useNavigate();
 
 
-  const [loading, setLoading] = useState(false);
-  const [openNotificationMessage, setOpenNotificationMessage] = useState(false);
+  
 
 
 
@@ -36,9 +33,12 @@ const LessonsList = ({
     navigate("/course-editor/homePage/" + courseid);
   };
 
+  const [loading, setLoading] = useState(false);
+  const [openNotificationMessage, setOpenNotificationMessage] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
 
- 
-
+  const [popupMessage, setPopupMessage] = useState(""); 
+  const [openPopup, setOpenPopup] = useState(false);
 
   const newObjetTemp = {
     attachedFile: "",
@@ -76,6 +76,7 @@ const LessonsList = ({
   const handleAddNewLesson = () => {
     updateLessons([...lessons, newObjetTemp]);
     setSelectedLesson(lessons.length);
+    
   };
 
   
@@ -91,9 +92,12 @@ const LessonsList = ({
         const updatedCourseData = await getCourseData(courseid);
         setBaseCourseData(updatedCourseData); // Update your state with the new course data
         
-        window.alert("Saved successfully");
+        //window.alert("Saved successfully");
 
         setLoading(false);
+        setPopupMessage("Changes saved successfully!");
+        setOpenPopup(true); 
+        setHasChanges(false); 
       } catch (error) {
         setLoading(false);
         
@@ -112,9 +116,12 @@ const LessonsList = ({
         }
       }
     } else {
-      setOpenNotificationMessage(true);
+      setOpenNotificationMessage(true); 
     }
   };
+  
+
+  
 
   function validateLessons(arr) {
     for (let i = 0; i < arr.length; i++) {
@@ -147,7 +154,21 @@ const LessonsList = ({
         />
       )}
       
-      {/* Moved the return button here */}
+      {openPopup && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg text-center">
+            <p className="font-semibold text-green-600 text-lg">
+              {popupMessage}
+            </p>
+            <button
+              onClick={() => setOpenPopup(false)}
+              className="px-6 py-2 bg-indigo-500 text-white rounded-full font-medium shadow-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 cursor-pointer"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
       <div className="w-full h-[2rem] border-r flex items-center justify-between px-2">
         <div
           onClick={() => returnToCourseMenu()}
@@ -156,23 +177,20 @@ const LessonsList = ({
           <IoReturnDownBackSharp />
           <p className="text-xs ml-2 font-semibold">return</p>
         </div>
-        
       </div>
 
-      {/* Editing mode comes after return */}
       <div className="w-full h-[2rem] border-r flex items-center justify-between px-2">
-      <div className="px-2 w-half border-r">
-        <p className="font-light text-sm py-1 text-stone-400">Editing mode</p>
-      </div>
-      <div
+        <div className="px-2 w-half border-r">
+          <p className="font-light text-sm py-1 text-stone-400">Editing mode</p>
+        </div>
+        <div
           onClick={() => handleAddNewLesson()}
-          className=" cursor-pointer font-semibold px-3 rounded-full py-1 text-white linearGradient_ver1 flex items-center  hover:scale-[1.02] transition-all "
+          className=" cursor-pointer font-semibold px-3 rounded-full py-1 text-white linearGradient_ver1 flex items-center hover:scale-[1.02] transition-all "
         >
           <p className="text-sm">Add Lesson</p>
           <IoAdd className="ml-2" />
         </div>
       </div>
-      
 
       {changed && (
         <div className="pl-2 flex space-x-2">
@@ -197,23 +215,6 @@ const LessonsList = ({
           )}
         </div>
       )}
-
-      <div className="w-full h-[2rem] border-r flex items-center justify-between px-2">
-        <div
-          onClick={() => handleAddNewLesson()}
-          className="cursor-pointer font-semibold px-3 rounded-full py-1 text-white linearGradient_ver1 flex items-center hover:scale-[1.02] transition-all"
-        >
-          <p className="text-sm">Add Lesson</p>
-          <IoAdd className="ml-2" />
-        </div>
-        <div
-          onClick={() => returnToCourseMenu()}
-          className="flex items-center hover-parent cursor-pointer bg-stone-100 px-2 text-lg hover:scale-[1.08] transition-all rounded-full"
-        >
-          <IoReturnDownBackSharp />
-          <p className="text-xs ml-2 font-semibold">Return</p>
-        </div>
-      </div>
 
 
 

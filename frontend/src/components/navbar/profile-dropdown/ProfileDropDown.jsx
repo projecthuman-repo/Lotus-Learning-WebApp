@@ -12,7 +12,7 @@ const ProfileDropDown = () => {
     // Clear user data on logout and navigate to registration page
     deleteUserOnCookies();
     navigate('/registration');
-    window.location.reload();
+    //window.location.reload();
   };
 
   const noPfpGenerator = (name) => {
