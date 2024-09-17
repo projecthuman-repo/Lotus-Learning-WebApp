@@ -111,12 +111,12 @@ const CrosswordPlayable = ({ gameData }) => {
       ) : (
         <div className="flex flex-col h-full">
           {/* Hamburger Menu */}
-          <button
+          {/* <button
             className="hamburger-menu"
             onClick={() => setIsEnlarged(!isEnlarged)}
           >
             <FaBars className="text-xl" />
-          </button>
+          </button> */}
   
           <div className={`flex flex-grow ${isEnlarged ? "enlarged" : ""}`}>
             <div className={`game-container ${isEnlarged ? "game-enlarged" : ""}`}>
@@ -184,8 +184,8 @@ const Crossword = ({
 
   let lastId = 0;
   const generateUniqueId = () => {
-    const timestamp = Date.now().toString(36); // Convert timestamp to base 36
-    const id = (lastId++).toString(36); // Increment counter and convert to base 36
+    const timestamp = Date.now().toString(36); 
+    const id = (lastId++).toString(36); 
     return `${timestamp}-${id}`;
   };
 
@@ -259,13 +259,11 @@ const Crossword = ({
       newMatrix.push(row);
     }
 
-    // Handle vertical linking
     toLinkVertical.forEach((link) => {
       for (let k = 1; k < link.word.length; k++) {
         const newRow = link.row + k;
         const newCol = link.col;
 
-        // Check bounds
         if (newRow < matrix.length && newCol < matrix[0].length) {
           if (matrix[newRow][newCol] === " ") {
             newMatrix[newRow][newCol] = {

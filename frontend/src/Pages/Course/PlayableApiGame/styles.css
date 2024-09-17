@@ -86,8 +86,8 @@
 	flex: 1; 
 	overflow: hidden; 
 	display: flex; 
-	align-items: center; /* Centers content vertically */
-	justify-content: center; /* Centers content horizontally */
+	align-items: center; 
+	justify-content: center; 
   }
   
   .crossword-table {
@@ -111,7 +111,7 @@
   .hints-container {
 	overflow-y: auto; 
 	max-height: 100vh; 
-	padding: 1rem; /* Adds padding for better spacing */
+	padding: 1rem; 
   }
   
   .enlarged .hints-container {
@@ -122,7 +122,7 @@
 	position: fixed; 
 	top: 1rem;
 	right: 1rem;
-	z-index: 1000; /* Ensures it's on top of other elements */
+	z-index: 1000; 
   }
   
   @media (min-width: 1024px) {
