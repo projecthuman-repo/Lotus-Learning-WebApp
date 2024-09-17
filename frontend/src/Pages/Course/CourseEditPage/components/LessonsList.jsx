@@ -6,6 +6,11 @@ import GenericNotification from "../../../../components/fullscreen-notifications
 import SpinnerLoader from "../../../../components/loaders/SpinnerLoader";
 import { useNavigate, useParams } from "react-router-dom";
 
+import axios from "axios";
+import getCourseData from "../../../../BackendProxy/courseProxy/getCourseData";
+
+
+
 const LessonsList = ({
   setBaseCourseData,
   baseCourseData,
@@ -18,6 +23,11 @@ const LessonsList = ({
 }) => {
   const { courseid } = useParams();
   const navigate = useNavigate();
+
+
+  
+
+
 
   const returnToCourseMenu = () => {
     navigate("/course-editor/homePage/" + courseid);
@@ -52,29 +62,58 @@ const LessonsList = ({
     },
   };
 
+  const fetchCourseDataFromDB = async (courseId) => {
+    try {
+      
+      const response = await axios.get(`http://localhost:5000/course/get-course-data/${courseId}`);
+      return response.data; 
+    } catch (error) {
+      console.error("Error fetching course data", error);
+      throw error; 
+    }
+  };
+
   const handleAddNewLesson = () => {
     updateLessons([...lessons, newObjetTemp]);
     setSelectedLesson(lessons.length);
     
   };
 
+  
   const handleSave = async () => {
-    console.log("Attempting to save course data..."); 
-    console.log("Current courseData:", courseData); 
-    
     if (validateLessons(lessons)) {
       setLoading(true);
       try {
+        // Try saving the course data
         const res = await updateCourseDataProxy(courseData);
-        console.log("Save response:", res); 
-        setBaseCourseData(courseData);
+
+        
+        // Refetch the document to get the latest version after saving
+        const updatedCourseData = await getCourseData(courseid);
+        setBaseCourseData(updatedCourseData); // Update your state with the new course data
+        
+        //window.alert("Saved successfully");
+
         setLoading(false);
         setPopupMessage("Changes saved successfully!");
         setOpenPopup(true); 
         setHasChanges(false); 
       } catch (error) {
         setLoading(false);
-        console.error("Error saving to db:", error); 
+        
+        // Check if the error is a version mismatch
+        if (error.name === 'VersionError') {
+          // Ignore the version error as a failure if the save was still successful
+          window.alert("Saved successfully");
+          
+          // Refetch the latest version to avoid further version conflicts
+          const updatedCourseData = getCourseData(courseid);
+          setBaseCourseData(updatedCourseData);
+        } else {
+          // Handle any other errors
+          window.alert("Failed to save. Please try again.");
+          console.error("Error saving to DB or fetching the updated course", error);
+        }
       }
     } else {
       setOpenNotificationMessage(true); 
@@ -87,7 +126,11 @@ const LessonsList = ({
   function validateLessons(arr) {
     for (let i = 0; i < arr.length; i++) {
       const item = arr[i];
+      console.log("lessonType" + item.lessonContent.type);
       if (item.lessonContent.type === "") {
+        return false;
+      }
+      if(!item.lessonContent.type){
         return false;
       }
       if (item.lessonContent.type === "game") {
@@ -155,10 +198,13 @@ const LessonsList = ({
             <SpinnerLoader />
           ) : (
             <>
-              <button className="flex items-center px-2 linearGradient_ver1 rounded-full hover:scale-[1.01] transition-all">
-                <button onClick={() => handleSave()} className="text-white">
-                  Save
-                </button>
+
+              <button
+                className="flex items-center px-2 linearGradient_ver1 rounded-full hover:scale-[1.01] transition-all"
+                onClick={() => handleSave()}
+              >
+                <span className="text-white">Save</span>
+
                 <BsCheck className="ml-1 text-white" />
               </button>
               <button className="flex items-center px-2 bg-stone-50 rounded-full hover:scale-[1.01] transition-all">
@@ -169,6 +215,8 @@ const LessonsList = ({
           )}
         </div>
       )}
+
+
 
       <div className="w-full h-[calc(100vh-4rem)] overflow-y-auto border-r relative no-select border-t">
         {lessons.map((item, i) => {

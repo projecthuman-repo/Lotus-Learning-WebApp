@@ -6,6 +6,9 @@
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
 }
+.bg-green-500 {
+  background-color: #48bb78; 
+}
 
 .crossword-container {
     display: flex;

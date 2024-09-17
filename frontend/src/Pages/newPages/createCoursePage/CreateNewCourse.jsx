@@ -10,6 +10,7 @@ import StepThree from "./steps/StepThree";
 import StepFour from "./steps/StepFour";
 import createNewCourseProxy from "../../../BackendProxy/courseProxy/createNewCourse";
 import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
+import enrollInstitutionStudentsProxy from "../../../BackendProxy/courseProxy/enrollInstitutionStudentsProxy";
 
 const CreateNewCourse = () => {
   const authUser = useSelector((state) => state.user);
@@ -33,24 +34,42 @@ const CreateNewCourse = () => {
       code: authUser.institution.code,
       institutionName: authUser.institution.institutionName,
       accountType: authUser.accountType,
-      email: authUser.email,
-    },
-  });
+      email: authUser.email
+    }
+  });  
 
+  
+  
   const sendNewCourse = async () => {
     if (!loading) {
       setLoading(true);
       try {
+        // Step 1: Create the course
         const response = await createNewCourseProxy(newCourseObj);
         setCourseId(response.data.savedData._id); 
         setPopupVisible(true); 
+        const courseId = response.data.savedData._id; //doubt
+        const institutionCode = newCourseObj.creator.code; 
+  
+        // Step 2: Enroll all students in the same institution
+        const enrollResponse = await enrollInstitutionStudentsProxy(institutionCode, courseId);
+  
+        if (enrollResponse.success) {
+          console.log("All students from the institution enrolled successfully");
+        } else {
+          console.error("Enrollment of students failed:", enrollResponse.message);
+        }
+  
+        // Navigate to the course editor page
+        navigate('/course-editor/homePage/' + courseId);
       } catch (error) {
-        console.error("Error creating course", error);
+        console.error("Error creating course or enrolling students", error);
       } finally {
         setLoading(false);
       }
     }
   };
+  
 
   const handlePopupClose = () => {
     setPopupVisible(false); 

@@ -14,6 +14,7 @@ import { MdClose, MdDone } from "react-icons/md";
 import getCoursesByProp from "../../../../BackendProxy/courseProxy/getCoursesByProp";
 import AcceptRejectPetition from "../../../../components/accept-reject-classpetition/AcceptRejectPetition";
 import { useSelector } from "react-redux";
+import deleteCourseById from "../../../../BackendProxy/courseProxy/deleteCourse";
 
 const AdminManageCourses = () => {
   const navigate = useNavigate();
@@ -44,6 +45,26 @@ const AdminManageCourses = () => {
       setLoadedReq(true);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const formatCreatedAt = (createdAt) => {
+    const date = new Date(createdAt);
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options).replace(',', ' -');
+  };
+
+  const handleDelete = async (courseId) => {
+    try {
+      const response = await deleteCourseById(courseId);
+      if (response.success) {
+        setCourses(courses.filter((course) => course._id !== courseId));
+        console.log('Course deleted successfully');
+      } else {
+        console.error('Failed to delete course');
+      }
+    } catch (error) {
+      console.error('Error deleting course:', error);
     }
   };
 
@@ -109,42 +130,42 @@ const AdminManageCourses = () => {
           </button>
         </div>
         <div className="bg-white py-2 px-4 mt-3 rounded-lg">
-          {loaded ? (
-            <table className="table-auto w-full">
-              <thead className="">
-                <tr>
-                  <th>Course Name</th>
-                  <th>Created by</th>
-                  <th>Created at</th>
-                  <th>Complexity</th>
-                  <th className="text-end">Options</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredCourses.map((course) => {
-                  return <CourseCard course={course} key={course._id} />;
-                })}
-              </tbody>
-            </table>
-          ) : (
-            <div className="flex items-center justify-center">
-              <SpinnerLoader />
-            </div>
-          )}
-        </div>
+  {loaded ? (
+    <table className="table-auto w-full">
+      <thead className="">
+        <tr>
+          <th>Course Name</th>
+          <th>Created by</th>
+          <th>Created at</th>
+          <th>Complexity</th>
+          <th className="text-end">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredCourses.map((course) => {
+          return <CourseCard course={course} formatCreatedAt={formatCreatedAt} handleDelete={handleDelete} />;
+        })}
+      </tbody>
+    </table>
+  ) : (
+    <div className="flex items-center justify-center">
+      <SpinnerLoader />
+    </div>
+  )}
+</div>
       </div>
     </div>
   );
 };
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, formatCreatedAt, handleDelete }) => {
   const navigate = useNavigate();
 
   return (
     <tr key={course._id} className="text-sm border-5 border-transparent">
       <td>{course.title}</td>
       <td>{course.creator.username}</td>
-      <td>Feb 20 - 2020</td>
+      <td>{formatCreatedAt(course.createdAt)}</td>
       <td>{course.age}</td>
       <td className="flex space-x-2 items-center justify-end">
         <div
@@ -154,8 +175,11 @@ const CourseCard = ({ course }) => {
           <RiEdit2Fill className="text-md text-blue-700" />
           <OnHoverExtraHud name={"Edit"} />
         </div>
-        <div className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
-          <RiDeleteBin7Fill className="text-md text-red-600" />
+
+        <div onClick={()=>handleDelete(course._id)}
+        className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
+          <RiDeleteBin7Fill className="text-md text-red-600 " />
+
           <OnHoverExtraHud name={"Delete"} />
         </div>
       </td>
