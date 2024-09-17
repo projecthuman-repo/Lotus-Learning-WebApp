@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/course";
+const BASE_URL = " http://52.14.4.146:5000/course";
 
 const getCoursesByProp = async (prop, value, code) => {
   try {
