@@ -1,37 +1,45 @@
 import React, { useState } from "react";
-import lotusLogo from '../../../../Images/lotusletters.webp'
-import crosswordIcon from '../../../../Images/game-icons/crossword.webp'
-import fillInBlanksIcon from '../../../../Images/game-icons/generate-fill-in-the-blanks.webp'
-import mcqsIcon from '../../../../Images/game-icons/generate-mcqs.webp'
-import wordDefIcon from '../../../../Images/game-icons/generate-word-definition-pairs.webp'
-import wordsearchIcon from '../../../../Images/game-icons/wordsearch.webp'
-import textIcon from '../../../../Images/game-icons/text_icon.webp'
-import { FaFileAlt } from "react-icons/fa";
-import { useLocation, useSearchParams } from 'react-router-dom';
-
+import lotusLogo from '../../../../Images/lotusletters.webp';
+import crosswordIcon from '../../../../Images/game-icons/crossword.webp';
+import fillInBlanksIcon from '../../../../Images/game-icons/generate-fill-in-the-blanks.webp';
+import mcqsIcon from '../../../../Images/game-icons/generate-mcqs.webp';
+import wordDefIcon from '../../../../Images/game-icons/generate-word-definition-pairs.webp';
+import wordsearchIcon from '../../../../Images/game-icons/wordsearch.webp';
+import textIcon from '../../../../Images/game-icons/text_icon.webp';
+import { FaFileAlt, FaBars, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import getCourseData from "../../../../BackendProxy/courseProxy/getCourseData";
 
-const LearningPageSideMenu = ({courseLessons, selectedLesson, setSelectedLesson}) => {
+const LearningPageSideMenu = ({ courseLessons, selectedLesson, setSelectedLesson }) => {
+  const [isMenuVisible, setIsMenuVisible] = useState(true);
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
 
   return (
-    <div className="w-[450px] border-r h-full">
-      <div onClick={() => {navigate('/home')}} className="w-full flex items-center justify-center py-3 cursor-pointer">
-        <img className="w-[50%]" src={lotusLogo} alt="Logo"/>
+    <>
+      {/* Hamburger button */}
+      <div className="fixed top-4 left-4 z-50">
+        <button onClick={toggleMenu} className="text-3xl">
+          {isMenuVisible ? <FaTimes /> : <FaBars />} {/* Toggle between hamburger and close icon */}
+        </button>
       </div>
-      <div className="w-full h-[90%] bg-stone-400 relative overflow-y-auto border-t">
-        {courseLessons.map((item, i) => {
-          return (
+
+      {/* Sidebar Menu */}
+      <div className={`fixed left-0 top-0 h-full bg-white transition-transform transform ${isMenuVisible ? "translate-x-0" : "-translate-x-full"} w-[450px] border-r z-40`}>
+        <div onClick={() => { navigate('/home'); toggleMenu(); }} className="w-full flex items-center justify-center py-3 cursor-pointer">
+          <img className="w-[50%]" src={lotusLogo} alt="Lotus Logo" />
+        </div>
+        <div className="w-full h-[90%] bg-stone-400 relative overflow-y-auto border-t">
+          {courseLessons.map((item) => (
             <div key={item._id}>
-                <LessonItemList selectedLessonId={selectedLesson._id} setSelectedLesson={setSelectedLesson} lesson={item}/>
+              <LessonItemList selectedLessonId={selectedLesson._id} setSelectedLesson={setSelectedLesson} lesson={item} />
             </div>
-          )
-        })}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -82,7 +90,7 @@ const LessonItemList = ({ lesson, selectedLessonId, setSelectedLesson }) => {
     <div 
       onClick={() => setSelectedLesson(lesson)} 
       className={`${(selectedLessonId === lesson._id) ? "bg-stone-200 " : ""} 
-                  ${(lesson.isCompleted ? "bg-green-100" : "bg-[#fff] hover:bg-stone-100")}  // Apply green background if completed
+                  ${(lesson.isCompleted ? "bg-green-100" : "bg-[#fff] hover:bg-stone-100")} 
                   w-full h-[75px] border-b flex items-center justify-between px-2 cursor-pointer transition-all`}
     >
       <div className="flex flex-col">
@@ -105,6 +113,5 @@ const LessonItemList = ({ lesson, selectedLessonId, setSelectedLesson }) => {
     </div>
   );
 };
-
 
 export default LearningPageSideMenu;
