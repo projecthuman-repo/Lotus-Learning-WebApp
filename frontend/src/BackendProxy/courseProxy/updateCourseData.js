@@ -1,7 +1,7 @@
 import axios from 'axios';
 import compressJson from '../CompressJson.js';
 
-const BASE_URL = ' http://52.14.4.146:5000/course'
+const BASE_URL = ' http://localhost:5000/course'
 
 const updateCourseDataProxy = async(course) => {
     try {

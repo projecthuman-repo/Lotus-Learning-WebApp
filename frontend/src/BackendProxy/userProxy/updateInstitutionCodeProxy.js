@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = ' http://52.14.4.146:5000/user';
+const BASE_URL = ' http://localhost:5000/user';
 
 const updateInstitutionCodeProxy = async (_id, code) => {
     try {

@@ -48,7 +48,7 @@ const SignUp = ({type = 'student'}) => {
       return;
     }
     try {
-      const response = await axios.post(' http://52.14.4.146:5000/user/create-user', {
+      const response = await axios.post(' http://localhost:5000/user/create-user', {
         firstName,
         lastName,
         email,
@@ -102,7 +102,7 @@ const SignUp = ({type = 'student'}) => {
 	};
   
 	  // Check if user exists in the db
-	  const response = await axios.post(' http://52.14.4.146:5000/user/google-login', {
+	  const response = await axios.post(' http://localhost:5000/user/google-login', {
 		...user
 	  });
 
@@ -110,7 +110,7 @@ const SignUp = ({type = 'student'}) => {
 
 	  // Set loggedin cookie with access token and email
 	  if (response.data.success) {
-		const saveOnCookies = await axios.post(' http://52.14.4.146:5000/cookies/save-user', {
+		const saveOnCookies = await axios.post(' http://localhost:5000/cookies/save-user', {
 			...user
 		},{
 			withCredentials: true, // Include cookies in the request
