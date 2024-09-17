@@ -18,19 +18,18 @@ const LearningPageSideMenu = ({ courseLessons, selectedLesson, setSelectedLesson
   };
 
   return (
-    <>
-      {/* Hamburger button */}
-      <div className="fixed top-4 left-4 z-50">
-        <button onClick={toggleMenu} className="text-3xl">
-          {isMenuVisible ? <FaTimes /> : <FaBars />} {/* Toggle between hamburger and close icon */}
-        </button>
-      </div>
-
-      {/* Sidebar Menu */}
-      <div className={`fixed left-0 top-0 h-full bg-white transition-transform transform ${isMenuVisible ? "translate-x-0" : "-translate-x-full"} w-[450px] border-r z-40`}>
-        <div onClick={() => { navigate('/home'); toggleMenu(); }} className="w-full flex items-center justify-center py-3 cursor-pointer">
+    <div className={`relative ${isMenuVisible ? "w-[450px]" : "w-0"} transition-width duration-300 border-r h-full`}>
+      <div className="flex justify-between items-center py-3 px-2 border-b">
+        {/* Logo */}
+        <div onClick={() => navigate('/home')} className="flex items-center cursor-pointer">
           <img className="w-[50%]" src={lotusLogo} alt="Lotus Logo" />
         </div>
+        <div onClick={toggleMenu} className="text-2xl cursor-pointer">
+          {isMenuVisible ? <FaTimes /> : <FaBars />}
+        </div>
+      </div>
+      
+      {isMenuVisible && (
         <div className="w-full h-[90%] bg-stone-400 relative overflow-y-auto border-t">
           {courseLessons.map((item) => (
             <div key={item._id}>
@@ -38,8 +37,8 @@ const LearningPageSideMenu = ({ courseLessons, selectedLesson, setSelectedLesson
             </div>
           ))}
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 
