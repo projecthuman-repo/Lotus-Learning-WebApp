@@ -49,7 +49,7 @@ const AdminHomePage = () => {
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
           <div onClick={() => navigate("/admin/students")}>
             <OptionCard
               name="Manage Students"
@@ -67,11 +67,7 @@ const AdminHomePage = () => {
           <div onClick={() => navigate("/admin/courses/")}>
             <OptionCard name="Manage Courses" icon={<FaBook />} color="red" />
           </div>
-          <OptionCard
-            name="Manage Games"
-            icon={<FaChessKnight />}
-            color="blue"
-          />
+         
         </div>
       </div>
       <GeneralFooter />
