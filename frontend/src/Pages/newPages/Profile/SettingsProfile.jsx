@@ -41,7 +41,6 @@ const SettingsProfile = () => {
   const handleEmailChange = (e) => setUser({ ...user, email: e.target.value });
   const handleUsernameChange = (e) => setUser({ ...user, username: e.target.value });
   const handlePasswordChange = (e) => setUser({ ...user, password: e.target.value });
-  const handleInstitutionCodeChange = (e) => setUser({ ...user, institutionCode: e.target.value });
 
   const handleUsernameUpdate = async () => {
     try {
@@ -258,45 +257,7 @@ const SettingsProfile = () => {
               )}
               </td>
             </tr>
-            <tr>
-              <td>
-                <label
-                  htmlFor="institutionCode"
-                  className="font-medium cursor-pointer flex justify-between"
-                >
-                  <span>Institution Code</span>
-                </label>
-              </td>
-              <td className="text-end">
-                {checkSelectedInput("institutionCode") ? (
-                  <div className="flex items-center justify-end space-x-2">
-                    <input
-                      value={user.institutionCode}
-                      onChange={handleInstitutionCodeChange}
-                      id="institutionCode"
-                      placeholder="Institution Code"
-                      type="text"
-                      className={`${styles.simple_text_input} border`}
-                    />
-                    <MdOutlineClose
-                      onClick={() => setSelectedInput(null)}
-                      className="text-stone-500 cursor-pointer"
-                    />
-                  </div>
-                ) : (
-                  <div
-                    onClick={() => setSelectedInput("institutionCode")}
-                    className="flex items-center justify-end space-x-2 cursor-pointer"
-                  >
-                    <p className="text-sm">{user.institutionCode}</p>
-                    <div className="hover:bg-stone-200 p-2 rounded-full transition-all hover-parent">
-                      <OnHoverExtraHud name="edit" />
-                      <FiChevronRight className="text-stone-500" />
-                    </div>
-                  </div>
-                )}
-              </td>
-            </tr>
+          
           </tbody>
         </table>
       </div>
