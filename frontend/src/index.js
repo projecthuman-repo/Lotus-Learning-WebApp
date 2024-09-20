@@ -12,7 +12,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 
 // const client = new ApolloClient({
-//   uri: ' https://52.14.4.146:5000/graphql', // Your backend GraphQL endpoint
+//   uri: ' http://lotuslearning.world/graphql', // Your backend GraphQL endpoint
 //   cache: new InMemoryCache(),
 // });
 
