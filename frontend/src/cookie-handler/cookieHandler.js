@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const url = 'http://lotuslearning.world/cookies'
+const url = 'https://lotuslearning.world/cookies'
 
 
 export const getLogedInCookies = async () => {

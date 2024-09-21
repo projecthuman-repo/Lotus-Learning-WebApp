@@ -65,7 +65,7 @@ const LessonsList = ({
   const fetchCourseDataFromDB = async (courseId) => {
     try {
       
-      const response = await axios.get(`http://lotuslearning.world/course/get-course-data/${courseId}`);
+      const response = await axios.get(`https://lotuslearning.world/course/get-course-data/${courseId}`);
       return response.data; 
     } catch (error) {
       console.error("Error fetching course data", error);

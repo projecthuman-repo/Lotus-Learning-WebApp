@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'http://lotuslearning.world/user';
+const BASE_URL = 'https://lotuslearning.world/user';
 
 const updateUsernameProxy = async(_id, username) => {
     try {

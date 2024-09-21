@@ -1,7 +1,7 @@
 import axios from 'axios';
 import compressJson from '../CompressJson.js';
 
-const BASE_URL = 'http://lotuslearning.world/course'
+const BASE_URL = 'https://lotuslearning.world/course'
 
 const updateCourseDataProxy = async(course) => {
     try {

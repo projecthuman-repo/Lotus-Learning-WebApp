@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://lotuslearning.world/admin";
+const BASE_URL = "https://lotuslearning.world/admin";
 
 const getStudents = async (code) => {
   try {
