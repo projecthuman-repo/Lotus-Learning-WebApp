@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = " http://lotuslearning.world/cookies";
+const BASE_URL = "http://lotuslearning.world/cookies";
 
 const saveUserOnCookies = async (user) => {
   try {

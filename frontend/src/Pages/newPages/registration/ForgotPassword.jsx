@@ -28,7 +28,7 @@ const ForgotPassword = () => {
     setLoading(true); // Set loading true while the request is being processed
     try {
       // Send a POST request to send the email
-      const response = await axios.post(' http://lotuslearning.world/user/forgot-password', { email });
+      const response = await axios.post('http://lotuslearning.world/user/forgot-password', { email });
       setLoading(false); // Set loading false after receiving the response
 
       if (response.status === 200) {

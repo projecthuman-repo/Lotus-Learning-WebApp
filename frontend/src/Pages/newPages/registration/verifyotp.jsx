@@ -26,7 +26,7 @@ const VerifyOTP = () => {
     setLoading(true);
     try {
       console.log('Sending request with OTP:', otp);
-      const response = await axios.post(' http://lotuslearning.world/user/verify-otp', { otp: otp.toString() });
+      const response = await axios.post('http://lotuslearning.world/user/verify-otp', { otp: otp.toString() });
       console.log('Response:', response.data);
       setLoading(false);
 

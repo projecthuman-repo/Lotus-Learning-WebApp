@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = " http://lotuslearning.world/course";
+const BASE_URL = "http://lotuslearning.world/course";
 
 // Function to search courses by title
 export const searchCourses = async (title) => {

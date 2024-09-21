@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = " http://lotuslearning.world/ai";
+const BASE_URL = "http://lotuslearning.world/ai";
 const BASEAPI_URL = "http://34.130.17.89:8080/api";
 
 const getApiToken = async () => {

@@ -50,7 +50,7 @@ const ChangePassword = () => {
       setErrorMessage('');
     }
 
-    const response = await axios.post(' http://lotuslearning.world/user/change-password', {
+    const response = await axios.post('http://lotuslearning.world/user/change-password', {
       newPassword: newPassword,
       email: email
 	  });

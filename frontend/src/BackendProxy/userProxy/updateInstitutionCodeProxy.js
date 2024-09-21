@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = ' http://lotuslearning.world/user';
+const BASE_URL = 'http://lotuslearning.world/user';
 
 const updateInstitutionCodeProxy = async (_id, code) => {
     try {
