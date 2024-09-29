@@ -19,12 +19,12 @@ const app = express();
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
-app.use(
-  cors({
-    credentials: true,
-    origin: 'https://lotuslearning.world',
-  })
-);
+app.use(cors({
+  credentials: true,
+  origin: 'https://lotuslearning.world', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+}));
+
 app.use(cookieParser());
 app.use(isAuth);
 
