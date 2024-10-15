@@ -10,6 +10,9 @@ import Settings from "../../../components/profile-components/Settings";
 import CreateEditCourse from "../../../components/profile-components/create-edit-new_course/CreateEditCourse";
 import { useDispatch, useSelector } from "react-redux";
 import getCoursesByProp from "../../../BackendProxy/courseProxy/getCoursesByProp"; // Import the getCoursesByProp function
+import getEnrollmentData from "../../../BackendProxy/courseProxy/getEnrolledCourses";
+import getEnrolledCourses from "../../../BackendProxy/courseProxy/getEnrolledCourses";
+import getAllEnrollmentsUser from "../../../BackendProxy/courseProxy/getAllEnrollmentsUser";
 
 const Profile = () => {
   const { screen } = useParams();
@@ -28,21 +31,26 @@ const Profile = () => {
 
   const fetchEnrolledCourses = async () => {
     try {
-      const res = await getCoursesByProp("accepted", true, authUser.institution.code);
-      console.log("The ID of the current user is " + authUser._id);
-      console.log("Fetched Courses: ", res); 
-      setEnrolledCourses(res.res); 
+      const res = await getAllEnrollmentsUser(authUser._id);
+      console.log("Fetched Enrollments: ", res);
+      
+     console.log(res);
+      const mappedCourses = res.data.map((enrollment) => ({
+        ...enrollment.course,
+        progress: enrollment.progress, // Add the progress from enrollment
+      }));
+  
+      setEnrolledCourses(mappedCourses); 
       setLoaded(true);
     } catch (error) {
       console.error(error);
       setErrorMessage("Failed to load courses");
     }
   };
-
   const changeScreen = (value) => {
     switch (value) {
       case "courses":
-        return <Courses courses={enrolledCourses} />; 
+        return <Courses courses={enrolledCourses} userId = {authUser._id} />; 
       case "my-courses":
         return <MyCourses />;
       case "games":
@@ -50,7 +58,7 @@ const Profile = () => {
       case "profile-settings":
         return <Settings />;
       default:
-        return <Courses courses={enrolledCourses} />;
+        return <Courses courses={enrolledCourses}  userId = {authUser._id} />;
     }
   };
 

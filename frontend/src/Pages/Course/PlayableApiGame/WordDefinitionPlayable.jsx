@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
+import updateGrades from "../../../BackendProxy/courseProxy/updateGrades"; // Import the function to save grades
 
-const WordDefinitionPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
+const WordDefinitionPlayable = ({ gameData, onNextLesson, isLastLesson, enrollment, selectedLesson }) => {
   const [finished, setFinished] = useState(false);
   const [compleated, setCompleated] = useState(false);
   const [message, setMessage] = useState(''); // State to display the message for correct answers
+  const [percentageCorrect, setPercentageCorrect] = useState(0); // Store the percentage score
   const [answersObj, setAnswersObj] = useState(() => {
     const half = Math.ceil(gameData.game.word_definitions.length / 2);
     const data = gameData.game.word_definitions.slice(0, half).map((element) => {
@@ -36,9 +38,10 @@ const WordDefinitionPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
       })
     );
     const totalCorrect = calculateCorrectAnswers();
-    const percentageCorrect = (totalCorrect / answersObj.length) * 100;
+    const percentage = (totalCorrect / answersObj.length) * 100;
+    setPercentageCorrect(percentage);
 
-    if (percentageCorrect >= 80) {
+    if (percentage >= 80) {
       setCompleated(true);
       setMessage('Great job! You answered 80% or more correctly.');
     } else {
@@ -63,6 +66,28 @@ const WordDefinitionPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
     return answersObj.every((item) => item.current.length > 0);
   };
 
+  // Function to save the grade to the backend
+  const saveGradeToBackend = async (percentageCorrect) => {
+    const lessonId = selectedLesson._id;
+    const lessonTitle = selectedLesson.title;
+
+    try {
+      // Save the grade to the backend
+      await updateGrades(enrollment._id, lessonId, lessonTitle, percentageCorrect);
+      console.log('Grade saved successfully!');
+    } catch (error) {
+      console.error('Error saving grade:', error);
+    }
+  };
+
+  // Handle what happens when "Next" button is clicked
+  const handleNextLesson = () => {
+    if (compleated) {
+      saveGradeToBackend(percentageCorrect); // Save the grade only if the user has completed with 80% or more correct
+    }
+    onNextLesson(); // Proceed to the next lesson
+  };
+
   const traverseGameObj = () => {
     return answersObj.map((wordDefinition, index) => (
       <GameObj updateAnswerCurrent={updateAnswerCurrent} key={index} indx={index} wordDefinition={wordDefinition} />
@@ -75,7 +100,7 @@ const WordDefinitionPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
         <div className="absolute h-full w-full bg-[#0005] z-30 rounded-lg flex flex-col items-center justify-center amin-compleated-crossword">
           <FaCheckCircle className="text-3xl text-white" />
           <p className="mt-1 font-bold text-white">COMPLETED!</p>
-          <button onClick={onNextLesson} className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center">
+          <button onClick={handleNextLesson} className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center">
             <span className="mr-2">{isLastLesson ? "Complete Course" : "Next"}</span>
           </button>
         </div>

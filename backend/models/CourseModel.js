@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const courseSchema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId, // Default type
+    auto: true // Automatically generate an ObjectId if not provided
+  },
   title: {
     type: String,
     required: true,
@@ -129,6 +133,6 @@ courseSchema.methods.calculateProgress = function () {
   return (completedLessons / totalLessons) * 100; // Returns progress as a percentage
 };
 
-const Course = mongoose.model('courses', courseSchema);
+const Course = mongoose.model('Course', courseSchema);
 
 module.exports = Course;

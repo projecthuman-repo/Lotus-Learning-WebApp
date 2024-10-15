@@ -5,7 +5,7 @@ import { CiTrash } from "react-icons/ci";
 import { CiStar } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 
-const OnProgressCourses = ({ id, progress, title }) => {
+const OnProgressCourses = ({ id, progress, title,creatorName,dateCreated, userId }) => {
   const divRef = useRef(null);
   const navigate = useNavigate();
   const [openOptions, setOpenOptions] = useState(false);
@@ -26,7 +26,17 @@ const OnProgressCourses = ({ id, progress, title }) => {
     if (divRef.current && divRef.current.contains(event.target)) {
       return;
     } else {
-      navigate(`/course/learn?id=${id}`);
+     // navigate(`/course/learn?id=${id}`);
+     navigate('/course-preface', {
+      state: {
+        courseId: id,
+        courseTitle: title,
+        creatorName: creatorName,
+        dateCreated: dateCreated,
+        item:null,
+        userId:userId,
+      }
+    });
     }
   }
 

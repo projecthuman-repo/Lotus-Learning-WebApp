@@ -132,14 +132,15 @@ const User = () => {
           </div>
         </div>
         <div className="w-full flex flex-col space-y-3 no-select">
-            {(authUser.accountType === "admin") &&
+            {(authUser.accountType === "instructor" || authUser.accountType === "admin") &&
              (
                <button
                  onClick={() => navigate("/admin")}
                  className={`my-2 flex  items-center text-white rounded-sm font-medium  text-center border-l-2  text-sm py-2 linearGradient_ver1   transition-all pl-3 hover:pl-5 hover:border-l-4`}
                >
                  <MdAdminPanelSettings className="mr-2" />
-                 Admin Institution 
+                 {authUser.accountType=== "admin" && "Admin Institution"}
+                 {authUser.accountType=== "instructor" && "Teacher Institution"}
                </button>
              )}
           <div className="w-full flex items-center justify-between">

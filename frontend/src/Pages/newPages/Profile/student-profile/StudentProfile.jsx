@@ -4,6 +4,7 @@ import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
 import getCoursesByProp from "../../../../BackendProxy/courseProxy/getCoursesByProp";
 import { useSelector } from "react-redux";
+import getEnrolledCourses from "../../../../BackendProxy/courseProxy/getEnrolledCourses";
 
 const StudentProfile = () => {
   const authUser = useSelector((state) => state.user);
@@ -20,7 +21,8 @@ const StudentProfile = () => {
 
   const fetchEnrolledCourses = async () => {
     try {
-      const res = await getCoursesByProp("accepted", true, authUser.institution.code);
+     // const res = await getCoursesByProp("accepted", true, authUser.institution.code);
+      const res = await getEnrolledCourses(authUser._id); 
       console.log("The ID of the current user is " + authUser._id);
       console.log("Fetched Courses: ", res); 
       setEnrolledCourses(res.res); 
@@ -73,8 +75,9 @@ const StudentProfile = () => {
                     item={{
                       _id: course._id, 
                       title: course.title, 
-                      creator: { username: course.creator.institutionName } // Accessing creatorName directly from course
-                    }}
+                      creator: { username: course.creator.institutionName },
+                      createdAt: course.createdAt 
+                    }} userId={authUser._id} 
                   />
                 ) : (
                   <p className="text-red-500">Course data missing</p>

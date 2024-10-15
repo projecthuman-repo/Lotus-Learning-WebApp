@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import './styles.css';
 import { FaCheckCircle } from "react-icons/fa";
+import updateGrades from "../../../BackendProxy/courseProxy/updateGrades";
 
-const FillInBlanksPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
+const FillInBlanksPlayable = ({ gameData, onNextLesson, isLastLesson, enrollment, selectedLesson }) => {
+  const lessonId = selectedLesson._id;
+  const lessonTitle = selectedLesson.title;
   const [completed, setCompleted] = useState(false);
   const [failed, setFailed] = useState(false); // State to track if user fails
   const [answersObj, setAnswersObj] = useState(() => {
@@ -33,7 +36,7 @@ const FillInBlanksPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
         return { ...element, correct: false };
       }
     });
-    
+
     setAnswersObj(updatedAnswers);
     return correctCount;
   };
@@ -41,16 +44,36 @@ const FillInBlanksPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
   const handleCompletionCheck = () => {
     const correctCount = checkValues();
     const percentage = (correctCount / answersObj.length) * 100;
-    
+
     if (percentage >= 80) {
-      // Delaying the completion state update after answers are checked
-      setTimeout(() => {
-        setCompleted(true);
-        setFailed(false); // Reset failure state
-      }, 100); // Small delay to ensure state updates are applied
+      // Mark as completed
+      setCompleted(true);
+      setFailed(false); // Reset failure state
     } else {
-      setFailed(true); 
+      setFailed(true);
       setCompleted(false);
+    }
+  };
+
+  // Function to save the grade to the backend using lessonId and lessonTitle
+  const saveGradeToBackend = async (lessonId, lessonTitle, percentage) => {
+    try {
+      await updateGrades(enrollment._id, lessonId, lessonTitle, percentage);
+      console.log("Grade saved successfully!");
+    } catch (error) {
+      console.error("Error saving grade:", error);
+    }
+  };
+
+  // Handle saving the grade and then moving to the next lesson
+  const handleNextLesson = async () => {
+    if (completed) {
+      const correctCount = checkValues();
+      const percentage = (correctCount / answersObj.length) * 100;
+
+      // Save grade when clicking the "Next" button
+      await saveGradeToBackend(lessonId, lessonTitle, percentage);
+      onNextLesson(); // Call the parent's onNextLesson prop after saving the grade
     }
   };
 
@@ -79,7 +102,7 @@ const FillInBlanksPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
           <FaCheckCircle className="text-3xl text-white" />
           <p className="mt-1 font-bold text-white">COMPLETED!</p>
           <button
-            onClick={onNextLesson}
+            onClick={handleNextLesson} // Save grade and then move to the next lesson
             className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center mt-4"
           >
             {isLastLesson ? "Complete Course" : "Next"}
@@ -119,7 +142,7 @@ const FillInBlanksPlayable = ({ gameData, onNextLesson, isLastLesson }) => {
       <div className="mt-2 pl-5">
         <button
           onClick={handleCompletionCheck}
-           className='linearGradient_ver1 px-3 py-1 rounded-full font-semibold text-white hover:scale-[1.03] transition-all'
+          className='linearGradient_ver1 px-3 py-1 rounded-full font-semibold text-white hover:scale-[1.03] transition-all'
         >
           Check Answers
         </button>

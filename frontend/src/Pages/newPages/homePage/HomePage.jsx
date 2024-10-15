@@ -16,6 +16,7 @@ import Astronomy9CourseCard from "../../../components/course-cards/Astronomy9Cou
 import ComputerScience11CourseCard from "../../../components/course-cards/ComputerScience11CourseCard";
 import getCoursesByProp from "../../../BackendProxy/courseProxy/getCoursesByProp";
 import { useSelector } from "react-redux";
+import getEnrolledCourses from "../../../BackendProxy/courseProxy/getEnrolledCourses";
 
 
 const HomePage = () => {
@@ -28,9 +29,26 @@ const HomePage = () => {
     getAllAcceptedCourses()
   },[])
 
+  
+
+
   const getAllAcceptedCourses = async () => {
     try {
-      const res = await getCoursesByProp("accepted", true, authUser.institution.code);
+      let res;
+      if(authUser.accountType === "instructor" || authUser.accountType === "admin"  )
+      {
+        console.log("this is instructor or admin");
+      res = await getCoursesByProp('creator.email', authUser.email, authUser.institution.code);
+      console.log(res);
+      }
+      else
+      {
+       // res = await getCoursesByProp('null', null, authUser.institution.code);
+       console.log(authUser._id);
+       res = await getEnrolledCourses(authUser._id);
+      }
+
+      console.log(res);
       setCourses(res.res);
       setLoadedCourses(true)
     } catch (error) {
@@ -66,7 +84,7 @@ const HomePage = () => {
             {courses && courses.map((item, id) => {
               return (
                 <div key={item._id}>
-                  <GeneralCourseCard item={item}/>
+                  <GeneralCourseCard item={item} userId={authUser._id}/>
                 </div>
               )
             })}

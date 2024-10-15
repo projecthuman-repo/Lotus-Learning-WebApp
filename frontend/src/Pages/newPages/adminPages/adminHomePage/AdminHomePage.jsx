@@ -48,25 +48,30 @@ const AdminHomePage = () => {
             <OnHoverExtraHud name="Account settings" />
           </div>
         </div>
-
+       
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
-          <div onClick={() => navigate("/admin/students")}>
+        {(authUser.accountType === "instructor" ) &&
+          (<div onClick={() => navigate("/admin/students")}>
             <OptionCard
               name="Manage Students"
               icon={<FaUserGraduate />}
               color="yellow"
             />
-          </div>
+          </div>)}
+          {(authUser.accountType === "admin" ) &&
+          (
           <div onClick={() => navigate("/admin/educators")}>
             <OptionCard
               name="Manage Educators"
               icon={<FaChalkboardTeacher />}
               color="green"
             />
-          </div>
+          </div>)}
+          {(authUser.accountType === "instructor" ) &&
+          (
           <div onClick={() => navigate("/admin/courses/")}>
             <OptionCard name="Manage Courses" icon={<FaBook />} color="red" />
-          </div>
+          </div>)}
          
         </div>
       </div>

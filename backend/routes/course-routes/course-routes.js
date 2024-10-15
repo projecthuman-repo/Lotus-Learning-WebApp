@@ -1,13 +1,16 @@
 const express = require('express');
-const Course = require("../../models/CourseModel.js");
+const Course = require('../../models/CourseModel.js')
 const {createNewCourse} = require('../../controllers/course/create-new-course.js');
 const { updateCourseData } = require('../../controllers/course/update-course-content.js');
 const router = express.Router();
 const zlib = require('zlib');
 const decompressData = require('../../helpers/decompressData.js');
 const Enrollment = require('../../models/Enrollment.js');
-const { log } = require('console');
+const Lesson = require('../../models/Lesson.js')
+const { log, debug } = require('console');
 const mongoose = require('mongoose');
+const logger = require('../../logger');
+const User = require('../../models/User.js');
 
 // On this file you can find all the routes for: 
 
@@ -64,15 +67,12 @@ router.get('/get-course-data', async(req, res, next) => {
     }
 
     // Calculate progress for the course
-    const progress = course.calculateProgress();
+   // const progress = course.calculateProgress();
 
-    // If the course is found, return it as a response, including progress
+   
     return res.status(200).json({
       success: true,
-      data: {
-        ...course.toObject(),
-        progress // Add progress to the response
-      }
+      data: course
     });
   } catch (error) {
     // If an error occurs during the search, send an error response
@@ -85,7 +85,7 @@ router.get('/get-course-data', async(req, res, next) => {
 router.post('/create-new-course', async(req, res, next) => {
   try{
     let newCourseObj = req.body
-    if(newCourseObj.creator.accountType === 'admin'){
+    if(newCourseObj.creator.accountType === 'instructor'){
       newCourseObj = {...newCourseObj, accepted: true}
     }
     else{
@@ -156,22 +156,27 @@ router.post('/get-courses-by-prop', async(req, res, next) => {
     const { prop, value, code } = req.body;
     let courses = [];
     
-    if(code) {
+    if(code && prop && value) {
       courses = await Course.find({
         $and: [{ "creator.code": code }, { [prop]: value }],
       });
-    } else {
+    } else if(prop && value){
       courses = await Course.find({ [prop]: value });
+    }
+    else if(code)
+    {
+      courses = await Course.find({ "creator.code": code });
     }
 
     // Calculate progress for each course
+    /*
     const coursesWithProgress = courses.map(course => ({
       ...course.toObject(),
       progress: course.calculateProgress() // Add progress
-    }));
+    }));*/
 
     return res.status(200).json({
-      res: coursesWithProgress,
+      res: courses,
       success: true,
     });
   } catch (error) {
@@ -181,17 +186,139 @@ router.post('/get-courses-by-prop', async(req, res, next) => {
   }
 });
 
+//Grabbing enrollment data with specific user and course ids so we can individually track progress
+router.get('/get-enrollment-by-userId-and-courseId', async (req, res) => {
+  const { userId, courseId } = req.query;
+
+  // Validate input parameters
+  if (!userId || !courseId) {
+    return res.status(400).json({
+      success: false,
+      message: 'Missing userId or courseId',
+    });
+  }
+
+  try {
+    // Find the enrollment document for the given user and course
+    const enrollment = await Enrollment.findOne({ learner: userId, course: courseId }).populate("currentLesson");
+
+ 
+    if (!enrollment) {
+      return res.status(404).json({
+        success: false,
+        message: 'Enrollment not found',
+      });
+    }
+
+    // Find the course by its ID
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found',
+      });
+    }
+
+    // Return the enrollment and course as separate objects
+    res.status(200).json({
+      success: true,
+      enrollment,
+      course, 
+    });
+  } catch (error) {
+    console.error('Error fetching enrollment data:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+    });
+  }
+});
+
+// GET ALL ENROLLMENTS FOR A SPECIFIC USER
+router.get('/get-user-enrollments', async (req, res, next) => {
+  try {
+    const { userId } = req.query;
+
+    // Validate if userId is provided
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: 'userId is required',
+      });
+    }
+
+    const enrollments = await Enrollment.find({ learner: userId }).populate('course');
+    logger.debug(enrollments, "ALL ENROLLS");
+
+    // Check if enrollments were found
+    if (enrollments.length === 0) {
+      return res.status(200).json({
+        success: true,
+        data: [],
+        message: 'No enrollments found for the specified user',
+      });
+    }
+
+    // Update progress for all enrollments
+    await Promise.all(
+      enrollments.map(async (enrollment) => {
+        await enrollment.updateProgress(); // This already saves the progress
+      })
+    );
+
+    // Return the list of enrollments with updated progress
+    return res.status(200).json({
+      success: true,
+      data: enrollments, 
+    });
+
+  } catch (error) {
+    console.error("Error fetching enrollments for user:", error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+    });
+  }
+});
+
+//This is necessary to remove from completed lessons list for all enrollments if teacher modifies course
+router.post('/remove-lesson-from-enrollments', async (req, res) => {
+  const { courseId, lessonId } = req.body;
+
+  try {
+    // Perform bulk update
+    const result = await Enrollment.updateMany(
+      { course: courseId }, // Match enrollments for the course
+      { 
+        $pull: { 
+          completedLessons: lessonId, // Remove the lesson from completedLessons
+          lessonGrades: { lessonId: lessonId } // Remove the lesson grade corresponding to the lessonId
+        } 
+      }
+    );
+
+    if (result.nModified === 0) {
+      return res.status(404).json({ success: false, message: 'No enrollments found or no lessons were updated.' });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Lesson and associated grades removed from all relevant enrollments.',
+    });
+  } catch (error) {
+    console.error('Error removing lesson and grades from enrollments:', error);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+
 //get enrolled courses
-
-
-
-
 router.get('/get-enrolled-courses', async (req, res, next) => {
   try {
     const userId = req.query.userId;  
-
+    logger.debug(userId);
     // Find all enrollments for the user
-    const enrollments = await Enrollment.find({ UserID: userId });
+    const enrollments = await Enrollment.find({ learner: userId }); 
     if (enrollments.length === 0) {
       return res.status(200).json({
         res: [],
@@ -200,22 +327,14 @@ router.get('/get-enrolled-courses', async (req, res, next) => {
     }
 
     // Get all course IDs from the enrollments
-    const courseIds = enrollments.map(enrollment => enrollment.CourseID);
+    const courseIds = enrollments.map(enrollment => enrollment.course);
 
-    // Fetch the corresponding courses
+    // Fetch the entire course documents
     const courses = await Course.find({ _id: { $in: courseIds } });
 
-    // Map the enrollments to the corresponding course data
-    const enrolledCourses = enrollments.map(enrollment => {
-      const course = courses.find(course => course._id.toString() === enrollment.CourseID.toString());
-      return {
-        enrollment,
-        course: course ? { title: course.title, creatorName: course.creator.username } : null
-      };
-    });
-
+    // Return the full course data
     return res.status(200).json({
-      res: enrolledCourses,
+      res: courses, // Directly return the array of course objects
       success: true,
     });
   } catch (error) {
@@ -227,31 +346,201 @@ router.get('/get-enrolled-courses', async (req, res, next) => {
   }
 });
 
-// Mark lesson as completed
+router.post('/enroll-student-by-institution', async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+logger.debug(user,"USER");
+    // Check if the user is a student (or eligible for enrollment)
+   // if (user.accountType !== 'student' || user.accountType!='instructor') {
+    if (user.accountType !== 'student') {
+      return res.status(400).json({ success: false, message: 'Only students can be enrolled in courses.' });
+    }
+
+    //  Retrieve the institution code from the user's profile
+    const institutionCode = user.institution.code; 
+    logger.debug(institutionCode,"CODE");
+    if (!institutionCode) {
+      return res.status(400).json({ success: false, message: 'Institution code not found for this user.' });
+    }
+
+   //Find courses associated with the institution code
+    const courses = await Course.find({ 'creator.code': institutionCode });
+    if (!courses.length) {
+      // Return success response but with information that no courses are available
+      return res.status(200).json({
+        success: true,
+        message: 'No courses available yet for this institution.',
+        enrollments: []
+      });
+    }
+    logger.debug(courses,"Courses");
+    // Enroll the user in each course, but only if they are not already enrolled
+    const enrollments = [];
+    for (const course of courses) {
+      // Check if the user is already enrolled in this course
+      const existingEnrollment = await Enrollment.findOne({ learner: user._id, course: course._id });
+      
+      if (!existingEnrollment) {
+        // Create a new enrollment if the user is not enrolled yet
+        const enrollment = new Enrollment({
+          course: course._id,
+          learner: user._id,
+          currentLesson: null, 
+          completedLessons: [],
+        });
+        await enrollment.save();
+
+        user.enrolledCourses.push(enrollment._id);
+        enrollments.push(enrollment);
+      }
+    }
+
+    await user.save();
+
+    // Check if any enrollments were made
+    if (!enrollments.length) {
+      return res.status(400).json({
+        success: false,
+        message: 'User is already enrolled in all available courses for this institution.',
+      });
+    }
+logger.debug(enrollments);
+    
+    return res.status(200).json({
+      success: true,
+      message: `User enrolled in ${enrollments.length} new course(s) for the institution.`,
+      enrollments,
+    });
+
+  } catch (error) {
+    console.error('Error enrolling user in institution courses:', error);
+    return res.status(500).json({ success: false, message: 'Internal server error during enrollment.' });
+  }
+});
+
+// Enroll a specific student in a specific course
+router.post('/enroll-student', async (req, res) => {
+  const { studentId, courseId } = req.body;
+
+  try {
+    
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ success: false, message: 'Course not found' });
+    }
+
+   
+    const student = await User.findById(studentId);
+    if (!student || student.accountType !== 'student') {
+      return res.status(404).json({ success: false, message: 'Student not found or invalid account type' });
+    }
+
+    //Check if the student is already enrolled in the course
+    const alreadyEnrolled = await Enrollment.findOne({ learner: studentId, course: courseId });
+    if (alreadyEnrolled) {
+      return res.status(400).json({ success: false, message: 'Student is already enrolled in this course' });
+    }
+
+    // Create a new enrollment for the student in the course
+    const enrollment = new Enrollment({
+      course: course._id,
+      learner: student._id,
+      currentLesson: null, // Set the initial lesson if applicable
+      completedLessons: [],
+    });
+
+   
+    await enrollment.save();
+
+    //Update the student's enrolledCourses array
+    student.enrolledCourses.push(enrollment._id);
+    await student.save();
+
+   
+    return res.status(200).json({
+      success: true,
+      message: `Student enrolled in course ${course.title} successfully`,
+    });
+
+  } catch (error) {
+    console.error('Error enrolling student in course:', error);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+router.post('/update-enrollment/:enrollmentId', async (req, res) => {
+  const { enrollmentId } = req.params;
+  const updates = req.body; // Fields to update
+
+  try {
+    if (!updates || Object.keys(updates).length === 0) {
+      return res.status(400).json({ success: false, message: 'No updates provided.' });
+    }
+
+    // Update the fields using $set
+    const updatedEnrollment = await Enrollment.findByIdAndUpdate(
+      enrollmentId,
+      { $set: updates }, // Dynamically update the fields sent in the request
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedEnrollment) {
+      return res.status(404).json({ success: false, message: 'Enrollment not found.' });
+    }
+
+    return res.status(200).json({ success: true, enrollment: updatedEnrollment });
+  } catch (error) {
+    console.error('Error updating enrollment:', error);
+    return res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
+});
+
+
+
 router.post('/complete-lesson', async (req, res) => {
   try {
-    const { courseId, lessonId } = req.body;
+    const { enrollmentId, courseId, lessonId } = req.body;
 
-    // Find the course by ID
+    // Fetch the course separately
     const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }
 
-    // Find the lesson by ID and mark it as completed
-    const lesson = course.lessons.id(lessonId);
-    if (!lesson) {
-      return res.status(404).json({ message: "Lesson not found" });
+    // Find the enrollment by ID
+    const enrollment = await Enrollment.findById(enrollmentId);
+    if (!enrollment) {
+      return res.status(404).json({ message: "Enrollment not found" });
     }
 
-    lesson.isCompleted = true; // Mark lesson as completed
+    // Ensure the lesson exists in the course's lessons array
+    const lesson = course.lessons.id(lessonId);
+    if (!lesson) {
+      return res.status(404).json({ message: "Lesson not found in the course" });
+    }
 
-    // Save the updated course
-    await course.save();
+    // Update the currentLesson in the enrollment
+    enrollment.currentLesson = lessonId;
+
+    // If the lesson is not already in the completedLessons array, add it
+if (!enrollment.completedLessons.some(lesson => lesson.toString() === lessonId.toString())) {
+  enrollment.completedLessons.push(lessonId); // Only push if it's not already there
+}
+//const progress = await enrollment.calculateProgress();
+
+
+//enrollment.progress = progress;
+await enrollment.save();
+    logger.info(enrollment);
 
     return res.status(200).json({
-      message: 'Lesson marked as completed successfully',
-      course,
+      message: 'Lesson marked as completed successfully for this student',
+      enrollment,
     });
   } catch (error) {
     console.error('Error completing lesson:', error);
@@ -259,7 +548,89 @@ router.post('/complete-lesson', async (req, res) => {
   }
 });
 
+router.post('/update-lesson-grade', async (req, res) => {
+  const { enrollmentId, lessonId, lessonTitle, grade } = req.body;
 
+  if (grade < 0 || grade > 100) {
+    return res.status(400).json({ success: false, message: 'Grade must be between 0 and 100.' });
+  }
+
+  try {
+    const enrollment = await Enrollment.findById(enrollmentId);
+    if (!enrollment) {
+      return res.status(404).json({ success: false, message: 'Enrollment not found.' });
+    }
+
+    
+    await enrollment.addOrUpdateLessonGrade(lessonId, lessonTitle, grade);
+    logger.debug(enrollment,"EnrollObject");
+
+    return res.status(200).json({
+      success: true,
+      message: 'Grade updated successfully.',
+      enrollment,
+    });
+  } catch (error) {
+    console.error('Error updating grade:', error);
+    return res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+router.get('/get-all-grades/:studentId', async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    // Fetch all enrollments for the student and populate the course and lessons
+    const enrollments = await Enrollment.find({ learner: studentId })
+      .populate('course')
+      .lean();
+
+    logger.debug(enrollments, "Enrollments in grades route");
+
+    // Iterate through each enrollment to update lesson titles
+    for (const enrollment of enrollments) {
+      if (enrollment.lessonGrades && enrollment.lessonGrades.length > 0) {
+        for (let grade of enrollment.lessonGrades) {
+          // Find the corresponding lesson in the course to get the latest title
+          const lessonFromCourse = enrollment.course.lessons.find(
+            (lesson) => lesson._id.toString() === grade.lessonId.toString()
+          );
+
+          if (lessonFromCourse && lessonFromCourse.title !== grade.lessonTitle) {
+            // Update the lesson title in the enrollment if it has changed
+            await Enrollment.updateOne(
+              { _id: enrollment._id, 'lessonGrades.lessonId': grade.lessonId },
+              { $set: { 'lessonGrades.$.lessonTitle': lessonFromCourse.title } }
+            );
+            grade.lessonTitle = lessonFromCourse.title; // Update in-memory as well
+          }
+        }
+      }
+    }
+
+    // Prepare the grades data
+    const gradesData = enrollments.map((enrollment) => {
+      if (enrollment.lessonGrades && enrollment.lessonGrades.length > 0) {
+        return enrollment.lessonGrades.map((grade) => ({
+          course: enrollment.course.title,
+          lessonId: grade.lessonId,
+          lessonTitle: grade.lessonTitle,
+          grade: grade.grade,
+        }));
+      } else {
+        return [];
+      }
+    }).flat(); // Flatten the array of lesson grades
+
+    return res.status(200).json({
+      success: true,
+      data: gradesData,
+    });
+  } catch (error) {
+    console.error('Error fetching grades:', error);
+    return res.status(500).json({ success: false, message: 'Error fetching grades' });
+  }
+});
 
 
 // DELETE COURSE BY ID
@@ -277,6 +648,7 @@ router.post('/delete-course-by-id', async(req, res, next) => {
 
     
     const deletedCourse = await Course.findByIdAndDelete(courseId);
+    await Enrollment.deleteMany({ course: courseId });
 
 
     if (!deletedCourse) {

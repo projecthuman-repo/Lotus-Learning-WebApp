@@ -5,7 +5,7 @@ import MultipleChoicePlayable from '../../../Course/PlayableApiGame/MultipleChoi
 import WordDefinitionPlayable from '../../../Course/PlayableApiGame/WordDefinitionPlayable';
 import PdfDisplayer from '../../../../components/display-pdf/PdfDisplayer';
 
-const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastLesson }) => {
+const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastLesson,enrollment }) => {
   if (!courseData || !selectedLesson) {
     return <div>Loading content...</div>; // Fallback if courseData or selectedLesson is not yet available
   }
@@ -25,7 +25,9 @@ const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastL
               gameData={selectedLesson.lessonContent.linked_game.gameRes}
               onNextLesson={onNextLesson}  
               isLastLesson={isLastLesson}
-              
+              enrollment = {enrollment}
+              selectedLesson={selectedLesson}
+    
             />
    
           );
@@ -36,6 +38,8 @@ const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastL
               gameData={selectedLesson.lessonContent.linked_game.gameRes}
               onNextLesson={onNextLesson}  
               isLastLesson={isLastLesson}
+              enrollment = {enrollment}
+              selectedLesson={selectedLesson}
             />
           );
         case 'multiplechoice':
@@ -45,6 +49,8 @@ const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastL
               gameData={selectedLesson.lessonContent.linked_game.gameRes}
               onNextLesson={onNextLesson}  
               isLastLesson={isLastLesson}
+              enrollment = {enrollment}
+              selectedLesson={selectedLesson}
             />
           );
         case 'worddefinition':
@@ -54,6 +60,8 @@ const LearningMainContent = ({ courseData, selectedLesson, onNextLesson, isLastL
               gameData={selectedLesson.lessonContent.linked_game.gameRes}
               onNextLesson={onNextLesson}  
               isLastLesson={isLastLesson}
+              enrollment = {enrollment}
+              selectedLesson={selectedLesson}
             />
           );
         default:

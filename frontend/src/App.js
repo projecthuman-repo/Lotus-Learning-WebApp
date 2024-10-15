@@ -95,6 +95,7 @@ function App() {
 
   useEffect(() => {
     if(authUser){
+      console.log(authUser);
       setAuth(true)
     }else{
       setAuth(false);
@@ -111,7 +112,7 @@ function App() {
             <Route path="/test" element={<TestPlayGround/>}/>
             <Route path="/registration" element={<Registration/>}/>
             <Route path="/course" element={<CoursePage/>}/>
-            <Route path="/course/learn" element={<LearningCoursePage/>}/>
+            <Route path="/course/learn" element={<LearningCoursePage userId={authUser?._id} />}/>
             <Route path="/learning/:courseName?" element={<Learning/>}/>
             <Route path="/course-complete" element={<CourseCompletion/>}/>
             <Route path="/course-preface" element={<CoursePreface/>}/>
@@ -131,7 +132,7 @@ function App() {
 
             {/* Admin Pages */}
             <Route path="/admin/students" element={
-              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'instructor' )}>
                 <AdminManageStudents/>
               </ProtectedRoute>
             }/>
@@ -141,19 +142,19 @@ function App() {
               </ProtectedRoute>
             }/> 
             <Route path="/admin/courses/:screen?" element={
-              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'instructor')}>
                 <AdminManageCourses/>
               </ProtectedRoute>
             
             }/>
             <Route path="/admin" element={
-              <ProtectedRoute isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+              <ProtectedRoute isAuthenticated={(authUser && (authUser.accountType === 'instructor' || authUser.accountType === 'admin'))}>
                 <AdminHomePage/>
               </ProtectedRoute>
             }/>
             <Route path="/admin/invite/:type?" 
               element={
-                <ProtectedRoute isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+                <ProtectedRoute isAuthenticated={(authUser && (authUser.accountType === 'instructor' || authUser.accountType === 'admin'))}>
                   <AdminInvitationPage/>
                 </ProtectedRoute>
               }

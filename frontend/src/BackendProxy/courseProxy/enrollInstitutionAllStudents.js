@@ -1,9 +1,9 @@
 import axios from 'axios';
 const BASE_URL = " http://localhost:5000/admin";
 
-const enrollInstitutionStudentsProxy = async (institutionCode, courseId) => {
+const enrollInstitutionAllStudents = async (institutionCode, courseId) => {
   try {
-    const response = await axios.post(`${BASE_URL}/enroll-students`, {
+    const response = await axios.post(`${BASE_URL}/enroll-all-students`, {
       institutionCode,
       courseId
     });
@@ -14,4 +14,4 @@ const enrollInstitutionStudentsProxy = async (institutionCode, courseId) => {
   }
 };
 
-export default enrollInstitutionStudentsProxy;
+export default enrollInstitutionAllStudents;

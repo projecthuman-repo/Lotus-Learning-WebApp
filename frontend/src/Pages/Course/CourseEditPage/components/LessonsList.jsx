@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
 import getCourseData from "../../../../BackendProxy/courseProxy/getCourseData";
+import removeLessonFromAllEnrollments from "../../../../BackendProxy/courseProxy/removeLessonFromAllEnrollments";
 
 
 
@@ -230,6 +231,7 @@ const LessonsList = ({
                 lesson={item}
                 updateLessons={updateLessons}
                 i={i}
+                courseid={courseid}
               />
             </div>
           );
@@ -246,8 +248,11 @@ const LessonItem = ({
   lesson,
   updateLessons,
   i,
+  courseid
 }) => {
-  const handleRemove = () => {
+  const handleRemove = async () => {
+
+    await removeLessonFromAllEnrollments(courseid, lesson._id);
     const newArr = lessons.filter((_, index) => index !== i);
     if (newArr.length === 0) {
       setSelectedLesson(0);

@@ -24,6 +24,13 @@ app.use(
     origin: ' http://localhost:3000',
   })
 );
+
+const logger = require('./logger');
+const pino = require('pino-http')({
+
+  logger,
+});
+app.use(pino);
 app.use(cookieParser());
 app.use(isAuth);
 
@@ -68,9 +75,13 @@ app.use("/highlight", (req, res) => {
 connectToDatabases()
   .then(() => {
     app.listen(config.PORT);
-    console.log(`Server running port ${config.PORT}`);
+    let test = 5;
+    logger.info(`Server running on port ${config.PORT}`);
+    //console.log(`Server running port ${config.PORT}`);
+  //  logger.debug({test}, 'Error connecting to the database');
     // processNotifications();
   })
   .catch((err) => {
-    console.error(err);
+    logger.error(err, 'Error connecting to the database');
+   // console.error(err);
   });

@@ -3,8 +3,8 @@ import { IoIosSearch } from "react-icons/io";
 import styles from '../../Styles';
 import OnProgressCourses from './OnProgressCourses';
 
-const Courses = ({ courses }) => { 
-  
+const Courses = ({ courses, userId }) => { 
+  console.log(courses);
   const [searchInput, setSearchInput] = useState("");
   const [filteredCourses, setFilteredCourses] = useState([]);
 
@@ -53,6 +53,9 @@ const Courses = ({ courses }) => {
               id={course._id}
               progress={course.progress} 
               title={course.title}
+              creatorName = {course.creator.username}
+              dateCreated = {course.createdAt}
+              userId = {userId}
             />
           ))
         ) : (

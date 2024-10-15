@@ -7,10 +7,13 @@ import { FaSortAlphaDownAlt } from "react-icons/fa";
 import { FaSortAlphaUp } from "react-icons/fa";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 import { RiEdit2Fill } from "react-icons/ri";
+import { FiDownload } from "react-icons/fi"; 
 import { useSelector } from "react-redux";
 import OnHoverExtraHud from "../../../../components/OnHoverExtraHud";
 import getStudents from "../../../../BackendProxy/adminProxy/getStudents";
 import styles from "../../../../Styles";
+import * as XLSX from "xlsx";
+import axios from "axios";
 
 const AdminManageStudents = () => {
   const authUser = useSelector((state) => state.user);
@@ -101,22 +104,68 @@ const AdminManageStudents = () => {
 };
 
 const StudentCard = ({ student }) => {
+  // Function to handle downloading the Excel file
+  const downloadGrades = async (studentId, studentName) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/course/get-all-grades/${studentId}`);
+      const gradesData = response.data.data;
+
+      if (gradesData.length === 0) {
+        alert("No grades available for this student.");
+        return;
+      }
+
+      // Format the data for Excel
+      const worksheetData = gradesData.map((grade) => ({
+        'Course': grade.course,
+        'Lesson ID': grade.lessonId,
+        'Lesson Title': grade.lessonTitle,
+        'Grade': grade.grade,
+      }));
+
+      // Create the Excel sheet
+      const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Grades');
+
+      // Generate and trigger Excel file download
+      XLSX.writeFile(workbook, `${studentName}_grades.xlsx`);
+    } catch (error) {
+      console.error('Error downloading grades:', error);
+    }
+  };
+
+
   return (
     <>
-      <td className="">{student.username}</td>
+      <td>{student.username}</td>
       <td>{student.email}</td>
       <td className="flex space-x-2 items-center justify-end">
+        {/* Delete Button */}
         <div className="p-2 hover:bg-blue-200 transition-all bg-blue-100 rounded-full cursor-pointer hover-parent">
           <RiDeleteBin7Fill className="text-md text-blue-700 " />
           <OnHoverExtraHud name={"Delete"} />
         </div>
-        <div className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent">
+        {/* Edit Button */}
+        <div
+          className="p-2 hover:bg-red-200 transition-all bg-red-100 rounded-full cursor-pointer hover-parent"
+        >
           <RiEdit2Fill className="text-md text-red-600 " />
           <OnHoverExtraHud name={"Edit"} />
+        </div>
+        {/* Download Grades Button */}
+        <div
+          className="p-2 hover:bg-green-200 transition-all bg-green-100 rounded-full cursor-pointer hover-parent"
+          onClick={() => downloadGrades(student._id,student.username)} // Download functionality
+        >
+          <FiDownload className="text-md text-green-600 " /> {}
+          <OnHoverExtraHud name={"Download Grades"} /> {}
         </div>
       </td>
     </>
   );
 };
+
+
 
 export default AdminManageStudents;
