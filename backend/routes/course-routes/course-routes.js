@@ -11,6 +11,11 @@ const { log, debug } = require('console');
 const mongoose = require('mongoose');
 const logger = require('../../logger');
 const User = require('../../models/User.js');
+const XLSX = require('xlsx');
+const archiver = require('archiver');
+const fs = require('fs');
+const path = require('path');
+const Student = require('../../models/User.js');
 
 // On this file you can find all the routes for: 
 
@@ -356,8 +361,8 @@ router.post('/enroll-student-by-institution', async (req, res) => {
     }
 logger.debug(user,"USER");
     // Check if the user is a student (or eligible for enrollment)
-   // if (user.accountType !== 'student' || user.accountType!='instructor') {
-    if (user.accountType !== 'student') {
+    if (user.accountType !== 'student' && user.accountType!='instructor') {
+  //  if (user.accountType !== 'student') {
       return res.status(400).json({ success: false, message: 'Only students can be enrolled in courses.' });
     }
 
@@ -629,6 +634,114 @@ router.get('/get-all-grades/:studentId', async (req, res) => {
   } catch (error) {
     console.error('Error fetching grades:', error);
     return res.status(500).json({ success: false, message: 'Error fetching grades' });
+  }
+});
+
+router.post('/download-zip-students-grades', async (req, res) => {
+  try {
+    const { studentIds } = req.body; // Expecting an array of student IDs
+    logger.debug(studentIds, 'Student IDs received');
+
+    if (!studentIds || studentIds.length === 0) {
+      return res.status(400).json({ success: false, message: 'No student IDs provided' });
+    }
+
+    // Fetch all students by the provided IDs
+    const students = await Student.find({ _id: { $in: studentIds } });
+    logger.debug(students, 'Students found');
+
+    // Prepare a temporary directory to store individual files
+    const tempDir = path.join(__dirname, 'temp-grades');
+    if (!fs.existsSync(tempDir)) {
+      try {
+        fs.mkdirSync(tempDir);
+      } catch (err) {
+        console.error('Error creating temp directory:', err);
+        return res.status(500).json({ success: false, message: 'Error creating temp directory' });
+      }
+    }
+
+    // Prepare to archive the files
+    const archive = archiver('zip', { zlib: { level: 9 } });
+    const zipFileName = 'filtered_students_grades.zip';
+    const zipFilePath = path.join(tempDir, zipFileName);
+    const output = fs.createWriteStream(zipFilePath);
+
+    // Error handling for the archive
+    archive.on('error', (err) => {
+      console.error('Archive Error:', err);
+      return res.status(500).json({ success: false, message: 'Error creating zip file' });
+    });
+
+    archive.pipe(output);
+
+    // Loop through each student and create individual Excel files
+    for (const student of students) {
+      try {
+        const enrollments = await Enrollment.find({ learner: student._id }).populate('course').lean();
+        let hasGrades = false;
+
+        const gradesData = enrollments.map((enrollment) => {
+          if (enrollment.lessonGrades && enrollment.lessonGrades.length > 0) {
+            hasGrades = true;
+            return enrollment.lessonGrades.map((grade) => ({
+              'Course': enrollment.course.title,
+              'Lesson Title': grade.lessonTitle,
+              'Grade': grade.grade,
+            }));
+          } else {
+            return [];
+          }
+        }).flat();
+
+        if (hasGrades) {
+          logger.debug('Creating Excel file for student:', student.username);
+          const worksheet = XLSX.utils.json_to_sheet(gradesData);
+          const workbook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(workbook, worksheet, 'Grades');
+
+          const studentFileName = `${student.username}_grades.xlsx`;
+          const studentFilePath = path.join(tempDir, studentFileName);
+          XLSX.writeFile(workbook, studentFilePath);
+
+          // Append the file to the archive
+          archive.file(studentFilePath, { name: studentFileName });
+        }
+      } catch (err) {
+        console.error(`Error processing student ${student.username}:`, err);
+        return res.status(500).json({ success: false, message: `Error processing student ${student.username}` });
+      }
+    }
+
+    // Finalize the archive (zip file)
+    await archive.finalize();
+
+    // When the zip file is ready, send it to the client
+    output.on('close', () => {
+      logger.debug('ZIP file created successfully');
+      if (!fs.existsSync(zipFilePath)) {
+        return res.status(500).json({ success: false, message: 'ZIP file not found' });
+      }
+
+      res.download(zipFilePath, zipFileName, (err) => {
+        if (err) {
+          console.error('Error sending zip file:', err);
+        }
+
+        // Clean up the temporary directory after the file has been sent
+        fs.readdir(tempDir, (err, files) => {
+          if (err) throw err;
+          for (const file of files) {
+            fs.unlink(path.join(tempDir, file), (err) => {
+              if (err) throw err;
+            });
+          }
+        });
+      });
+    });
+  } catch (error) {
+    console.error('Error downloading grades:', error);
+    return res.status(500).json({ success: false, message: 'Error downloading grades' });
   }
 });
 

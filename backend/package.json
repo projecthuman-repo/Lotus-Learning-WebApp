@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.10.3",
+    "archiver": "^7.0.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
@@ -35,6 +36,7 @@
     "pino-http": "^10.3.0",
     "pino-pretty": "^11.2.2",
     "twilio": "^4.20.0",
+    "xlsx": "^0.18.5",
     "zlib": "^1.0.5"
   },
   "devDependencies": {

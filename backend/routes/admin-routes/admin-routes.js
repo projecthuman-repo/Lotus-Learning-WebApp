@@ -61,16 +61,19 @@ router.post("/get-teachers", async (req, res, next) => {
       }
   
       // Find all users (students) with the same institution code
-      /*
+      
       const students = await User.find({
         'institution.code': institutionCode,
         accountType: { $in: ['student', 'instructor'] }
       });
-      */
+      
+
+      /*
       const students = await User.find({
         'institution.code': institutionCode,
         accountType: 'student'  
       });
+      */
   
       if (!students.length) {
         return res.status(200).json({

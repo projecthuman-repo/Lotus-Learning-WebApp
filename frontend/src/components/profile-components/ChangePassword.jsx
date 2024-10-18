@@ -59,7 +59,7 @@ const ChangePassword = () => {
 
     if(response.data.success) {
       alert("Password Changed!");
-      navigate("/profile");
+      navigate("/home");
     } else {
       setErrorMessage("An error has occurred. Please try again in a few minutes.");
       return;
