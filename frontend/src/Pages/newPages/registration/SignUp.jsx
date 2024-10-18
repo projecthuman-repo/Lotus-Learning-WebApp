@@ -14,6 +14,7 @@ import { BsQuestionCircleFill } from "react-icons/bs";
 
 import saveUserOnCookies from "../../../BackendProxy/cookiesProxy/saveUserCookies";
 import OnHoverExtraHud from "../../../components/OnHoverExtraHud";
+import enrollStudentByInstitution from "../../../BackendProxy/courseProxy/enrollStudentByInstituition";
 const SignUp = ({type = 'student'}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,9 +59,23 @@ const SignUp = ({type = 'student'}) => {
         username,
         password,
       });
+
       if (response.data.success) {
           const savedUser = await saveUserOnCookies({...response.data.user})
           await dispatch(setUser(savedUser));
+       
+        //  if(response.data.user.accountType === 'student' ||  response.data.user.accountType === 'teacher')
+          if(response.data.user.accountType === 'student')
+          {
+            console.log(response.data.user._id);
+          const enrollResponse = await enrollStudentByInstitution(response.data.user._id);
+         
+          if (enrollResponse.success) {
+            console.log('User successfully enrolled in institution courses');
+          } else {
+            console.error('Enrollment failed:', enrollResponse.data.message);
+          }
+        }
           navigate('/');
   
       } else {

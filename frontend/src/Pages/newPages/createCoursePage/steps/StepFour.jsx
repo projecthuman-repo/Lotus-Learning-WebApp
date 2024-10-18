@@ -25,6 +25,7 @@ const StepFour = ({ setNewCourseObj, newCourseObj, sendNewCourse, handlePopupClo
   };
 
   const handleFinish = async () => {
+    
     await sendNewCourse(); // Save course and trigger popup in parent
   };
 

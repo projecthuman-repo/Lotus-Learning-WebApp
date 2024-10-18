@@ -7,20 +7,21 @@ const GeneralCourseCard = ({ item = {
   creator: {
     username: 'creator',
   },
-  dateCreated: '2023-07-15T00:00:00.000Z'
-} }) => {
+  createdAt: '2023-07-15T00:00:00.000Z'
+},userId }) => {
   const navigate = useNavigate();
 
   const handleNavigateToCoursePreface = () => {
 console.log("item",item);
+//console.log("item2",userId);
     navigate('/course-preface', {
       state: {
         courseId: item._id,
         courseTitle: item.title,
         creatorName: item.creator.username,
         dateCreated: item.createdAt,
-        courseStarted:item.courseStarted,
-        item:item
+        item:item,
+        userId:userId,
       }
     });
   };

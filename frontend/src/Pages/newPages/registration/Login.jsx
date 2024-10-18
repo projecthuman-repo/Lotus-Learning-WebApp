@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SpinnerLoader from "../../../components/loaders/SpinnerLoader";
 import saveUserOnCookies from "../../../BackendProxy/cookiesProxy/saveUserCookies";
 import { useGoogleLogin } from "@react-oauth/google";
+import enrollStudentByInstitution from "../../../BackendProxy/courseProxy/enrollStudentByInstituition";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -94,6 +95,8 @@ const Login = () => {
       if (foundUser.success) {
         const savedUser = await saveUserOnCookies({...foundUser.user})
         await dispatch(setUser(savedUser));
+
+		//const enrollResponse = await enrollStudentByInstitution(foundUser.user._id);
         navigate('/');
 
       }

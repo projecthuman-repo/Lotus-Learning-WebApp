@@ -22,7 +22,8 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.2",
+    "archiver": "^7.0.1",
+    "axios": "^1.7.7",
     "bootstrap": "^5.2.3",
     "crypto-browserify": "^3.12.0",
     "firebase": "^10.7.1",
@@ -44,7 +45,8 @@
     "redux-toolkit": "^1.1.2",
     "styled-components": "^5.3.9",
     "swiper": "^11.0.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",

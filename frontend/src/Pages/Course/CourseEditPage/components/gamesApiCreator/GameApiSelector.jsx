@@ -267,6 +267,7 @@ const Phase1 = ({ setPhase, updateLessonGameContent, fetchHandler, lesson }) => 
           handleClick={handleClick}
           type={"worddefinition"}
         />
+        {/*
         <Option
           icon={WordSearch_icon}
           name={"Word Search"}
@@ -274,7 +275,7 @@ const Phase1 = ({ setPhase, updateLessonGameContent, fetchHandler, lesson }) => 
           secondColor={"bg-purple-400"}
           handleClick={handleClick}
           type={"wordsearch"}
-        />
+        />*/}
       </div>
     </div>
   );

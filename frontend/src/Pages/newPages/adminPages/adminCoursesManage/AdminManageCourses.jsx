@@ -58,7 +58,10 @@ const AdminManageCourses = () => {
     try {
       const response = await deleteCourseById(courseId);
       if (response.success) {
-        setCourses(courses.filter((course) => course._id !== courseId));
+        // Update the state directly to remove the deleted course from the UI
+        const updatedCourses = courses.filter((course) => course._id !== courseId);
+        setCourses(updatedCourses); // Update the courses state
+        setFilteredCourses(updatedCourses); // Update the filtered courses as well if needed
         console.log('Course deleted successfully');
       } else {
         console.error('Failed to delete course');

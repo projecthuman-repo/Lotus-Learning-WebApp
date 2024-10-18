@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineRestartAlt } from "react-icons/md";
+import updateGrades from "../../../BackendProxy/courseProxy/updateGrades";
 
-const MultipleChoicePlayable = ({ gameData, onNextLesson, isLastLesson }) => {
+const MultipleChoicePlayable = ({ gameData, onNextLesson, isLastLesson,enrollment, selectedLesson  }) => {
   const [questionOn, setQuestionOn] = useState(0);
   const [answers, setAnswers] = useState([]); // Store answers
   const [finished, setFinished] = useState(false);
   const [completed, setCompleted] = useState(false); // Track if the user passed the quiz
+  const [percentage, setPercentageCorrect] = useState(0);
 
   // Reset state when the gameData changes (new lesson starts)
   useEffect(() => {
@@ -40,6 +42,28 @@ const MultipleChoicePlayable = ({ gameData, onNextLesson, isLastLesson }) => {
     resetGame(); 
   };
 
+  const saveGradeToBackend = async (percentageCorrect) => {
+    const lessonId = selectedLesson._id;
+    const lessonTitle = selectedLesson.title;
+
+    try {
+      // Save the grade to the backend
+      await updateGrades(enrollment._id, lessonId, lessonTitle, percentageCorrect);
+      console.log('Grade saved successfully!');
+    } catch (error) {
+      console.error('Error saving grade:', error);
+    }
+  };
+
+   
+   const handleNextLesson = () => {
+    if (completed) {
+      saveGradeToBackend(percentage); // Only save the grade if the game is completed
+    }
+    onNextLesson(); // Proceed to the next lesson
+  };
+
+
   useEffect(() => {
     if (questionOn === gameData.game.mcqs.length) {
       if (answers.length === gameData.game.mcqs.length) {
@@ -48,6 +72,7 @@ const MultipleChoicePlayable = ({ gameData, onNextLesson, isLastLesson }) => {
 
         if (percentage >= 80) {
           setCompleted(true); 
+          setPercentageCorrect(percentage);
         }
 
         setFinished(true);
@@ -119,7 +144,7 @@ const MultipleChoicePlayable = ({ gameData, onNextLesson, isLastLesson }) => {
               )}
               {completed && (
                 <button
-                  onClick={onNextLesson}
+                  onClick={handleNextLesson}
                   className="linearGradient_ver1 px-3 rounded-full font-semibold text-white hover:scale-[1.01] transition-all flex items-center justify-center "
                 >
                   <span className="mr-2">

@@ -138,6 +138,8 @@ router.post("/create-user", async(req, res, next) => {
                     password: newUser.password,
                     institution: {
                         admin: false,
+                        code:"NO-INSTITUTION",
+                        institutionName:"Default"
                     }
                 };
                 createUser(user)

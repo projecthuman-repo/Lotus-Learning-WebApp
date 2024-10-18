@@ -102,7 +102,7 @@ const LessonItemList = ({ lesson, selectedLessonId, setSelectedLesson }) => {
         </p>
       </div>
       <div className="flex items-center">
-        {/* Completion indicator (checkmark or icon) */}
+        {/* Completion indicator  */}
         {lesson.isCompleted && (
           <span className="text-green-500 mr-2">✔️</span> 
         )}

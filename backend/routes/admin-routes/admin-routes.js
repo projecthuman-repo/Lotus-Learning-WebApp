@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../models/User.js");
 const Enrollment = require('../../models/Enrollment.js');
-const Course =  require('../../models/Course.js');
+const Course =  require('../../models/CourseModel.js');
+const logger = require('../../logger.js')
 
 router.post("/get-students", async (req, res, next) => {
   try {
@@ -48,7 +49,8 @@ router.post("/get-teachers", async (req, res, next) => {
     }
   });
 
-  router.post('/enroll-students', async (req, res) => {
+
+  router.post('/enroll-all-students', async (req, res) => {
     const { institutionCode, courseId } = req.body;
   
     try {
@@ -59,10 +61,25 @@ router.post("/get-teachers", async (req, res, next) => {
       }
   
       // Find all users (students) with the same institution code
-      const students = await User.find({ 'institution.code': institutionCode, accountType: 'student' });
+      
+      const students = await User.find({
+        'institution.code': institutionCode,
+        accountType: { $in: ['student', 'instructor'] }
+      });
+      
+
+      /*
+      const students = await User.find({
+        'institution.code': institutionCode,
+        accountType: 'student'  
+      });
+      */
   
       if (!students.length) {
-        return res.status(404).json({ success: false, message: 'No students found in this institution' });
+        return res.status(200).json({
+          success: true,
+          message: 'No students found in this institution',
+        });
       }
   
       

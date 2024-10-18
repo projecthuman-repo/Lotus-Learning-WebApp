@@ -2,67 +2,92 @@ import React, { useEffect, useState } from "react";
 import GeneralNavbar from "../../../../components/navbar/GeneralNavbar";
 import LearningPageSideMenu from "./LearningPageSideMenu";
 import LearningMainContent from "./LearningMainContent";
-import getCourseData from "../../../../BackendProxy/courseProxy/getCourseData";
+import getEnrollmentData from "../../../../BackendProxy/courseProxy/getEnrollmentData"; // API to get enrollment data
+import completeLesson from "../../../../BackendProxy/courseProxy/completeLesson"; // API to complete a lesson
 import BarLoader from "../../../../components/loaders/BarLoader";
-import completeLesson from "../../../../BackendProxy/courseProxy/completeLesson";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const LearningCoursePage = () => {
+const LearningCoursePage = ({ userId }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
+  const courseId = searchParams.get("id"); // Get the course ID from query parameters
 
-  const [courseData, setCourseData] = useState(null);
-  const [loaded, setLoaded] = useState(false);
+  const [enrollmentData, setEnrollmentData] = useState(null);
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
-  const [isLastLesson, setIsLastLesson] = useState(false);
+  const [isLastLesson, setIsLastLesson] = useState(false); // Track if it's the last lesson
   const [isMenuOpen, setIsMenuOpen] = useState(true); // State for menu visibility
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    fetchData(id);
-    console.log(id);
-  }, [id]);
+    if (userId && courseId) {
+      fetchEnrollmentData(userId, courseId);
+    } else {
+      console.error("Missing userId or courseId");
+      setLoaded(true);
+    }
+  }, [userId, courseId]);
 
-  const fetchData = async (id) => {
+  const fetchEnrollmentData = async (userId, courseId) => {
     try {
-      const res = await getCourseData(id);
-      setCourseData(res.data);
+      const { enrollment, course } = await getEnrollmentData(userId, courseId);
+      console.log(enrollment)
+      if (!enrollment || !course) {
+        console.error("Enrollment or course data is missing or invalid");
+        setLoaded(true);
+        return;
+      }
 
-      if (res.data.lessons && res.data.lessons.length > 0 && res.data.lessons[0].lessonContent) {
-        setSelectedLesson(res.data.lessons[0]);
+      const updatedLessons = course.lessons.map((lesson) => ({
+        ...lesson,
+        isCompleted: enrollment.completedLessons.includes(lesson._id.toString()),
+      }));
+
+      setEnrollmentData({
+        ...enrollment,
+        course: { ...course, lessons: updatedLessons },
+      });
+
+      // Set first lesson
+      if (updatedLessons.length > 0) {
+        setSelectedLesson(updatedLessons[0]);
         setCurrentLessonIndex(0);
-      } else {
-        setSelectedLesson(null);
       }
 
       setLoaded(true);
     } catch (error) {
-      console.error(error.message);
+      console.error("Error fetching enrollment data:", error);
     }
   };
 
-  
+  // Check if lesson content is available for the selected lesson
+  const isValidLessonContent = (lesson) => {
+    return lesson && lesson.lessonContent && Object.keys(lesson.lessonContent).length > 0;
+  };
+
   useEffect(() => {
-    if (courseData && selectedLesson) {
-      const allLessonsCompleted = courseData.lessons.every(lesson => lesson.isCompleted);
+    if (enrollmentData && selectedLesson) {
+      const allLessonsCompleted = enrollmentData.course.lessons.every(
+        (lesson) => lesson.isCompleted
+      );
 
       if (allLessonsCompleted) {
         setIsLastLesson(true);
-      } else if (courseData.lessons.length === 1) {
+      } else if (enrollmentData.course.lessons.length === 1) {
         setIsLastLesson(!selectedLesson.isCompleted);
       } else {
-        const otherLessonsCompleted = courseData.lessons
-          .filter(lesson => lesson._id !== selectedLesson._id)
-          .every(lesson => lesson.isCompleted);
+        const otherLessonsCompleted = enrollmentData.course.lessons
+          .filter((lesson) => lesson._id !== selectedLesson._id)
+          .every((lesson) => lesson.isCompleted);
+
         setIsLastLesson(otherLessonsCompleted && !selectedLesson.isCompleted);
       }
     }
-  }, [courseData, selectedLesson]);
+  }, [enrollmentData, selectedLesson]);
 
-  const markLessonAsCompleted = async (courseId, lessonId) => {
+  const markLessonAsCompleted = async (enrollmentId, courseId, lessonId) => {
     try {
-      await completeLesson(courseId, lessonId);
+      await completeLesson(enrollmentId, courseId, lessonId);
       console.log(`Lesson ${lessonId} marked as completed.`);
     } catch (error) {
       console.error("Error marking lesson as completed:", error);
@@ -72,21 +97,21 @@ const LearningCoursePage = () => {
 
   const handleNextLesson = async () => {
     try {
-      await markLessonAsCompleted(courseData._id, selectedLesson._id);
+      await markLessonAsCompleted(enrollmentData._id, courseId, selectedLesson._id);
 
-      const updatedLessons = courseData.lessons.map(lesson => {
+      const updatedLessons = enrollmentData.course.lessons.map((lesson) => {
         if (lesson._id === selectedLesson._id) {
           return { ...lesson, isCompleted: true };
         }
         return lesson;
       });
 
-      setCourseData(prevState => ({
+      setEnrollmentData((prevState) => ({
         ...prevState,
-        lessons: updatedLessons,
+        course: { ...prevState.course, lessons: updatedLessons },
       }));
 
-      const allLessonsCompleted = updatedLessons.every(lesson => lesson.isCompleted);
+      const allLessonsCompleted = updatedLessons.every((lesson) => lesson.isCompleted);
 
       if (allLessonsCompleted) {
         navigate("/course-complete");
@@ -101,7 +126,7 @@ const LearningCoursePage = () => {
           setCurrentLessonIndex(nextLessonIndex);
           setSelectedLesson(nextLesson);
         } else {
-          const firstIncompleteLesson = updatedLessons.find(lesson => !lesson.isCompleted);
+          const firstIncompleteLesson = updatedLessons.find((lesson) => !lesson.isCompleted);
           const firstIncompleteLessonIndex = updatedLessons.indexOf(firstIncompleteLesson);
           setCurrentLessonIndex(firstIncompleteLessonIndex);
           setSelectedLesson(firstIncompleteLesson);
@@ -120,27 +145,35 @@ const LearningCoursePage = () => {
             {selectedLesson ? (
               <>
                 <LearningPageSideMenu
-                  courseLessons={courseData.lessons}
+                  courseLessons={enrollmentData.course.lessons}
                   selectedLesson={selectedLesson}
                   setSelectedLesson={(lesson) => {
-                    const index = courseData.lessons.indexOf(lesson);
+                    const index = enrollmentData.course.lessons.indexOf(lesson);
                     setCurrentLessonIndex(index);
                     setSelectedLesson(lesson);
                   }}
-                  somethingMenu={isMenuOpen} 
-                  setIsMenuOpen={setIsMenuOpen} 
+                  somethingMenu={isMenuOpen}
+                  setIsMenuOpen={setIsMenuOpen}
                 />
-                <LearningMainContent
-                  courseData={courseData}
-                  selectedLesson={selectedLesson}
-                  onNextLesson={handleNextLesson}
-                  isLastLesson={isLastLesson}
-                  isMenuOpen={isMenuOpen} 
-                />
+                {/* Perform lesson content validation here */}
+                {isValidLessonContent(selectedLesson) ? (
+                  <LearningMainContent
+                    courseData={enrollmentData.course}
+                    selectedLesson={selectedLesson}
+                    onNextLesson={handleNextLesson}
+                    isLastLesson={isLastLesson}
+                    isMenuOpen={isMenuOpen}
+                    enrollment={enrollmentData}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center w-full h-full">
+                    <p className="text-red-500 font-semibold">Error: No content available for this lesson.</p>
+                  </div>
+                )}
               </>
             ) : (
               <div className="flex items-center justify-center w-full h-full">
-                <p>The Content for this lesson hasn't been added yet.</p>
+                <p>The content for this lesson hasn't been added yet.</p>
               </div>
             )}
           </div>
