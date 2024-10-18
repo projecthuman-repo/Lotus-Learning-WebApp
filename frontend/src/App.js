@@ -3,42 +3,42 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Games from "./Pages/Learners/Games/Games";
-import Navbar from "./components/Navbar/Navbar";
-import Profile from "./Pages/Profile/Profile";
-import Contact from "./Pages/Learners/Contact/Contact";
-
-import CourseCatalogue from "./Pages/Learners/Course-Catalogue/course-catalogue";
-
-import Document from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Document";
-import Video from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Video";
-import Audio from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Audio";
-
-import Author from "./Pages/Learners/Author/Author";
-
-import Notification from "./components/Firebase/Notification";
-
-import SignUp from "./Pages/SignUp/SignUp";
-
-import Completed from "./Pages/Learners/Course-Catalogue/Course-Info/CourseLessons/Completed";
-
 import { AuthProvider } from "./context/auth-context";
-import Login from "./Pages/Login/Login";
 import { getLogedInCookies } from "./cookie-handler/cookieHandler";
 
-import CourseEditing from "./Pages/Educators/ProfileScreens/CourseEditing/CourseEditing";
-import CourseCreation from "./Pages/Educators/ProfileScreens/CourseCreation/CourseCreation";
 
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./redux/slice/user/userSlice";
-import ProtectedRoute from "./ProtectedRoute";
 
 //STYLE
 import "./App.css";
-import CoursePage from "./Pages/Course/CoursePage/CoursePage";
-import CourseSuscriptionPage from "./Pages/Course/CourseSuscriptionPage/CourseSuscriptionPage";
-import CourseLearningPage from "./Pages/Course/CourseLearningPage/CourseLearningPage";
+import Registration from "./Pages/newPages/registration/Registration";
+import Profile from "./Pages/newPages/Profile/Profile";
+import HomePage from "./Pages/newPages/homePage/HomePage";
+import CoursePage from "./Pages/newPages/coursePage/CoursePage";
+import Learning from "./Pages/newPages/learningPage/Learning";
+import NotFoundPage from "./Pages/newPages/notFoundPage/NotFoundPage";
+import CreateNewCourse from "./Pages/newPages/createCoursePage/CreateNewCourse";
+import HomePageLoggedIn from "./Pages/newPages/homePage/HomePageLoggedIn";
+import User from "./Pages/newPages/user/User";
+import AdminHomePage from "./Pages/newPages/adminPages/adminHomePage/AdminHomePage";
+import AdminManageStudents from "./Pages/newPages/adminPages/adminStudentsManage/AdminManageStudents";
+import AdminManageEducators from "./Pages/newPages/adminPages/adminEducatorsManage/AdminManageEducators";
+import AdminManageCourses from "./Pages/newPages/adminPages/adminCoursesManage/AdminManageCourses";
+import NewPage from "./Pages/newPages/newPage/newPage"; //my change here
+import CreateEditCourse from "./components/profile-components/create-edit-new_course/CreateEditCourse";
+import ProtectedRoute from "./ProtectedRoute";
+import ForgotPassword from "./Pages/newPages/registration/ForgotPassword";
+import VerifyOTP from "./Pages/newPages/registration/verifyotp";
+import ChangePassword from "./components/profile-components/ChangePassword";
+import ProfileReRoutes from "./Pages/newPages/Profile/ProfileReRoutes";
+import TestPlayGround from "./TestPlayGround";
+import AdminInvitationPage from "./Pages/newPages/adminPages/adminInvitationPage/AdminInvitationPage";
+import CourseEditPage from "./Pages/Course/CourseEditPage/CourseEditPage";
+import LearningCoursePage from "./Pages/newPages/coursePage/LearningPageCourse/LearningCoursePage";
+import CourseCompletion from "./Pages/newPages/coursePage/LearningPageCourse/CourseCompletion";
+import CoursePreface from "./Pages/newPages/coursePage/LearningPageCourse/CoursePreface";
 
 // Debug For Firebase Messaging
 if ("serviceWorker" in navigator) {
@@ -56,6 +56,7 @@ function App() {
   //redux
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.user);
+  const [auth, setAuth] = useState(false)
 
   const [loadingUser, setLoadingUser] = useState(true);
 
@@ -63,19 +64,24 @@ function App() {
 
   const setAuthUser = async () => {
     setLoadingUser(true);
-    // finds user storaged into the cookies  as 'userDataAuth'
-    const foundUser = await getLogedInCookies();
-
-    if (foundUser) {
-      // saves the found user into the redux for auth
-      return new Promise((resolve) => {
-        dispatch(setUser(foundUser.userData));
-        resolve();
-      });
+    try {
+      const foundUser = await getLogedInCookies();
+      if (foundUser) {
+        if(foundUser.userData.user)
+        {
+        //userdata means it works with goog users but userdata.user it works with reg users
+        dispatch(setUser(foundUser.userData.user)); 
+        }else
+        {
+          dispatch(setUser(foundUser.userData)); 
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching logged in user from cookies:", error);
+    } finally {
+      setLoadingUser(false);
     }
-    return Promise.resolve();
   };
-
   useEffect(() => {
     setAuthUser()
       .then(() => {
@@ -87,100 +93,94 @@ function App() {
       });
   }, []);
 
-  return (
-    <>
-      <BrowserRouter>
-        <AuthProvider>
-          <Navbar />
+  useEffect(() => {
+    if(authUser){
+      console.log(authUser);
+      setAuth(true)
+    }else{
+      setAuth(false);
+    }
+  },[authUser])
 
+  return (
+    <BrowserRouter>
+      {loadingUser ? 
+        <div>Loading Pages...</div>
+        :
+        <AuthProvider>
           <Routes>
-            <Route
-              path="/"
+            <Route path="/test" element={<TestPlayGround/>}/>
+            <Route path="/registration" element={<Registration/>}/>
+            <Route path="/course" element={<CoursePage/>}/>
+            <Route path="/course/learn" element={<LearningCoursePage userId={authUser?._id} />}/>
+            <Route path="/learning/:courseName?" element={<Learning/>}/>
+            <Route path="/course-complete" element={<CourseCompletion/>}/>
+            <Route path="/course-preface" element={<CoursePreface/>}/>
+            <Route path="/course-search" element={<NewPage/>}/>  {/*  my change   */}
+
+            <Route path="/profile/:screen?/:secondscreen?/:courseid?" element={
+              <ProtectedRoute  isAuthenticated={(authUser)}>
+                <Profile/>
+              </ProtectedRoute>
+            }/>
+            <Route path="/user/:screen?" element={<User/>}/>
+            <Route path="/logintest" element={<HomePageLoggedIn/>}/>
+            <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
+            <Route path="/verifyotp" element={<VerifyOTP/>}/>
+            <Route path="/profile/profile-settings/changepassword" element={<ChangePassword/>}/>
+
+
+            {/* Admin Pages */}
+            <Route path="/admin/students" element={
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'instructor' )}>
+                <AdminManageStudents/>
+              </ProtectedRoute>
+            }/>
+            <Route path="/admin/educators/:screen?" element={
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'admin')}>
+                <AdminManageEducators/>
+              </ProtectedRoute>
+            }/> 
+            <Route path="/admin/courses/:screen?" element={
+              <ProtectedRoute  isAuthenticated={(authUser && authUser.accountType === 'instructor')}>
+                <AdminManageCourses/>
+              </ProtectedRoute>
+            
+            }/>
+            <Route path="/admin" element={
+              <ProtectedRoute isAuthenticated={(authUser && (authUser.accountType === 'instructor' || authUser.accountType === 'admin'))}>
+                <AdminHomePage/>
+              </ProtectedRoute>
+            }/>
+            <Route path="/admin/invite/:type?" 
               element={
-                <ProtectedRoute
-                  loading={loadingUser}
-                  isAuthenticated={authUser ? false : true}
-                  reRouteTo={"/profile"}
-                >
-                  <Login />
+                <ProtectedRoute isAuthenticated={(authUser && (authUser.accountType === 'instructor' || authUser.accountType === 'admin'))}>
+                  <AdminInvitationPage/>
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/signup"
-              element={
-                <ProtectedRoute
-                  loading={loadingUser}
-                  isAuthenticated={authUser ? false : true}
-                  reRouteTo={"/profile"}
-                >
-                  <SignUp />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile/:screen?"
-              element={
-                <ProtectedRoute
-                  loading={loadingUser}
-                  isAuthenticated={authUser ? true : false}
-                  reRouteTo={"/"}
-                >
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile/courseEditing/createCourse/:screen?"
-              element={
-                <ProtectedRoute
-                  loading={loadingUser}
-                  isAuthenticated={authUser ? true : false}
-                  reRouteTo={"/"}
-                >
-                  <CourseCreation />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/games" element={<Games />} />
-            <Route path="/courses" element={<CourseCatalogue />} />
-            <Route path="/course" element={<CoursePage />} />
-            <Route
-              path="/course/suscription"
-              element={
-                <ProtectedRoute
-                  loading={loadingUser}
-                  isAuthenticated={authUser ? true : false}
-                  reRouteTo={"/"}
-                >
-                  <CourseSuscriptionPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/course/learning"
-              element={
-                <ProtectedRoute
-                  loading={loadingUser}
-                  isAuthenticated={authUser ? true : false}
-                  reRouteTo={"/"}
-                >
-                  <CourseLearningPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/Document" element={<Document />} />
-            <Route path="/Video" element={<Video />} />'
-            <Route path="/Audio" element={<Audio />} />'
-            <Route path="/author/:name" element={<Author />} />
-            <Route path="/Completed" element={<Completed />} />'
-            <Route path="/creator/:id" element={<Author />} />
+
+            {/* Course Creation and editing */}
+            <Route path="/create-new-course/:step?" element={<CreateNewCourse/>}/>
+            <Route path="/course-editor/:secondscreen?/:courseid?" element={<CreateEditCourse />}/>
+            <Route path="/course-program/:courseid?" element={<CourseEditPage/>}/>
+
+
+            <Route path="/" element={
+              <ProtectedRoute  isAuthenticated={(authUser)}>
+                <HomePage/>
+               </ProtectedRoute> 
+            }/>
+            <Route path="/home" element={<HomePage/>}/>
+            {/* NOT FOUND PAGE 404 */}
+            <Route path="*" element={<NotFoundPage/>}/>
           </Routes>
         </AuthProvider>
-      </BrowserRouter>
-      <Notification />
-    </>
+    }
+
+
+    </BrowserRouter>
+
   );
 }
 

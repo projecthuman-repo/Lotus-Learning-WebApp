@@ -1,6 +1,11 @@
+/*
 const mongoose = require('mongoose');
 
 const courseSchema = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId, // Default type
+    auto: true // Automatically generate an ObjectId if not provided
+  },
   title: {
     type: String,
     required: true,
@@ -32,3 +37,4 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model('Course', courseSchema);
 
 module.exports = Course;
+*/

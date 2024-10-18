@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.10.3",
+    "archiver": "^7.0.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
@@ -22,13 +23,21 @@
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
     "firebase-admin": "^12.0.0",
+    "form-data": "^4.0.0",
+    "fs": "^0.0.1-security",
     "graphql": "^15.8.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.8.1",
     "mongoose": "^7.4.4",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.7",
-    "twilio": "^4.20.0"
+    "pdfkit": "^0.15.0",
+    "pino": "^9.4.0",
+    "pino-http": "^10.3.0",
+    "pino-pretty": "^11.2.2",
+    "twilio": "^4.20.0",
+    "xlsx": "^0.18.5",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

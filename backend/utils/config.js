@@ -5,7 +5,7 @@ require('dotenv').config({ path: './backend/.env' });
  * @const PORT port backend will run on
  * @const BLN_CONNECT url for database connection
  */
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const BLN_CONNECT = process.env.BLN_CONNECT;
 const DATABASE_CROSS_PLATFORM_CONNECTION =
   process.env.DATABASE_CROSS_PLATFORM_CONNECTION;

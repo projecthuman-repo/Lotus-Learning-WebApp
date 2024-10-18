@@ -8,20 +8,23 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 //redux 
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 
-const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql', // Your backend GraphQL endpoint
-  cache: new InMemoryCache(),
-});
+// const client = new ApolloClient({
+//   uri: ' http://localhost:5000/graphql', // Your backend GraphQL endpoint
+//   cache: new InMemoryCache(),
+// });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ApolloProvider client={client}>
+  // <ApolloProvider client={client}>
     <Provider store={store}>
-      <App />
+      <GoogleOAuthProvider clientId="689689573550-agn1nvas4qbvpf4ijj9mqf9dfad91a7d.apps.googleusercontent.com">
+        <App />
+      </GoogleOAuthProvider>
     </Provider>
-  </ApolloProvider>
+  // </ApolloProvider>
   // ReactDOM.render(
 
   //     <App />
