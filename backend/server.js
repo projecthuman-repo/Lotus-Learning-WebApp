@@ -23,7 +23,7 @@ const corsOptions = {
   origin: 'https://lotuslearning.world',  // Frontend origin
   credentials: true,  // Allow cookies and credentials
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowed methods
-  allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'Authorization'],  // Allow specific headers
+  allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
 };
 
 app.use(cors(corsOptions));
