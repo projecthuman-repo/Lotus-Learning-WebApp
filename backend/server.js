@@ -20,9 +20,10 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use(cors({
-  credentials: true,
-  origin: 'https://lotuslearning.world', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  origin: 'https://lotuslearning.world',  
+  credentials: true,  
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'Authorization'],
 }));
 
 app.use(cookieParser());
@@ -51,31 +52,6 @@ app.use("/highlight", (req, res) => {
   console.log(selectedText);
 });
 
-// Read SSL certificate files
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/lotuslearning.world/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/lotuslearning.world/fullchain.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/lotuslearning.world/chain.pem', 'utf8');
-
-const credentials = { key: privateKey, cert: certificate, ca: ca };
-
-// Create HTTPS server
-const server = https.createServer(credentials, app);
-
-// Initialize WebSocket server on the same HTTPS server
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ server, path: '/ws' });
-
-// Handle WebSocket connections
-wss.on('connection', (ws, req) => {
-  console.log('WebSocket connection established');
-  ws.on('message', (message) => {
-    console.log('Received message:', message);
-    ws.send('Message received');
-  });
-  ws.on('close', () => {
-    console.log('WebSocket connection closed');
-  });
-});
 
 // Connect to databases and start server
 connectToDatabases()
