@@ -61,7 +61,7 @@ app.use('/highlight', (req, res) => {
 // Connect to databases and start server
 connectToDatabases()
   .then(() => {
-    app.listen(config.PORT), () => {
+    app.listen(config.PORT, () => {
       console.log(`HTTPS Server running on port ${config.PORT}`);
     });
   })
