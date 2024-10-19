@@ -52,11 +52,11 @@ app.use("/test", (req, res) => {
 });
 
 //highlight function developing --zelong
-app.use("/highlight", (req, res) => {
+app.use('/highlight', (req, res) => {
   const selectedText = req.body.selectedText;
   console.log(selectedText);
+  res.status(200).send({ message: 'Highlight received' });
 });
-
 
 // Connect to databases and start server
 connectToDatabases()
