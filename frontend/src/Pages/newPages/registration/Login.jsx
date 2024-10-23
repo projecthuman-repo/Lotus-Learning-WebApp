@@ -54,13 +54,13 @@ const Login = () => {
 	};
   
 	  // Log user in if account exists. If account does not exist, sign the user up automatically.
-	  const response = await axios.post(' http://localhost:5000/user/google-login', {
+	  const response = await axios.post(' http://localhost:5001/user/google-login', {
 		...user
 	});
 
 	  // Set loggedin cookie with user info
 	  if (response.data.success) {
-		const saveOnCookies = await axios.post(' http://localhost:5000/cookies/save-user', {
+		const saveOnCookies = await axios.post(' http://localhost:5001/cookies/save-user', {
 			...user
 		},{
 			withCredentials: true, // Include cookies in the request
@@ -85,7 +85,7 @@ const Login = () => {
   const sendLoginRequest = async () => {
 	setLoading(true);
 	try {
-	  const response = await axios.post(' http://localhost:5000/user/login-user', {
+	  const response = await axios.post(' http://localhost:5001/user/login-user', {
 		email,
 		password,
 	  });

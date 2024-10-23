@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = "http://localhost:5000/course";
+const BASE_URL = "http://localhost:5001/course";
 
 const removeLessonFromAllEnrollments = async (courseId,lessonId) => {
   try {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/course';
+const BASE_URL = 'http://localhost:5001/course';
 
 // Updated function to complete a lesson for the specific enrollment
 const completeLesson = async (enrollmentId, courseId, lessonId) => {

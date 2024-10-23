@@ -69,7 +69,9 @@ const ProfileDropDown = () => {
                 Profile
               </p>
               <p className="text-sm cursor-pointer px-2 hover:text-red-300">Wish List</p>
-              <p className="text-sm cursor-pointer px-2 hover:text-red-300">
+              <p 
+              onClick={() => navigate('/user/notifications')}
+              className="text-sm cursor-pointer px-2 hover:text-red-300">
                 Notifications
               </p>
               {/*

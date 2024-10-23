@@ -45,7 +45,7 @@ const AdminManageStudents = () => {
 
   const downloadGradesAsZip = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/course/download-zip-students-grades', {
+      const response = await axios.post('http://localhost:5001/course/download-zip-students-grades', {
         studentIds: filteredStudentIds, 
       }, {
         responseType: 'blob', // This ensures you handle the zip file as binary data
@@ -70,7 +70,7 @@ const AdminManageStudents = () => {
       
           // Loop through the filtered students
           for (const student of filteredStudents) {
-            const response = await axios.get(`http://localhost:5000/course/get-all-grades/${student._id}`);
+            const response = await axios.get(`http://localhost:5001/course/get-all-grades/${student._id}`);
             const gradesData = response.data.data;
       
             if (gradesData.length > 0) {
@@ -206,7 +206,7 @@ const StudentCard = ({ student }) => {
  
   const downloadGrades = async (studentId, studentName) => {
     try {
-      const response = await axios.get(`http://localhost:5000/course/get-all-grades/${studentId}`);
+      const response = await axios.get(`http://localhost:5001/course/get-all-grades/${studentId}`);
       const gradesData = response.data.data;
   
       if (gradesData.length === 0) {
