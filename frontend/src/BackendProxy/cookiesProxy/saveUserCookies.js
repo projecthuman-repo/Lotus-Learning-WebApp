@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = " http://localhost:5000/cookies";
+const BASE_URL = " http://localhost:5001/cookies";
 
 const saveUserOnCookies = async (user) => {
   try {

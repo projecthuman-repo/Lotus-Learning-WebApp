@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = ' http://localhost:5000/user';
+const BASE_URL = ' http://localhost:5001/user';
 
 const updateUsernameProxy = async(_id, username) => {
     try {

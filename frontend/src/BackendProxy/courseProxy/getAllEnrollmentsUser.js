@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = "http://localhost:5000/course";
+const BASE_URL = "http://localhost:5001/course";
 
 // Function to fetch enrollment data for a specific user and course
 const getAllEnrollmentsUser = async (userId) => {

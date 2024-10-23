@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/course';
+const BASE_URL = 'http://localhost:5001/course';
 
 // Function to update any field in an enrollment document
 const updateEnrollment = async (enrollmentId, updates) => {
